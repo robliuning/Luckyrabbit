@@ -15,7 +15,7 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 	}
 
 	public function addEmployee(
-								$name,
+							/*	$name,
 								$gender,
 								$age,
 								$deptName,
@@ -26,10 +26,16 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 								$otherContact,
 								$address,
 								$status,
-								$remark)
+								$remark*/
+								$empId,
+								$deptName,
+								$dutyName,
+								$titleName,
+								$status,
+								)
 	{
 		$data = array (
-			'name' => $name,
+			/*'name' => $name,
 			'gender' => $gender,
 			'age' => $age,
 			'deptName' => $deptName,
@@ -40,28 +46,27 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'otherContact' => $otherContact,
 			'address' => $address,
 			'status' => $status,
-			'remark' => $remark,
+			'remark' => $remark,*/
+			
+			'empId' => $empId,
+			'deptName' => $deptName,
+			'dutyName' => $dutyName,
+			'titlesName' => $titleName,
+			'status' => $status,
 		);
 		$this->insert($data);
 	}
 
 	public function updateEmployee(
 								$empId,
-								$name,
-								$gender,
-								$age,
 								$deptName,
 								$dutyName,
 								$titleName,
-								$idCard,
-								$phone,
-								$otherContact,
-								$address,
 								$status,
-								$remark)
+								)
 	{
 		$data = array (
-			'name' => $name,
+			/*'name' => $name,
 			'gender' => $gender,
 			'age' => $age,
 			'deptName' => $deptName,
@@ -72,7 +77,13 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'otherContact' => $otherContact,
 			'address' => $address,
 			'status' => $status,
-			'remark' => $remark,
+			'remark' => $remark,*/
+
+			'empId' => $empId,
+			'deptName' => $deptName,
+			'dutyName' => $dutyName,
+			'titleName' => $titleName,
+			'status' => $status,
 		);
 		$this->update($data, 'empId = ' . (int)$empId);
 	}

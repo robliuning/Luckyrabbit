@@ -26,18 +26,10 @@ class Application_Model_EmployeeMapper
     {
         $data = array(
             'empId' => $employee->getEmpId(),
-            'name' => $employee->getName(),
-            'gender' => $employee->getGender(),
-            'age' => $employee->getAge(),
             'deptName' => $employee->getDeptName(),
             'dutyName' => $employee->getDutyName(),
             'titleName' => $employee->getTitleName(),
-            'idCard' => $employee->getIdCard(),
-            'phone' => $employee->getPhone(),
-            'otherContact' => $employee->getOtherContact(),
-            'address' => $employee->getAddress(),
             'status' => $employee->getStatus(),
-            'remark' => $employee->getRemark(),
         );
         if (null === ($id = $employee->getEmpId())) {
             unset($data['empId']);
@@ -61,18 +53,10 @@ class Application_Model_EmployeeMapper
         $row = $result->current();
 
         $employee ->setEmpId($row->empId)
-        		->setName($row->name)
-                  ->setGender($row->gender)
-                  ->setAge($row->age)
-                  ->setDeptName($row->deptName)
+        		  ->setDeptName($row->deptName)
                   ->setDutyName($row->dutyName)
                   ->setTitleName($row->titleName)
-                  ->setIdCard($row->idCard)
-                  ->setPhone($row->phone)
-                  ->setOtherContact($row->otherContact)
-                  ->setAddress($row->address)
-                  ->setStatus($row->status)
-                  ->setRemark($row->remark);
+                  ->setStatus($row->status);
     }
  
 
@@ -89,19 +73,11 @@ class Application_Model_EmployeeMapper
             $entry = new Application_Model_Employee();
 
 			$entry->setEmpId($row->empId)
-				  ->setName($row->name)
-                  ->setGender($row->gender)
-                  ->setAge($row->age)
-                  ->setDeptName($row->deptName)
+				  ->setDeptName($row->deptName)
                   ->setDutyName($row->dutyName)
                   ->setTitleName($row->titleName)
-                  ->setIdCard($row->idCard)
-                  ->setPhone($row->phone)
-                  ->setOtherContact($row->otherContact)
-                  ->setAddress($row->address)
-                  ->setStatus($row->status)
-                  ->setRemark($row->remark);
-
+                  ->setStatus($row->status);
+                  
             $entries[] = $entry;
 
         }

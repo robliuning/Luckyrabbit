@@ -2,19 +2,22 @@
 
 class Application_Model_Employee
 {
-    protected $_empId;
+  /*protected $_empId;
 	protected $_name;
-	protected $_gender;
 	protected $_age;
 	protected $_deptName;
 	protected $_dutyName;
 	protected $_titleName;
-	protected $_idCard;
-	protected $_phone;
 	protected $_otherContact;
 	protected $_address;
 	protected $_status;
-	protected $_remark;
+	protected $_remark;*/
+     
+    protected $_empId;
+	protected $_deptName;
+	protected $_dutyName;
+	protected $_titleName;
+	protected $_status;
     
     public function __construct(array $options = null)
     {
@@ -55,7 +58,7 @@ class Application_Model_Employee
 
 	public function setEmpId($empId)
     {
-        $this->_empId = (string)$empId;
+        $this->_empId = (int)$empId;
         return $this;
     } 
 
@@ -64,140 +67,49 @@ class Application_Model_Employee
         return $this->_empId;
     }
 
-    public function setName($name)
+    public function setDeptName($deptName)
     {
-        $this->_name = (string)$name;
+        $this->_deptName = (string)$deptName;
         return $this;
     } 
-
-    public function getName()
-    {
-        return $this->_name;
-    }
-
-	
-    public function setGender($gender)
-    {
-        $this->_gender = (int) $gender;
-        return $this;
-    } 
-
-    public function getGender()
-    {
-        return $this->_gender;
-    }
- 
-     public function setAge($age)
-    {
-        $this->_age = (int) $age;
-        return $this;
-    }
-
-    public function getAge()
-    {
-        return $this->_age;
-    }
-
-     public function setDeptName($deptName)
-    {
-        $this->_deptName = $deptName;
-        return $this;
-    }
 
     public function getDeptName()
     {
         return $this->_deptName;
     }
 
+	
     public function setDutyName($dutyName)
     {
-        $this->_dutyName = (string) $dutyName;
+        $this->_dutyName= (string) $dutyName;
         return $this;
-    }
+    } 
 
     public function getDutyName()
     {
         return $this->_dutyName;
     }
-
+ 
      public function setTitleName($titleName)
     {
-        $this->_titleName = (string) $titleName;
+        $this->_titleName= (string) $titleName;
         return $this;
     }
- 
+
     public function getTitleName()
     {
         return $this->_titleName;
     }
 
- 
-     public function setIdCard($idCard)
-    {
-        $this->_idCard = (string) $idCard;
-        return $this;
-    }
-
-    public function getIdCard()
-    {
-        return $this->_idCard;
-    }
-
- 
-     public function setPhone($phone)
-    {
-        $this->_phone = (string) $phone;
-        return $this;
-    } 
-
-    public function getPhone()
-    {
-        return $this->_phone;
-    }
-
- 
-     public function setOtherContact($otherContact)
-    {
-        $this->_otherContact = (string) $otherContact;
-        return $this;
-    }
-
-    public function getOtherContact()
-    {
-        return $this->_otherContact;
-    }
-
-     public function setAddress($address)
-    {
-        $this->_address = (string) $address;
-        return $this;
-    } 
-
-    public function getAddress()
-    {
-        return $this->_address;
-    }
-
      public function setStatus($status)
     {
-        $this->_status = (string) $status;
+        $this->_status= $status;
         return $this;
-    } 
+    }
 
     public function getStatus()
     {
         return $this->_status;
-    }
- 
-     public function setRemark($remark)
-    {
-        $this->_remark = (string) $remark;
-        return $this;
-    }
-
-    public function getRemark()
-    {
-        return $this->_remark;
-    }
+	}
 }
 ?>
