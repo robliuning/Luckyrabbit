@@ -1,20 +1,24 @@
 <?php
 
-class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'em_employees';
+/* create by lxj
+   2011-03-28   v 1.1
+ */
 
-	public function getEmployee($empId)
+class Application_Model_DbTable_Post extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'ge_post';
+
+	public function getPost($postId)
 	{
-		$empId = (int)$empId;
-		$row = $this->fetchRow('empId = ' . $empId);
+		$postId = (int)$postId;
+		$row = $this->fetchRow('postId = ' . $postId);
 		if (!$row) {
-			throw new Exception("Could not find row $empId");
+			throw new Exception("Could not find row $postId");
 		}
 		return $row->toArray();
 	}
 
-	public function addEmployee(
+	public function addPost(
 							/*	$name,
 								$gender,
 								$age,
@@ -27,11 +31,12 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 								$address,
 								$status,
 								$remark*/
-								$empId,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$status
+								$postId,
+								$name,
+								$type,
+								$cardId,
+								$certId,
+								$remark
 								)
 	{
 		$data = array (
@@ -48,21 +53,23 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'status' => $status,
 			'remark' => $remark,*/
 			
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titlesName' => $titleName,
-			'status' => $status
+			'postId' => $postId,
+			'name' => $name,
+			'type' => $type,
+			'cardId' => $cardId,
+			'certId' => $certId,
+			'remark' => $remark
 		);
 		$this->insert($data);
 	}
 
-	public function updateEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$status
+	public function updatePost(
+								$postId,
+								$name,
+								$type,
+								$cardId,
+								$certId,
+								$remark
 								)
 	{
 		$data = array (
@@ -79,18 +86,19 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'status' => $status,
 			'remark' => $remark,*/
 
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'status' => $status
+			'postId' => $postId,
+			'name' => $name,
+			'type' => $type,
+			'cardId' => $cardId,
+			'certId' => $certId,
+			'remark' => $remark
 		);
-		$this->update($data, 'empId = ' . (int)$empId);
+		$this->update($data, 'postId = ' . (int)$postId);
 	}
 
-	public function deleteEmployee($empId)
+	public function deletePost($postId)
 	{
-		$this->delete('empId = ' . (int)$empId);
+		$this->delete('postId = ' . (int)$postId);
 	}
 }
 

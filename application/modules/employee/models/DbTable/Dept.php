@@ -1,20 +1,24 @@
 <?php
 
-class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'em_employees';
+/* create by lxj
+   2011-03-28   v 1.1
+ */
 
-	public function getEmployee($empId)
+class Application_Model_DbTable_Dept extends Zend_Db_Table_Abstract
+{
+	protected $_name = 'ge_dept';
+
+	public function getDept($deptId)
 	{
-		$empId = (int)$empId;
-		$row = $this->fetchRow('empId = ' . $empId);
+		$deptId= (int)$deptId;
+		$row = $this->fetchRow('deptId = ' . $deptId);
 		if (!$row) {
-			throw new Exception("Could not find row $empId");
+			throw new Exception("Could not find row $deptId");
 		}
 		return $row->toArray();
 	}
 
-	public function addEmployee(
+	public function addDept(
 							/*	$name,
 								$gender,
 								$age,
@@ -27,11 +31,8 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 								$address,
 								$status,
 								$remark*/
-								$empId,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$status
+								$postId,
+								$name
 								)
 	{
 		$data = array (
@@ -48,21 +49,15 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'status' => $status,
 			'remark' => $remark,*/
 			
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titlesName' => $titleName,
-			'status' => $status
+			'postId' => $postId,
+			'name' => $name
 		);
 		$this->insert($data);
 	}
 
-	public function updateEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$status
+	public function updateDept(
+								$postId,
+								$name
 								)
 	{
 		$data = array (
@@ -79,19 +74,19 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'status' => $status,
 			'remark' => $remark,*/
 
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'status' => $status
+			'postId' => $postId,
+			'name' => $name
 		);
-		$this->update($data, 'empId = ' . (int)$empId);
+		$this->update($data, 'deptId = ' . (int)$deptId);
 	}
 
-	public function deleteEmployee($empId)
+	public function deleteDept($deptId)
 	{
-		$this->delete('empId = ' . (int)$empId);
+		$this->delete('deptId = ' . (int)$deptId);
 	}
+}
+
+?>
 }
 
 ?>
