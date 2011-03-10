@@ -2,6 +2,6 @@
 
 class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'em_employes';
+    protected $_name = 'em_employees';
 }
 
