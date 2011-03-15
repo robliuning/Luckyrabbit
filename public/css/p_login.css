@@ -1,0 +1,30 @@
+#p_login
+{
+	margin: 108px auto 0;
+	width: 546px;
+	}
+#cap_top
+{
+	background: url("../images/login/cap-top.png") no-repeat scroll 0 0 transparent;
+	height: 8px;
+	width: 546px;
+	}
+#cap_body
+{
+	background: url("../images/login/cap-bg.png") repeat-y scroll 0 0 transparent;
+	padding-left: 40px;
+	padding-right: 40px;
+	height: 230px;
+	}
+#cap_bottom
+{
+	background: url("../images/login/cap-bottom.png") no-repeat scroll 0 0 transparent;
+	height: 15px;
+	width: 546px;
+	}
+#panel_login div
+{
+	margin: 0 auto;
+	padding:20px 0 0 0;
+	width: 456px;	
+	}
