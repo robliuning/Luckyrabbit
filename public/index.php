@@ -6,7 +6,7 @@ defined('APPLICATION_PATH')
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
@@ -15,14 +15,16 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 /** Zend_Application */
-require_once 'Zend/Application.php';
+require_once 'My/App.php';
 
 // Create application, bootstrap, and run
-$application = new Zend_Application(
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
-);
+$application = new My_App(APPLICATION_ENV);
+
 $application->bootstrap()
             ->run();
             
+/*require_once 'Zend/Controller/Front.php';
+$front = Zend_Controller_Front::getInstance();
+$front->addModuleDirectory(APPLICATION_PATH."/modules");
+$front->dispatch();*/
 ?>

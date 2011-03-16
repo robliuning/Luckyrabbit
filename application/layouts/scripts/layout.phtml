@@ -1,26 +1,51 @@
 <?php echo $this->doctype() ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Zend Framework Quickstart Application</title>
-  <?php echo $this->headLink()->appendStylesheet('/css/global.css') ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 	<title>工程管理DEMO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="version" content="0.1" />
+	<meta name="author" content="Project Luckyrabbit" />
+	<meta name="" content="description" />
+	<link rel="stylesheet" href="/css/nyroModal.css" type="text/css" media="screen" />
+	<?php echo $this->headLink()->appendStylesheet('/css/global_style.css') ?>
+	<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script> 
+	<script type="text/javascript" src="/js/lightbox/jquery.nyroModal.custom.js"></script>
+	<script type="text/javascript" src="/js/global.js"></script>
 </head>
 <body>
-<div id="header" style="background-color: #EEEEEE; height: 30px;">
-    <div id="header-logo" style="float: left">
-        <b>ZF Quickstart Application</b>
-    </div>
-    <div id="header-navigation" style="float: right">
-        <a href="<?php echo $this->url(
-            array('controller'=>'guestbook'),
-            'default',
-            true) ?>">Guestbook</a>
-    </div>
-
+<div id="p_header">
+	<a id="p_logo" href="index.php">管理平台首页</a>
+	<ul id="panel_uinfo" class="radius">
+		<li class="c_user">管理员 您好！</li>
+		<li class="c_info"><a href="/admin/setup">个人设置</a></li>
+		<li class="c_info"><a href="/admin/help">帮助</a></li>
+		<li class="c_info"><a href="/admin/logout">退出</a></li>
+	</ul>
+	<ul id="nav_main" class="radius nav_general">
+		<li><a href="/index">首页</a></li>
+		<li><a href="/project">工程管理</a></li>
+		<li><a href="/employee">员工及岗位管理</a></li>
+		<li><a href="/contract">分包管理</a></li>
+		<li><a href="/worker">工人管理</a></li>
+		<li><a href="/asset">固定资产管理</a></li>
+		<li><a href="/equipment">机械设备管理</a></li>
+		<li><a href="/material">材料管理</a></li>
+		<li><a href="/finance">财务管理</a></li>
+		<li><a href="/moneyapply">资金申请与审批</a></li>
+		<li><a href="/document">工程文件管理</a></li>
+		<li><a href="/document">统计报表</a></li>
+	</ul>
+	<ul id="nav_sub" class="radius nav_general">
+		<li><a href="/system/infobox">站内通知</a></li>
+		<li><a href="/system">系统管理</a></li>
+	</ul>
 </div>
 <?php echo $this->layout()->content ?>
-    <div id="test">
-    	This is a test
-    </div>
+<div id="p_footer">
+		<a href="#">隐私策略</a></li>
+		<a href="#">服务条款</a></li>
+		<a href="#">Alpha Project Team保留所有权</a>
+</div>
 </body>
 </html>

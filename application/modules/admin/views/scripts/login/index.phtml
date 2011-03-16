@@ -1,0 +1,21 @@
+<link href="/css/p_login.css" rel="stylesheet" type="text/css" />
+	<div id="p_id" class="hide">nav_generalInfo</div>
+	<div id="s_id" class="hide">none</div>
+<div id="contentWrapper">
+	<div id="p_stage">
+		<div id="p_login">
+			<div id="cap_top"></div>
+			<div id="cap_body">
+				<div id="panel_login">
+					<div>
+					<?php
+						$this->loginForm->setAction($this->url());
+						echo $this->loginForm;
+					?>
+					</div>
+				</div>
+			</div><!-- end of cap_body -->
+			<div id="cap_bottom"></div>
+		</div><!-- end of page login -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->
