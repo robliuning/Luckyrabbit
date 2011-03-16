@@ -1,16 +1,17 @@
-<link href="css/p_generalinfo.css" rel="stylesheet" type="text/css" />
-   <?php $this->layout()->title = "公司员工信息";?>
-	<div id="p_id" class="hide">nav_generalInfo</div>
+ <?php 
+ 	$this->headTitle('-公司员工基本信息');
+ 	$this->headLink()->appendStylesheet('/css/p_employee.css');
+ 	$this->headScript()->prependFile('/js/p_employee.js');
+ ?>
+ 	<div id="p_id" class="hide">nav_generalInfo</div>
 	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
-	<div id="p_stage_sidebar">
-	 	<div id="p_sidebar" class="p_sidebar_general">
-			<ul>
-				<li><a href="employee">公司员工基本信息</a></li>
-				<li><a href="employee/position">项目岗位信息</a></li>
-			</ul>
-		</div> 	
+	<div id="p_stage_sidebar">	
+	<div id="test">我是红的！</div>
+		<?php 
+			echo $this->placeholder('sidebar');
+		?>
 		<div id="p_content">
 		<h1>公司员工管理 - 公司员工基本信息 - 总览</h1>
 		<div class="p_msg">
@@ -19,12 +20,12 @@
 			<div class="overall_tool">
 				<div class="button_group">
 					<div><input class="tbMedium tbtext" type="text" /></div>
-					<div><a href="#"><img src="images/icons/functions/search.png"/><p>查询</p></a></div>	
-					<div><a href="generalInfo_new.php"><img src="images/icons/functions/new.png"/><p>新建</p></a></div>
-					<div><a href="#"><img src="images/icons/functions/delete.png"/><p>删除</p></a></div>
-					<div><a href="generalInfo.php"><img src="images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
-					<div><a href="#"><img src="images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="#"><img src="images/icons/functions/help.png"/><p>帮助</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/search.png"/><p>查询</p></a></div>	
+					<div><a href="generalInfo_new.php"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="generalInfo.php"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

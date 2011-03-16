@@ -7,17 +7,16 @@ class Employee_IndexController extends Zend_Controller_Action
     {
         /* Initialize action controller here */
     }
+    
+    public function preDispatch()
+	{
+		$this->view->render("_sidebar.phtml");
+	}
 
     public function indexAction()
     {
     	$employee = new Application_Model_EmployeeMapper();
-        $this->view->entries = $employee->fetchAll();
+    //    $this->view->entries = $employee->fetchAll();
     }
-/*	public function preDispatch()
-	{
-		$this->view->render("/_sidebar.phtml");
-	}
-*/
 }
-
 ?>

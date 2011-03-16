@@ -1,17 +1,21 @@
-<?php echo $this->doctype() ?>
+<?php echo $this->doctype(); 
+	$this->headTitle()->prepend("工程管理Demo");
+	$this->headLink()->prependStylesheet('/css/global_style.css');
+	$this->headLink()->prependStylesheet('/css/nyroModal.css');
+	$this->headScript()->prependFile('/js/jquery-1.5.1.min.js');
+	$this->headScript()->prependFile('/js/lightbox/jquery.nyroModal.custom.js');
+	$this->headScript()->prependFile('/js/global.js');
+	
+?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- 	<title>工程管理 Demo - <?php echo $this->layout()->title ?></title>
+ 	<?php echo $this->headTitle(); ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="version" content="0.1" />
 	<meta name="author" content="Project Luckyrabbit" />
 	<meta name="" content="description" />
-	<link rel="stylesheet" href="/css/nyroModal.css" type="text/css" media="screen" />
-	<?php echo $this->headLink()->appendStylesheet('/css/global_style.css') ?>
-	<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script> 
-	<script type="text/javascript" src="/js/lightbox/jquery.nyroModal.custom.js"></script>
-	<script type="text/javascript" src="/js/global.js"></script>
+    <?php echo $this->headLink(); ?>
+	<?php echo $this->headScript();?>
 </head>
 <body>
 <div id="p_header">

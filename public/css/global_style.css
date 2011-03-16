@@ -70,7 +70,7 @@ a:link, a:visited
 	}
 #p_logo
 {
-	background: url("/../images/logo.png") no-repeat scroll 0 0 transparent;
+	background: url("/images/logo.png") no-repeat scroll 0 0 transparent;
 	display: block;
 	height: 35px;
 	width: 160px;
