@@ -4,6 +4,55 @@
 	name varchar(16) not null 
 );*/
 
+
+/*General*/
+
+
+/*Project*/
+
+
+/*Employee*/
+
+
+
+
+/*Contract*/
+
+
+
+/*Worker*/
+
+
+
+/*Asset*/
+
+
+
+/*Equipment*/
+
+
+
+/*Material*/
+
+
+
+/*Finance*/
+
+
+
+/*Moneyapply*/
+
+
+
+/*Document*/
+
+
+
+/*System*/
+
+
+
+/*Admin*/
 CREATE TABLE global_users(
 	id int not null auto_increment primary key,
 	username varchar(50) unique not null,
