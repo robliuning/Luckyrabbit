@@ -12,9 +12,39 @@
 
 
 /*Employee*/
+CREATE TABLE em_employees (
+	empId int unsigned not null auto_increment primary key,
+	name char(50) not null,
+	gender bit,
+	age tinyint,
+	deptId int,
+	dutyId int,
+	titleId int,
+	idCard char(20),
+	phone char(20),
+	otherContact char(20),
+	address char(100),
+	status bit,
+	remark text
+)
 
+CREATE TABLE em_depts (
+	deptId int unsigned not null auto_increment primary key,
+	name char(50),
+	foreign key (deptId) references em_employees (deptId)
+)
 
+CREATE TABLE em_duties (
+	dutyId int unsigned not null auto_increment primary key,
+	name char(50),
+	foreign key (dutyId) references em_employees (dutyId)
+)
 
+CREATE TABLE em_titles (
+	titleId int unsigned not null auto_increment primary key,
+	name char(50),
+	foreign key (titleId) references em_employees (titleId)
+)
 
 /*Contract*/
 
