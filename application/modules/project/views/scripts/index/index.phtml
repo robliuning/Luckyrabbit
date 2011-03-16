@@ -1,31 +1,295 @@
-	<link href="css/p_mainpage.css" rel="stylesheet" type="text/css" />
+<link href="css/p_generalinfo.css" rel="stylesheet" type="text/css" />
 	<div id="p_id" class="hide">nav_generalInfo</div>
 	<div id="s_id" class="hide">none</div>
+<title>工程管理DEMO - 工程信息管理</title>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">
-		<div id="p_sidebar" class="p_sidebar_general"></div>
+		<div id="p_sidebar" class="p_sidebar_general">
+			<ul>
+				<li><a href="/project">工程信息</a></li>
+				<li><a href="/project/progress">工程进度管理</a></li>
+				<li><a href="/project/plog">总施工日志</a></li>
+				<li><a href="/project/glog">班组施工日志</a></li>
+			</ul>
+		</div>
 		<div id="p_content">
-		<h1>首页</h1>
+		<h1>工程管理 - 工程信息 - 总览</h1>
 		<div class="p_msg">
-			<h3>欢迎登录工程管理系统Demo</h3>
-			<p>版本 V0.1：本版本完成页面结构和UI设计，功能暂不可用。</p>
-			<p>您可以通过左边的边栏阅读新的站内消息。</p>
-			<p>您可以通过下面的管理项目图标分别进入相关管理界面。</p>
+			<h3>本页显示内容为固定资产基本信息总览</h3>
 		</div>
-		<div id="p_home_icons">
-			<div class="home_icon"><a href="generalInfo.php"><h2>基本信息管理</h2><img src="images/icons/1.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>工人管理</h2><img src="images/icons/2.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>公司内部员工管理</h2><img src="images/icons/3.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>分包管理</h2><img src="images/icons/4.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>固定资产管理</h2><img src="images/icons/5.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>设备管理</h2><img src="images/icons/6.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>材料管理</h2><img src="images/icons/7.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>财务管理</h2><img src="images/icons/8.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>工程进度管理</h2><img src="images/icons/9.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>文件管理</h2><img src="images/icons/10.png"/></a></div>
-			<div class="home_icon"><a href="#"><h2>工程统计</h2><img src="images/icons/11.png"/></a></div>
-			</div><!-- end of home icons  -->
-		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><input class="tbMedium tbtext" type="text" /></div>
+					<div><a href="project/index/search"><img src="images/icons/functions/search.png"/><p>查询</p></a></div>	
+					<div><a href="project/index/new"><img src="images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="project/index/delete"><img src="images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="project"><img src="images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="#"><img src="images/icons/functions/help.png"/><p>帮助</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:30%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:35%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>工程编号</th>
+						<th>工程名称</th>
+						<th>工程状态</th>
+						<th>用途</th>
+						<th>建筑面积</th>
+					</thead>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+						<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+						<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+										<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"></td>
+						<td><a href="generalInfo_update.php">ZC-0001</a></td>
+						<td>推土机</td>
+						<td>辆</td>
+						<td>GASDF-ASDF11</td>
+						<td>一汽大众</td>
+					</tr>
+				</table>			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
 	</div><!-- end of page stage -->
 	</div><!-- end of contentWrapper -->
