@@ -16,7 +16,7 @@ class Employee_IndexController extends Zend_Controller_Action
     public function indexAction()
     {
     	$employee = new Application_Model_EmployeeMapper();
-    //    $this->view->entries = $employee->fetchAll();
+      	$this->view->entries = $employee->fetchAll();
     }
 }
 ?>

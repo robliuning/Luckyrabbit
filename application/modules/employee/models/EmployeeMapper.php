@@ -1,6 +1,6 @@
 <?php
 
-class Employee_Model_EmployeeMapper
+class Application_Model_EmployeeMapper
 {
 	protected $_dbTable;
 	
@@ -18,18 +18,18 @@ class Employee_Model_EmployeeMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Employee_Model_DbTable_Employee');
+            $this->setDbTable('Application_Model_DbTable_Employee');
         }
         return $this->_dbTable;
     }
-    public function save(Employee_Model_Employee $employee)
+    public function save(Application_Model_Employee $employee)
     {
         $data = array(
             'empId' => $employee->getEmpId(),
             'name' => $employee->getName(),
             'gender' => $employee->getGender(),
             'age' => $employee->getAge(),
-            'deptName' => $employee->getDeptName
+            'deptName' => $employee->getDeptName(),
             'dutyName' => $employee->getDutyName(),
             'titleName' => $employee->getTitleName(),
             'idCard' => $employee->getIdCard(),
@@ -60,8 +60,8 @@ class Employee_Model_EmployeeMapper
 
         $row = $result->current();
 
-        $employee->setEmpId($row->empId)
-				  ->setName($row->name)
+        $employee ->setEmpId($row->empId)
+        		->setName($row->name)
                   ->setGender($row->gender)
                   ->setAge($row->age)
                   ->setDeptNamedeptName
@@ -86,13 +86,13 @@ class Employee_Model_EmployeeMapper
 
         foreach ($resultSet as $row) {
 
-            $entry = new Employee_Model_Employee();
+            $entry = new Application_Model_Employee();
 
 			$entry->setEmpId($row->empId)
 				  ->setName($row->name)
                   ->setGender($row->gender)
                   ->setAge($row->age)
-                  ->setDeptNamedeptName
+                  ->setDeptName($row->deptName)
                   ->setDutyName($row->dutyName)
                   ->setTitleName($row->titleName)
                   ->setIdCard($row->idCard)

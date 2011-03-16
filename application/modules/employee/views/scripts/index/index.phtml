@@ -52,12 +52,12 @@
 					<?php foreach($this->entries as $entry):?>
 					<tr>
 						<td><input type="checkbox"></td>
-						<td><?php echo $this->escape($entry->email) ?></td>
-						<td><?php echo $this->escape($entry->email) ?></td>
-						<td><?php echo $this->escape($entry->email) ?></td>	
-						<td><?php echo $this->escape($entry->email) ?></td>
-						<td><?php echo $this->escape($entry->eid) ?></td>
-						<td><?php echo $this->escape($entry->ename) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$this->escape($entry->empId)))?>"><?php echo $this->escape($entry->empId) ?></a></td>
+						<td><?php echo $this->escape($entry->name) ?></td>
+						<td><?php echo $this->escape($entry->deptName) ?></td>	
+						<td><?php echo $this->escape($entry->dutyName) ?></td>
+						<td><?php echo $this->escape($entry->titleName) ?></td>
+						<td><?php echo $this->escape($entry->status) ?></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

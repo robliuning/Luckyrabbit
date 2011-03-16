@@ -18,8 +18,6 @@ class Application_Model_Employee
 
     }
 
- 
-
     public function __set($name, $value)
 
     {

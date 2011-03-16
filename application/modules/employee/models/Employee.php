@@ -1,6 +1,6 @@
 <?php
 
-class Employee_Model_Employee
+class Application_Model_Employee
 {
     protected $_empId;
 	protected $_name;
@@ -53,11 +53,29 @@ class Employee_Model_Employee
         return $this;
     }
 
+	public function setEmpId($empId)
+    {
+        $this->_empId = (int)$empId;
+        return $this;
+    } 
+
     public function getEmpId()
     {
         return $this->_empId;
     }
 
+    public function setName($name)
+    {
+        $this->_name = (string)$name;
+        return $this;
+    } 
+
+    public function getName()
+    {
+        return $this->_name;
+    }
+
+	
     public function setGender($gender)
     {
         $this->_gender = (int) $gender;
@@ -82,7 +100,7 @@ class Employee_Model_Employee
 
      public function setDeptName($deptName)
     {
-        $this->_deptName = (string) $deptName;
+        $this->_deptName = $deptName;
         return $this;
     }
 
@@ -144,12 +162,10 @@ class Employee_Model_Employee
         return $this;
     }
 
-
     public function getOtherContact()
     {
         return $this->_otherContact;
     }
-
 
      public function setAddress($address)
     {
@@ -179,13 +195,9 @@ class Employee_Model_Employee
         return $this;
     }
 
- 
-
     public function getRemark()
     {
         return $this->_remark;
     }
-
 }
-
 ?>
