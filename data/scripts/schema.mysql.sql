@@ -17,9 +17,9 @@ CREATE TABLE em_employees (
 	name char(50) not null,
 	gender bit,
 	age tinyint,
-	deptId int,
-	dutyId int,
-	titleId int,
+	deptName char(50),
+	dutyName char(50),
+	titleName char(50),
 	idCard char(20),
 	phone char(20),
 	otherContact char(20),
@@ -28,22 +28,19 @@ CREATE TABLE em_employees (
 	remark text
 )
 
-CREATE TABLE em_depts (
+CREATE TABLE ge_depts (
 	deptId int unsigned not null auto_increment primary key,
-	name char(50),
-	foreign key (deptId) references em_employees (deptId)
+	name char(50)
 )
 
-CREATE TABLE em_duties (
+CREATE TABLE ge_duties (
 	dutyId int unsigned not null auto_increment primary key,
-	name char(50),
-	foreign key (dutyId) references em_employees (dutyId)
+	name char(50)
 )
 
-CREATE TABLE em_titles (
+CREATE TABLE ge_titles (
 	titleId int unsigned not null auto_increment primary key,
-	name char(50),
-	foreign key (titleId) references em_employees (titleId)
+	name char(50)
 )
 
 /*Contract*/

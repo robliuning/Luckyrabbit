@@ -13,8 +13,11 @@ class Employee_IndexController extends Zend_Controller_Action
     	$employee = new Application_Model_EmployeeMapper();
         $this->view->entries = $employee->fetchAll();
     }
-
-
+/*	public function preDispatch()
+	{
+		$this->view->render("/_sidebar.phtml");
+	}
+*/
 }
 
 ?>
