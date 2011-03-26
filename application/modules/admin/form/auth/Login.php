@@ -44,3 +44,4 @@ class Admin_Form_Auth_Login extends Zend_Form
 
 }
 
+?>

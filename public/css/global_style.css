@@ -73,7 +73,7 @@ a:link, a:visited
 	background: url("/images/logo.png") no-repeat scroll 0 0 transparent;
 	display: block;
 	height: 35px;
-	width: 160px;
+	width: 330px;
 	position: absolute;
 	left: 38px;
 	top:14px;
@@ -374,10 +374,6 @@ h3
 {
 	color:#006bd8 ;
 	}
-.overall_content table tr:hover
-{
-	background: red;
-	}
 /*classes*/
 .p_msg
 {
@@ -398,14 +394,14 @@ label
 {
 	color: #888888;
 	display: block;
-	font-size: 12px;
+	font-size: 13px;
 	padding: 3px;
 	}
 .tbText
 {
 	background: none repeat scroll 0 0 #FAFAFA;
 	border: 1px solid #EEEEEE;
-	font-size: 18px;
+	font-size: 14px;
 	line-height: 20px;
 	margin: 0;
 	padding: 3px;
@@ -418,10 +414,13 @@ label
 {
 	width: 200px;
 	}
+.tbShort
+{
+	width:50px;
+	}
 .btConfirm
 {
-	width: 80px;
-	height: 30px;
+	padding: 5px 30px 5px 30px;
 	border: 1px solid #D7D7D7;
 	display: block;
 	background-color: #13a000;
@@ -435,4 +434,38 @@ label
 .btConfirm:hover
 {
 	background-color: #15af00;
+	cursor: pointer;
+	}
+.btDelete
+{
+	padding: 5px 30px 5px 30px;
+	border: 1px solid #D7D7D7;
+	display: block;
+	background-color: #13a000;
+	color: white;
+	margin: 0 9px 0 0;
+	line-height: 30px;
+	font-size: 15px;
+	text-align: center;
+	}
+.btDelete:hover
+{
+	cursor: pointer;	
+	}
+#submit-label,#submit2-label
+{
+	display: none;
+	}
+/*lightbox*/
+#msgBox
+{
+	display: none;
+	}
+#ajaxMsgBox
+{
+
+	}
+#ajaxMsgBox_Emp
+{
+	width:500px;
 	}

@@ -13,9 +13,9 @@
 
 /*Employee*/
 CREATE TABLE em_employees (
-	empId int unsigned not null auto_increment primary key,
+	empId int(4) zerofill not null auto_increment primary key,
 	name char(50) not null,
-	gender bit,
+	gender tinyint,
 	age tinyint,
 	deptName char(50),
 	dutyName char(50),
@@ -24,7 +24,7 @@ CREATE TABLE em_employees (
 	phone char(20),
 	otherContact char(20),
 	address char(100),
-	status bit,
+	status tinyint,
 	remark text
 )
 

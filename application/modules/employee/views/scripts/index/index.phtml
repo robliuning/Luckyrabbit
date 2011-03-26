@@ -1,17 +1,16 @@
  <?php 
  	$this->headTitle('-公司员工基本信息');
  	$this->headLink()->appendStylesheet('/css/p_employee.css');
- 	$this->headScript()->prependFile('/js/p_employee.js');
+ 	$this->headScript()->prependFile('/js/empjs/p_employee.js');
  ?>
  	<div id="p_id" class="hide">nav_generalInfo</div>
 	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
-	<div id="test">我是红的！</div>
-		<?php 
-			echo $this->placeholder('sidebar');
-		?>
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
 		<div id="p_content">
 		<h1>公司员工管理 - 公司员工基本信息 - 总览</h1>
 		<div class="p_msg">
@@ -21,8 +20,8 @@
 				<div class="button_group">
 					<div><input class="tbMedium tbtext" type="text" /></div>
 					<div><a href="#"><img src="/images/icons/functions/search.png"/><p>查询</p></a></div>	
-					<div><a href="generalInfo_new.php"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDelete"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="generalInfo.php"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
@@ -33,11 +32,12 @@
 					<colgroup>
 						<col style="width:5%"></col>
 						<col style="width:10%"></col>
-						<col style="width:20%"></col>
+						<col style="width:15%"></col>
 						<col style="width:15%"></col>
 						<col style="width:15%"></col>
 						<col style="width:25%"></col>
 						<col style="width:10%"></col>
+						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
@@ -47,20 +47,42 @@
 						<th>职务</th>
 						<th>职称</th>
 						<th>员工状态</th>
+						<th></th>
 					</thead>
-					
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td>全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
 					<?php foreach($this->entries as $entry):?>
 					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$this->escape($entry->empId)))?>"><?php echo $this->escape($entry->empId) ?></a></td>
+						<td><input type="checkbox" name="cbEmp" value="<?php echo $this->escape($entry->empId); ?>"></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxemp','id'=>$this->escape($entry->empId)))?>" class="lightbox"><?php echo 'YG'.$this->escape($entry->empId) ?></a></td>
 						<td><?php echo $this->escape($entry->name) ?></td>
 						<td><?php echo $this->escape($entry->deptName) ?></td>	
 						<td><?php echo $this->escape($entry->dutyName) ?></td>
 						<td><?php echo $this->escape($entry->titleName) ?></td>
-						<td><?php echo $this->escape($entry->status) ?></td>
+						<td><?php 
+							$status = $this->escape($entry->status);
+							if($status == 0)
+							{
+								echo "离职";
+								}
+								else
+								{
+									echo "在职";
+									}
+						  ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$this->escape($entry->empId)))?>">修改</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>
+				<div id="msgBox"></div>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->
 	</div><!-- end of page stage -->

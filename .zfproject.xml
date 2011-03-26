@@ -23,6 +23,7 @@
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Login"/>
+        <formFile formName="UpdateEmployee"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
