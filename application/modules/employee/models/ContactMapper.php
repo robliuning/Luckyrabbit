@@ -1,6 +1,11 @@
 <?php
+/*
+created by ËïÁÖ
+time of creating 3-26-2011
+completed time 3-26-2011
+*/
 
-class Application_Model_EmployeeMapper
+class Application_Model_ContactMapper
 {
 	protected $_dbTable;
 	
@@ -18,39 +23,35 @@ class Application_Model_EmployeeMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Employee');
+            $this->setDbTable('Application_Model_DbTable_Contact');
         }
         return $this->_dbTable;
     }
-    public function save(Application_Model_Employee $employee)
+    public function save(Application_Model_Contact $contact)
     {
         $data = array(
-            'empId' => $employee->getEmpId(),
-            'name' => $employee->getName(),
-            'gender' => $employee->getGender(),
-            'age' => $employee->getAge(),
-            'deptName' => $employee->getDeptName(),
-            'dutyName' => $employee->getDutyName(),
-            'titleName' => $employee->getTitleName(),
-            'idCard' => $employee->getIdCard(),
-            'phone' => $employee->getPhone(),
-            'otherContact' => $employee->getOtherContact(),
-            'address' => $employee->getAddress(),
-            'status' => $employee->getStatus(),
-            'remark' => $employee->getRemark(),
+			'contactId' => $contact->getContactId(),
+		     'name' => $contact->getName(),
+			 'gender' => $contact->getGender(),
+			 'birth' => $contact->getBirth(),
+			 'idCard' => $contact->getIdCard(),
+			 'phoneNo' => $contact->getPhoneNo(),
+			 'otherContact' => $contact->getOtherContact(),
+			 'address' => $contact->getAddress(),
+			 'remark' => $contact->getRemark(),
         );
-        if (null === ($id = $employee->getEmpId())) {
-            unset($data['empId']);
+        if (null === ($id = $contact->getContactId())) {
+            unset($data['contactId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('empId = ?' => $empId));
+            $this->getDbTable()->update($data, array('contactId = ?' => $contactId));
         }
     }
-    public function find($empId, Application_Model_Employee $employee)
+    public function find($contactId, Application_Model_Contact $contact)
 
     {
 
-        $result = $this->getDbTable()->find($empId);
+        $result = $this->getDbTable()->find($contactId);
 
         if (0 == count($result)) {
 
@@ -60,18 +61,14 @@ class Application_Model_EmployeeMapper
 
         $row = $result->current();
 
-        $employee ->setEmpId($row->empId)
-        		->setName($row->name)
+        $contact  ->setEmpId($row->contactId)
+        		  ->setName($row->name)
                   ->setGender($row->gender)
-                  ->setAge($row->age)
-                  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setTitleName($row->titleName)
+                  ->setBirth($row->birth)
                   ->setIdCard($row->idCard)
-                  ->setPhone($row->phone)
+                  ->setPhoneNo($row->phoneNo)
                   ->setOtherContact($row->otherContact)
                   ->setAddress($row->address)
-                  ->setStatus($row->status)
                   ->setRemark($row->remark);
     }
  
@@ -86,28 +83,22 @@ class Application_Model_EmployeeMapper
 
         foreach ($resultSet as $row) {
 
-            $entry = new Application_Model_Employee();
+            $entry = new Application_Model_Contact();
+		    $entry ->setEmpId($row->contactId)
+        		   ->setName($row->name)
+                   ->setGender($row->gender)
+                   ->setBirth($row->birth)
+                   ->setIdCard($row->idCard)
+                   ->setPhoneNo($row->phoneNo)
+                   ->setOtherContact($row->otherContact)
+                   ->setAddress($row->address)
+                   ->setRemark($row->remark);
 
-			$entry->setEmpId($row->empId)
-				  ->setName($row->name)
-                  ->setGender($row->gender)
-                  ->setAge($row->age)
-                  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setTitleName($row->titleName)
-                  ->setIdCard($row->idCard)
-                  ->setPhone($row->phone)
-                  ->setOtherContact($row->otherContact)
-                  ->setAddress($row->address)
-                  ->setStatus($row->status)
-                  ->setRemark($row->remark);
 
             $entries[] = $entry;
 
         }
-
         return $entries;
-
     }
 }
 ?>
