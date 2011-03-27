@@ -3,9 +3,9 @@
 author: mingtingling
 version: v0.1
 */
-class Employee_Form_Employeesave extends Zend_Form
+class Employee_Form_EmployeeSave extends Zend_Form
 {
-	pubic function init()
+	pubLic function init()
 	{
      $this->setMethod('post');
 	 $this->addElement(

@@ -23,18 +23,18 @@ class Employee_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$contacts = new Application_Model_ContactMapper();
-      	$this->view->entries = $contacts->fetchAll();
+    	$employees = new Application_Model_EmployeeMapper();
+      	$this->view->entries = $employees->fetchAll();
     }
     
-   /*public function displayAction()
+    public function displayAction()
     {
     	
-    }*/
+    }
     
-    public function editAction()                                   //修改
+    public function editAction()
     {
-    	$editForm = new Employee_form_contactSave();
+    	$editForm = new Employee_form_edit();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
     	$this->view->form = $editForm;
@@ -45,23 +45,22 @@ class Employee_IndexController extends Zend_Controller_Action
     		$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
     		{
-    			$contactId = $this->_getParam('id');
-    			$name = $editForm->getValue('name');	
+    			$empId = $this->_getParam('id');
+    			$name = $editForm->getValue('name');
     			$gender = $editForm->getValue('gender');
-    			$birth = $editForm->getValue('birth');
+    			$age = $editForm->getValue('age');
+    			$deptName = $editForm->getValue('deptName');
+    			$dutyName = $editForm->getValue('dutyName');
+    			$titleName = $editForm->getValue('titleName');
     			$idCard = $editForm->getValue('idCard');
-    			$phoneNo = $editForm->getValue('phoneNo');
-    			$otherContact = $editForm->getValue('otherContact');
-    			$address = $editForm->getValue('address');
-    	/*		$idCard = $editForm->getValue('idCard');
     			$phone = $editForm->getValue('phone');
     			$otherContact = $editForm->getValue('otherContact');
-    			
-    			$status = $editForm->getValue('status');  */
+    			$address = $editForm->getValue('address');
+    			$status = $editForm->getValue('status');
     			$remark = $editForm->getValue('remark');
     			    			
-    			$emps = new Application_Model_DbTable_Contact();
-    			$emps->updateContact($contactId,$name,$gender,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);    			
+    			$emps = new Application_Model_DbTable_Employee();
+    			$emps->updateEmployee($empId,$name,$gender,$age,$deptName,$dutyName,$titleName,$idCard,$phone,$otherContact,$address,$status,$remark);    			
     			
     			
     			
@@ -77,8 +76,8 @@ class Employee_IndexController extends Zend_Controller_Action
     			$id=$this->_getParam('id',0);
     			if($id >0)
     			{
-    			    $emps = new Application_Model_DbTable_Contact();
-    				$editForm->populate($emps->getContact($id));
+    			    $emps = new Application_Model_DbTable_Employee();
+    				$editForm->populate($emps->getC($id));
     				}
     				else
     				{
@@ -87,13 +86,13 @@ class Employee_IndexController extends Zend_Controller_Action
     			}
     	}
     
-    public function addAction()                       //新建
+    public function addAction()
     {
-        $editForm = new Employee_form_contactSave();
+        $editForm = new Employee_form_edit();
         $editForm->submit->setLabel('保存继续新建');
         $editForm->submit2->setLabel('保存返回上页');
-    	$tbId = $editForm->getElement('contactId');
-    	$tbId->setValue('通讯录编号在保存新建后自动生成');
+    	$tbId = $editForm->getElement('empId');
+    	$tbId->setValue('员工编号在保存新建后自动生成');
     	$this->view->form = $editForm;
     	
     	if($this->getRequest()->isPost())
@@ -104,28 +103,32 @@ class Employee_IndexController extends Zend_Controller_Action
     		{
     			$name = $editForm->getValue('name');
     			$gender = $editForm->getValue('gender');
-    			$birth = $editForm->getValue('birth');
+    			$age = $editForm->getValue('age');
+    			$deptName = $editForm->getValue('deptName');
+    			$dutyName = $editForm->getValue('dutyName');
+    			$titleName = $editForm->getValue('titleName');
     			$idCard = $editForm->getValue('idCard');
-    			$phoneNo = $editForm->getValue('phoneNo');
+    			$phone = $editForm->getValue('phone');
     			$otherContact = $editForm->getValue('otherContact');
     			$address = $editForm->getValue('address');
+    			$status = $editForm->getValue('status');
     			$remark = $editForm->getValue('remark');
     			    			
-    			$contacts = new Application_Model_DbTable_Contact();
-    			$contacts->addContact($name,$gender,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);   
+    			$emps = new Application_Model_DbTable_Employee();
+    			$emps->addEmployee($name,$gender,$age,$deptName,$dutyName,$titleName,$idCard,$phone,$otherContact,$address,$status,$remark);   
     			if($dec == '保存继续新建')
     			{
    					$editForm->getElement('name')->setValue('');
    					$editForm->getElement('gender')->setValue('');
-   					$editForm->getElement('birth')->setValue('');
-   					$editForm->getElement('idCard')->setValue('0');
-   					$editForm->getElement('phoneNo')->setValue('0');
-   					$editForm->getElement('otherContact')->setValue('');
-   				//	$editForm->getElement('idCard')->setValue('');
-				//	$editForm->getElement('phone')->setValue('');
-				//	$editForm->getElement('otherContact')->setValue('');
+   					$editForm->getElement('age')->setValue('');
+   					$editForm->getElement('deptName')->setValue('0');
+   					$editForm->getElement('dutyName')->setValue('0');
+   					$editForm->getElement('titleName')->setValue('');
+   					$editForm->getElement('idCard')->setValue('');
+					$editForm->getElement('phone')->setValue('');
+					$editForm->getElement('otherContact')->setValue('');
 					$editForm->getElement('address')->setValue('');
-   				//	$editForm->getElement('status')->setValue('');
+   					$editForm->getElement('status')->setValue('');
    					$editForm->getElement('remark')->setValue('');
    					}
    					else
@@ -140,7 +143,7 @@ class Employee_IndexController extends Zend_Controller_Action
     		}
     }
     
-    public function ajaxdeleteAction()                //删除
+    public function deleteAction()
     {
         $this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
@@ -149,8 +152,8 @@ class Employee_IndexController extends Zend_Controller_Action
    		$id=$this->_getParam('id',0);
     	if($id >0)
     	{
-    		$contacts = new Application_Model_DbTable_Contact();
-    		$contacts->deleteContact($id);
+    		$emps = new Application_Model_DbTable_Employee();
+    		$emps->deleteEmployee($id);
     		echo "1";
     		}
     		else
@@ -163,15 +166,15 @@ class Employee_IndexController extends Zend_Controller_Action
    	{
    	
    	}
-   	public function ajaxdisplayAction()              //浏览
+   	public function ajaxempAction()
    	{
    		$this->_helper->layout()->disableLayout();
    		$id=$this->_getParam('id',0);
     	if($id >0)
     	{
-   		    $contacts = new Application_Model_DbTable_Contact();
-   			$contact = $contacts->getContact($id);
-   			$this->view->contact = $contact;
+   		    $emps = new Application_Model_DbTable_Employee();
+   			$emp = $emps->getEmployee($id);
+   			$this->view->employee = $emp;
    			}
     		else
     		{

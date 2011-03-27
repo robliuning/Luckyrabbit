@@ -21,8 +21,9 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	$employee = new Application_Model_DbTable_Employee();
 		$select = $employee->select()
 			->setIntegrityCheck(false)
-			->from(array('e'=>'em_employees'),array('deptName','dutyName','titleName','status'))
-			->join(array('c'=>'em_contacts'),array('contactId','name','gender','phoneNo','adress'),e.empId = c.contactId);
+			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','titleName'))
+			->join(array('c'=>'em_contacts'),array('contactId','name','gender'),'e.empId = c.contactId');
+			
       	$this->view->entries = $employee->fetchAll($select);
     }
 	public function editAction()
@@ -50,7 +51,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  $status=$this->getValue('status');
               $emps=new Application_Model_DbTable_Employee();
               $emps->updateEmployee($empId,$deptName,$dutyName,$titleName,$status);
-			  this->redirect('/employee');
+			  $this->redirect('/employee');
 			}
 		  else
 			{
@@ -76,7 +77,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
      $addForm = new Employee_form_employeeSave();
 	 $addForm->submit->setLabel('保存继续新建');
 	 $addForm->submit->setLabel('保存返回上页');
-	 $deptOptions=new Application_Model_DbTable_Dept();
+	 $deptOptions=new General_Model_DbTable_Dept();
 	 $dutyOptions=new Application_Model_DbTable_Duty();
 	 $titleOptions=new Application_Model_DbTable_Title();
 	 $addForm->getElement('deptName')->setMultiOptions($deptOptions);
@@ -147,7 +148,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 	$select = $employee->select()
 			->setIntegrityCheck(false)
 			->from(array('e'=>'em_employees'))
-			->join(array('c'=>'em_contacts'),e.empId = c.contactId);
+			->join(array('c'=>'em_contacts'),'e.empId = c.contactId');
     $this->view->entries=$employee->find($id,$select);
 	  }
 	else

@@ -31,7 +31,7 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 								$deptName,
 								$dutyName,
 								$titleName,
-								$status,
+								$status
 								)
 	{
 		$data = array (
@@ -62,7 +62,7 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 								$deptName,
 								$dutyName,
 								$titleName,
-								$status,
+								$status
 								)
 	{
 		$data = array (

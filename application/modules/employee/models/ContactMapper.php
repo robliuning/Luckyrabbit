@@ -84,7 +84,7 @@ class Application_Model_ContactMapper
         foreach ($resultSet as $row) {
 
             $entry = new Application_Model_Contact();
-		    $entry ->setEmpId($row->contactId)
+		    $entry ->setContactId($row->contactId)
         		   ->setName($row->name)
                    ->setGender($row->gender)
                    ->setBirth($row->birth)

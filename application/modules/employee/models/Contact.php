@@ -18,7 +18,7 @@ class Application_Model_Contact
 
     public function __construct(array $options=null)
 	{
-		if(is_array($optionas)){
+		if(is_array($options)){
              $this->setOptions($options);
 		}
 	}
@@ -55,7 +55,7 @@ class Application_Model_Contact
 
 	public function setContactId($contactId)
 	{
-		$this->_contactId = $contactId);
+		$this->_contactId = $contactId;
 		return $this;
 	}
 
@@ -88,7 +88,7 @@ class Application_Model_Contact
 
 	public function setBirth($birth)
 	{
-		$this->_birth = $bith;
+		$this->_birth = $birth;
 		return $this;
 	}
 
