@@ -22,7 +22,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		$select = $employee->select()
 			->setIntegrityCheck(false)
 			->from(array('e'=>'em_employees'),array('deptName','dutyName','titleName','status'))
-			->join(array('c'=>'em_contacts'),array('contactId','name','gender','phoneNo','adress'),e.empId = c.contactId);
+			->join(array('c'=>'em_contacts'),array('contactId','name','gender','phoneNo','address'),'e.empId = c.contactId');
       	$this->view->entries = $employee->fetchAll($select);
     }
 	public function editAction()
@@ -147,7 +147,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 	$select = $employee->select()
 			->setIntegrityCheck(false)
 			->from(array('e'=>'em_employees'))
-			->join(array('c'=>'em_contacts'),e.empId = c.contactId);
+			->join(array('c'=>'em_contacts'),'e.empId = c.contactId');
     $this->view->entries=$employee->find($id,$select);
 	  }
 	else
