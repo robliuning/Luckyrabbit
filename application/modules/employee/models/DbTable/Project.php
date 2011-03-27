@@ -1,20 +1,24 @@
 <?php
 
-class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'em_employees';
+/* create by lxj
+   2011-03-28   v 1.1
+ */
 
-	public function getEmployee($empId)
+class Application_Model_DbTable_Project extends Zend_Db_Table_Abstract
+{
+	protected $_name = 'em_cpp';
+
+	public function getProject($projectId)
 	{
-		$empId = (int)$empId;
-		$row = $this->fetchRow('empId = ' . $empId);
+		$projectId = (int)$projectId;
+		$row = $this->fetchRow('projectId = ' . $projectId);
 		if (!$row) {
-			throw new Exception("Could not find row $empId");
+			throw new Exception("Could not find row $projectId");
 		}
 		return $row->toArray();
 	}
 
-	public function addEmployee(
+	public function addProject(
 							/*	$name,
 								$gender,
 								$age,
@@ -27,11 +31,9 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 								$address,
 								$status,
 								$remark*/
-								$empId,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$status
+								$contactId,
+								$postId,
+								$projectId
 								)
 	{
 		$data = array (
@@ -48,21 +50,17 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'status' => $status,
 			'remark' => $remark,*/
 			
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titlesName' => $titleName,
-			'status' => $status
+			'contactId' => $contactId,
+			'postId' => $postId,
+			'projectId' => $projectId
 		);
 		$this->insert($data);
 	}
 
-	public function updateEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$status
+	public function updateProject(
+								$contactId,
+								$postId,
+								$projectId
 								)
 	{
 		$data = array (
@@ -79,19 +77,18 @@ class Application_Model_DbTable_Employee extends Zend_Db_Table_Abstract
 			'status' => $status,
 			'remark' => $remark,*/
 
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'status' => $status
+			'contactId' => $contactId,
+			'postId' => $postId,
+			'projectId' => $projectId
 		);
-		$this->update($data, 'empId = ' . (int)$empId);
+		$this->update($data, 'projectId = ' . (int)$projectId);
 	}
 
-	public function deleteEmployee($empId)
+	public function deleteProject($projectId)
 	{
-		$this->delete('empId = ' . (int)$empId);
+		$this->delete('projectId = ' . (int)$projectId);
 	}
 }
 
 ?>
+
