@@ -21,9 +21,14 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	$employee = new Application_Model_DbTable_Employee();
 		$select = $employee->select()
 			->setIntegrityCheck(false)
+<<<<<<< HEAD
 			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','titleName'))
 			->join(array('c'=>'em_contacts'),array('contactId','name','gender'),'e.empId = c.contactId');
 			
+=======
+			->from(array('e'=>'em_employees'),array('deptName','dutyName','titleName','status'))
+			->join(array('c'=>'em_contacts'),array('contactId','name','gender','phoneNo','address'),'e.empId = c.contactId');
+>>>>>>> 85abe69d87a221b5286db0d9f78612b68782963a
       	$this->view->entries = $employee->fetchAll($select);
     }
 	public function editAction()
