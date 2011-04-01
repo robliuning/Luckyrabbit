@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('-通讯录信息');
+ 	$this->headTitle('-公司员工基本信息');
  	$this->headLink()->appendStylesheet('/css/p_employee.css');
  	$this->headScript()->prependFile('/js/p_employee.js');
  ?>
@@ -12,15 +12,17 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>公司员工管理 - 通讯录信息 - 新建</h1>
+		<h1>公司员工管理 - 公司员工基本信息 - 新建</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为通讯录信息新建</h3>
+			<h3>本页显示内容为公司员工基本信息新建</h3>
+			<?php echo $this->errorMsg;?>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><a href="/employee/index/add"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>	
+					<div><a class="lightbox" href="/employee/index/ajaxadd"><img src="/images/icons/functions/new.png"/><p>快速新建通讯录</p></a></div>	
+					<div><a href="/employee/employee/add"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="/employee"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/employee/employee"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

@@ -5,7 +5,7 @@ time of creating 3-26-2011
 completed time 3-26-2011
 */
 
-class Application_Model_ContactMapper
+class Employee_Models_ContactMapper
 {
 	protected $_dbTable;
 	
@@ -23,11 +23,11 @@ class Application_Model_ContactMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Contact');
+            $this->setDbTable('Employee_Models_DbTable_Contact');
         }
         return $this->_dbTable;
     }
-    public function save(Application_Model_Contact $contact)
+    public function save(Employee_Models_Contact $contact)
     {
         $data = array(
 			'contactId' => $contact->getContactId(),
@@ -47,7 +47,7 @@ class Application_Model_ContactMapper
             $this->getDbTable()->update($data, array('contactId = ?' => $contactId));
         }
     }
-    public function find($contactId, Application_Model_Contact $contact)
+    public function find($contactId, Employee_Models_Contact $contact)
 
     {
 
@@ -83,7 +83,7 @@ class Application_Model_ContactMapper
 
         foreach ($resultSet as $row) {
 
-            $entry = new Application_Model_Contact();
+            $entry = new Employee_Models_Contact();
 		    $entry ->setContactId($row->contactId)
         		   ->setName($row->name)
                    ->setGender($row->gender)

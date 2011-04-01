@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_EmployeeMapper
+class Employee_Models_EmployeeMapper
 {
 	protected $_dbTable;
 	

@@ -1,7 +1,8 @@
 <?php
 /*created: 2011.3.26
 author: mingtingling
-version: v0.1
+reviewed: rob:2001.3.31
+version: v0.2
 */
 
 class Employee_EmployeeController extends Zend_Controller_Action
@@ -18,45 +19,35 @@ class Employee_EmployeeController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$employee = new Application_Model_DbTable_Employee();
-		$select = $employee->select()
-			->setIntegrityCheck(false)
-<<<<<<< HEAD
-			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','titleName'))
-			->join(array('c'=>'em_contacts'),array('contactId','name','gender'),'e.empId = c.contactId');
-			
-=======
-			->from(array('e'=>'em_employees'),array('deptName','dutyName','titleName','status'))
-			->join(array('c'=>'em_contacts'),array('contactId','name','gender','phoneNo','address'),'e.empId = c.contactId');
->>>>>>> 85abe69d87a221b5286db0d9f78612b68782963a
-      	$this->view->entries = $employee->fetchAll($select);
+    	$employee = new Employee_Models_DbTable_Employee();
+      	$this->view->entries = $employee->displayAll();
     }
 	public function editAction()
 	{
-		$editForm = new Employee_form_employeeSave();
-    	$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm = new Employee_Forms_EmployeeSave();
+    	$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
-		$deptOptions=new Application_Model_DbTable_Dept();
-		$dutyOptions=new Application_Model_DbTable_Duty();
-		$titleOptions=new Application_Model_DbTable_Title();
-		$editForm->getElement('deptName')->setMultiOptions($deptOptions);
-        $editForm->getElement('dutyName')->setMultiOptions($dutyOptions);
-		$editForm->getElement('titleName')->setMultiOptions($titleOptions);
+    	$tbName = $editForm->getElement('name');
+    	$tbName->setAttrib('disabled','disabled');
+    	//populate dropdown  	
+        $emps=new Employee_Models_DbTable_Employee();
+    	$emps->populateEmployeeDd($editForm);
+
+		//end
     	$this->view->form = $editForm;
     	$this->view->id = $this->_getParam('id');
 		if($this->getRequest()->isPost())
 		{
           $formData=$this->getRequest()->getPost();
-		  if($editForm->isVaild($formData))
+		  if($editForm->isValid($formData))
 			 {
 			  $empId=$this->_getParam('id');
-			  $deptName=$this->getValue('deptName');
-			  $dutyName=$this->getValue('dutyName');
-			  $titleName=$this->getValue('titleName');
-			  $status=$this->getValue('status');
-              $emps=new Application_Model_DbTable_Employee();
+			  $deptName=$editForm->getValue('deptName');
+			  $dutyName=$editForm->getValue('dutyName');
+			  $titleName=$editForm->getValue('titleName');
+			  $status=$editForm->getValue('status');
               $emps->updateEmployee($empId,$deptName,$dutyName,$titleName,$status);
-			  $this->redirect('/employee');
+			  $this->_redirect('/employee/employee');
 			}
 		  else
 			{
@@ -68,9 +59,23 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			$id=$this->_getParam('id',0);
 			if($id>0)
 			{
-            $emps=new Application_Model_DbTable_Employee();
-            $editForm->populate($emps->getEmployee($id));
-			}
+            	$data = $emps->displayOne($id);
+            	foreach($data as $da)
+            	{
+            	    $empId = $editForm->getElement('empId');
+            		$empId->setValue($da->empId);
+            		$name = $editForm->getElement('name');
+            		$name->setValue($da->name);
+            		$dept = $editForm->getElement('deptName');
+            		$dept->setValue($da->deptName);
+            		$duty = $editForm->getElement('dutyName');
+            		$duty->setValue($da->dutyName);
+            		$title = $editForm->getElement('titleName');
+            		$title->setValue($da->titleName);
+            		$status = $editForm->getElement('status');
+            		$status->setValue($da->status);
+            		}
+				}
 			else
 			{
 		     $this->redirect('/employee');
@@ -79,45 +84,68 @@ class Employee_EmployeeController extends Zend_Controller_Action
 	}
   public function addAction()
 	{
-     $addForm = new Employee_form_employeeSave();
-	 $addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-	 $addForm->submit->setLabel('±£´æ·µ»ØÉÏÒ³');
-	 $deptOptions=new General_Model_DbTable_Dept();
-	 $dutyOptions=new Application_Model_DbTable_Duty();
-	 $titleOptions=new Application_Model_DbTable_Title();
-	 $addForm->getElement('deptName')->setMultiOptions($deptOptions);
-     $addForm->getElement('dutyName')->setMultiOptions($dutyOptions);
-	 $addForm->getElement('titleName')->setMultiOptions($titleOptions);
-	 $tbId=$addForm->getElement('empId');
-	 $tbId->setValue('Ô±¹¤±àºÅÔÚ±£´æÐÂ½¨ºó×Ô¶¯Éú³É');
+     $addForm = new Employee_Forms_EmployeeSave();
+	 $addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+	 $addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
+	 $emps = new Employee_Models_DbTable_Employee();
+	 $emps->populateEmployeeDd($addForm);
 	 $this->view->form=$addForm;
 		if($this->getRequest()->isPost())
 		{
-		  $dec=$this->getRequest->getPost('submit');
+		  $dec=$this->getRequest()->getPost('submit');
           $formData=$this->getRequest()->getPost();
-		  if($addForm->isVaild($formData))
+		  if($addForm->isValid($formData))
 			 {
-			  $empId=$this->_getParam('id');
-			  $deptName=$this->getValue('deptName');
-			  $dutyName=$this->getValue('dutyName');
-			  $titleName=$this->getValue('titleName');
-			  $status=$this->getValue('status');
-              $emps=new Application_Model_DbTable_Employee();
-              $emps->addEmployee($empId,$deptName,$dutyName,$titleName,$status);
-			   if($dec=='±£´æ¼ÌÐøÐÂ½¨')
-				 {
-				   	 $deptOptions=new Application_Model_DbTable_Dept();
-	                 $dutyOptions=new Application_Model_DbTable_Duty();
-	                 $titleOptions=new Application_Model_DbTable_Title();
-	                 $addForm->getElement('deptName')->setMultiOptions($deptOptions);
-                     $addForm->getElement('dutyName')->setMultiOptions($dutyOptions);
-	                 $addForm->getElement('titleName')->setMultiOptions($titleOptions);
-					 $tbId=$addForm->getElement('empId');
-	                 $tbId->setValue('Ô±¹¤±àºÅÔÚ±£´æÐÂ½¨ºó×Ô¶¯Éú³É');
-				 }
+			  $empId=$addForm->getValue('empId');
+			  $deptName=$addForm->getValue('deptName');
+			  $dutyName=$addForm->getValue('dutyName');
+			  $titleName=$addForm->getValue('titleName');
+			  $status=$addForm->getValue('status');
+			  $contact = new Employee_Models_DbTable_Contact();
+			  //valdiate if the empid is exists in contacts but not recorded in employees since one contact can have up to 1 position within the company.
+			  $errorMsg;
+			  $validatorRe = new Zend_Validate_Db_RecordExists(
+			  	array(
+			  		'table'=>'em_contacts',
+			  		'field'=>'contactId'
+			  		)
+			  );
+			  if($validatorRe->isValid($empId))
+			  {
+			  	$validatorNe = new Zend_Validate_Db_NoRecordExists(
+			  	 array(
+			  	 	'table'=>'em_employees',
+			  	 	'field'=>'empId'
+			  	 )
+			  	);
+			  	if($validatorNe->isValid($empId))
+			  	{
+			  		$emps->addEmployee($empId,$deptName,$dutyName,$titleName,$status);
+			  		}
+			  		else
+			  		{
+			  			/*foreach($validatorNe->getMessages() as $message)
+			  			{
+			  				$errorMsg.=$message."\n";
+			  				}*/
+			  			$errorMsg = "è¯¥å‘˜å·¥å·²ç»æ³¨å†Œè¿‡å…¬å¸åŸºæœ¬ä¿¡æ¯ã€‚";
+			  			}
+			  	}
+			  	else{
+			  	/*standard way
+			  		foreach($validatorRe->getMessages() as $message)
+			  		{
+			  			$errorMsg.=$message."\n";
+			  			}*/
+			  		$errorMsg = "è¾“å…¥çš„å‘˜å·¥åæ— æ•ˆï¼Œæ‚¨éœ€è¦é¦–å…ˆåœ¨é€šè®¯å½•ç®¡ç†å½•å…¥å…¶ä¸ªäººä¿¡æ¯æˆ–ç‚¹å‡»å·¥å…·æ â€™å¿«é€Ÿæ–°å»ºé€šè®¯å½•â€˜å½•å…¥ã€‚";
+			  		}
+			   if($dec=='ä¿å­˜ç»§ç»­æ–°å»º')
+			   {
+					$this->view->errorMsg=$errorMsg;
+					}
 			  else
 				 {
-				      $this->redirect('/employee');
+				      $this->_redirect('/employee/employee');
 				 }
 			}
 		  else
@@ -126,14 +154,14 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			}
 	  }
   }
-  public function ajaxDeleteAction()
+  public function ajaxdeleteAction()
   {
     $this->_helper->layout()->disableLayout();
     $this->_helper->viewRenderer->setNoRender(true);
     $id=$this->_getParam('id',0);
 	if($id>0)
 	  {
-		$emps=new Application_Model_DbTable_Employee();
+		$emps=new Employee_Models_DbTable_Employee();
         $emps->deleteEmployee($id);
 		echo "1";
 	  }
@@ -142,24 +170,21 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		$this->redirect('/employee');
 	  }
   }
-  public function ajaxDisplayAction()
+  public function ajaxdisplayAction()
   {
 	$this->_helper->layout()->disableLayout();
-	$this->_helper->viewRenderer->setNoRender(true);
-	$id=$this->_getPararm('id',0);
+	//$this->_helper->viewRenderer->setNoRender(true);
+	$id=$this->_getParam('id',0);
 	if($id>0)
 	  {
-    $employee = new Application_Model_DbTable_Employee();
-	$select = $employee->select()
-			->setIntegrityCheck(false)
-			->from(array('e'=>'em_employees'))
-			->join(array('c'=>'em_contacts'),'e.empId = c.contactId');
-    $this->view->entries=$employee->find($id,$select);
+   		$employee = new Employee_Models_DbTable_Employee();
+    	$this->view->entries=$employee->displayOne($id);  		
 	  }
 	else
 	  {
 		$this->redirect('/employee');
 	  }
   }
+
 }
 

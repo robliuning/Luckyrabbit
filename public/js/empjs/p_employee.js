@@ -44,7 +44,7 @@ $(document).ready(function()
 				var result = 1;
 				$.ajax({
 					type:"post",
-					url:"/employee/index/delete/id/"+id,
+					url:"/employee/index/ajaxdelete/id/"+id,
 					success:function(rt){
 						if(rt == "0")
 						{
@@ -52,15 +52,15 @@ $(document).ready(function()
 							}
 						}
 					});
-					if(result == "1")
+				if(result == "1")
+				{
+					alert("删除成功！");
+					window.location = "/employee";	
+					}
+					else
 					{
-						alert("删除成功！");
-						window.location = "/employee";	
-						}
-						else
-						{
 						
-							}	
+						}		
 			});		
 		});
 	});

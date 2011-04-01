@@ -1,6 +1,10 @@
 <?php
 
-class Employee_Models_Employee
+/* create by lxj
+   2011-03-28   v1.1
+   */
+
+class Application_Model_Project
 {
   /*protected $_empId;
 	protected $_name;
@@ -12,12 +16,10 @@ class Employee_Models_Employee
 	protected $_address;
 	protected $_status;
 	protected $_remark;*/
-     
-    protected $_empId;
-	protected $_deptName;
-	protected $_dutyName;
-	protected $_titleName;
-	protected $_status;
+
+	protected $_contactId;	
+	protected $_postId;
+    protected $_projectId;
     
     public function __construct(array $options = null)
     {
@@ -56,60 +58,47 @@ class Employee_Models_Employee
         return $this;
     }
 
-	public function setEmpId($empId)
+	public function setContactId($contactId)
     {
-        $this->_empId = (int)$empId;
+        $this->_contactId= (int)$contactId;
         return $this;
     } 
 
-    public function getEmpId()
+    public function getContactId()
     {
-        return $this->_empId;
+        return $this->_contactId;
     }
 
-    public function setDeptName($deptName)
+    public function setPostId($postId)
     {
-        $this->_deptName = (string)$deptName;
+        $this->_postId= (int)$postId;
         return $this;
     } 
 
-    public function getDeptName()
+    public function getPostId()
     {
-        return $this->_deptName;
-    }
-
-	
-    public function setDutyName($dutyName)
-    {
-        $this->_dutyName= (string) $dutyName;
-        return $this;
-    } 
-
-    public function getDutyName()
-    {
-        return $this->_dutyName;
-    }
- 
-     public function setTitleName($titleName)
-    {
-        $this->_titleName= (string) $titleName;
-        return $this;
-    }
-
-    public function getTitleName()
-    {
-        return $this->_titleName;
-    }
-
-     public function setStatus($status)
-    {
-        $this->_status= $status;
-        return $this;
-    }
-
-    public function getStatus()
-    {
-        return $this->_status;
+        return $this->_postId;
 	}
+
+	public function setProjectId($projectId)
+    {
+        $this->_projectId= (int)$projectId;
+        return $this;
+    } 
+
+    public function getProjectId()
+    {
+        return $this->_projectId;
+    }
+
+    public function setName($name)
+    {
+        $this->_name= (string)$name;
+        return $this;
+    } 
+
+    public function getName()
+    {
+        return $this->_name;
 }
 ?>

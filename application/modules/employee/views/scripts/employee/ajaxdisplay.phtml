@@ -1,0 +1,18 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+		<?php foreach($this->entries as $entry):?>
+		<?php echo $this->escape($entry->name) ?><br/>
+		<?php echo $this->escape($entry->gender) ?><br/>
+		<?php echo $this->escape($entry->birth) ?><br/>
+		<?php echo $this->escape($entry->idCard) ?><br/>
+		<?php echo $this->escape($entry->phoneNo) ?><br/>
+		<?php echo $this->escape($entry->otherContact) ?><br/>
+		<?php echo $this->escape($entry->address) ?><br/>
+		<?php echo $this->escape($entry->remark) ?><br/>
+		<?php echo $this->escape($entry->deptName) ?><br/>
+		<?php echo $this->escape($entry->dutyName) ?><br/>
+		<?php echo $this->escape($entry->titleName) ?><br/>
+		<?php echo $this->escape($entry->status) ?><br/>
+		<?php endforeach ?>
+	</div>
+</div>

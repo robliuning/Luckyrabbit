@@ -5,7 +5,7 @@ time of creating 3-26-2011
 completed time 3-26-2011
 */
 
-class Application_Model_DbTable_Contact extends Zend_Db_Table_Abstract
+class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 {
     protected $_name = 'em_contacts';
 

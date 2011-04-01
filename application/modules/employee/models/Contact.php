@@ -1,10 +1,10 @@
 <?php
 /*
-created by ËïÁÖ
+created by Ã‹Ã¯ÃÃ–
 time of creating 3-26-2011
 completed time 3-26-2011
 */
-class Application_Model_Contact
+class Employee_Models_Contact
 {
 	protected $_contactId;
 	protected $_name;
