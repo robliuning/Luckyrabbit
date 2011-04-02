@@ -1,10 +1,10 @@
 <?php
-	/*
-	Created by Meimo
-	Date of creation 4.1.2011
-	Completion date
-	*/
-	class project_Forms_projectSave extends Zend_Form
+/* Created by Meimo
+   Date of creation 4.1.2011
+   Completion date
+ */
+
+class project_Forms_progressSave extends Zend_Form
 {
 
     public function init()
@@ -21,81 +21,74 @@
 		);
 			
 		 $this->addElement(
-			'text', 'name', array(
-			'label' => '工程名称: ',
+			'select', 'stage', array(
+			'label' => '阶段: ',
 			'required' => true,
-			'class'=>'tbMedium tbText'
+			'class'=>'tbLarge tbText'
 			)
 		);
      $this->addElement(
-			'text', 'dutyName', array(
-			'label' => '地址: ',
+			'text', 'task', array(
+			'label' => '阶段任务: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	 $this->addElement(
-			'select', 'status', array(
-			'label' => '工程状况: ',
-		    'multiOptions'=>array('0'=>'未开工','1'=>'建设中','2'=>'已竣工'),
-			'required' => false,
-			'class'=>'tbMedium tbText'
-			)
-		);
-    $this->addElement(
-			'text', 'structType', array(
-			'label' => '结构类型: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
-			)
-		);
-			$this->addElement(
-			'text', 'level', array(
-			'label' => '层数: ',
-			'required' => false,
-			'class'=>'tbSmall tbText'
-			)
-		);
-			$this->addElement(
-			'text', 'amount', array(
-			'label' => '合同金额: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
-			)
-		);
-			$this->addElement(
-			'text', 'purpose', array(
-			'label' => '用途: ',
+			'text', 'startDateExp', array(
+			'label' => '起始日期: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
-			$this->addElement(
-			'text', 'constrArea', array(
-			'label' => '建筑面积: ',
+    $this->addElement(
+			'text', 'endDateExp', array(
+			'label' => '预计结束日期: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
-		);
-			$this->addElement(
-			'text', 'staffNo', array(
-			'label' => '作业总人数: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
+		);	
+	$this->addElement(                   
+			'text','periodExp',array(
+			'label'=>'预计工期: ',
+		//	'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText',
 			)
 		);
-			$this->addElement(
-			'textarea', 'remark', array(
-			'label' => '备注: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
+	$this->addElement(                   
+			'text','endDateAct',array(
+			'label'=>'实际完成日期: ',
+		//	'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText',
 			)
 		);
-			$this->addElement(
-			'text', 'cTime', array(
-			'label' => '创建时间: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
+	$this->addElement(                   
+			'text','periodAct',array(
+			'label'=>'实际工期: ',
+		//	'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText',
+			)
+		);
+	$this->addElement(                   
+			'select','quality',array(
+			'label'=>'完成质量: ',
+		    'multiOptions'=>array('0'=>'不合格','1'=>'合格','2'=>'良好','3'=>'优秀'),
+		//	'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText',
+			)
+		);
+	$this->addElement(                   
+			'textarea','remark',array(
+			'label'=>'备注: ',
+		//	'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText',
+			)
+		);
+	$this->addElement(                   
+			'text','cTime',array(
+			'label'=>'创建时间: ',
+		//	'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText',
 			)
 		);
     	$this->addElement(
