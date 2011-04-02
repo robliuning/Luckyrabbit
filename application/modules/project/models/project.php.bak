@@ -184,15 +184,15 @@ class Project_Models_Project
 		return $this->_cName;
 	}
 	/****************************/
-	public function setStage($stage)
+	public function setCTime($cTime)
 	{
-		$this->_stage = $stage;
+		$this->_cTime = $cTime;
 		return $this;
 	}
 
-	public function getStage()
+	public function getCTime()
 	{
-		return $this->_stage;
+		return $this->_cTime;
 	}
 }
 ?>
