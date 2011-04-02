@@ -137,10 +137,13 @@ class Project_Models_ProjectMapper
 				->where('projectId = ?',$pid);
 			$result = $dbProgress->fetchAll($select);
 			$pro->setStage($result[0]->stage);
+
 			}
+
+
 		//3 return object
        
-        return $projects;
+        return $entries;
     }
 }
 ?>
