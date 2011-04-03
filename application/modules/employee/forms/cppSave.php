@@ -1,42 +1,43 @@
 <?php
 /*created: 2011.3.27
   author: mingtingling
+  review:mingtingling
+  review time:2011.4.3
   version: v0.1
 */
-class Employee_Forms_PostSave extends Zend_Form
+class Employee_Forms_CppSave extends Zend_Form
 {
 	public function init()
 	{
 		$this->setMethod('post');
 		$this->addElement(
-			/*岗位编号项*/
-			 'text','postid',array(
+			/*岗位编号*/
+			 'text','postId',array(
 		        'label'=>'岗位编号:',
 			    'disabled'=>'disabled',
 			    'required'=>false,
-			    'filters'=>array('StringTrim'),
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
 			/*岗位名称*/
-	         'select','postname',array(
+	         'select','postName',array(
 			    'label'=>'岗位名称:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*姓名*/
-		     'text','contactname',array(
-			    'label'=>'姓名:',
+			/*员工姓名*/
+		     'text','contactName',array(
+			    'label'=>'员工姓名:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
 			/*所属工程*/
-		     'select','projectname',array(
+		     'select','projectName',array(
 			    'label'=>'所属工程:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
@@ -44,7 +45,7 @@ class Employee_Forms_PostSave extends Zend_Form
 		);
 	    $this->addElement(
 			/*岗位证类别*/
-		     'text','posttype',array(
+		     'text','postType',array(
 			    'label'=>'岗位证类别:',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
@@ -52,7 +53,7 @@ class Employee_Forms_PostSave extends Zend_Form
 		);
 		$this->addElement(
 			/*岗位证编号*/
-		     'text','postcardid',array(
+		     'text','postCardId',array(
 			    'label'=>'岗位证编号:',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
@@ -60,38 +61,45 @@ class Employee_Forms_PostSave extends Zend_Form
 		);
 		$this->addElement(
 			/*安全能力考核证编号*/
-		      'text','certid',array(
+		      'text','certId',array(
 			    'label'=>'安全能力考核证编号:',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
-       $this->addElement(
-			/*联系电话*/
-		      'text','contactno',array(
-			    'label'=>'联系电话:',
+		$this->addElement(
+		     /*员工姓名对应的Id,隐藏域*/
+		      'text','contactId',array(
+			    'label'=>'员工ID:',
 			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
-		);
-       $this->addElement(
-			/*其他联系方式*/
-		      'text','othercontact',array(
-			    'label'=>'其他联系方式:',
+			    'class'=>'hide'
+			  )
+		$this->addElement(
+		     /*未更新前的岗位编号,隐藏域*/
+		      'text','prePostId',array(
+			    'label'=>'未更新前的岗位编号:',
 			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
+			    'class'=>'hide'
+			  )		
 		);
-       $this->addElement(
-			/*备注*/
-		      'textarea','remark',array(
-			    'label'=>'备注:',
+		$this->addElement(
+		     /*未更新前的岗位编号,隐藏域*/
+		      'text','preContactId',array(
+			    'label'=>'未更新前的员工姓名对应的Id:',
 			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
+			    'class'=>'hide'
+			  )		
 		);
-
+		$this->addElement(
+		     /*未更新前的工程ID,隐藏域*/
+		      'text','preProjectName',array(
+			    'label'=>'未更新前的工程ID:',
+			    'required'=>false,
+			    'class'=>'hide'
+			  )		
+		);
 	   $this->addElement(
+		   /*按钮一*/
 		      'submit','submit',array(
 		         'ignore'=>true,
 		         'class'=>'btConfirm radius',
@@ -99,6 +107,7 @@ class Employee_Forms_PostSave extends Zend_Form
 	          )
 	   );
 	  $this->addElement(
+		  /*按钮二*/
 		      'submit','submit2',array(
 		          'ignore'=>true,
 		          'class'=>'btConfirm radius',
