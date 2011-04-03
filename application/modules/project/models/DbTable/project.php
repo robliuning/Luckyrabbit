@@ -27,8 +27,8 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 		                        $purpose,
 		                        $constrArea,
 		                        $staffNo,
-		                        $remark,
-		                        $cTime)
+		                        $remark
+		                        )
 	{
 		$data = array(
 			'name' => $name ,
@@ -41,7 +41,6 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 			'constrArea' => $constrArea,
 			'staffNo' => $staffNo,
 			'remark' => $remark,
-			'cTime' => $cTime
 			);
 		$this->insert($data);
 	}
@@ -57,8 +56,8 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 		                        $purpose,
 		                        $constrArea,
 		                        $staffNo,
-		                        $remark,
-		                        $cTime)
+		                        $remark
+		                      )
 	{
 		$data = array(
 			'projectId' => $projectId,
@@ -71,8 +70,7 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 			'purpose' => $purpose,
 			'constrArea' => $constrArea,
 			'staffNo' => $staffNo,
-			'remark' => $remark,
-			'cTime' => $cTime
+			'remark' => $remark
 			);
 		$this->update($data,'projectId = '.(int)$projectId);
 	}
@@ -80,6 +78,16 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 	public function deleteProject($projectId)
 	{
 		$this->delete('projectId = '.(int)$projectId);
+	}
+
+	public function populateDb($form)         //Ìî³ästructype
+	{
+		$structTypes = new General_Models_DbTable_Structype();
+		$options = $structTypes->fetchAll();
+		foreach($options as $op)
+		{
+			$form->getElement('name')->addMultiOption($op->structTypesId,$op->name);
+			}
 	}
 }
 
