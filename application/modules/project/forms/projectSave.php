@@ -3,6 +3,7 @@
 	Created by Meimo
 	Date of creation 4.1.2011
 	Completion date
+	reviewed: rob
 	*/
 	class project_Forms_projectSave extends Zend_Form
 {
@@ -43,20 +44,20 @@
 			)
 		);
     $this->addElement(
-			'text', 'structType', array(
+			'select', 'structType', array(
 			'label' => '结构类型: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
-			$this->addElement(
+	$this->addElement(
 			'text', 'level', array(
 			'label' => '层数: ',
 			'required' => false,
 			'class'=>'tbSmall tbText'
 			)
 		);
-			$this->addElement(
+	$this->addElement(
 			'text', 'amount', array(
 			'label' => '合同金额: ',
 			'required' => false,
@@ -64,7 +65,7 @@
 			)
 		);
 			$this->addElement(
-			'text', 'purpose', array(
+			'textarea', 'purpose', array(
 			'label' => '用途: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
@@ -87,17 +88,11 @@
 			$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注: ',
-			'required' => false,
+			'required' => false,			
 			'class'=>'tbMedium tbText'
 			)
 		);
-			$this->addElement(
-			'text', 'cTime', array(
-			'label' => '创建时间: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
-			)
-		);
+
     	$this->addElement(
     		'submit','submit',array(
     		'ignore'=>true,

@@ -17,57 +17,55 @@ class Project_IndexController extends Zend_Controller_Action
     public function indexAction()
     {
        $project  = new Project_Models_ProjectMapper();
-	   $this -> view ->projects = $project -> fetchAll();
-		
-
-		
+	   $this -> view ->projects = $project -> getAllInfo();
 		// Project manager from em_cpp search key:project id = this and post = 000001
         // Present progress from pm_progress search
         // Order by creation date
     }
     
-    public function addAction()
+    public function addAction()                                        //新建
     {
-    	$editForm = new Project_Forms_ProjectSave();
-        $editForm->submit->setLabel('保存继续新建');
-        $editForm->submit2->setLabel('保存返回上页');
-    	$tbId = $editForm->getElement('projectId');
+    	$addForm = new Project_Forms_ProjectSave();
+        $addForm->submit->setLabel('保存继续新建');
+        $addForm->submit2->setLabel('保存返回上页');
+    	$tbId = $addForm->getElement('strucTypesId');
     	$tbId->setValue('工程编号在保存新建后自动生成');
-    	$this->view->form = $editForm;
+		//populate dd structure type
+		$projs = new Porject_Models_DbTable_Project();			
+		$projs->populateDd($addForm);
+		//end
+    	$this->view->form = $addForm;
     	
     	if($this->getRequest()->isPost())
     	{
     		$dec = $this->getRequest()->getPost('submit');
     		$formData = $this->getRequest()->getPost();
-    		if($editForm->isValid($formData))
+    		if($addForm->isValid($formData))
     		{
-    			$name = $editForm->getValue('name');
-    			$address = $editForm->getValue('address');
-    			$status = $editForm->getValue('status');
-    			$structType = $editForm->getValue('structType');
-    			$level = $editForm->getValue('level');
-    			$amount = $editForm->getValue('amount');
-    			$purpose = $editForm->getValue('purpose');
-    			$constrArea = $editForm->getValue('constrArea');
-				$staffNo = $editForm->getValue('staffNo');
-				$remark = $editForm->getValue('remark');
-                $cTime = $editForm->getValue('cTime');
-    			    			
-    			$contacts = new Project_Models_DbTable_Project();
-    			$contacts->addContact($name,$address,$status,$structType,$level,$amount,$purpose,$constrArea,$staffNo,$remark,$cTime);   
+    			$name = $addForm->getValue('name');
+    			$address = $addForm->getValue('address');
+    			$status = $addForm->getValue('status');
+    			$structType = $addForm->getValue('strucTypesId');
+    			$level = $addForm->getValue('level');
+    			$amount = $addForm->getValue('amount');
+    			$purpose = $addForm->getValue('purpose');
+    			$constrArea = $addForm->getValue('constrArea');
+				$staffNo = $addForm->getValue('staffNo');
+				$remark = $addForm->getValue('remark');
+    			$projs->addProject($name,$address,$status,$structType,$level,$amount,$purpose,$constrArea,$staffNo,$remark);   
     			if($dec == '保存继续新建')
     			{
-   					$editForm->getElement('name')->setValue('');
-   					$editForm->getElement('address')->setValue('');
-   					$editForm->getElement('status')->setValue('');
-   					$editForm->getElement('structType')->setValue('0');
-   					$editForm->getElement('level')->setValue('0');
-   					$editForm->getElement('amount')->setValue('');
-					$editForm->getElement('purpose')->setValue('');
-   					$editForm->getElement('constrArea')->setValue('');
-					$editForm->getElement('staffNo')->setValue('');
-					$editForm->getElement('remark')->setValue('');
-					$editForm->getElement('cTime')->setValue('');
+   					$addForm->getElement('name')->setValue('');
+   					$addForm->getElement('address')->setValue('');
+   					$addForm->getElement('status')->setValue('');
+   					$addForm->getElement('structType')->setValue('0');
+   					$addForm->getElement('level')->setValue('0');
+   					$addForm->getElement('amount')->setValue('');
+					$addForm->getElement('purpose')->setValue('');
+   					$addForm->getElement('constrArea')->setValue('');
+					$addForm->getElement('staffNo')->setValue('');
+					$addForm->getElement('remark')->setValue('');
+					$addForm->getElement('cTime')->setValue('');
    					}
    					else
     				{
@@ -76,21 +74,26 @@ class Project_IndexController extends Zend_Controller_Action
     			}
     			else
     			{
-    				$editForm->populate($formData);
+    				$addForm->populate($formData);
     				}
     		}
 		// fill the structType db
     
     	}
     
-    public function editAction()
+    public function editAction()                                //编辑
     {
         $editForm = new Project_Forms_ProjectSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
+		//populate dd structure type
+    	$projs = new Project_Models_DbTable_Project();
+		$projs->populateDd($editForm);
+		//end
     	$this->view->form = $editForm;
-    	$this->view->id = $this->_getParam('id');
-    	
+    	$this->view->id = $this->_getParam('id');    	
+		$proj = new Project_Models_DbTable_Project();
+
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
@@ -107,12 +110,7 @@ class Project_IndexController extends Zend_Controller_Action
     			$constrArea = $editForm->getValue('constrArea');
 				$staffNo = $editForm->getValue('staffNo');
 				$remark = $editForm->getValue('remark');
-				$cTime = $editForm->getValue('cTime');
-    			$prjs = new Project_Models_DbTable_Project();
-    			$prjs->updateContact($projectId,$name,$address,$status,$structType,$level,$amount,$purpose,$constrArea,$staffNo,$remark,$cTime);    			
-    			
-    			
-    			
+    			$projs->updateProject($projectId,$name,$address,$status,$structType,$level,$amount,$purpose,$constrArea,$staffNo,$remark);    					
     			$this->_redirect('/project');
     			}
     			else
@@ -125,8 +123,7 @@ class Project_IndexController extends Zend_Controller_Action
     			$id=$this->_getParam('id',0);
     			if($id >0)
     			{
-    			    $prjs = new Project_Models_DbTable_Project();
-    				$editForm->populate($prjs->getContact($id));
+    				$editForm->populate($projs->getProject($id));
     				}
     				else
     				{
@@ -137,29 +134,43 @@ class Project_IndexController extends Zend_Controller_Action
 		// fill the structType db
     	}
     
-    public function displayAction()
-    {
-    //display project info
-    //display employees related to this project
+   public function displayOneAction()                //浏览
+	                                         
+    {  //显示project信息  （display project info）
+       $displayOne = new Project_Models_ProjectMapper();   
+	   $projectId = this->_getParam('id');
+	   $this->view->id = $projectId;
+	   $this -> view ->projects = $displayOne -> Find($projectId);
+       
+	    //显示该project下的岗位及人员（display employees related to this project）
+	   $cpp = new Employee_Models_Dbtable_Cpp(); 
+	   $condition = "projectId";
+	   $this -> view -> cpps = $cpp -> fetchALL($projectId,$condition);   
+    
+    
     //display relevant project progress
     //display relevant log
     	}
-    
+   
     public function ajaxDeleteAction()
     {
+		$this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+   
+   
+   		$id=$this->_getParam('id',0);
+    	if($id >0)
+    	{
+    		$projects = new Project_Models_DbTable_Project();
+    		$projects->deleteProject($id);
+    		echo "1";
+    		}
+    		else
+    		{
+    			$this->_redirect('/project');
+    			}
     	//check if has log or progress
     	//either one exist, the deletion can not be processed
     	}
-    
-    public function ajaxContactAction()
-    {
-    	//Use Object of Contact_Models_DbTable_Contact to find specific contact info
-    	}
-    
-    public function ajaxProgressAction()
-    {
-    	//use project id and progress stage to find specific progress info
-    	}
 }
-
 ?>
