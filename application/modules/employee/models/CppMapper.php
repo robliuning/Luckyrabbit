@@ -2,6 +2,8 @@
 
 /*create by lxj
   2011-03-28	v1.1
+  rewrite by lxj
+  2011-04-03	v0.2
   */
 
 class Employee_Models_CppMapper
@@ -26,7 +28,7 @@ class Employee_Models_CppMapper
         }
         return $this->_dbTable;
     }
-    public function save(Employee_Models_Cpp $cpp)
+    /*public function save(Employee_Models_Cpp $cpp)
     {
         $data = array(
             'contactId' => $cpp->getContactId(),
@@ -36,18 +38,18 @@ class Employee_Models_CppMapper
 			'postCardId' => $cpp->getPostCardId(),
 			'CertId' => $cpp->getCertId()
         );
-        if (null === ($id = $post->getPostId())) {
+        if (null === ($id = $cpp->getPostId())) {
             unset($data['postId']);
             $this->getDbTable()->insert($data);
         } else {
             $this->getDbTable()->update($data, array('postId = ?' => $postId));
         }
-    }
-    public function find($postId, Application_Model_Post $post)
+    }*/
+    public function find($cppId, Employee_Model_Cpp $cpp)
 
     {
 
-        $result = $this->getDbTable()->find($post);
+        $result = $this->getDbTable()->find($cppId);
 
         if (0 == count($result)) {
 
@@ -57,19 +59,32 @@ class Employee_Models_CppMapper
 
         $row = $result->current();
 
-        $post->setPostId($row->postId)
-				  ->setName($row->name)
-				  ->setType($row->type)
-                  ->setCardId($row->cardId)
-                  ->setCertId($row->certId)
-                  ->setRemark($row->remark);
+        $post->setContactId($row->contactId)
+				  ->setPostId($row->postId)
+				  ->setProjectId($row->projectId)
+                  ->setPostType($row->postType)
+                  ->setPostCardId($row->postCardId)
+                  ->setCertId($row->certId);
     }
  
 
-    public function fetchAll()
+    public function fetchAll($data,$condition)
     {
-    //1 fetch all rows from cpp table
-    	$resultSet = $this->getDbTable()->fetchAll();
+		$select = $this->getDbTable()->select();
+		if($condition == "projectId")
+		{
+			$select->where("projectId = ?",$data);
+			}
+		elseif($condition == "postId")
+		{
+			$select->where("postId = ?",$data);
+			}
+		elseif($condition == "contactId")
+		{
+			$select->where("contactId = ?",$data);
+			}
+		//1 fetch all rows from cpp table
+    	$resultSet = $this->getDbTable()->fetchAll($select);
     	$cpps   = array();
  		foreach ($resultSet as $row) 
  		{

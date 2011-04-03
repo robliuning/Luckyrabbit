@@ -3,6 +3,8 @@
 /* create by lxj
    modified by rob
    2011-03-31   v2.0
+   rewrite by lxj
+   2011-04-03   v2.0
    */
 
 class Employee_Models_Cpp

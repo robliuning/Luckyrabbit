@@ -1,83 +1,116 @@
 <?php
 
+/*create by lxj
+  2011-03-28	v1.1
+  rewrite by lxj
+  2011-04-03	v0.2
+  */
+
 class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'em_cpp';
+    protected $_name = 'em_cpp'; 
+	protected $_primary = array('contactId','postId','projectId');
 
-	public function getCpp($empId)
+	public function getCpp($CppId)
 	{
-		$empId = (int)$empId;
-		$row = $this->fetchRow('empId = ' . $empId);
+		$CppId = (int)$CppId;
+		$row = $this->fetchRow('CppId = ' . $CppId);
 		if (!$row) {
-			throw new Exception("Could not find row $empId");
+			throw new Exception("Could not find row $CppId");
 		}
 		return $row->toArray();
 	}
 
-	public function addEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$status
+	public function addCpp(
+								$contactId,
+								$postId,
+								$projectId,
+								$postCardId,
+								$postType,
+								$certId
 								)
 	{
 		$data = array (
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'status' => $status
+			'contactId' => $contactId,
+			'postId' => $postId,
+			'projectId' => $projectId,
+			'postCardId' => $postCardId,
+			'postType' => $postType,
+			'certId' => $certId
+
 		);
 		$this->insert($data);
 	}
 
-	public function updateEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$status
+	public function updateCpp(
+								$contactId,
+								$postId,
+								$projectId,
+								$postCardId,
+								$postType,
+								$certId
 								)
 	{
 		$data = array (
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'status' => $status
+			'contactId' => $contactId,
+			'postId' => $postId,
+			'projectId' => $projectId,
+			'postCardId' => $postCardId,
+			'postType' => $postType,
+			'certId' => $certId
 		);
-		$this->update($data, 'empId = ' . (int)$empId);
+
+		$where = array($contactId,$postId,$projectId);
+
+		$this->update($data, $where);
 	}
 
-	public function deleteEmployee($empId)
+	public function deleteCpp($contactId,$postId,$projectId)
 	{
-		$this->delete('empId = ' . (int)$empId);
+		$where = array($contactId,$postId,$projectId);
+		$this->delete($where);
 	}
 		
-	public function displayOne($empId)
+	public function displayOne($contactId,$postId,$projectId)
 	{   		
-		$select = $this->select()
-			->setIntegrityCheck(false)
-			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','status'))
-			->join(array('c'=>'em_contacts'),'e.empId = c.contactId')
-			->where('e.empId = ?',$empId);
-	
-   		$entry = $this->fetchAll($select);
+		//$where = array($contactId,$postId,$projectId);
+		//$select = $this->select()
+		//	->setIntegrityCheck(false)
+		//	->from(array('e'=>'em_cpp'),array('contactId','postId','projectId','postCardId','postType','certId'))
+		//	->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
+		//	->where($where);
+		$cpp = Employee_Models_CppMapper();		
+   		$entry = $cpp->fetchAll($projectId,"project");
    		return $entry;
 		}
 	public function populateCppDd($form)
   	{
-  		$dept=new General_Models_DbTable_Dept();
-		$deptOptions = $dept->fetchAll(); 
-		$duty=new General_Models_DbTable_Duty();
-		$dutyOptions = $duty->fetchAll();
+  		$post=new General_Models_DbTable_Post();
+		$postname = $post->fetchAll(); 
+		$project=new General_Models_DbTable_Project();
+		$projectname = $project->fetchAll();
 
-		foreach($deptOptions as $op)
+		foreach($postname as $op)
 		{
-			$form->getElement('deptName')->addMultiOption($op->name,$op->name);
+			$form->getElement('postName')->addMultiOption($op->postId,$op->name);
 			}
-		foreach($dutyOptions as $op)
+		foreach($projectname as $op)
 		{
-			$form->getElement('dutyName')->addMultiOption($op->name,$op->name);
+			$form->getElement('projectName')->addMultiOption($op->projectId,$op->name);
 			}
   	}
+	/*public function getAllCppByPid($projectId)
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from(array('e'=>'em_cpp'),array('contactId','postId','projectId','postCardId','postType','certId'))
+			->join(array('g'=>'ge_posts'),'e.postId = g.postId')
+			->where('e.projectId = ?',$projectId);
+
+		$entries = $this->fetchall($select);
+		return $entries;
+	}*/
+
 }
 
 ?>
