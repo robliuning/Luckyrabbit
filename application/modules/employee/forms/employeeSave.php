@@ -33,13 +33,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
-	 $this->addElement(
-			'select', 'titleName', array(
-			'label' => '职称: ',
-			'required' => false,
-			'class'=>'tbLarge tbText'
-			)
-		);
+
     $this->addElement(
 			'select', 'status', array(
 			'label' => '员工状态: ',

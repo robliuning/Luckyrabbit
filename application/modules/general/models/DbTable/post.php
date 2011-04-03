@@ -19,79 +19,25 @@ class General_Models_DbTable_Post extends Zend_Db_Table_Abstract
 	}
 
 	public function addPost(
-							/*	$name,
-								$gender,
-								$age,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$idCard,
-								$phone,
-								$otherContact,
-								$address,
-								$status,
-								$remark*/
 								$postId,
-								$name,
-								$type,
-								$cardId,
-								$certId,
-								$remark
+								$name
 								)
 	{
-		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-			
+		$data = array (	
 			'postId' => $postId,
-			'name' => $name,
-			'type' => $type,
-			'cardId' => $cardId,
-			'certId' => $certId,
-			'remark' => $remark
+			'name' => $name
 		);
 		$this->insert($data);
 	}
 
 	public function updatePost(
 								$postId,
-								$name,
-								$type,
-								$cardId,
-								$certId,
-								$remark
+								$name
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-
 			'postId' => $postId,
-			'name' => $name,
-			'type' => $type,
-			'cardId' => $cardId,
-			'certId' => $certId,
-			'remark' => $remark
+			'name' => $name
 		);
 		$this->update($data, 'postId = ' . (int)$postId);
 	}

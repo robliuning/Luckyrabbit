@@ -28,7 +28,6 @@ class Employee_Models_EmployeeMapper
             'empId' => $employee->getEmpId(),
             'deptName' => $employee->getDeptName(),
             'dutyName' => $employee->getDutyName(),
-            'titleName' => $employee->getTitleName(),
             'status' => $employee->getStatus(),
         );
         if (null === ($id = $employee->getEmpId())) {
@@ -38,7 +37,7 @@ class Employee_Models_EmployeeMapper
             $this->getDbTable()->update($data, array('empId = ?' => $empId));
         }
     }
-    public function find($empId, Application_Model_Employee $employee)
+    public function find($empId, Employee_Models_Employee $employee)
 
     {
 
@@ -55,7 +54,6 @@ class Employee_Models_EmployeeMapper
         $employee ->setEmpId($row->empId)
         		  ->setDeptName($row->deptName)
                   ->setDutyName($row->dutyName)
-                  ->setTitleName($row->titleName)
                   ->setStatus($row->status);
     }
  
@@ -70,12 +68,11 @@ class Employee_Models_EmployeeMapper
 
         foreach ($resultSet as $row) {
 
-            $entry = new Application_Model_Employee();
+            $entry = new Employee_Models_Employee();
 
 			$entry->setEmpId($row->empId)
 				  ->setDeptName($row->deptName)
                   ->setDutyName($row->dutyName)
-                  ->setTitleName($row->titleName)
                   ->setStatus($row->status);
                   
             $entries[] = $entry;

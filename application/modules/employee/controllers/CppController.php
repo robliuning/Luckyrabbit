@@ -4,20 +4,20 @@
   author: rob
   version: v0.2
 */
-class Employee_PostController extends  Zend_Controller_Action
+class Employee_CppController extends  Zend_Controller_Action
 {
    public function init()
 	{
-	   /*³õÊ¼»¯*/
+		/* Initialize action controller here */
 	}
    public function preDispatch()
 	{
-	   /*±ßÀ¸*/
 	   $this->view->render("_sidebar.phtml");
 	}
 	public function indexAction()
     {
-	   
+	 	$cpp = new Employee_Models_CppMapper();
+      	$this->view->entries = $cpp->fetchAll();
 	   	}
 	public function editAction() /*ÐÞ¸Ä*/
 	{

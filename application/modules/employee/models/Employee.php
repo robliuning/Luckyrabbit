@@ -1,22 +1,10 @@
 <?php
 
 class Employee_Models_Employee
-{
-  /*protected $_empId;
-	protected $_name;
-	protected $_age;
-	protected $_deptName;
-	protected $_dutyName;
-	protected $_titleName;
-	protected $_otherContact;
-	protected $_address;
-	protected $_status;
-	protected $_remark;*/
-     
+{     
     protected $_empId;
 	protected $_deptName;
 	protected $_dutyName;
-	protected $_titleName;
 	protected $_status;
     
     public function __construct(array $options = null)
@@ -90,17 +78,6 @@ class Employee_Models_Employee
         return $this->_dutyName;
     }
  
-     public function setTitleName($titleName)
-    {
-        $this->_titleName= (string) $titleName;
-        return $this;
-    }
-
-    public function getTitleName()
-    {
-        return $this->_titleName;
-    }
-
      public function setStatus($status)
     {
         $this->_status= $status;

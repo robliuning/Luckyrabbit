@@ -5,7 +5,7 @@
 
 class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'pm_project';
+    protected $_name = 'pm_projects';
 	
 	public function getProject($projectId)
 	{
@@ -74,7 +74,7 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 			'remark' => $remark,
 			'cTime' => $cTime
 			);
-		$this->update($data,'projectId = '.(int)$projectId;
+		$this->update($data,'projectId = '.(int)$projectId);
 	}
 
 	public function deleteProject($projectId)

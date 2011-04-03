@@ -109,7 +109,7 @@ class Employee_Models_Cpp
         return $this->_projectId;
     }
 
-    public function setProjectName($ProjectName)
+    public function setProjectName($projectName)
     {
         $this->_projectName= (string)$projectName;
         return $this;
@@ -139,7 +139,7 @@ class Employee_Models_Cpp
 
 	public function getPostCardId()
     {
-        return $this->_PostCardId;
+        return $this->_postCardId;
     }
 
      public function setCertId($certId)

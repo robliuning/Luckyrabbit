@@ -19,36 +19,11 @@ class General_Models_DbTable_Title extends Zend_Db_Table_Abstract
 	}
 
 	public function addTitle(
-							/*	$name,
-								$gender,
-								$age,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$idCard,
-								$phone,
-								$otherContact,
-								$address,
-								$status,
-								$remark*/
 								$titleId,
 								$name
 								)
 	{
-		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-			
+		$data = array (			
 			'titleId' => $titleId,
 			'name' => $name
 		);
@@ -61,19 +36,6 @@ class General_Models_DbTable_Title extends Zend_Db_Table_Abstract
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-
 			'titleId' => $titleId,
 			'name' => $name
 		);
@@ -85,5 +47,4 @@ class General_Models_DbTable_Title extends Zend_Db_Table_Abstract
 		$this->delete('titleId = ' . (int)$titleId);
 	}
 }
-
 ?>

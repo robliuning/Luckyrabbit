@@ -15,43 +15,16 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 	}
 
 	public function addEmployee(
-							/*	$name,
-								$gender,
-								$age,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$idCard,
-								$phone,
-								$otherContact,
-								$address,
-								$status,
-								$remark*/
 								$empId,
 								$deptName,
 								$dutyName,
-								$titleName,
 								$status
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-			
 			'empId' => $empId,
 			'deptName' => $deptName,
 			'dutyName' => $dutyName,
-			'titleName' => $titleName,
 			'status' => $status
 		);
 		$this->insert($data);
@@ -61,28 +34,13 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 								$empId,
 								$deptName,
 								$dutyName,
-								$titleName,
 								$status
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-
 			'empId' => $empId,
 			'deptName' => $deptName,
 			'dutyName' => $dutyName,
-			'titleName' => $titleName,
 			'status' => $status
 		);
 		$this->update($data, 'empId = ' . (int)$empId);
@@ -97,7 +55,7 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)	
-			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','titleName','status'))
+			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','status'))
 			->join(array('c'=>'em_contacts'),'e.empId = c.contactId');
 		$entries = $this->fetchAll($select);
 		return $entries;
@@ -107,7 +65,7 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 	{   		
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','titleName','status'))
+			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','status'))
 			->join(array('c'=>'em_contacts'),'e.empId = c.contactId')
 			->where('e.empId = ?',$empId);
 	
@@ -120,8 +78,7 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		$deptOptions = $dept->fetchAll(); 
 		$duty=new General_Models_DbTable_Duty();
 		$dutyOptions = $duty->fetchAll();
-		$title=new General_Models_DbTable_Title();
-		$titleOptions = $title->fetchAll();
+
 		foreach($deptOptions as $op)
 		{
 			$form->getElement('deptName')->addMultiOption($op->name,$op->name);
@@ -130,10 +87,6 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		{
 			$form->getElement('dutyName')->addMultiOption($op->name,$op->name);
 			}
-		foreach($titleOptions as $op)
-		{
-			$form->getElement('titleName')->addMultiOption($op->name,$op->name);
-			}	
   	}
 }
 

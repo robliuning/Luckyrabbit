@@ -1,6 +1,6 @@
 <?php
 /*
-created by ËïÁÖ
+created by Ã‹Ã¯ÃÃ–
 time of creating 3-26-2011
 completed time 3-26-2011
 */
@@ -33,6 +33,7 @@ class Employee_Models_ContactMapper
 			'contactId' => $contact->getContactId(),
 		     'name' => $contact->getName(),
 			 'gender' => $contact->getGender(),
+             'titleName' => $contact->getTitleName(),
 			 'birth' => $contact->getBirth(),
 			 'idCard' => $contact->getIdCard(),
 			 'phoneNo' => $contact->getPhoneNo(),
@@ -64,6 +65,7 @@ class Employee_Models_ContactMapper
         $contact  ->setEmpId($row->contactId)
         		  ->setName($row->name)
                   ->setGender($row->gender)
+                  ->setTitleName($row->titleName)
                   ->setBirth($row->birth)
                   ->setIdCard($row->idCard)
                   ->setPhoneNo($row->phoneNo)
@@ -86,6 +88,7 @@ class Employee_Models_ContactMapper
             $entry = new Employee_Models_Contact();
 		    $entry ->setContactId($row->contactId)
         		   ->setName($row->name)
+        		   ->setTitleName($row->titleName)
                    ->setGender($row->gender)
                    ->setBirth($row->birth)
                    ->setIdCard($row->idCard)

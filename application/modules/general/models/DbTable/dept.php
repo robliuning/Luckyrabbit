@@ -1,7 +1,8 @@
 <?php
 
 /* create by lxj
-   2011-03-28   v 1.1
+   date: 2011-03-28   v 1.1
+   reviewed by rob 2011.4.3
  */
 
 class General_Models_DbTable_Dept extends Zend_Db_Table_Abstract
@@ -19,62 +20,24 @@ class General_Models_DbTable_Dept extends Zend_Db_Table_Abstract
 	}
 
 	public function addDept(
-							/*	$name,
-								$gender,
-								$age,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$idCard,
-								$phone,
-								$otherContact,
-								$address,
-								$status,
-								$remark*/
-								$postId,
+								$deptId,
 								$name
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-			
-			'postId' => $postId,
+			'deptId' => $deptId,
 			'name' => $name
 		);
 		$this->insert($data);
 	}
 
 	public function updateDept(
-								$postId,
+								$deptId,
 								$name
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-
-			'postId' => $postId,
+			'deptId' => $deptId,
 			'name' => $name
 		);
 		$this->update($data, 'deptId = ' . (int)$deptId);

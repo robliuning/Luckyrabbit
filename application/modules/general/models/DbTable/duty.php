@@ -19,36 +19,11 @@ class General_Models_DbTable_Duty extends Zend_Db_Table_Abstract
 	}
 
 	public function addDuty(
-							/*	$name,
-								$gender,
-								$age,
-								$deptName,
-								$dutyName,
-								$titleName,
-								$idCard,
-								$phone,
-								$otherContact,
-								$address,
-								$status,
-								$remark*/
 								$dutyId,
 								$name
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-			
 			'dutyId' => $dutyId,
 			'name' => $name
 		);
@@ -61,19 +36,6 @@ class General_Models_DbTable_Duty extends Zend_Db_Table_Abstract
 								)
 	{
 		$data = array (
-			/*'name' => $name,
-			'gender' => $gender,
-			'age' => $age,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'titleName' => $titleName,
-			'idCard' => $idCard,
-			'phone' => $phone,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'status' => $status,
-			'remark' => $remark,*/
-
 			'dutyId' => $dutyId,
 			'name' => $name
 		);

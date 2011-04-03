@@ -8,6 +8,7 @@ class Employee_Models_Contact
 {
 	protected $_contactId;
 	protected $_name;
+	protected $_titleName;
 	protected $_gender;
 	protected $_birth;
 	protected $_idCard;
@@ -73,6 +74,17 @@ class Employee_Models_Contact
     public function getName()
     {
         return $this->_name;
+    }
+    
+    public function setTitleName($titleName)
+    {
+        $this->_titleName= (string) $titleName;
+        return $this;
+    }
+
+    public function getTitleName()
+    {
+        return $this->_titleName;
     }
 
     public function setGender($gender)

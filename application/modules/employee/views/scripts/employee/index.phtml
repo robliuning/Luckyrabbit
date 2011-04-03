@@ -30,7 +30,8 @@
 			<div class="overall_content">
 				<table>
 					<colgroup>
-						<col style="width:5%"></col>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
 						<col style="width:10%"></col>
 						<col style="width:15%"></col>
 						<col style="width:15%"></col>
@@ -41,6 +42,7 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
+						<th></th>
 						<th>姓名</th>
 						<th>部门</th>
 						<th>职务</th>
@@ -51,7 +53,7 @@
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
-						<td>全选/取消</td>
+						<td colspan="2">全选/取消</td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -62,6 +64,11 @@
 					<?php foreach($this->entries as $entry):?>
 					<tr>
 						<td><input type="checkbox" name="cbEmp" value="<?php echo $this->escape($entry->empId); ?>"></td>
+						<td><?php 
+							$counter = 1;
+							echo $counter;
+							$counter++;
+						?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'employee','action'=>'ajaxdisplay','id'=>$this->escape($entry->empId)))?>" class="lightbox"><?php echo $this->escape($entry->name) ?></td>
 						<td><?php echo $this->escape($entry->deptName) ?></td>
 						<td><?php echo $this->escape($entry->dutyName) ?></td>

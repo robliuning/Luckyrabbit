@@ -22,6 +22,7 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 	public function addContact(
 		                        $name,
 		                        $gender,
+		                        $titleName,
 		                        $birth,
 		                        $idCard,
 		                        $phoneNo,
@@ -32,6 +33,7 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 		$data = array (
 		    'name' => $name,
 		    'gender' => $gender,
+		    'titleName' => $titleName,
 			'birth' => $birth,
 		    'idCard' => $idCard,
 		    'phoneNo' => $phoneNo,
@@ -46,6 +48,7 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 								$contactId,
 		                        $name,
 		                        $gender,
+		                        $titleName,
 		                        $birth,
 		                        $idCard,
 		                        $phoneNo,
@@ -57,6 +60,7 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 		    'contactId' => $contactId,
 		    'name' => $name,
 		    'gender' => $gender,
+		    'titleName' => $titleName,
 			'birth' => $birth,
 		    'idCard' => $idCard,
 		    'phoneNo' => $phoneNo,
@@ -71,5 +75,15 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 	{
 		$this->delete('contactId = ' . (int)$contactId);
 	}
+	
+	public function populateContactDd($form)
+  	{		
+  		$title=new General_Models_DbTable_Title();
+		$titleOptions = $title->fetchAll();
+  		foreach($titleOptions as $op)
+		{
+			$form->getElement('titleName')->addMultiOption($op->name,$op->name);
+			}	
+  		}
 }
 ?>

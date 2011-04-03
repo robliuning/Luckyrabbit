@@ -30,28 +30,30 @@
 			<div class="overall_content">
 				<table>
 					<colgroup>
-						<col style="width:5%"></col>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
 						<col style="width:10%"></col>
 						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:25%"></col>
 						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
 						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
+						<th></th>
 						<th>通讯录编号</th>
 						<th>姓名</th>
 						<th>性别</th>
+						<th>职称</th>
 						<th>电话</th>
 						<th>其他联系方式</th>
-						<th>地址</th>
 						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
-						<td>全选/取消</td>
+						<td colspan="2">全选/取消</td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -62,12 +64,29 @@
 					<?php foreach($this->entries as $entry):?>
 					<tr>
 						<td><input type="checkbox" name="cbEmp" value="<?php echo $this->escape($entry->contactId); ?>"></td>
+						<td><?php 
+							$counter = 1;
+							echo $counter;
+							$counter++;
+						?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$this->escape($entry->contactId)))?>" class="lightbox"><?php echo 'YG'.$this->escape($entry->contactId) ?></a></td>
 						<td><?php echo $this->escape($entry->name) ?></td>
-						<td><?php echo $this->escape($entry->gender) ?></td>	
+						<td><?php 
+							$gender = $this->escape($entry->gender);
+							$tbGender;
+							if($gender == 0)
+							{
+								$tbGender = "女";
+								}
+								else
+								{
+									$tbGender = "男";
+									}
+									echo $tbGender;
+						?></td>	
+						<td><?php echo $this->escape($entry->titleName) ?></td>
 						<td><?php echo $this->escape($entry->phoneNo) ?></td>
 						<td><?php echo $this->escape($entry->otherContact) ?></td>
-						<td><?php echo $this->escape($entry->address) ?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$this->escape($entry->contactId)))?>">修改</a></td>
 					</tr>
 					<?php endforeach ?>

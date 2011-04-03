@@ -9,6 +9,7 @@
 //8.Need to validate the deletion result
 //Rewrite by meimo 2011.3.25
 //Reviewed by rob 2011.3.28
+
 class Employee_IndexController extends Zend_Controller_Action
 {
     public function init()
@@ -32,6 +33,10 @@ class Employee_IndexController extends Zend_Controller_Action
     	$editForm = new Employee_Forms_ContactSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
+    	//populate ddb
+    	$contacts=new Employee_Models_DbTable_Contact();
+    	$contacts->populateContactDd($editForm);
+    	
     	$this->view->form = $editForm;
     	$this->view->id = $this->_getParam('id');
     	
@@ -43,16 +48,14 @@ class Employee_IndexController extends Zend_Controller_Action
     			$contactId = $this->_getParam('id');
     			$name = $editForm->getValue('name');	
     			$gender = $editForm->getValue('gender');
+    			$titleName = $editForm ->getValue('titleName');
     			$birth = $editForm->getValue('birth');
     			$idCard = $editForm->getValue('idCard');
     			$phoneNo = $editForm->getValue('phoneNo');
     			$otherContact = $editForm->getValue('otherContact');
     			$address = $editForm->getValue('address');
     			$remark = $editForm->getValue('remark');
-    			$emps = new Employee_Models_DbTable_Contact();
-    			$emps->updateContact($contactId,$name,$gender,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);    			
-    			
-    			
+    			$contacts->updateContact($contactId,$name,$gender,$titleName,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);    			
     			
     			$this->_redirect('/employee');
     			}
@@ -66,8 +69,7 @@ class Employee_IndexController extends Zend_Controller_Action
     			$id=$this->_getParam('id',0);
     			if($id >0)
     			{
-    			    $emps = new Employee_Models_DbTable_Contact();
-    				$editForm->populate($emps->getContact($id));
+    				$editForm->populate($contacts->getContact($id));
     				}
     				else
     				{
@@ -78,40 +80,47 @@ class Employee_IndexController extends Zend_Controller_Action
     
     public function addAction()                       //新建
     {
-        $editForm = new Employee_Forms_ContactSave();
-        $editForm->submit->setLabel('保存继续新建');
-        $editForm->submit2->setLabel('保存返回上页');
-    	$tbId = $editForm->getElement('contactId');
+        $addForm = new Employee_Forms_ContactSave();
+        $addForm->submit->setLabel('保存继续新建');
+        $addForm->submit2->setLabel('保存返回上页');
+        
+        //populate ddb
+    	$contacts=new Employee_Models_DbTable_Contact();
+    	$contacts->populateContactDd($addForm);
+   
+    	$tbId = $addForm->getElement('contactId');
     	$tbId->setValue('通讯录编号在保存新建后自动生成');
-    	$this->view->form = $editForm;
+    	$this->view->form = $addForm;
     	
     	if($this->getRequest()->isPost())
     	{
     		$dec = $this->getRequest()->getPost('submit');
     		$formData = $this->getRequest()->getPost();
-    		if($editForm->isValid($formData))
+    		if($addForm->isValid($formData))
     		{
-    			$name = $editForm->getValue('name');
-    			$gender = $editForm->getValue('gender');
-    			$birth = $editForm->getValue('birth');
-    			$idCard = $editForm->getValue('idCard');
-    			$phoneNo = $editForm->getValue('phoneNo');
-    			$otherContact = $editForm->getValue('otherContact');
-    			$address = $editForm->getValue('address');
-    			$remark = $editForm->getValue('remark');
+    			$name = $addForm->getValue('name');
+    			$gender = $addForm->getValue('gender');
+       			$titleName = $addForm->getValue('titleName');
+    			$birth = $addForm->getValue('birth');
+    			$idCard = $addForm->getValue('idCard');
+    			$phoneNo = $addForm->getValue('phoneNo');
+    			$otherContact = $addForm->getValue('otherContact');
+    			$address = $addForm->getValue('address');
+    			$remark = $addForm->getValue('remark');
     			    			
     			$contacts = new Employee_Models_DbTable_Contact();
-    			$contacts->addContact($name,$gender,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);   
+    			$contacts->addContact($name,$gender,$titleName,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);   
     			if($dec == '保存继续新建')
     			{
-   					$editForm->getElement('name')->setValue('');
-   					$editForm->getElement('gender')->setValue('');
-   					$editForm->getElement('birth')->setValue('');
-   					$editForm->getElement('idCard')->setValue('0');
-   					$editForm->getElement('phoneNo')->setValue('0');
-   					$editForm->getElement('otherContact')->setValue('');
-					$editForm->getElement('address')->setValue('');
-   					$editForm->getElement('remark')->setValue('');
+   					$addForm->getElement('name')->setValue('');
+   					$addForm->getElement('gender')->setValue('');
+   					$addForm->getElement('titleName')->setValue('');
+   					$addForm->getElement('birth')->setValue('');
+   					$addForm->getElement('idCard')->setValue('0');
+   					$addForm->getElement('phoneNo')->setValue('0');
+   					$addForm->getElement('otherContact')->setValue('');
+					$addForm->getElement('address')->setValue('');
+   					$addForm->getElement('remark')->setValue('');
    					}
    					else
     				{

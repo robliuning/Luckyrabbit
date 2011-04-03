@@ -30,12 +30,20 @@ class Employee_Forms_ContactSave extends Zend_Form
 		$this->addElement(                   //性别
 			'select', 'gender', array(
 			'label' => '性别: ',
-			'multiOptions'=> array('１'=>'男','０'=>'女'),
+			'multiOptions'=> array('1'=>'男','0'=>'女'),
 			'required' => true,
 			'class'=>'tbShort tbText'
 			)
 		);
     
+    	 $this->addElement(					//职称
+			'select', 'titleName', array(
+			'label' => '职称: ',
+			'required' => false,
+			'class'=>'tbLarge tbText'
+			)
+		);
+		
     	$this->addElement(                  //出生日期
 			'text', 'birth', array(
 			'label' => '出生日期: ',

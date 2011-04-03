@@ -44,9 +44,8 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  $empId=$this->_getParam('id');
 			  $deptName=$editForm->getValue('deptName');
 			  $dutyName=$editForm->getValue('dutyName');
-			  $titleName=$editForm->getValue('titleName');
 			  $status=$editForm->getValue('status');
-              $emps->updateEmployee($empId,$deptName,$dutyName,$titleName,$status);
+              $emps->updateEmployee($empId,$deptName,$dutyName,$status);
 			  $this->_redirect('/employee/employee');
 			}
 		  else
@@ -70,8 +69,6 @@ class Employee_EmployeeController extends Zend_Controller_Action
             		$dept->setValue($da->deptName);
             		$duty = $editForm->getElement('dutyName');
             		$duty->setValue($da->dutyName);
-            		$title = $editForm->getElement('titleName');
-            		$title->setValue($da->titleName);
             		$status = $editForm->getElement('status');
             		$status->setValue($da->status);
             		}
@@ -99,7 +96,6 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  $empId=$addForm->getValue('empId');
 			  $deptName=$addForm->getValue('deptName');
 			  $dutyName=$addForm->getValue('dutyName');
-			  $titleName=$addForm->getValue('titleName');
 			  $status=$addForm->getValue('status');
 			  $contact = new Employee_Models_DbTable_Contact();
 			  //valdiate if the empid is exists in contacts but not recorded in employees since one contact can have up to 1 position within the company.
@@ -120,7 +116,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  	);
 			  	if($validatorNe->isValid($empId))
 			  	{
-			  		$emps->addEmployee($empId,$deptName,$dutyName,$titleName,$status);
+			  		$emps->addEmployee($empId,$deptName,$dutyName,$status);
 			  		}
 			  		else
 			  		{
@@ -143,8 +139,8 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			   {
 					$this->view->errorMsg=$errorMsg;
 					}
-			  else
-				 {
+			   else
+				{
 				      $this->_redirect('/employee/employee');
 				 }
 			}

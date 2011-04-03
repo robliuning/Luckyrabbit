@@ -29,12 +29,12 @@ class Employee_Models_CppMapper
     public function save(Employee_Models_Cpp $cpp)
     {
         $data = array(
-            'postId' => $post->getPostId(),
-            'name' => $post->getName(),
-            'type' => $post->getType(),
-            'cardId' => $post->getCardId(),
-			'CertId' => $post->getCertId(),
-			'remark' => $post->getRemark()
+            'contactId' => $cpp->getContactId(),
+            'postId' => $cpp->getPostId(),
+            'projectId' => $cpp->getProjectId(),
+            'postType' => $cpp->getPostType(),
+			'postCardId' => $cpp->getPostCardId(),
+			'CertId' => $cpp->getCertId()
         );
         if (null === ($id = $post->getPostId())) {
             unset($data['postId']);
@@ -67,30 +67,59 @@ class Employee_Models_CppMapper
  
 
     public function fetchAll()
-
     {
-
-        $resultSet = $this->getDbTable()->fetchAll();
-
-        $entries   = array();
-
-        foreach ($resultSet as $row) {
-
-            $entry = new Application_Model_Post();
-
-			$entry->setPostId($row->postId)
-				  ->setName($row->name)
-                  ->setType($row->type)
-                  ->setCardId($row->cardId)
-				  ->setCertId($row->certId)
-				  ->setRemark($row->remark);
-                  
-            $entries[] = $entry;
-
-        }
-
-        return $entries;
-
+    //1 fetch all rows from cpp table
+    	$resultSet = $this->getDbTable()->fetchAll();
+    	$cpps   = array();
+ 		foreach ($resultSet as $row) 
+ 		{
+            $cpp = new Employee_Models_Cpp();
+			$cpp->setContactId($row->contactId)
+				  ->setPostId($row->postId)
+				  ->setProjectId($row->projectId)
+                  ->setPostType($row->postType)
+                  ->setPostCardId($row->postCardId)
+				  ->setCertId($row->certId);
+    		//2 fetch contact name by contact id from em_contact table
+    		$contacts = new Employee_Models_DbTable_Contact();
+    		$select = $contacts->select()
+			->setIntegrityCheck(false)
+			->from('em_contacts',array('name'))
+			->where('contactId = ?',$cpp->getContactId());
+			
+   			$contact = $contacts->fetchAll($select);
+   			foreach($contact as $co)
+   			{
+   				$cpp->setContactName($co->name);
+   				}
+    		//3 fetch project name by project id from pm_project table
+    		$projects = new Project_Models_DbTable_Project();
+    		$select = $projects->select()
+			->setIntegrityCheck(false)
+			->from('pm_projects',array('name'))
+			->where('projectId = ?',$cpp->getProjectId());
+			
+   			$project = $projects->fetchAll($select);
+   			foreach($project as $pr)
+   			{
+   				$cpp->setProjectName($pr->name);
+   				}
+    		//4 fetch post name by post id from ge_post table
+			$posts = new General_Models_DbTable_Post();
+    		$select = $posts->select()
+			->setIntegrityCheck(false)
+			->from('ge_posts',array('name'))
+			->where('postId = ?',$cpp->getPostId());
+			
+   			$post = $posts->fetchAll($select);
+   			foreach($post as $po)
+   			{
+   				$cpp->setPostName($po->name);
+   				}			
+			$cpps[] = $cpp;
+			}
+			//return it to controlloer
+    		return $cpps;
     }
 }
 ?>
