@@ -134,8 +134,5 @@ class Project_Models_Progress
 	{
 		return $this->_cTime;
 	}
-
-
-
 }
 ?>

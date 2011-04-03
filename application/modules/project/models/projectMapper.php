@@ -1,7 +1,7 @@
 <?php
   //creation date 01-4-2011
   //creating by lincoy
-  //completion date
+  //completion date 03-04-2011
 
 class Project_Models_ProjectMapper
 {
@@ -28,7 +28,7 @@ class Project_Models_ProjectMapper
     public function save(Project_Models_Project $project)
     {
         $data = array(
-			'projectId' => $project->getPrejectId(),
+			'projectId' => $project->getProjectId(),
             'name' => $project->getName() ,
 			'address' => $project->getAddress(),
 			'status' => $project->getStatus(),
@@ -41,7 +41,7 @@ class Project_Models_ProjectMapper
 			'remark' => $project->getRemark(),
 			'cTime' => $project->getCTime()
         );
-        if (null === ($id = $project->getPrejectId())) {
+        if (null === ($id = $project->getProjectId())) {
             unset($data['projectId']);
             $this->getDbTable()->insert($data);
         } else {
@@ -49,20 +49,20 @@ class Project_Models_ProjectMapper
         }
     }
 
-    public function find($projectId, Project_Models_Project $project)
+    public function find($projectId)
     {
+		$project = new Project_Models_Project();
         $result = $this->getDbTable()->find($projectId);
 
         if (0 == count($result)) {
 
             return;
-
         }
 
         $row = $result->current();
 
         $project  ->setProjectId($row->projectId)
-                  ->setEname($row->name)
+                  ->setName($row->name)
 			      ->setAddress($row->address)
 				  ->setStatus($row->status)
 				  ->setStructType($row->structType)
@@ -73,15 +73,34 @@ class Project_Models_ProjectMapper
 				  ->setStaffNo($row->staffNo)
 				  ->setRemark($row->remark)
 				  ->setCTime($row->cTime);
+		return $project;
     }
 
-    public function fetchAll()
+	/*public function fetchAll()
+	{
+		$resultSet = $this->getDbTable()->fetchAll();
+		$entries = array();
+		foreach($resultSet as $row){
+			$entry = new Project_Models_Project();
+			$entry ->setProjectId($row->projectId)
+				   ->setName($row->name);
+
+			$entries[] = $entry;
+		} 
+	}*/
+
+    public function getAllInfo()
     {
 		//fetch all projects and contact id and name whos post id is 000001 in relevant project. also progress stage
 
 		//1 fetch all project add in to project object
 
-		$resultSet = $this->getDbTable()->fetchAll();
+		$dbPro = new Project_Models_DbTable_Project();
+        $select = $dbPro->select()
+			->setIntegrityCheck(false)
+			->from('pm_projects')
+			->order('cTime DESC');
+		$resultSet = $this->getDbTable()->fetchAll($select);
 
         $projects   = array();
 
@@ -89,16 +108,16 @@ class Project_Models_ProjectMapper
 		$project = new Project_Models_Project(); 
         $project ->setProjectId($row->projectId)
                    ->setEname($row->name)
-			       ->setAddress($row->address)
+			       //->setAddress($row->address)
 				   ->setStatus($row->status)
-				   ->setStructType($row->structType)
-				   ->setLevel($row->level)
+				   ->setStructType($row->structType);
+				   /*->setLevel($row->level)
 				   ->setAmount($row->amount)
 				   ->setPurpose($row->purpose)
 				   ->setConstrArea($row->constrArea)
 				   ->setStaffNo($row->staffNo)
 				   ->setRemark($row->remark)
-				   ->setCTime($row->cTime);
+				   ->setCTime($row->cTime);*/
 
             $projects[] = $project;
         }
@@ -141,6 +160,6 @@ class Project_Models_ProjectMapper
 		//3 return object
        
         return $projects;
-    }
+    }  */
 }
 ?>

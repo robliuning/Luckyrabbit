@@ -18,9 +18,9 @@ class Project_Models_Project
 	protected $_remark;
 	protected $_cTime;
 
-	protected $_cId;
-	protected $_cName;
-	protected $_stage;
+	protected $_cId;  //contactId  in contact
+	protected $_cName;//contactName  in conctact
+	protected $_stage;//stage in progress
 
 	public function setProjectId($projectId)
 	{
