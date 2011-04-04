@@ -59,7 +59,8 @@ class Employee_Models_CppMapper
 
         $row = $result->current();
 
-        $post->setContactId($row->contactId)
+        $cpp->setCId($row->cId)
+				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)
                   ->setPostType($row->postType)
@@ -89,14 +90,45 @@ class Employee_Models_CppMapper
  		foreach ($resultSet as $row) 
  		{
             $cpp = new Employee_Models_Cpp();
-			$cpp->setContactId($row->contactId)
+			$cpp->setCId($row->CId)
+				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)
                   ->setPostType($row->postType)
                   ->setPostCardId($row->postCardId)
 				  ->setCertId($row->certId);
-    		//2 fetch contact name by contact id from em_contact table
-    		$contacts = new Employee_Models_DbTable_Contact();
+    		
+    		$cpp = $this->assignNames($cpp);
+    		//2 fetch contact name by contact id from em_contact table		
+			$cpps[] = $cpp;
+			}
+			//return it to controlloer
+    		return $cpps;
+    }
+    public function getCpp($cppId)
+    {
+    	$cpp = new Employee_Models_Cpp();
+		$select = $this->getDbTable()->select();
+		$select->where("cId = ?",$cId);
+		$resultSet = $this->getDbTable()->fetchAll($select);
+		foreach ($resultSet as $row) 
+ 		{
+			$cpp->setCId($row->cId)
+				  ->setContactId($row->contactId)
+				  ->setPostId($row->postId)
+				  ->setProjectId($row->projectId)
+                  ->setPostType($row->postType)
+                  ->setPostCardId($row->postCardId)
+				  ->setCertId($row->certId);
+    		$cpp = $this->assignNames($cpp);
+    		//2 fetch contact name by contact id from em_contact table		
+			}
+			return $cpp;	
+    	}
+    
+    public function assignNames($cpp)
+    {
+    	    $contacts = new Employee_Models_DbTable_Contact();
     		$select = $contacts->select()
 			->setIntegrityCheck(false)
 			->from('em_contacts',array('name'))
@@ -130,11 +162,8 @@ class Employee_Models_CppMapper
    			foreach($post as $po)
    			{
    				$cpp->setPostName($po->name);
-   				}			
-			$cpps[] = $cpp;
-			}
-			//return it to controlloer
-    		return $cpps;
-    }
+   				}				
+   			return $cpp;	  	
+    	}
 }
 ?>

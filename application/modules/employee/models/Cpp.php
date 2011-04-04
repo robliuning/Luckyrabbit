@@ -9,6 +9,7 @@
 
 class Employee_Models_Cpp
 {    
+	protected $_cppId;
     protected $_contactId;
     protected $_contactName;
 	protected $_postId;
@@ -55,6 +56,17 @@ class Employee_Models_Cpp
         }
         return $this;
     }
+
+	public function setCppId($cppId)
+	{
+		$this->_cppId = (int)$cppId;
+		return $this;
+	}
+
+	public function getCppId()
+	{
+		return $this->_cppId;
+	}
 
 	public function setContactId($contactId)
     {
