@@ -1,8 +1,8 @@
 <?php
   //creation date 03-04-2011
   //creating by lincoy
-  //completion date 03-04-2011
-class Project_Models_ProjectLog
+  //completion date 04-04-2011
+class Project_Models_Log
 {
 	protected $_projectId;
 	protected $_logDate;

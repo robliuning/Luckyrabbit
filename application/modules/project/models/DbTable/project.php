@@ -1,7 +1,7 @@
 <?php
   //creation date 01-04-2011
   //creating by lincoy
-  //completion date
+  //completion date 03-04-2011
 
 class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 {
@@ -80,7 +80,7 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 		$this->delete('projectId = '.(int)$projectId);
 	}
 
-	public function populateDd($form)         //Ìî³ästructype
+	public function populateDd($form)         //å¡«å……structype
 	{
 		$strucTypes = new General_Models_DbTable_StrucType();
 		$options = $strucTypes->fetchAll();
@@ -90,4 +90,4 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 			}
 	}
 }
-
+?>

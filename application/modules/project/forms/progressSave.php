@@ -12,9 +12,9 @@ class project_Forms_progressSave extends Zend_Form
     	$this->setMethod('post');
 		
 		$this->addElement(                   
-			'text','projectId',array(
-			'label'=>'工程编号: ',
-			'filters'=>array('StringTrim'),
+			'select','projectId',array(
+			'label'=>'工程名称: ',
+		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			'required' => true,
 			)
@@ -84,14 +84,8 @@ class project_Forms_progressSave extends Zend_Form
 			'class'=>'tbLarge tbText',
 			)
 		);
-	$this->addElement(                   
-			'text','cTime',array(
-			'label'=>'创建时间: ',
-		//	'filters'=>array('StringTrim'),
-			'class'=>'tbLarge tbText',
-			)
-		);
-    	$this->addElement(
+
+   	$this->addElement(
     		'submit','submit',array(
     		'ignore'=>true,
     		'class'=>'btConfirm radius',
@@ -99,7 +93,7 @@ class project_Forms_progressSave extends Zend_Form
     		)
     	);
     	
-    	$this->addElement(
+   	$this->addElement(
     		'submit','submit2',array(
     		'ignore'=>true,
     		'class'=>'btConfirm radius',
@@ -107,7 +101,7 @@ class project_Forms_progressSave extends Zend_Form
     		)
     	);
     	
-    	$this->addElement(                 
+   	$this->addElement(                 
 			'text','empId',array(
 		//	'filters'=>array('StringTrim'),
 			'value'=>'000009',
@@ -115,7 +109,7 @@ class project_Forms_progressSave extends Zend_Form
 			)
 		);
     	
-    	$this->setElementDecorators(array(
+   	$this->setElementDecorators(array(
             'ViewHelper',
             'Errors',
             array(array('data'=>'HtmlTag'),
@@ -125,7 +119,7 @@ class project_Forms_progressSave extends Zend_Form
 
    		 ));
 
-		$this->setDecorators(array(
+	$this->setDecorators(array(
             'FormElements',
             array('HtmlTag',array('tag'=>'table')),
             'Form'
