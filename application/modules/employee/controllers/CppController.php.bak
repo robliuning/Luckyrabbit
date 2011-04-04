@@ -79,11 +79,9 @@ class Employee_CppController extends  Zend_Controller_Action
 		   
 		else
 	   {
-	   $id=$this->_getParam('id'); /*传递过来的Id,实际上是三个值，中间用&连接的*/
-	   $str=explode("&",$str);
-	   $contactId=parseInt($str[0]);
-	   $postId=parseInt($str[1]);
-	   $projectId=parseInt($str[2]);
+		$contactId=$this->_getParam('contactId',0);
+        $postId=$this->_getParam('postId',0);
+		$projectId=$this->_getParam('projectId',0);
 		if(($contactId>0)&&($postId>0)&&($projectId>0))
 		   {
 			 $data=$cpps->displayOne($contactId,$postId,$projectId);
