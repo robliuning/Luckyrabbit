@@ -109,9 +109,21 @@ class Project_Models_Progress
 		return $this;
 	}
 
-	public function getEndDateExp()
+	public function getStartDateExp()
 	{
 		return $this->_startDateExp;
+	}
+	/****************************/
+
+	public function setEndDateExp($endDateExp)
+	{
+		$this->_EndDateExp = $endDateExp;
+		return $this;
+	}
+
+	public function getEndDateExp()
+	{
+		return $this->_endDateExp;
 	}
 	/****************************/
 
