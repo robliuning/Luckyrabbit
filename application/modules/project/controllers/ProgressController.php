@@ -94,21 +94,21 @@ class Project_ProgressController extends Zend_Controller_Action
    				}
 	}
 
-/*	public function ajaxDispayOne(){                                               
-		//需要显示projectname
+	public function ajaxdispayoneAction(){                                               
+		//
 		$this->_helper->layout()->disableLayout();
    		$id=$this->_getParam('id',0);
     	if($id >0)
     	{
    		    $progresses = new Project_Models_DbTable_Progress();
-   			$progress = $progresses->getProgress($id);
+   			$progress = $progresses->getProgressInfo($id);
    			$this->view->progress = $progress;
    			}
     		else
     		{
    				$this->_redirect('/project/progress');
    				}
-	}        */
+	}        
 
 	public function editAction(){
 		//to edit a choosen progress
