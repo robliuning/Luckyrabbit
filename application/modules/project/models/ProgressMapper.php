@@ -91,5 +91,27 @@ class Project_Models_ProgressMapper
 		}
 		return $entries;
 	}
+	public function getProgressInfo($progressId)
+	{
+		$select = $this->getDbTable()->select();
+		$select->where('progressId = ?',$progressId);
+		$resultSet = $this->getDbTable()->fetchAll($select);
+		$entries = array();
+		foreach($resultSet as $row){
+			$entry = new Project_Models_Progress();
+			$entry ->setStage($row->stage)
+				   ->setTask($row->startDateExp)
+				   ->setEndDateExp($row->endDateExp)   
+				   ->setPeriodExp($row->periodExp)
+				   ->setEndDateAct($row->endDateAct)
+				   ->setPeriodAct($row->periodAct)
+				   ->setQuality($row->quality)
+				   ->setRemark($row->remark)
+				   ->setCTime($row->cTime);
+
+			$entries[] = $entry;
+		}
+		return $entries;
+	}
 }
 ?>
