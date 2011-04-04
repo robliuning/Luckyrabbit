@@ -60,13 +60,13 @@ class Project_Models_Project
 
 	public function setStatus($status)
 	{
-		$this->_address = $address;
+		$this->_status = $status;
 		return $this;
 	}
 
 	public function getStatus()
 	{
-		return $this->_address;
+		return $this->_status;
 	}
 	/****************************/
 

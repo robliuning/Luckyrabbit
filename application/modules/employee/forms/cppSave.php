@@ -11,95 +11,92 @@ class Employee_Forms_CppSave extends Zend_Form
 	{
 		$this->setMethod('post');
 		$this->addElement(
-			/*¸ÚÎ»±àºÅ*/
+			/*å²—ä½ç¼–å·*/
 			 'text','postId',array(
-		        'label'=>'¸ÚÎ»±àºÅ:',
+		        'label'=>'å²—ä½ç¼–å·:',
 			    'disabled'=>'disabled',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*¸ÚÎ»Ãû³Æ*/
+			/*å²—ä½åç§°*/
 	         'select','postName',array(
-			    'label'=>'¸ÚÎ»Ãû³Æ:',
+			    'label'=>'å²—ä½åç§°:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*Ô±¹¤ÐÕÃû*/
+			/*å‘˜å·¥å§“å*/
 		     'text','contactName',array(
-			    'label'=>'Ô±¹¤ÐÕÃû:',
+			    'label'=>'å‘˜å·¥å§“å:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*ËùÊô¹¤³Ì*/
+			/*æ‰€å±žå·¥ç¨‹*/
 		     'select','projectName',array(
-			    'label'=>'ËùÊô¹¤³Ì:',
+			    'label'=>'æ‰€å±žå·¥ç¨‹:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 	    $this->addElement(
-			/*¸ÚÎ»Ö¤Àà±ð*/
+			/*å²—ä½è¯ç±»åˆ«*/
 		     'text','postType',array(
-			    'label'=>'¸ÚÎ»Ö¤Àà±ð:',
+			    'label'=>'å²—ä½è¯ç±»åˆ«:',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*¸ÚÎ»Ö¤±àºÅ*/
+			/*å²—ä½è¯ç¼–å·*/
 		     'text','postCardId',array(
-			    'label'=>'¸ÚÎ»Ö¤±àºÅ:',
+			    'label'=>'å²—ä½è¯ç¼–å·:',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*°²È«ÄÜÁ¦¿¼ºËÖ¤±àºÅ*/
+			/*å®‰å…¨èƒ½åŠ›è€ƒæ ¸è¯ç¼–å·*/
 		      'text','certId',array(
-			    'label'=>'°²È«ÄÜÁ¦¿¼ºËÖ¤±àºÅ:',
+			    'label'=>'å®‰å…¨èƒ½åŠ›è€ƒæ ¸è¯ç¼–å·:',
 			    'required'=>false,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-		     /*Ô±¹¤ÐÕÃû¶ÔÓ¦µÄId,Òþ²ØÓò*/
+		     /*å‘˜å·¥å§“åå¯¹åº”çš„Id,éšè—åŸŸ*/
 		      'text','contactId',array(
-			    'label'=>'Ô±¹¤ID:',
 			    'required'=>false,
 			    'class'=>'hide'
 			  )
+		);
 		$this->addElement(
-		     /*Î´¸üÐÂÇ°µÄ¸ÚÎ»±àºÅ,Òþ²ØÓò*/
+		     /*æœªæ›´æ–°å‰çš„å²—ä½ç¼–å·,éšè—åŸŸ*/
 		      'text','prePostId',array(
-			    'label'=>'Î´¸üÐÂÇ°µÄ¸ÚÎ»±àºÅ:',
 			    'required'=>false,
 			    'class'=>'hide'
 			  )		
 		);
 		$this->addElement(
-		     /*Î´¸üÐÂÇ°µÄ¸ÚÎ»±àºÅ,Òþ²ØÓò*/
+		     /*æœªæ›´æ–°å‰çš„å²—ä½ç¼–å·,éšè—åŸŸ*/
 		      'text','preContactId',array(
-			    'label'=>'Î´¸üÐÂÇ°µÄÔ±¹¤ÐÕÃû¶ÔÓ¦µÄId:',
 			    'required'=>false,
 			    'class'=>'hide'
 			  )		
 		);
 		$this->addElement(
-		     /*Î´¸üÐÂÇ°µÄ¹¤³ÌID,Òþ²ØÓò*/
+		     /*æœªæ›´æ–°å‰çš„å·¥ç¨‹ID,éšè—åŸŸ*/
 		      'text','preProjectName',array(
-			    'label'=>'Î´¸üÐÂÇ°µÄ¹¤³ÌID:',
 			    'required'=>false,
 			    'class'=>'hide'
 			  )		
 		);
 	   $this->addElement(
-		   /*°´Å¥Ò»*/
+		   /*æŒ‰é’®ä¸€*/
 		      'submit','submit',array(
 		         'ignore'=>true,
 		         'class'=>'btConfirm radius',
@@ -107,7 +104,7 @@ class Employee_Forms_CppSave extends Zend_Form
 	          )
 	   );
 	  $this->addElement(
-		  /*°´Å¥¶þ*/
+		  /*æŒ‰é’®äºŒ*/
 		      'submit','submit2',array(
 		          'ignore'=>true,
 		          'class'=>'btConfirm radius',

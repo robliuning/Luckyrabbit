@@ -5,8 +5,8 @@
 	Completion date
 	reviewed: rob
 	*/
-	class project_Forms_projectSave extends Zend_Form
-{
+	class Project_Forms_ProjectSave extends Zend_Form
+	{
 
     public function init()
     {
@@ -14,7 +14,7 @@
 		
 		$this->addElement(                   
 			'text','projectId',array(
-			'label'=>'¹¤³Ì±àºÅ: ',
+			'label'=>'å·¥ç¨‹ç¼–å·: ',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			'required' => true,
@@ -23,71 +23,71 @@
 			
 		 $this->addElement(
 			'text', 'name', array(
-			'label' => '¹¤³ÌÃû³Æ: ',
+			'label' => 'å·¥ç¨‹åç§°: ',
 			'required' => true,
 			'class'=>'tbMedium tbText'
 			)
 		);
      $this->addElement(
 			'text', 'dutyName', array(
-			'label' => 'µØÖ·: ',
+			'label' => 'åœ°å€: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	 $this->addElement(
 			'select', 'status', array(
-			'label' => '¹¤³Ì×´¿ö: ',
-		    'multiOptions'=>array('0'=>'Î´¿ª¹¤','1'=>'½¨ÉèÖÐ','2'=>'ÒÑ¿¢¹¤'),
+			'label' => 'å·¥ç¨‹çŠ¶å†µ: ',
+		    'multiOptions'=>array('0'=>'æœªå¼€å·¥','1'=>'å»ºè®¾ä¸­','2'=>'å·²ç«£å·¥'),
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
     $this->addElement(
 			'select', 'structType', array(
-			'label' => '½á¹¹ÀàÐÍ: ',
+			'label' => 'ç»“æž„ç±»åž‹: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 	$this->addElement(
 			'text', 'level', array(
-			'label' => '²ãÊý: ',
+			'label' => 'å±‚æ•°: ',
 			'required' => false,
 			'class'=>'tbSmall tbText'
 			)
 		);
 	$this->addElement(
 			'text', 'amount', array(
-			'label' => 'ºÏÍ¬½ð¶î: ',
+			'label' => 'åˆåŒé‡‘é¢: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 			$this->addElement(
 			'textarea', 'purpose', array(
-			'label' => 'ÓÃÍ¾: ',
+			'label' => 'ç”¨é€”: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 			$this->addElement(
 			'text', 'constrArea', array(
-			'label' => '½¨ÖþÃæ»ý: ',
+			'label' => 'å»ºç­‘é¢ç§¯: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 			$this->addElement(
 			'text', 'staffNo', array(
-			'label' => '×÷Òµ×ÜÈËÊý: ',
+			'label' => 'ä½œä¸šæ€»äººæ•°: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 			$this->addElement(
 			'textarea', 'remark', array(
-			'label' => '±¸×¢: ',
+			'label' => 'å¤‡æ³¨: ',
 			'required' => false,			
 			'class'=>'tbMedium tbText'
 			)

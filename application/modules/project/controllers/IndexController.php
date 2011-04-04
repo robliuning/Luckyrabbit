@@ -28,10 +28,10 @@ class Project_IndexController extends Zend_Controller_Action
     	$addForm = new Project_Forms_ProjectSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
-    	$tbId = $addForm->getElement('strucTypesId');
+    	$tbId = $addForm->getElement('projectId');
     	$tbId->setValue('工程编号在保存新建后自动生成');
 		//populate dd structure type
-		$projs = new Porject_Models_DbTable_Project();			
+		$projs = new Project_Models_DbTable_Project();			
 		$projs->populateDd($addForm);
 		//end
     	$this->view->form = $addForm;
@@ -138,7 +138,7 @@ class Project_IndexController extends Zend_Controller_Action
 	                                         
     {  //显示project信息  （display project info）
        $displayOne = new Project_Models_ProjectMapper();   
-	   $projectId = this->_getParam('id');
+	   $projectId = $this->_getParam('id');
 	   $this->view->id = $projectId;
 	   $this -> view ->projects = $displayOne -> Find($projectId);
        

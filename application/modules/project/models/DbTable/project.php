@@ -9,12 +9,12 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 	
 	public function getProject($projectId)
 	{
-		$projectId = int($projectId);
+		$projectId = (int)$projectId;
 		$row = $this->fetchRow('projectId = '.$projectId);
 		if(!$row){
 			throw new Exception("Could not find row $projectId");
 		}
-		return $row->roArray();
+		return $row->toArray();
 	}
 
 	public function addProject(
@@ -80,13 +80,13 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 		$this->delete('projectId = '.(int)$projectId);
 	}
 
-	public function populateDb($form)         //野割structype
+	public function populateDd($form)         //野割structype
 	{
-		$structTypes = new General_Models_DbTable_Structype();
-		$options = $structTypes->fetchAll();
+		$strucTypes = new General_Models_DbTable_StrucType();
+		$options = $strucTypes->fetchAll();
 		foreach($options as $op)
 		{
-			$form->getElement('name')->addMultiOption($op->structTypesId,$op->name);
+			$form->getElement('structType')->addMultiOption($op->strucTypesId,$op->name);
 			}
 	}
 }

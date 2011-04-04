@@ -26,8 +26,8 @@ CREATE TABLE ge_titles(
 	name char(50) not null
 );
 
-CREATE TABLE ge_strutypes(
-	struTypesId int(6) unsigned zerofill not null auto_increment primary key,
+CREATE TABLE ge_structypes(
+	strucTypesId int(6) unsigned zerofill not null auto_increment primary key,
 	name char(50) not null
 );
 

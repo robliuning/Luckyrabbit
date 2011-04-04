@@ -17,8 +17,9 @@ class Employee_CppController extends  Zend_Controller_Action
 	public function indexAction()
     {
 	 	$cpp = new Employee_Models_CppMapper();
-      	$this->view->entries = $cpp->fetchAll();
+      	$this->view->entries = $cpp->fetchAll(null,null);
 	   	}
+	   	
 	public function editAction() /*修改*/
 	{
 	 $editForm=new Employee_Forms_CppSave();
@@ -65,16 +66,17 @@ class Employee_CppController extends  Zend_Controller_Action
 			  		      {
 			  			    $cpps->updateCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
 							$cpps->deleteCpp($preContactId,$prePostId,$preProjectId);
+						 	$this->_redirect('/employee/cpp');
 			  		      }
-			    	}				 
+			  		      }
+			    					 
 				 /*end*/
-                 $this->_redirect('/employee/cpp');
-			}
 			else
 		   {
                  $editForm->populate($formData);
 		   }
-		}
+		 }
+		   
 		else
 	   {
 		$contactId=$this->_getParam('contactId',0);
@@ -155,7 +157,7 @@ class Employee_CppController extends  Zend_Controller_Action
 			  		      {
 			  			    $cpps->addCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
 			  		      }
-			    	}
+			    	
 				/*查找结束*/
 				if($dec=="保存继续新建")
 			    {
@@ -170,8 +172,8 @@ class Employee_CppController extends  Zend_Controller_Action
 		    {
 				$addForm->populate($formData);
 		    }
+		   }
 		}
-	}
 	public function ajaxDeleteAction()/*删除*/
 	{
 		$this->_helper->layout()->disableLayout();

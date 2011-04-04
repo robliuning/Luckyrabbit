@@ -33,7 +33,7 @@ class Project_Models_ProjectMapper
 			'address' => $project->getAddress(),
 			'status' => $project->getStatus(),
 			'structType' => $project->getStructType(),
-			'level' => $project->getLevel)(),
+			'level' => $project->getLevel(),
 			'amount' => $project->getAmount(),
 			'purpose' => $project->getPurpose(),
 			'constrArea' => $project->getConstrArea(),
@@ -107,16 +107,16 @@ class Project_Models_ProjectMapper
         foreach ($resultSet as $row) {
 		$project = new Project_Models_Project(); 
         $project ->setProjectId($row->projectId)
-                   ->setEname($row->name)
+                   ->setName($row->name)
 			       //->setAddress($row->address)
 				   ->setStatus($row->status)
-				   ->setStructType($row->structType);
+				   ->setStructType($row->structType)
 				   /*->setLevel($row->level)
 				   ->setAmount($row->amount)
 				   ->setPurpose($row->purpose)
-				   ->setConstrArea($row->constrArea)
-				   ->setStaffNo($row->staffNo)
-				   ->setRemark($row->remark)
+				   ->setConstrArea($row->constrArea)*/
+				   ->setStaffNo($row->staffNo);
+				   /*->setRemark($row->remark)
 				   ->setCTime($row->cTime);*/
 
             $projects[] = $project;
@@ -127,39 +127,40 @@ class Project_Models_ProjectMapper
 			$pid = $pro->getProjectId();
 
 			//2.1 find postId of project manager
-			$dbGer = new General_Models_DbTable_Posts();
+			$dbGer = new General_Models_DbTable_Post();
 			$postName =  "工程总负责人";
 			$select = $dbGer->select()
 				->setIntegrityCheck(false)
 				->from('ge_posts',array('postId'))
 				->where('name = ?',$postName);  
 			$result = $dbGer->fetchAll($select);
-			$postId = $result[0];
+			$postId = $result[0]->postId;
 
 			//2.2 search for contact id and name 
-			$dbCpp = new Employee_Models_DbTable_Contact();
+			$dbCpp = new Employee_Models_DbTable_Cpp();
 			$select = $dbCpp->select()
 				->setIntegrityCheck(false)
 				->from(array('e'=>'em_cpp'),array('contactId'))
-				->join(array('c'=>'em_contacts'),'e.contact = c.contactId')
+				->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
 				->where('e.projectId = ?',$pid)
 				->where('e.postId = ?',$postId);
 			$result = $dbCpp->fetchAll($select);
 			$pro->setCId($result[0]->contactId);
-			$pro->setCName($result[0]->Name);
+			$pro->setCName($result[0]->name);
 		
 			//2.3 search for max stage number
-			$dbProgress = new Project_Models_Progress();
-			$select = $dbCpp->select()
+			$dbProgress = new Project_Models_DbTable_Progress();
+			$select = $dbProgress->select()
 				->setIntegrityCheck(false)
-				->from('pm_progress',MAX('stage'))
+				->from('pm_progresses','stage')
 				->where('projectId = ?',$pid);
-			$result = $dbProgress->fetchAll($select);
-			$pro->setStage($result[0]->stage);
+			$rows = $dbProgress->fetchAll($select);
+			$pro->setStage(count($rows));
+			
 			}
 		//3 return object
        
         return $projects;
-    }  */
+    }  
 }
 ?>

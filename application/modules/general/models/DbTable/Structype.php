@@ -4,11 +4,11 @@
   //completion date 03-04 -2011
 
 
-class General_Models_DbTable_Structype extends Zend_Db_Table_Abstract
+class General_Models_DbTable_StrucType extends Zend_Db_Table_Abstract
 {
-	protected $_name = 'ge_structype';
+	protected $_name = 'ge_structypes';
 
-	public function getStructype($strucTypesId)
+	public function getstrucType($strucTypesId)
 	{
 		$strucTypesId = (int)$strucTypesId;
 		$row = $this->fetchRow('strucTypesId = ' . $strucTypesId);
@@ -18,7 +18,7 @@ class General_Models_DbTable_Structype extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 
-	public function addStructype(
+	public function addstrucType(
 								$strucTypesId,
 								$name
 								)
@@ -30,7 +30,7 @@ class General_Models_DbTable_Structype extends Zend_Db_Table_Abstract
 		$this->insert($data);
 	}
 
-	public function updateStructype(
+	public function updatestrucType(
 								$strucTypesId,
 								$name
 								)
@@ -42,7 +42,7 @@ class General_Models_DbTable_Structype extends Zend_Db_Table_Abstract
 		$this->update($data, 'strucTypesId = ' . (int)$strucTypesId);
 	}
 
-	public function deleteStructype($strucTypesId)
+	public function deletestrucType($strucTypesId)
 	{
 		$this->delete('strucTypesId = ' . (int)$strucTypesId);
 	}

@@ -87,14 +87,14 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
   	{
   		$post=new General_Models_DbTable_Post();
 		$postname = $post->fetchAll(); 
-		$project=new General_Models_DbTable_Project();
-		$projectname = $project->fetchAll();
+		$project=new Project_Models_DbTable_Project();
+		$projectName = $project->fetchAll();
 
 		foreach($postname as $op)
 		{
 			$form->getElement('postName')->addMultiOption($op->postId,$op->name);
 			}
-		foreach($projectname as $op)
+		foreach($projectName as $op)
 		{
 			$form->getElement('projectName')->addMultiOption($op->projectId,$op->name);
 			}
