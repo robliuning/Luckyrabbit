@@ -59,7 +59,8 @@ class Employee_Models_CppMapper
 
         $row = $result->current();
 
-        $post->setContactId($row->contactId)
+        $cpp->setCId($row->cId)
+				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)
                   ->setPostType($row->postType)
@@ -89,7 +90,8 @@ class Employee_Models_CppMapper
  		foreach ($resultSet as $row) 
  		{
             $cpp = new Employee_Models_Cpp();
-			$cpp->setContactId($row->contactId)
+			$cpp->setCId($row->CId)
+				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)
                   ->setPostType($row->postType)
@@ -103,17 +105,16 @@ class Employee_Models_CppMapper
 			//return it to controlloer
     		return $cpps;
     }
-    public function getCpp($contactId,$postId,$projectId)
+    public function getCpp($cppId)
     {
     	$cpp = new Employee_Models_Cpp();
 		$select = $this->getDbTable()->select();
-		$select->where("contactId = ?",$contactId)
-				->where("postId = ?",$postId)
-				->where("projectId = ?",$projectId);
+		$select->where("cId = ?",$cId);
 		$resultSet = $this->getDbTable()->fetchAll($select);
 		foreach ($resultSet as $row) 
  		{
-			$cpp->setContactId($row->contactId)
+			$cpp->setCId($row->cId)
+				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)
                   ->setPostType($row->postType)
