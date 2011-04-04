@@ -14,7 +14,7 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 	{
 		$this->view->render("_sidebar.phtml");
 	}
-	public function indexAction()
+	public function indexAction()   /*其实是add*/
 	{
        $contractor=new Contract_Models_ContractMapper();
 	   $this->view->entries=$contracotr->fetchAll(); /*调用models/contractorMapper.php的fetchAll方法，没有参数*/
@@ -26,7 +26,7 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 	  $editForm->submit2->setAttrib('class','hide');
 	  /*下拉条*/
 	  $contractors=new Contract_Models_DbTable_Contract();
-
+      
 	  /*end*/
 	}
 }

@@ -26,7 +26,8 @@ class Contract_IndexController extends Zend_Controller_Action
 	  $editForm->submit2->setAttrib('class','hide');
 	  /*下拉条*/
 	  $contractors=new Contract_Models_DbTable_Contract();
-
+      $contractors->populateContractDb($editForm);
 	  /*end*/
+
 	}
 }
