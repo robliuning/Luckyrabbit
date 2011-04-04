@@ -64,7 +64,7 @@ class Employee_Forms_CppSave extends Zend_Form
 		      'text','contactId',array(
 			    'required'=>false,
 			    'class'=>'hide',
-			    'value'=>'000001'
+			    'value'=>'000002'
 			  )
 		);
 		$this->addElement(
