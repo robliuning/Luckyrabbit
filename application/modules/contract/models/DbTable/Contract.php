@@ -4,7 +4,7 @@
   2011-04-04	v1.1
   */
 
-class Employee_Models_DbTable_Contract extends Zend_Db_Table_Abstract
+class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 {
     protected $_name = 'sc_contractors'; 
 
@@ -19,68 +19,56 @@ class Employee_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 	}
 
 	public function addContract(
-								$contractorId,
 								$name,
 								$artiPerson,
-								$qualiSerie,
-								$qualiGrade,
-                                $licenseNo,
-
+								$licenseNo,
+								$busiField,
+                                $otherContact, 
+                                $address,
+                                $remark
 								)
 	{
 		$data = array (
-			'contactId' => $contactId,
-			'postId' => $postId,
-			'projectId' => $projectId,
-			'postCardId' => $postCardId,
-			'postType' => $postType,
-			'certId' => $certId
-
+			'name' => $name,
+			'artiPerson' => $artiPerson,
+			'licenseNo' => $licenseNO,
+			'otherContact' => $otherContact,
+			'address' => $address,
+			'remark' => $remark
 		);
 		$this->insert($data);
 	}
 
-	public function updateCpp(
-								$contactId,
-								$postId,
-								$projectId,
-								$postCardId,
-								$postType,
-								$certId
+	public function updateContract(
+								$contractorId,
+								$name,
+								$artiPerson,
+								$licenseNo,
+								$busiField,
+                                $otherContact,
+                                $address,
+                                $remark
 								)
 	{
 		$data = array (
-			'contactId' => $contactId,
-			'postId' => $postId,
-			'projectId' => $projectId,
-			'postCardId' => $postCardId,
-			'postType' => $postType,
-			'certId' => $certId
+			'contractorId' => $contractorId,
+			'name' => $name,
+			'artiPerson' => $artiPerson,
+			'licenseNo' => $licenseNo,
+			'busiField' => $busiField,
+            'otherContact' => $otherContact,
+            'address' => $address,
+            'remark' => $remark
 		);
 
-		$where = array($contactId,$postId,$projectId);
-
-		$this->update($data, $where);
+		$this->update($data, 'contractId = '.(int)$contractorId);
 	}
 
-	public function deleteCpp($contactId,$postId,$projectId)
+	public function deleteCpp($contractId)
 	{
-		$where = array($contactId,$postId,$projectId);
-		$this->delete($where);
+		$this->delete('contractId = '.(int)$contractorId);
 	}
 		
-	public function displayOne($contactId,$postId,$projectId)
-	{   		
-		//$where = array($contactId,$postId,$projectId);
-		//$select = $this->select()
-		//	->setIntegrityCheck(false)
-		//	->from(array('e'=>'em_cpp'),array('contactId','postId','projectId','postCardId','postType','certId'))
-		//	->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
-		//	->where($where);
-		$cpp = Employee_Models_CppMapper();		
-   		$entry = $cpp->fetchAll($projectId,"project");
-   		return $entry;
-		}
 	public function populateCppDd($form)
   	{
   		$post=new General_Models_DbTable_Post();
@@ -97,17 +85,6 @@ class Employee_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 			$form->getElement('projectName')->addMultiOption($op->projectId,$op->name);
 			}
   	}
-	/*public function getAllCppByPid($projectId)
-	{
-		$select = $this->select()
-			->setIntegrityCheck(false)
-			->from(array('e'=>'em_cpp'),array('contactId','postId','projectId','postCardId','postType','certId'))
-			->join(array('g'=>'ge_posts'),'e.postId = g.postId')
-			->where('e.projectId = ?',$projectId);
-
-		$entries = $this->fetchall($select);
-		return $entries;
-	}*/
 
 }
 
