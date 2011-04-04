@@ -22,6 +22,8 @@ class Project_Models_Project
 	protected $_cName;//contactName  in conctact
 	protected $_stage;//stage in progress
 
+
+
 	public function setProjectId($projectId)
 	{
 		$this->_projectId = $projectId;

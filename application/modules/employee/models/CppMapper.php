@@ -90,7 +90,7 @@ class Employee_Models_CppMapper
  		foreach ($resultSet as $row) 
  		{
             $cpp = new Employee_Models_Cpp();
-			$cpp->setCId($row->CId)
+			$cpp->setCppId($row->cppId)
 				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)

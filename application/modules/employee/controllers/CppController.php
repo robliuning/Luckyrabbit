@@ -18,7 +18,7 @@ class Employee_CppController extends  Zend_Controller_Action
     {
 	 	$cpp = new Employee_Models_CppMapper();
       	$this->view->entries = $cpp->fetchAll(null,null);
-	   	}
+	 }
 	   	
 	public function editAction() /*修改*/
 	{
@@ -43,10 +43,8 @@ class Employee_CppController extends  Zend_Controller_Action
                  $postType=$editForm->getValue('postType');
                  $postCardId=$editForm->getValue('postCardId');
                  $certId=$editForm->getValue('certId');
-				 /*取得没有修改前的三个编号*/
-				 $prePostId=$editForm->getValue('prePostId');
-				 $preContactId=$editForm->getValue('preContactId');
-				 $preProjectName=$editForm->getValue('preProjectName');
+				 /*取得em_cpp对应的cppId编号*/
+                 $cppId=$this->_getParam('id');
 				 /*end*/
 				 /*查找是否存在该记录*/
 				        $errorMsg;
@@ -55,7 +53,7 @@ class Employee_CppController extends  Zend_Controller_Action
 			  		     'table'=>'em_cpp',
 			  		     'field'=>'postId',
 						 'field'=>'contactId',
-						 'field'=>'projectName'  /*有可能是出错的*/
+						 'field'=>'projectId' 
 			  	            	)
 			              );
 			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*已经存在这条记录*/
@@ -64,11 +62,10 @@ class Employee_CppController extends  Zend_Controller_Action
 			  		      }
 			  		  else /*不存在这条记录，可以update一条记录*/
 			  		      {
-			  			    $cpps->updateCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
-							$cpps->deleteCpp($preContactId,$prePostId,$preProjectId);
+			  			    $cpps->updateCpp($cppId,$contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
 						 	$this->_redirect('/employee/cpp');
 			  		      }
-			  		      }
+			  		 }
 			    					 
 				 /*end*/
 			else
@@ -79,16 +76,11 @@ class Employee_CppController extends  Zend_Controller_Action
 		   
 		else
 	   {
-	   	   $id=$this->_getParam('id'); /*传递过来的Id,实际上是三个值，中间用&连接的*/
-	   	   $str=explode('&',$id);
-	   	   $contactId=(int)$str[0];
-	   	   $postId=(int)$str[1];
-	   	   $projectId=(int)$str[2];
-		   if(!empty($id))
+	   	   $cppId=$this->_getParam('id',0); /*传递过来的cppId*/
+		   if($cppId>0)
 		   {
 		   	 $cppMapper = new Employee_Models_Cppmapper();
-		   	 
-		   	 $data = $cppMapper->getCpp($contactId,$postId,$projectId);
+		   	 $data = $cppMapper->getCpp($cppId);
 			 foreach($data as $da)
 			 {
 				 $contactId=$editForm->getElement('contactId');
@@ -181,13 +173,11 @@ class Employee_CppController extends  Zend_Controller_Action
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$contactId=$this->_getParam('contactId',0);
-        $postId=$this->_getParam('postId',0);
-		$projectId=$this->_getParam('projectId',0);
-		if(($contactId>0)&&($postId>0)&&($projectId>0))
+        $cppId=$this->getParam('id',0);
+		if($cppId>0)
 		{
 			$cpps=new Employee_Models_DbTable_Cpp();
-			$cpps->deleteCpp($contactId,$postId,$projectId);
+			$cpps->deleteCpp($cppId);
 			echo "1";
 		}
 		else
@@ -198,13 +188,11 @@ class Employee_CppController extends  Zend_Controller_Action
    public function ajaxDisplayAction() /*显示*/
     {
 		$this->_helper->layout()->disableLayout();
-		$contactId=$this->_getParam('contactId',0);
-        $postId=$this->_getParam('postId',0);
-		$projectId=$this->_getParam('projectId',0);
-		if(($contactId>0)&&($postId>0)&&($projectId>0))
+        $cppId=$this->getParam('id',0);
+		if($cppId>0)
 		{
 			$cpps=new Employee_Models_DbTable_Cpp();
-			$this->view->entries=$cpps->displayOne($contactId,$postId,$projectId);
+			$this->view->entries=$cpps->getCpp($cppId);
 		}
 		else
 		{

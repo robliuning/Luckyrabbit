@@ -22,7 +22,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 	}
 
 	public function addCpp(
-								$cppId,
 								$contactId,
 								$postId,
 								$projectId,
@@ -32,7 +31,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 								)
 	{
 		$data = array (
-			'cppId' => $cppId,
 			'contactId' => $contactId,
 			'postId' => $postId,
 			'projectId' => $projectId,
