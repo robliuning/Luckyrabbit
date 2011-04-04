@@ -11,9 +11,15 @@ class project_Forms_progressSave extends Zend_Form
     {
     	$this->setMethod('post');
 		
+		$this->addElement(
+			'text', 'progressId', array(
+			'class'=>'hide'
+			)
+		);
+		
 		$this->addElement(                   
 			'select','projectId',array(
-			'label'=>'¹¤³ÌÃû³Æ: ',
+			'label'=>'å·¥ç¨‹åç§°: ',
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			'required' => true,
@@ -21,65 +27,66 @@ class project_Forms_progressSave extends Zend_Form
 		);
 			
 		 $this->addElement(
-			'select', 'stage', array(
-			'label' => '½×¶Î: ',
+			'text', 'stage', array(
+			'label' => 'é˜¶æ®µ: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText',
+			'value'=>'1'
 			)
 		);
      $this->addElement(
 			'text', 'task', array(
-			'label' => '½×¶ÎÈÎÎñ: ',
+			'label' => 'é˜¶æ®µä»»åŠ¡: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	 $this->addElement(
 			'text', 'startDateExp', array(
-			'label' => 'ÆðÊ¼ÈÕÆÚ: ',
+			'label' => 'èµ·å§‹æ—¥æœŸ: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
     $this->addElement(
 			'text', 'endDateExp', array(
-			'label' => 'Ô¤¼Æ½áÊøÈÕÆÚ: ',
+			'label' => 'é¢„è®¡ç»“æŸæ—¥æœŸ: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);	
 	$this->addElement(                   
 			'text','periodExp',array(
-			'label'=>'Ô¤¼Æ¹¤ÆÚ: ',
+			'label'=>'é¢„è®¡å·¥æœŸ: ',
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)
 		);
 	$this->addElement(                   
 			'text','endDateAct',array(
-			'label'=>'Êµ¼ÊÍê³ÉÈÕÆÚ: ',
+			'label'=>'å®žé™…å®Œæˆæ—¥æœŸ: ',
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)
 		);
 	$this->addElement(                   
 			'text','periodAct',array(
-			'label'=>'Êµ¼Ê¹¤ÆÚ: ',
+			'label'=>'å®žé™…å·¥æœŸ: ',
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)
 		);
 	$this->addElement(                   
 			'select','quality',array(
-			'label'=>'Íê³ÉÖÊÁ¿: ',
-		    'multiOptions'=>array('0'=>'²»ºÏ¸ñ','1'=>'ºÏ¸ñ','2'=>'Á¼ºÃ','3'=>'ÓÅÐã'),
+			'label'=>'å®Œæˆè´¨é‡: ',
+		    'multiOptions'=>array('0'=>'ä¸åˆæ ¼','1'=>'åˆæ ¼','2'=>'è‰¯å¥½','3'=>'ä¼˜ç§€'),
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)
 		);
 	$this->addElement(                   
 			'textarea','remark',array(
-			'label'=>'±¸×¢: ',
+			'label'=>'å¤‡æ³¨: ',
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)

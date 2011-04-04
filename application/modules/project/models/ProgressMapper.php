@@ -76,8 +76,9 @@ class Project_Models_ProgressMapper
 
 	public function fetchInfo($projectId)  //获得progress 中的stage, task, endDateAct, quality
 	{
-		$resultSet = $this->getDbTable()->fetchRow(array('projectId = ?' => $projectId));
-		$resultSet = $resultSet->toArray();
+		$select = $this->getDbTable()->select();
+		$select->where('projectId = ?',$projectId);
+		$resultSet = $this->getDbTable()->fetchAll($select);
 		$entries = array();
 		foreach($resultSet as $row){
 			$entry = new Project_Models_Progress();
@@ -90,4 +91,5 @@ class Project_Models_ProgressMapper
 		}
 		return $entries;
 	}
+}
 ?>

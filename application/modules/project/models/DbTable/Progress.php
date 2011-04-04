@@ -7,17 +7,18 @@ class Project_Models_DbTable_Progress extends Zend_Db_Table_Abstract
 {
     protected $_name = 'pm_progresses';
 
-	public function getProgress($projectId)
+	public function getProgress($progressId)
 	{
-		$projectId = (int)$projectId;
-		$row = $this->fetchRow('projectId = '.$projectId);
+		$progressId = (int)$progressId;
+		$row = $this->fetchRow('progressId = '.$progressId);
 		if(!$row){
-			throw new Exception("Could not find row $projectId");
+			throw new Exception("Could not find row $progressId");
 		}
 		return $row->toArray();
 	}
 
 	public function addProgress(
+								 $projectId,
 		                         $stage,
 								 $task,
 								 $startDateExp,
@@ -30,6 +31,7 @@ class Project_Models_DbTable_Progress extends Zend_Db_Table_Abstract
 		                         )
 	{
 		$data = array(
+			'projectId' => $projectId,
 			'stage' => $stage,
 			'task' => $task,
 			'startDateExp' => $startDateExp,
@@ -43,9 +45,10 @@ class Project_Models_DbTable_Progress extends Zend_Db_Table_Abstract
 		$this->insert($data);
 	}
 
-	public function updatePregress(
-		                         //$projectId,
-		                         //$stage,
+	public function updateProgress(
+		                         $progressId,
+		                         $projectId,
+		                         $stage,
 								 $task,
 								 $startDateExp,
 		                         $endDateExp,
@@ -57,8 +60,8 @@ class Project_Models_DbTable_Progress extends Zend_Db_Table_Abstract
 		                         )
 	{
 		$data = array(
-			//'projectId' => $projectId,
-			//'stage' => $stage,
+			'projectId' => $projectId,
+			'stage' => $stage,
 			'task' => $task,
 			'startDateExp' => $startDateExp,
 			'endDateExp' => $endDateExp,
@@ -68,12 +71,12 @@ class Project_Models_DbTable_Progress extends Zend_Db_Table_Abstract
 			'quality' => $quality,
 			'remark' => $remark
 			);
-		$this->update($data,'projectId = '.(int)$projectId);
+		$this->update($data,'progressId = '.(int)$progressId);
 	}
 
-	public function deleteProgress($projectId)
+	public function deleteProgress($progressId)
 	{
-		$this->delete('projectId = '.(int)$projectId);
+		$this->delete('progressId = '.(int)$progressId);
 	}
 
 	public function populateDd($form)         //填充project name

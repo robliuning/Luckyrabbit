@@ -65,7 +65,7 @@ class Employee_CppController extends  Zend_Controller_Action
 			  			    $cpps->updateCpp($cppId,$contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
 						 	$this->_redirect('/employee/cpp');
 			  		      }
-			  		      }
+			  		 }
 			    					 
 				 /*end*/
 			else

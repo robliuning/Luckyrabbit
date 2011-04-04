@@ -15,26 +15,26 @@ class Project_ProgressController extends Zend_Controller_Action
 		$this -> view ->render('_sidebar.phtml');
 	}
 
-	public function addAction(){                                          //ÐÂ½¨
+	public function indexAction(){                                          //æ–°å»º
 		//this is an indexAction
     	$addForm = new Project_Forms_ProgressSave();
-        $addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-        $addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+        $addForm->submit->setLabel('ä¿å­˜æ–°å»º');
+    	$addForm->submit2->setAttrib('class','hide');
     	$tbId = $addForm->getElement('projectId');
-    	$tbId->setValue('¹¤³Ì½ø¶È¼ÇÂ¼ÔÚ±£´æÐÂ½¨ºó×Ô¶¯Éú³É');
-		//populate dd structure type
-		$projs = new Project_Models_DbTable_Progress();			
-		$projs->populateDd($addForm);
+    	$tbId->setValue('å·¥ç¨‹è¿›åº¦è®°å½•åœ¨ä¿å­˜æ–°å»ºåŽè‡ªåŠ¨ç”Ÿæˆ');
+		//populate dd project
+		$progs = new Project_Models_DbTable_Progress();			
+		$progs->populateDd($addForm);
 		//end
     	$this->view->form = $addForm;
     	
     	if($this->getRequest()->isPost())
     	{
-    		$dec = $this->getRequest()->getPost('submit');
     		$formData = $this->getRequest()->getPost();
     		if($addForm->isValid($formData))
     		{
-    			$stage = $addForm->$this->_getParam('id');
+    			$projectId = $addForm->getValue('projectId');
+    			$stage = $addForm->getValue('stage');
     			$task = $addForm->getValue('task');
     			$startDateExp = $addForm->getValue('startDateExp');
     			$endDateExp = $addForm->getValue('endDateExp');
@@ -42,9 +42,25 @@ class Project_ProgressController extends Zend_Controller_Action
     			$endDateAct = $addForm->getValue('endDateAct');
     			$periodAct = $addForm->getValue('periodAct');
     			$quality = $addForm->getValue('quality');
-				$remark = $addForm->getValue('remark');    			$progs->addProgress($task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);   
-    			if($dec == '±£´æ¼ÌÐøÐÂ½¨')
-    			{
+				$remark = $addForm->getValue('remark'); 
+				
+				   /*  $errorMsg=null;
+			            $validatorRe = new Zend_Validate_Db_RecordExists(
+			        	array(
+			  		     'table'=>'pm_progresses',
+			  		     'field'=>'projectId',
+						 'field'=>'stage'
+						 	)
+			              );*/
+			        //  if($validatorRe->isValid($projectId,$stage)) /*å·²ç»å­˜åœ¨è¿™æ¡è®°å½•*/
+			  	      //    {
+			  		    //   $errorMsg="è¯¥è¿›åº¦ä¿¡æ¯ä¿¡æ¯å·²ç»å­˜åœ¨ã€‚";
+			  		    //  }
+			  		  //else /*ä¸å­˜åœ¨è¿™æ¡è®°å½•ï¼Œå¯ä»¥updateä¸€æ¡è®°å½•*/
+			  		      //{
+						   	$progs->addProgress($projectId,$stage,$task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);   
+			  		      //}
+				 			
    					$addForm->getElement('task')->setValue('');
    					$addForm->getElement('startDateExp')->setValue('');
    					$addForm->getElement('endDateExp')->setValue('');
@@ -52,13 +68,7 @@ class Project_ProgressController extends Zend_Controller_Action
 					$addForm->getElement('endDateAct')->setValue('');
    					$addForm->getElement('periodAct')->setValue('');
    					$addForm->getElement('quality')->setValue('0');
-   					$addForm->getElement('remark')->setValue('');
-
-				}
-   					else
-    				{
-    					$this->_redirect('/project/progress');
-    					} 			
+   					$addForm->getElement('remark')->setValue('');	
     			}
     			else
     			{
@@ -67,7 +77,7 @@ class Project_ProgressController extends Zend_Controller_Action
     		}
 	}
 
-	public function ajaxDisplayAll(){                                                  //ÏÔÊ¾²¿·ÖprogressÐÅÏ¢
+	public function ajaxdisplayallAction(){                                                  //æ˜¾ç¤ºéƒ¨åˆ†progressä¿¡æ¯
 		//to show some details of a specific grogress
 
 		$this->_helper->layout()->disableLayout();
@@ -85,7 +95,7 @@ class Project_ProgressController extends Zend_Controller_Action
 	}
 
 /*	public function ajaxDispayOne(){                                               
-		//ÐèÒªÏÔÊ¾projectname
+		//éœ€è¦æ˜¾ç¤ºprojectname
 		$this->_helper->layout()->disableLayout();
    		$id=$this->_getParam('id',0);
     	if($id >0)
@@ -103,19 +113,22 @@ class Project_ProgressController extends Zend_Controller_Action
 	public function editAction(){
 		//to edit a choosen progress
 	    $editForm = new Project_Forms_ProgressSave();
-    	$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+    	$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
-		//populate dd structure type
+		//populate dd project
+		$progs = new Project_Models_DbTable_Progress();			
+		$progs->populateDd($editForm);
     	$this->view->form = $editForm;
     	$this->view->id = $this->_getParam('id');    	
-		$prog = new Project_Models_DbTable_Progress();
 
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
     		{
-    		
+    			$progressId = $editForm->getValue('progressId');	
+    			$projectId = $editForm->getValue('projectId');
+    			$stage = $editForm->getValue('stage');
     			$task = $editForm->getValue('task');
     			$startDateExp = $editForm->getValue('startDateExp');
     			$endDateExp = $editForm->getValue('endDateExp');
@@ -124,7 +137,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$periodAct = $editForm->getValue('periodAct');
     			$quality = $editForm->getValue('quality');
 				$remark = $editForm->getValue('remark');
-    			$progs->updateProgress($task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);    					
+    			$progs->updateProgress($progressId,$projectId,$stage,$task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);    					
     			$this->_redirect('/project/progress');
     			}
     			else
@@ -146,4 +159,5 @@ class Project_ProgressController extends Zend_Controller_Action
     			}
 		
 	}
+}
 ?>

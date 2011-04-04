@@ -5,6 +5,7 @@
 
 class Project_Models_Progress
 {
+	protected $_progressId;
 	protected $_projectId;	
 	protected $_stage;
 	protected $_task;
@@ -17,6 +18,55 @@ class Project_Models_Progress
 	protected $_remark;
 	protected $_cTime;
 
+	public function __construct(array $options = null)
+    {
+        if (is_array($options)) {
+            $this->setOptions($options);
+        }
+    }
+
+    public function __set($name, $value)
+    {
+        $method = 'set' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method)) {
+            throw new Exception('Invalid progress property');
+        }
+        $this->$method($value);
+    }
+
+    public function __get($name)
+    {
+        $method = 'get' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method)) {
+            throw new Exception('Invalid progress property');
+        }
+        return $this->$method();
+    } 
+
+    public function setOptions(array $options)
+    {
+        $methods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $methods)) {
+                $this->$method($value);
+            }
+        }
+        return $this;
+    }
+    
+	public function setProgressId($progressId)
+	{
+		$this->_progressId = $progressId;
+		return $this;
+	}
+
+	public function getProgressId()
+	{
+		return $this->_progressId;
+	}
+	/****************************/    
+	
 	public function setProjectId($projectId)
 	{
 		$this->_projectId = $projectId;
@@ -43,7 +93,7 @@ class Project_Models_Progress
 
 	public function setTask($task)
 	{
-		$this->_Task = $task;
+		$this->_task = $task;
 		return $this;
 	}
 
