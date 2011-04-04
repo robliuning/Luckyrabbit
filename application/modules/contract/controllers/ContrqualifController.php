@@ -4,7 +4,7 @@ author:ming tingling
 create date:2011.4.4
 vision:2.0
 */
-class Contract_IndexController extends Zend_Controller_Action
+class Contract_ContrqualifController extends Zend_Controller_Action
 {
 	public function init()
 	{
