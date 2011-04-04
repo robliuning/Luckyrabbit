@@ -75,7 +75,7 @@
 						<td><?php echo $this->escape($entry->postType) ?></td>
 						<td><?php echo $this->escape($entry->postCardId) ?></td>
 						<td><?php echo $this->escape($entry->certId) ?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'edit','cid'=>$this->escape($entry->contactId),'pid'=>$this->escape($entry->projectId),'oid'=>$this->escape($entry->postId)))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'edit','id'=>$this->escape($entry->contactId)."&".$this->escape($entry->postId)."&".$this->escape($entry->projectId)))?>">修改</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

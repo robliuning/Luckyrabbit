@@ -22,7 +22,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 	}
 
 	public function addCpp(
-								$cppId,
 								$contactId,
 								$postId,
 								$projectId,
@@ -32,7 +31,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 								)
 	{
 		$data = array (
-			'cppId' => $cppId,
 			'contactId' => $contactId,
 			'postId' => $postId,
 			'projectId' => $projectId,
@@ -45,7 +43,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 	}
 
 	public function updateCpp(
-								$cppId,
 								$contactId,
 								$postId,
 								$projectId,
@@ -55,7 +52,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 								)
 	{
 		$data = array (
-			'cppId' => $cppId,
 			'contactId' => $contactId,
 			'postId' => $postId,
 			'projectId' => $projectId,
@@ -64,16 +60,29 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 			'certId' => $certId
 		);
 
-		//$where = array($contactId,$postId,$projectId);
+		$where = array($contactId,$postId,$projectId);
 
-		$this->update($data, 'cppId = ' . (int)$cppId);
+		$this->update($data, $where);
 	}
 
-	public function deleteCpp($cppId)
+	public function deleteCpp($contactId,$postId,$projectId)
 	{
-		$this->delete('cppId = ' . (int)$cppId);
+		$where = array($contactId,$postId,$projectId);
+		$this->delete($where);
 	}
 		
+	public function displayOne($contactId,$postId,$projectId)
+	{   		
+		//$where = array($contactId,$postId,$projectId);
+		//$select = $this->select()
+		//	->setIntegrityCheck(false)
+		//	->from(array('e'=>'em_cpp'),array('contactId','postId','projectId','postCardId','postType','certId'))
+		//	->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
+		//	->where($where);
+		$cpp = Employee_Models_CppMapper();		
+   		$entry = $cpp->fetchAll($projectId,"project");
+   		return $entry;
+		}
 	public function populateCppDd($form)
   	{
   		$post=new General_Models_DbTable_Post();
@@ -83,7 +92,7 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 
 		foreach($postname as $op)
 		{
-			$form->getElement('postId')->addMultiOption($op->postId,$op->name);
+			$form->getElement('postName')->addMultiOption($op->postId,$op->name);
 			}
 		foreach($projectName as $op)
 		{

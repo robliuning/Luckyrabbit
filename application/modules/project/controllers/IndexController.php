@@ -134,8 +134,7 @@ class Project_IndexController extends Zend_Controller_Action
 		// fill the structType db
     	}
     
-   public function displayOneAction()                //ä¯ÀÀ
-	                                         
+   public function displayAction()                //ä¯ÀÀ                                        
     {  //ÏÔÊ¾projectÐÅÏ¢  £¨display project info£©
        $displayOne = new Project_Models_ProjectMapper();   
 	   $projectId = $this->_getParam('id');

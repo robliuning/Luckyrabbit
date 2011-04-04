@@ -10,27 +10,19 @@ class Employee_Forms_CppSave extends Zend_Form
 	public function init()
 	{
 		$this->setMethod('post');
+
 		$this->addElement(
-			/*岗位编号*/
-			 'text','postId',array(
-		        'label'=>'岗位编号:',
-			    'disabled'=>'disabled',
-			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
-		);
-		$this->addElement(
-			/*岗位名称*/
-	         'select','postName',array(
-			    'label'=>'岗位名称:',
+			/*员工姓名*/
+		     'text','contactName',array(
+			    'label'=>'员工姓名:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
 		);
 		$this->addElement(
-			/*员工姓名*/
-		     'text','contactName',array(
-			    'label'=>'员工姓名:',
+			/*岗位名称*/
+	         'select','postId',array(
+			    'label'=>'岗位名称:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
 		      )
@@ -71,7 +63,8 @@ class Employee_Forms_CppSave extends Zend_Form
 		     /*员工姓名对应的Id,隐藏域*/
 		      'text','contactId',array(
 			    'required'=>false,
-			    'class'=>'hide'
+			    'class'=>'hide',
+			    'value'=>'000001'
 			  )
 		);
 		$this->addElement(
