@@ -14,7 +14,7 @@
 		<div id="p_content">
 		<h1>工程管理 - 工程信息管理 - 总览</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为通讯录总览</h3>
+			<h3>本页显示内容为工程信息总览</h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -69,7 +69,7 @@
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$this->escape($entry->getProjectId())))?>" class="lightbox"><?php echo $this->escape($entry->getName()) ?></a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$this->escape($entry->getProjectId())))?>"><?php echo $this->escape($entry->getName()) ?></a></td>
 						<td><?php echo $this->escape($entry->getStatus())?></td>	
 						<td><?php echo $this->escape($entry->getStructType()) ?></td>
 						<td><?php echo $this->escape($entry->getCName()) ?></td>

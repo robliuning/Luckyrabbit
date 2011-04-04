@@ -20,12 +20,12 @@ class Employee_CppController extends  Zend_Controller_Action
       	$this->view->entries = $cpp->fetchAll(null,null);
 	   	}
 	   	
-	public function editAction() /*ÐÞ¸Ä*/
+	public function editAction() /*ä¿®æ”¹*/
 	{
 	 $editForm=new Employee_Forms_CppSave();
-	 $editForm->submit->setLabel("±£´æÐÞ¸Ä");
+	 $editForm->submit->setLabel("ä¿å­˜ä¿®æ”¹");
      $editForm->submit2->setAttrib('class','hide');
-	 /*ÏÂÀ­Ìõ*/
+	 /*ä¸‹æ‹‰æ¡*/
 	 $cpps=new Employee_Models_DbTable_Cpp();
 	 $cpps->populateCppDd($editForm);
 	 /*end*/
@@ -36,35 +36,35 @@ class Employee_CppController extends  Zend_Controller_Action
 		  if($editForm->isValid($formData))
 			{
 			     $postId=$editForm->getValue('postId');
-				 $contactId=$editForm->getValue('contactId'); /*´ÓÒþ²ØÓòÖÐ¶Á³öÔ±¹¤ÐÕÃûµÄID*/
+				 $contactId=$editForm->getValue('contactId'); /*ä»Žéšè—åŸŸä¸­è¯»å‡ºå‘˜å·¥å§“åçš„ID*/
                  $postName=$editForm->getValue('postName');
                  $contactName=$editForm->getValue('contactName');
-                 $projectName=$editForm->getValue('projectName');/*Êµ¼ÊÉÏµÃµ½µÄÊÇprojectId*/
+                 $projectName=$editForm->getValue('projectName');/*å®žé™…ä¸Šå¾—åˆ°çš„æ˜¯projectId*/
                  $postType=$editForm->getValue('postType');
                  $postCardId=$editForm->getValue('postCardId');
                  $certId=$editForm->getValue('certId');
-				 /*È¡µÃÃ»ÓÐÐÞ¸ÄÇ°µÄÈý¸ö±àºÅ*/
+				 /*å–å¾—æ²¡æœ‰ä¿®æ”¹å‰çš„ä¸‰ä¸ªç¼–å·*/
 				 $prePostId=$editForm->getValue('prePostId');
 				 $preContactId=$editForm->getValue('preContactId');
 				 $preProjectName=$editForm->getValue('preProjectName');
 				 /*end*/
-				 /*²éÕÒÊÇ·ñ´æÔÚ¸Ã¼ÇÂ¼*/
+				 /*æŸ¥æ‰¾æ˜¯å¦å­˜åœ¨è¯¥è®°å½•*/
 				        $errorMsg;
 			            $validatorRe = new Zend_Validate_Db_RecordExists(
 			        	array(
 			  		     'table'=>'em_cpp',
 			  		     'field'=>'postId',
 						 'field'=>'contactId',
-						 'field'=>'projectName'  /*ÓÐ¿ÉÄÜÊÇ³ö´íµÄ*/
+						 'field'=>'projectName'  /*æœ‰å¯èƒ½æ˜¯å‡ºé”™çš„*/
 			  	            	)
 			              );
-			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*ÒÑ¾­´æÔÚÕâÌõ¼ÇÂ¼*/
+			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*å·²ç»å­˜åœ¨è¿™æ¡è®°å½•*/
 			  	          {
-			  		       $errorMsg="¸Ã¸ÚÎ»ÐÅÏ¢ÒÑ¾­´æÔÚ¡£";
+			  		       $errorMsg="è¯¥å²—ä½ä¿¡æ¯å·²ç»å­˜åœ¨ã€‚";
 			  		      }
-			  		  else /*²»´æÔÚÕâÌõ¼ÇÂ¼£¬¿ÉÒÔupdateÒ»Ìõ¼ÇÂ¼*/
+			  		  else /*ä¸å­˜åœ¨è¿™æ¡è®°å½•ï¼Œå¯ä»¥updateä¸€æ¡è®°å½•*/
 			  		      {
-			  			    $cpps->updateCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectNameÊµ¼ÊÉÏÊÇprojectId*/
+			  			    $cpps->updateCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectNameå®žé™…ä¸Šæ˜¯projectId*/
 							$cpps->deleteCpp($preContactId,$prePostId,$preProjectId);
 						 	$this->_redirect('/employee/cpp');
 			  		      }
@@ -79,48 +79,52 @@ class Employee_CppController extends  Zend_Controller_Action
 		   
 		else
 	   {
-		$contactId=$this->_getParam('contactId',0);
-        $postId=$this->_getParam('postId',0);
-		$projectId=$this->_getParam('projectId',0);
-		if(($contactId>0)&&($postId>0)&&($projectId>0))
+	   	   $id=$this->_getParam('id'); /*ä¼ é€’è¿‡æ¥çš„Id,å®žé™…ä¸Šæ˜¯ä¸‰ä¸ªå€¼ï¼Œä¸­é—´ç”¨&è¿žæŽ¥çš„*/
+	   	   $str=explode('&',$id);
+	   	   $contactId=(int)$str[0];
+	   	   $postId=(int)$str[1];
+	   	   $projectId=(int)$str[2];
+		   if(!empty($id))
 		   {
-			 $data=$cpps->displayOne($contactId,$postId,$projectId);
+		   	 $cppMapper = new Employee_Models_Cppmapper();
+		   	 
+		   	 $data = $cppMapper->getCpp($contactId,$postId,$projectId);
 			 foreach($data as $da)
-			   {
+			 {
 				 $contactId=$editForm->getElement('contactId');
-                 $contactId->setValue($da->contactId);
+                 $contactId->setValue($da->getContactId());
 				 $preContactId->$editForm->getElement('preContactId');
-                 $preContactId->setValue($da->contactId);
+                 $preContactId->setValue($da->getContactId());
 				 $postId=$editForm->getElement('postId');
-                 $postId->setValue($da->postId);
+                 $postId->setValue($da->getPostId());
 				 $prePostId=$editForm->getElement('prePostId');
-				 $prePostId->setValue($da->postId);
+				 $prePostId->setValue($da->getPostId());
 				 $projectName=$editForm->getElement('projectName');
-                 $projectName->setValue($da->projectName);
+                 $projectName->setValue($da->getProjectName());
 				 $preProjectName=$editForm->getElement('preProjectName');
-				 $preProjectName->setValue($da->projectName);
+				 $preProjectName->setValue($da->getProjectName());
 				 $postCardId=$editForm->getElement('postCardId');
-                 $postCardId->setValue($da->postCardId);
+                 $postCardId->setValue($da->getPostCardId());
 				 $postType=$editForm->getElement('postType');
-                 $postType->setValue($da->postType);
+                 $postType->setValue($da->getPostType());
 				 $certId=$editForm->getElement('certId');
-                 $certId->setValue($da->certId);
+                 $certId->setValue($da->getCertId());
 				 $contactName=$editForm->getElement('contactName');
-				 $contactName->setValue($da->contactName);
+				 $contactName->setValue($da->getContactName());
 			   }
 		   }
-		 else /*·Ç·¨·ÃÎÊ*/
+		 else /*éžæ³•è®¿é—®*/
 		   {
            $this->_redirect('/employee/cpp');
 		   }
 	   }
 	 }
- 	public function addAction()/*ÐÂ½¨*/
+ 	public function addAction()/*æ–°å»º*/
     {
      $addForm=new Employee_Forms_CppSave();
-	 $addForm->submit->setLabel("±£´æ¼ÌÐøÐÂ½¨");
-	 $addForm->submit2->setLabel("±£´æ·µ»ØÉÏÒ³");
-	 /*ÏÂÀ­Ìõ*/
+	 $addForm->submit->setLabel("ä¿å­˜ç»§ç»­æ–°å»º");
+	 $addForm->submit2->setLabel("ä¿å­˜è¿”å›žä¸Šé¡µ");
+	 /*ä¸‹æ‹‰æ¡*/
 	 $cpps=new Employee_Models_DbTable_Cpp();
      $cpps->populateCppDd($addForm);
 	/*end*/
@@ -132,36 +136,35 @@ class Employee_CppController extends  Zend_Controller_Action
 		   if($addForm->isValid($formData))
 			{
 			     $postId=$addForm->getValue('postId');
-				 $contactId=$addForm->getValue('contactId'); /*´ÓÒþ²ØÓòÖÐ¶Á³öÔ±¹¤ÐÕÃûµÄID*/
+				 $contactId=$addForm->getValue('contactId'); /*ä»Žéšè—åŸŸä¸­è¯»å‡ºå‘˜å·¥å§“åçš„ID*/
                  $postName=$addForm->getValue('postName');
                  $contactName=$addForm->getValue('contactName');
-                 $projectName=$addForm->getValue('projectName');/*Êµ¼ÊÉÏµÃµ½µÄÊÇprojectId*/
+                 $projectName=$addForm->getValue('projectName');/*å®žé™…ä¸Šå¾—åˆ°çš„æ˜¯projectId*/
                  $postType=$addForm->getValue('postType');
                  $postCardId=$addForm->getValue('postCardId');
                  $certId=$addForm->getValue('certId');
-                 /*²éÕÒem_cppÊÇ·ñ´æÔÚ¸Ã¼ÇÂ¼*/
-				        $errorMsg;
+                 /*æŸ¥æ‰¾em_cppæ˜¯å¦å­˜åœ¨è¯¥è®°å½•*/
+				     	$errorMsg = null;
 			            $validatorRe = new Zend_Validate_Db_RecordExists(
 			        	array(
 			  		     'table'=>'em_cpp',
 			  		     'field'=>'postId',
 						 'field'=>'contactId',
-						 'field'=>'projectName' /*ÓÐ¿ÉÄÜÊÇ³ö´íµÄ*/
+						 'field'=>'projectId' 
 			  	            	)
 			              );
-			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*ÒÑ¾­´æÔÚÕâÌõ¼ÇÂ¼*/
+			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*å·²ç»å­˜åœ¨è¿™æ¡è®°å½•*/
 			  	          {
-			  		       $errorMsg="¸Ã¸ÚÎ»ÐÅÏ¢ÒÑ¾­´æÔÚ¡£";
+			  		       $errorMsg="è¯¥å²—ä½ä¿¡æ¯å·²ç»å­˜åœ¨ã€‚";
 			  		      }
-			  		  else /*²»´æÔÚÕâÌõ¼ÇÂ¼£¬¿ÉÒÔinsertÒ»Ìõ¼ÇÂ¼*/
+			  		  else /*ä¸å­˜åœ¨è¿™æ¡è®°å½•ï¼Œå¯ä»¥insertä¸€æ¡è®°å½•*/
 			  		      {
-			  			    $cpps->addCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectNameÊµ¼ÊÉÏÊÇprojectId*/
+			  			    $cpps->addCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectNameå®žé™…ä¸Šæ˜¯projectId*/
 			  		      }
-			    	
-				/*²éÕÒ½áÊø*/
-				if($dec=="±£´æ¼ÌÐøÐÂ½¨")
+				/*æŸ¥æ‰¾ç»“æŸ*/
+				if($dec=="ä¿å­˜ç»§ç»­æ–°å»º")
 			    {
-					$this->view->errorMsg=$errorMsg;
+			    	$this->view->errorMsg=$errorMsg;
 			    }
 				else
 			   {
@@ -174,7 +177,7 @@ class Employee_CppController extends  Zend_Controller_Action
 		    }
 		   }
 		}
-	public function ajaxDeleteAction()/*É¾³ý*/
+	public function ajaxDeleteAction()/*åˆ é™¤*/
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -192,7 +195,7 @@ class Employee_CppController extends  Zend_Controller_Action
          $this->_redirect('/employee');
 		}
 	}
-   public function ajaxDisplayAction() /*ÏÔÊ¾*/
+   public function ajaxDisplayAction() /*æ˜¾ç¤º*/
     {
 		$this->_helper->layout()->disableLayout();
 		$contactId=$this->_getParam('contactId',0);
