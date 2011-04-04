@@ -71,18 +71,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 		$this->delete($where);
 	}
 		
-	public function displayOne($contactId,$postId,$projectId)
-	{   		
-		//$where = array($contactId,$postId,$projectId);
-		//$select = $this->select()
-		//	->setIntegrityCheck(false)
-		//	->from(array('e'=>'em_cpp'),array('contactId','postId','projectId','postCardId','postType','certId'))
-		//	->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
-		//	->where($where);
-		$cpp = Employee_Models_CppMapper();		
-   		$entry = $cpp->fetchAll($projectId,"project");
-   		return $entry;
-		}
 	public function populateCppDd($form)
   	{
   		$post=new General_Models_DbTable_Post();
@@ -92,7 +80,7 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 
 		foreach($postname as $op)
 		{
-			$form->getElement('postName')->addMultiOption($op->postId,$op->name);
+			$form->getElement('postId')->addMultiOption($op->postId,$op->name);
 			}
 		foreach($projectName as $op)
 		{
