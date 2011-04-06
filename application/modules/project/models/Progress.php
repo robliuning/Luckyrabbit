@@ -117,7 +117,7 @@ class Project_Models_Progress
 
 	public function setEndDateExp($endDateExp)
 	{
-		$this->_EndDateExp = $endDateExp;
+		$this->_endDateExp = $endDateExp;
 		return $this;
 	}
 
