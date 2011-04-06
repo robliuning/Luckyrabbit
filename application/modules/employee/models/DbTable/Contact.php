@@ -44,46 +44,9 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
 		$this->insert($data);
 	}
 
-	public function updateContact(
-								$contactId,
-		                        $name,
-		                        $gender,
-		                        $titleName,
-		                        $birth,
-		                        $idCard,
-		                        $phoneNo,
-		                        $otherContact,
-		                        $address,
-		                        $remark)
-	{
-		$data = array(
-		    'contactId' => $contactId,
-		    'name' => $name,
-		    'gender' => $gender,
-		    'titleName' => $titleName,
-			'birth' => $birth,
-		    'idCard' => $idCard,
-		    'phoneNo' => $phoneNo,
-		    'otherContact' => $otherContact,
-		    'address' => $address,
-		    'remark' => $remark
-		);
-		$this->update($data, 'contactId = ' . (int)$contactId);
-	}
-
 	public function deleteContact($contactId)
 	{
 		$this->delete('contactId = ' . (int)$contactId);
 	}
-	
-	public function populateContactDd($form)
-  	{		
-  		$title=new General_Models_DbTable_Title();
-		$titleOptions = $title->fetchAll();
-  		foreach($titleOptions as $op)
-		{
-			$form->getElement('titleName')->addMultiOption($op->name,$op->name);
-			}	
-  		}
 }
 ?>

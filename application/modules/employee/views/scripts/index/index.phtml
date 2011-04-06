@@ -43,9 +43,9 @@
 					<thead>
 						<th>#</th>
 						<th></th>
-						<th>通讯录编号</th>
 						<th>姓名</th>
 						<th>性别</th>
+						<th>生日</th>
 						<th>职称</th>
 						<th>电话</th>
 						<th>其他联系方式</th>
@@ -60,34 +60,32 @@
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php foreach($this->entries as $entry):?>
+					</tr>
+					<?php $counter = 1;?>	
+					<?php foreach($this->arrayContacts as $contact):?>
+					<?php $contactId = $this->escape($contact->getContactId()); ?>
 					<tr>
-						<td><input type="checkbox" name="cbEmp" value="<?php echo $this->escape($entry->contactId); ?>"></td>
+						<td><input type="checkbox" name="cbEmp" value="<?php echo $contactId; ?>"></td>
 						<td><?php 
-							$counter = 1;
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$this->escape($entry->contactId)))?>" class="lightbox"><?php echo 'YG'.$this->escape($entry->contactId) ?></a></td>
-						<td><?php echo $this->escape($entry->name) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$contactId))?>" class="lightbox"><?php echo $this->escape($contact->getName()); ?></a></td>
 						<td><?php 
-							$gender = $this->escape($entry->gender);
-							$tbGender;
-							if($gender == 0)
-							{
-								$tbGender = "女";
-								}
-								else
-								{
-									$tbGender = "男";
-									}
-									echo $tbGender;
+							$gender = $this->escape($contact->getGender());
+							echo $gender?"男":"女";
 						?></td>	
-						<td><?php echo $this->escape($entry->titleName) ?></td>
-						<td><?php echo $this->escape($entry->phoneNo) ?></td>
-						<td><?php echo $this->escape($entry->otherContact) ?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$this->escape($entry->contactId)))?>">修改</a></td>
+						<td><?php
+							//$birth = $this->escape($contact->getBirth());
+							echo $this->escape($contact->getBirth());
+							//$currentDate = ;
+						?>
+						</td>
+						<td><?php echo $this->escape($contact->getTitleName()) ?></td>
+						<td><?php echo $this->escape($contact->getPhoneNo()) ?></td>
+						<td><?php echo $this->escape($contact->getOtherContact()) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contactId)?>">修改</a></td>
+						<td></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

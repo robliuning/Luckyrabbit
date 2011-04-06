@@ -27,7 +27,7 @@ class Employee_Models_ContactMapper
         }
         return $this->_dbTable;
     }
-    public function save(Employee_Models_Contact $contact)
+    public function save(Employee_Models_Contact $contact) //check
     {
         $data = array(
 			'contactId' => $contact->getContactId(),
@@ -48,8 +48,7 @@ class Employee_Models_ContactMapper
             $this->getDbTable()->update($data, array('contactId = ?' => $contactId));
         }
     }
-    public function find($contactId, Employee_Models_Contact $contact)
-
+    public function find($contactId, Employee_Models_Contact $contact) //check
     {
 
         $result = $this->getDbTable()->find($contactId);
@@ -62,7 +61,7 @@ class Employee_Models_ContactMapper
 
         $row = $result->current();
 
-        $contact  ->setEmpId($row->contactId)
+        $contact  ->setContactId($row->contactId)
         		  ->setName($row->name)
                   ->setGender($row->gender)
                   ->setTitleName($row->titleName)
@@ -73,12 +72,14 @@ class Employee_Models_ContactMapper
                   ->setAddress($row->address)
                   ->setRemark($row->remark);
     }
- 
+	public function findArrayContact($id) //check
+	{
+		$result = $this->getDbTable()->find($id);
+		return $result;
+		}
 
-    public function fetchAll()
-
+    public function fetchAll() //check
     {
-
         $resultSet = $this->getDbTable()->fetchAll();
 
         $entries   = array();
@@ -96,12 +97,19 @@ class Employee_Models_ContactMapper
                    ->setOtherContact($row->otherContact)
                    ->setAddress($row->address)
                    ->setRemark($row->remark);
-
-
+                   
             $entries[] = $entry;
-
         }
         return $entries;
     }
+    public function populateContactDd($form) //check
+  	{		
+  		$titles=new General_Models_TitleMapper();
+		$arrayTitles = $titles->fetchAll();
+  		foreach($arrayTitles as $title)
+		{
+			$form->getElement('titleName')->addMultiOption($title->getName(),$title->getName());
+			}	
+  		}
 }
 ?>
