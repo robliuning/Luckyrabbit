@@ -23,7 +23,7 @@ class General_Models_TitleMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Title');
+            $this->setDbTable('General_Models_DbTable_Title');
         }
         return $this->_dbTable;
     }

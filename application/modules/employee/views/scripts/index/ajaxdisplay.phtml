@@ -1,7 +1,8 @@
 <div id="ajaxMsgBox">
 	<div id="ajaxMsgBox_Emp">
-		<?php foreach($this->contact as $contact):?>
-			<p><?php echo $contact;?></p>
-		<?php endforeach?>
+			<p><?php
+			$contact = $this->contact;
+			 echo $contact->getName();?>
+			 </p>
 	</div>
 </div>

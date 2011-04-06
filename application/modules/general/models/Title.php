@@ -57,15 +57,15 @@ class General_Models_Title
         return $this->_titleId;
     }
 
-    public function setName($Name)
+    public function setName($name)
     {
-        $this->_Name = (string)$Name;
+        $this->_name = (string)$name;
         return $this;
     } 
 
     public function getName()
     {
-        return $this->_Name;
+        return $this->_name;
     }
 
 }

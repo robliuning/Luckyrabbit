@@ -1,8 +1,7 @@
 <?php
-  //creation date 01-04-2011
-  //creating by lincoy
-  //completion date 03-04-2011
-
+  //Author lincoy
+  //Date 2011.4.1
+  
 class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 {
     protected $_name = 'pm_projects';
@@ -89,5 +88,16 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 			$form->getElement('structType')->addMultiOption($op->strucTypesId,$op->name);
 			}
 	}
+	
+	public function fetchAllJoin()
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from('pm_projects',array('projectId','name','status','structType','staffNo'))
+			->order('cTime DESC');
+		$entries = $this->fetchAll($select);
+		
+		return $entries;
+		}
 }
 ?>
