@@ -165,5 +165,16 @@ class Employee_Models_CppMapper
    				}				
    			return $cpp;	  	
     	}
+
+		public function FindContact($projectId, $postId)
+	   {
+		$contact = new Employee_Models_DbTable_Contact();
+		$select = $contact->select()
+			->setIntegrityCheck(false)
+			->from('em_cpp',array('contactId'))
+			->join('em_contacts',array('name'))
+			->where('contactId = ?', )
+		}
+
 }
 ?>
