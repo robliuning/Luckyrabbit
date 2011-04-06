@@ -21,12 +21,10 @@ class General_Models_DbTable_Post extends Zend_Db_Table_Abstract
 	}
 
 	public function addPost(
-								$postId,
 								$name
 								)
 	{
 		$data = array (	
-			'postId' => $postId,
 			'name' => $name
 		);
 		$this->insert($data);
