@@ -94,13 +94,13 @@ class Project_ProgressController extends Zend_Controller_Action
    				}
 	}
 
-	public function ajaxdispayoneAction(){                                               
+	public function ajaxdisplayoneAction(){                                               
 		//
 		$this->_helper->layout()->disableLayout();
    		$id=$this->_getParam('id',0);
     	if($id >0)
     	{
-   		    $progresses = new Project_Models_DbTable_Progress();
+   		    $progresses = new Project_Models_ProgressMapper();
    			$progress = $progresses->getProgressInfo($id);
    			$this->view->progress = $progress;
    			}

@@ -1,15 +1,6 @@
 <?php
-//1.Data to populate db.deptName, dutyName, titleName will be added later
-//2.Validation of inputs is missing (better with ajax)
-//3.Set focus for each form
-//4.For add and edit, the employeemapper has been skipped, the dbTable is used directly.
-//5.Reconsider the use of zend_form
-//6.Messagebox for sucessful adding, editting and deleting
-//7.Missing Paginator for displayAction
-//8.Need to validate the deletion result
-//Rewrite by meimo 2011.3.25
-//Reviewed by rob 2011.3.28
-
+//Author Rob
+//2011.4.6
 class Employee_IndexController extends Zend_Controller_Action
 {
     public function init()
@@ -25,37 +16,35 @@ class Employee_IndexController extends Zend_Controller_Action
     public function indexAction()
     {
     	$contacts = new Employee_Models_ContactMapper();
-      	$this->view->entries = $contacts->fetchAll();
+      	$this->view->arrayContacts = $contacts->fetchAll();
     }
     
-    public function editAction()                                   //修改
+    public function editAction()                                  
     {
     	$editForm = new Employee_Forms_ContactSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
-    	//populate ddb
-    	$contacts=new Employee_Models_DbTable_Contact();
-    	$contacts->populateContactDd($editForm);
-    	
-    	$this->view->form = $editForm;
-    	$this->view->id = $this->_getParam('id');
+	
+		$contacts = new Employee_Models_ContactMapper()
+		$contacts->populateContactDd($editForm);
+		$contactId = $this->_getParam('id',0)
     	
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
     		{
-    			$contactId = $this->_getParam('id');
-    			$name = $editForm->getValue('name');	
-    			$gender = $editForm->getValue('gender');
-    			$titleName = $editForm ->getValue('titleName');
-    			$birth = $editForm->getValue('birth');
-    			$idCard = $editForm->getValue('idCard');
-    			$phoneNo = $editForm->getValue('phoneNo');
-    			$otherContact = $editForm->getValue('otherContact');
-    			$address = $editForm->getValue('address');
-    			$remark = $editForm->getValue('remark');
-    			$contacts->updateContact($contactId,$name,$gender,$titleName,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);    			
+    			$contact = new Employee_Models_Contact();
+    			$contact->setName($editForm->getValue('name'));
+    			$contact->setGender($editForm->getValue('gender'));
+    			$contact->setTitleName($editForm->getValue('titleName'));
+    			$contact->setBirth($editForm->getValue('birth'));
+    			$contact->setIdCard($editForm->getValue('idCard'));
+    			$contact->setPhoneNo($editForm->getValue('phoneNo'));
+    			$contact->setOtherContact($editForm->getValue('otherContact'));
+    			$contact->setAddress($editForm->getValue('adress'));
+    			$contact->setRemark($editForm->getValue('remark'));
+    			$contacts->save($contact);    			
     			
     			$this->_redirect('/employee');
     			}
@@ -66,51 +55,51 @@ class Employee_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$id=$this->_getParam('id',0);
-    			if($id >0)
+    			if($contactId >0)
     			{
-    				$editForm->populate($contacts->getContact($id));
+    				$arrayContact = $contacts->findArrayContact($contactId);
+    				$editForm->populate($arrayContact);
     				}
     				else
     				{
     					$this->_redirect('/employee');
     					}
     			}
+    	$this->view->editForm = $editForm;
+    	$this->view->id = $contactId;
     	}
     
-    public function addAction()                       //新建
+    public function addAction()                       
     {
         $addForm = new Employee_Forms_ContactSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
         
-        //populate ddb
-    	$contacts=new Employee_Models_DbTable_Contact();
+    	$contacts=new Employee_Models_ContactMapper();
     	$contacts->populateContactDd($addForm);
    
     	$tbId = $addForm->getElement('contactId');
     	$tbId->setValue('通讯录编号在保存新建后自动生成');
-    	$this->view->form = $addForm;
-    	
+    	    	
     	if($this->getRequest()->isPost())
     	{
-    		$dec = $this->getRequest()->getPost('submit');
+    		$btClicked = $this->getRequest()->getPost('submit');
     		$formData = $this->getRequest()->getPost();
     		if($addForm->isValid($formData))
-    		{
-    			$name = $addForm->getValue('name');
-    			$gender = $addForm->getValue('gender');
-       			$titleName = $addForm->getValue('titleName');
-    			$birth = $addForm->getValue('birth');
-    			$idCard = $addForm->getValue('idCard');
-    			$phoneNo = $addForm->getValue('phoneNo');
-    			$otherContact = $addForm->getValue('otherContact');
-    			$address = $addForm->getValue('address');
-    			$remark = $addForm->getValue('remark');
-    			    			
-    			$contacts = new Employee_Models_DbTable_Contact();
-    			$contacts->addContact($name,$gender,$titleName,$birth,$idCard,$phoneNo,$otherContact,$address,$remark);   
-    			if($dec == '保存继续新建')
+    		{  			
+    			$contact = new Employee_Models_Contact();
+    			$contact->setName($editForm->getValue('name'));
+    			$contact->setGender($editForm->getValue('gender'));
+    			$contact->setTitleName($editForm->getValue('titleName'));
+    			$contact->setBirth($editForm->getValue('birth'));
+    			$contact->setIdCard($editForm->getValue('idCard'));
+    			$contact->setPhoneNo($editForm->getValue('phoneNo'));
+    			$contact->setOtherContact($editForm->getValue('otherContact'));
+    			$contact->setAddress($editForm->getValue('adress'));
+    			$contact->setRemark($editForm->getValue('remark'));
+    			$contacts->save($contact);   
+    			
+    			if($btClicked == '保存继续新建')
     			{
    					$addForm->getElement('name')->setValue('');
    					$addForm->getElement('gender')->setValue('');
@@ -132,20 +121,21 @@ class Employee_IndexController extends Zend_Controller_Action
     				$editForm->populate($formData);
     				}
     		}
+        	
+        $this->view->form = $addForm;
     }
     
-    public function ajaxdeleteAction()                //删除
+    public function ajaxdeleteAction()               
     {
         $this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
-   
-   
-   		$id=$this->_getParam('id',0);
-    	if($id >0)
+    
+   		$contactId = $this->_getParam('id',0);
+    	if($contactId >0)
     	{
-    		$contacts = new Employee_Models_DbTable_Contact();
-    		$contacts->deleteContact($id);
-    		echo "1";
+    		$contacts = new Employee_Models_ContactMapper();
+    		$contacts->delete($contactId);
+    		echo "1";//Missing validate if deletion succeed.
     		}
     		else
     		{
@@ -157,14 +147,15 @@ class Employee_IndexController extends Zend_Controller_Action
    	{
    	
    	}
-   	public function ajaxdisplayAction()              //浏览
+   	public function ajaxdisplayAction()              
    	{
    		$this->_helper->layout()->disableLayout();
-   		$id=$this->_getParam('id',0);
-    	if($id >0)
+   		$contactId = $this->_getParam('id',0);
+    	if($contactId >0)
     	{
-   		    $contacts = new Employee_Models_DbTable_Contact();
-   			$contact = $contacts->getContact($id);
+   		    $contacts = new Employee_Models_ContactMapper();
+   		    $contact = new Employee_Models_Contact();
+   			$contact = $contacts->find($contactId,$contact);
    			$this->view->contact = $contact;
    			}
     		else

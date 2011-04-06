@@ -100,7 +100,7 @@ class Project_Models_ProgressMapper
 		foreach($resultSet as $row){
 			$entry = new Project_Models_Progress();
 			$entry ->setStage($row->stage)
-				   ->setTask($row->startDateExp)
+				   ->setTask($row->task)
 				   ->setEndDateExp($row->endDateExp)   
 				   ->setPeriodExp($row->periodExp)
 				   ->setEndDateAct($row->endDateAct)
