@@ -1,7 +1,7 @@
 <?php
 
 /* create by lxj
-   2011-03-28   v 1.1
+   2011-03-28   v 0.2
  */
 
 class General_Models_DbTable_Title extends Zend_Db_Table_Abstract
@@ -19,12 +19,10 @@ class General_Models_DbTable_Title extends Zend_Db_Table_Abstract
 	}
 
 	public function addTitle(
-								$titleId,
 								$name
 								)
 	{
 		$data = array (			
-			'titleId' => $titleId,
 			'name' => $name
 		);
 		$this->insert($data);
