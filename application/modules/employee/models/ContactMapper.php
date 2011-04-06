@@ -74,8 +74,12 @@ class Employee_Models_ContactMapper
     }
 	public function findArrayContact($id) //check
 	{
-		$result = $this->getDbTable()->find($id);
-		return $result;
+		$id = (int)$id;
+		$row = $this->getDbTable()->fetchRow('contactId = ' . $id);
+		if (!$row) {
+			throw new Exception("Could not find row $contactId");
+		}
+		return $row->toArray();
 		}
 
     public function fetchAll() //check
@@ -102,6 +106,12 @@ class Employee_Models_ContactMapper
         }
         return $entries;
     }
+    
+    public function delete($id) //check
+    { 	
+    	$this->getDbTable()->delete('contactId = ' . (int)$id);
+    	}
+    	
     public function populateContactDd($form) //check
   	{		
   		$titles=new General_Models_TitleMapper();
