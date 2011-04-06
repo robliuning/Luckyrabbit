@@ -84,7 +84,7 @@
 						<td><?php echo $this->escape($contact->getTitleName()) ?></td>
 						<td><?php echo $this->escape($contact->getPhoneNo()) ?></td>
 						<td><?php echo $this->escape($contact->getOtherContact()) ?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contactId)?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contactId))?>">修改</a></td>
 						<td></td>
 					</tr>
 					<?php endforeach ?>

@@ -89,24 +89,16 @@ class Project_Models_ProjectMapper
 		} 
 	}*/
 
-    public function getAllInfo()
+    public function fetchAllJoin()
     {
-		//fetch all projects and contact id and name whos post id is 000001 in relevant project. also progress stage
-
-		//1 fetch all project add in to project object
-
-		$dbPro = new Project_Models_DbTable_Project();
-        $select = $dbPro->select()
-			->setIntegrityCheck(false)
-			->from('pm_projects')
-			->order('cTime DESC');
-		$resultSet = $this->getDbTable()->fetchAll($select);
-
+    	//1.get particular project info from projects
+    	$resultSet = $this->getDbTable()->fetchAllJoin();	
         $projects   = array();
-
-        foreach ($resultSet as $row) {
-		$project = new Project_Models_Project(); 
-        $project ->setProjectId($row->projectId)
+        
+        foreach ($resultSet as $row) 
+        {
+			$project = new Project_Models_Project(); 
+        	$project ->setProjectId($row->projectId)
                    ->setName($row->name)
 			       //->setAddress($row->address)
 				   ->setStatus($row->status)
@@ -118,17 +110,27 @@ class Project_Models_ProjectMapper
 				   ->setStaffNo($row->staffNo);
 				   /*->setRemark($row->remark)
 				   ->setCTime($row->cTime);*/
+				   
+			$projectId = $project->getProjectId();
+			
+			//2. find postId of Project Manager
+			$posts = new General_Models_PostMapper();
+			$postName = "工程总负责人";
+			$arrayPost = $posts->findPostByName($postName);
+			$postId = $arrayPost->postId;
+			
+			$
 
             $projects[] = $project;
         }
 		//2 loop all project, search for contact id ,name and max number of stage
-		foreach($projects as $pro)
+		foreach($projects as $project)
 		{
-			$pid = $pro->getProjectId();
 
 			//2.1 find postId of project manager
-			$dbGer = new General_Models_DbTable_Post();
+			$posts = new General_Models_PostMapper();
 			$postName =  "工程总负责人";
+			$arrayPost = $posts->findPostByName($postName);
 			$select = $dbGer->select()
 				->setIntegrityCheck(false)
 				->from('ge_posts',array('postId'))

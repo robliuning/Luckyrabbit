@@ -1,29 +1,27 @@
 <?php
-//Creation date: Apr.1st.2011
 //Author: Meimo
-//Completion date:
+//Date: 2011.4.1
+//Reviewed: Rob
+//Date: 2011.4.6
 
 class Project_IndexController extends Zend_Controller_Action
 {
-
     public function init()
     {
         /* Initialize action controller here */
     }
+    
 	public function preDispatch(){
 	     $this -> view ->render("_sidebar.phtml");
 	 }
 
     public function indexAction()
     {
-       $project  = new Project_Models_ProjectMapper();
-	   $this -> view ->projects = $project -> getAllInfo();
-		// Project manager from em_cpp search key:project id = this and post = 000001
-        // Present progress from pm_progress search
-        // Order by creation date
+       $projects  = new Project_Models_ProjectMapper();
+	   $this -> view ->arrayProjects = $projects -> fetchAllJoin();
     }
     
-    public function addAction()                                        //新建
+    public function addAction()                                        
     {
     	$addForm = new Project_Forms_ProjectSave();
         $addForm->submit->setLabel('保存继续新建');

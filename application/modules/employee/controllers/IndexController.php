@@ -1,6 +1,7 @@
 <?php
 //Author Rob
 //2011.4.6
+
 class Employee_IndexController extends Zend_Controller_Action
 {
     public function init()
@@ -25,9 +26,9 @@ class Employee_IndexController extends Zend_Controller_Action
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 	
-		$contacts = new Employee_Models_ContactMapper()
+		$contacts = new Employee_Models_ContactMapper();
 		$contacts->populateContactDd($editForm);
-		$contactId = $this->_getParam('id',0)
+		$contactId = $this->_getParam('id',0);
     	
     	if($this->getRequest()->isPost())
     	{
@@ -35,6 +36,7 @@ class Employee_IndexController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$contact = new Employee_Models_Contact();
+    			$contact->setContactId($contactId);
     			$contact->setName($editForm->getValue('name'));
     			$contact->setGender($editForm->getValue('gender'));
     			$contact->setTitleName($editForm->getValue('titleName'));
@@ -42,7 +44,7 @@ class Employee_IndexController extends Zend_Controller_Action
     			$contact->setIdCard($editForm->getValue('idCard'));
     			$contact->setPhoneNo($editForm->getValue('phoneNo'));
     			$contact->setOtherContact($editForm->getValue('otherContact'));
-    			$contact->setAddress($editForm->getValue('adress'));
+    			$contact->setAddress($editForm->getValue('address'));
     			$contact->setRemark($editForm->getValue('remark'));
     			$contacts->save($contact);    			
     			
@@ -88,15 +90,15 @@ class Employee_IndexController extends Zend_Controller_Action
     		if($addForm->isValid($formData))
     		{  			
     			$contact = new Employee_Models_Contact();
-    			$contact->setName($editForm->getValue('name'));
-    			$contact->setGender($editForm->getValue('gender'));
-    			$contact->setTitleName($editForm->getValue('titleName'));
-    			$contact->setBirth($editForm->getValue('birth'));
-    			$contact->setIdCard($editForm->getValue('idCard'));
-    			$contact->setPhoneNo($editForm->getValue('phoneNo'));
-    			$contact->setOtherContact($editForm->getValue('otherContact'));
-    			$contact->setAddress($editForm->getValue('adress'));
-    			$contact->setRemark($editForm->getValue('remark'));
+    			$contact->setName($addForm->getValue('name'));
+    			$contact->setGender($addForm->getValue('gender'));
+    			$contact->setTitleName($addForm->getValue('titleName'));
+    			$contact->setBirth($addForm->getValue('birth'));
+    			$contact->setIdCard($addForm->getValue('idCard'));
+    			$contact->setPhoneNo($addForm->getValue('phoneNo'));
+    			$contact->setOtherContact($addForm->getValue('otherContact'));
+    			$contact->setAddress($addForm->getValue('adress'));
+    			$contact->setRemark($addForm->getValue('remark'));
     			$contacts->save($contact);   
     			
     			if($btClicked == '保存继续新建')
@@ -122,7 +124,7 @@ class Employee_IndexController extends Zend_Controller_Action
     				}
     		}
         	
-        $this->view->form = $addForm;
+        $this->view->addForm = $addForm;
     }
     
     public function ajaxdeleteAction()               
@@ -155,7 +157,7 @@ class Employee_IndexController extends Zend_Controller_Action
     	{
    		    $contacts = new Employee_Models_ContactMapper();
    		    $contact = new Employee_Models_Contact();
-   			$contact = $contacts->find($contactId,$contact);
+   			$contacts->find($contactId,$contact);
    			$this->view->contact = $contact;
    			}
     		else

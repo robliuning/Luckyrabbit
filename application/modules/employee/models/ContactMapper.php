@@ -45,7 +45,7 @@ class Employee_Models_ContactMapper
             unset($data['contactId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('contactId = ?' => $contactId));
+            $this->getDbTable()->update($data, array('contactId = ?' => $contact->getContactId()));
         }
     }
     public function find($contactId, Employee_Models_Contact $contact) //check
