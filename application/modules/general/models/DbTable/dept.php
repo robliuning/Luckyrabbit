@@ -20,12 +20,10 @@ class General_Models_DbTable_Dept extends Zend_Db_Table_Abstract
 	}
 
 	public function addDept(
-								$deptId,
 								$name
 								)
 	{
 		$data = array (
-			'deptId' => $deptId,
 			'name' => $name
 		);
 		$this->insert($data);

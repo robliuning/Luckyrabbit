@@ -19,12 +19,10 @@ class General_Models_DbTable_StrucType extends Zend_Db_Table_Abstract
 	}
 
 	public function addstrucType(
-								$strucTypesId,
 								$name
 								)
 	{
 		$data = array (			
-			'strucTypesId' => $strucTypesId,
 			'name' => $name
 		);
 		$this->insert($data);

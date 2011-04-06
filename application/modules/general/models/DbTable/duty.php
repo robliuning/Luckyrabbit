@@ -1,7 +1,7 @@
 <?php
 
 /* create by lxj
-   2011-03-28   v 1.1
+   2011-03-28   v 0.2
  */
 
 class General_Models_DbTable_Duty extends Zend_Db_Table_Abstract
@@ -19,12 +19,10 @@ class General_Models_DbTable_Duty extends Zend_Db_Table_Abstract
 	}
 
 	public function addDuty(
-								$dutyId,
 								$name
 								)
 	{
 		$data = array (
-			'dutyId' => $dutyId,
 			'name' => $name
 		);
 		$this->insert($data);
