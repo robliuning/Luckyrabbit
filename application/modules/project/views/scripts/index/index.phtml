@@ -61,11 +61,12 @@
 						<td></td>
 						<td></td>
 					</tr>	
-					<?php foreach($this->projects as $entry):?>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayProjects as $project):?>
+					<?php  ?>
 					<tr>
 						<td><input type="checkbox" name="cbEmp" value="<?php echo $this->escape($entry->getProjectId()); ?>"></td>
 						<td><?php 
-							$counter = 1;
 							echo $counter;
 							$counter++;
 						?></td>

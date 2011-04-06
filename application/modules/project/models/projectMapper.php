@@ -119,12 +119,30 @@ class Project_Models_ProjectMapper
 			$arrayPost = $posts->findPostByName($postName);
 			$postId = $arrayPost->postId;
 			
-			$
-
+			$cpps = new Employee_Models_CppMapper();
+			$arrayContacts = $cpps->findContact($projectId,$postId);
+			$project->setCId($arrayContacts[0]->contactId);
+			$project->setCName($arrayContacts[0]->name);
+			
+			//3. find max stage number
+			$progresses = new Project_Models_ProgressMapper();
+			$arrayProgresses = $progresses->fetchAllStages($projectId);
+			$project->setStage(count($arrayProgresses));
+			
+			/*$dbProgress = new Project_Models_DbTable_Progress();
+			$select = $dbProgress->select()
+				->setIntegrityCheck(false)
+				->from('pm_progresses','stage')
+				->where('projectId = ?',$pid);
+			$rows = $dbProgress->fetchAll($select);
+			$pro->setStage(count($rows));*/	
             $projects[] = $project;
         }
+        
+        return $projects;
+	}  
 		//2 loop all project, search for contact id ,name and max number of stage
-		foreach($projects as $project)
+	/*	foreach($projects as $project)
 		{
 
 			//2.1 find postId of project manager
@@ -151,18 +169,10 @@ class Project_Models_ProjectMapper
 			$pro->setCName($result[0]->name);
 		
 			//2.3 search for max stage number
-			$dbProgress = new Project_Models_DbTable_Progress();
-			$select = $dbProgress->select()
-				->setIntegrityCheck(false)
-				->from('pm_progresses','stage')
-				->where('projectId = ?',$pid);
-			$rows = $dbProgress->fetchAll($select);
-			$pro->setStage(count($rows));
-			
-			}
+						
+			}*/
 		//3 return object
        
-        return $projects;
-    }  
+
 }
 ?>
