@@ -1,9 +1,10 @@
 <?php
   //creation date 03-04-2011
   //creating by lincoy
-  //completion date 04-04-2011
+  //completion date 04-08-2011
 class Project_Models_Log
 {
+	protected $_pLogId;
 	protected $_projectId;
 	protected $_logDate;
 	protected $_weather;
@@ -20,7 +21,55 @@ class Project_Models_Log
 	protected $_machine;
 	protected $_utility;
 	protected $_remark;
-	protected $_ctime;
+	protected $_cTime;
+
+	public function __construct(array $options = null)
+    {
+        if (is_array($options)) {
+            $this->setOptions($options);
+        }
+    }
+
+    public function __set($name, $value)
+    {
+        $method = 'set' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method)) {
+            throw new Exception('Invalid progress property');
+        }
+        $this->$method($value);
+    }
+
+    public function __get($name)
+    {
+        $method = 'get' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method)) {
+            throw new Exception('Invalid progress property');
+        }
+        return $this->$method();
+    } 
+
+    public function setOptions(array $options)
+    {
+        $methods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $methods)) {
+                $this->$method($value);
+            }
+        }
+        return $this;
+    }
+
+	public function setPLogId($pLogId)
+	{
+		$this->_pLogId = $pLogId;
+		return $this;
+	}
+	public function getPLogId()
+	{
+		return $this->_pLogId;
+	}
+	/*************************************************/
 
 	public function setProjectId($projectId)
 	{
