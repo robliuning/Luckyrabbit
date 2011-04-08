@@ -2,13 +2,15 @@
 
 /*create by lxj
   2011-04-04	v1.1
+  rewrite by lxj
+  2011-04-08   v0.2
   */
 
 class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 {
     protected $_name = 'sc_contractors'; 
 
-	public function getContract($ContractId)
+	public function findArrayContract($ContractId)
 	{
 		$ContractId = (int)$ContractId;
 		$row = $this->fetchRow('ContractId = ' . $ContractId);
@@ -18,11 +20,18 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 
+	public function deleteContract($contractId)
+	{
+		$this->delete('contractId = '.(int)$contractorId);
+	}
+
+
 	public function addContract(
 								$name,
 								$artiPerson,
 								$licenseNo,
 								$busiField,
+								$phoneNo,
                                 $otherContact, 
                                 $address,
                                 $remark
@@ -31,7 +40,9 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 		$data = array (
 			'name' => $name,
 			'artiPerson' => $artiPerson,
-			'licenseNo' => $licenseNO,
+			'licenseNo' => $licenseNo,
+			'busiField' => $busiField,
+			'phoneNo' => $phoneNo,
 			'otherContact' => $otherContact,
 			'address' => $address,
 			'remark' => $remark
@@ -45,6 +56,7 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 								$artiPerson,
 								$licenseNo,
 								$busiField,
+								$phoneNo,
                                 $otherContact,
                                 $address,
                                 $remark
@@ -56,6 +68,7 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 			'artiPerson' => $artiPerson,
 			'licenseNo' => $licenseNo,
 			'busiField' => $busiField,
+			'phoneNo' => $phoneNo,
             'otherContact' => $otherContact,
             'address' => $address,
             'remark' => $remark
@@ -64,27 +77,30 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 		$this->update($data, 'contractId = '.(int)$contractorId);
 	}
 
-	public function deleteCpp($contractId)
+	public function Search($key, $condition)
 	{
-		$this->delete('contractId = '.(int)$contractorId);
-	}
-		
-	public function populateCppDd($form)
-  	{
-  		$post=new General_Models_DbTable_Post();
-		$postname = $post->fetchAll(); 
-		$project=new Project_Models_DbTable_Project();
-		$projectName = $project->fetchAll();
+		$select = $this->select();
+		if($condition == "name")
+		{
+			$select->where("name like ?","%$key%");
+			}
+		elseif($condition == "artiPerson")
+		{
+			$select->where("artiPerson like ?","%$key%");
+			}
+		elseif($condition == "address")
+		{
+			$select->where("address like ?","%$key%");
+			}
+		elseif($condition == "remark")
+		{
+			$select->where("remark like ?","%$key%");
+			}
 
-		foreach($postname as $op)
-		{
-			$form->getElement('postName')->addMultiOption($op->postId,$op->name);
-			}
-		foreach($projectName as $op)
-		{
-			$form->getElement('projectName')->addMultiOption($op->projectId,$op->name);
-			}
-  	}
+    	$resultSet = $this->fetchAll($select);
+		return $resultSet;
+	}
+
 
 }
 

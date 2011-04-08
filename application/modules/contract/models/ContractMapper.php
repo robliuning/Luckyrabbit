@@ -1,5 +1,11 @@
 <?php
 
+/* write by lxj
+   2011-04-03   v2.0
+   rewrite by lxj
+   2011-04-08   v0.2
+   */
+
 class Contract_Models_ContractMapper
 {
 	protected $_dbTable;
@@ -15,6 +21,7 @@ class Contract_Models_ContractMapper
         $this->_dbTable = $dbTable;
         return $this;
     }
+
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
@@ -22,6 +29,7 @@ class Contract_Models_ContractMapper
         }
         return $this->_dbTable;
     }
+
     public function save(Contract_Models_Contract $contract)
     {
         $data = array(
@@ -30,6 +38,7 @@ class Contract_Models_ContractMapper
             'artiPerson' => $contract->getArtiPerson(),
             'licenseNo' => $contract->getLicenseNo(),
 			'busiField' => $contract->getBusiField(),
+			'phoneNo' => $contract->getPhoneNo(),
 			'otherContact' => $contract->getOtherContact(),
 			'address' => $contract->getAddress(),
 			'remark' => $contract->getRemark()
@@ -41,11 +50,12 @@ class Contract_Models_ContractMapper
             $this->getDbTable()->update($data, array('contractorId = ?' => $contractorId));
         }
     }
-    public function find($contractorId, Contract_Models_Contract $contractorId)
+
+    public function find($contractorId, Contract_Models_Contract $contractor)
 
     {
 
-        $result = $this->getDbTable()->find($empId);
+        $result = $this->getDbTable()->find($contractorId);
 
         if (0 == count($result)) {
 
@@ -55,36 +65,67 @@ class Contract_Models_ContractMapper
 
         $row = $result->current();
 
-        $employee ->setEmpId($row->empId)
-        		  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setStatus($row->status);
+        $contractor ->setContractorId($row->contractorId)
+        		  ->setName($row->name)
+                  ->setArtiPerson($row->artiPerson)
+                  ->setLicenseNo($row->licenseNo)
+				  ->setBusiField($row->busiField)
+				  ->setPhoneNo($row->phoneNo)
+				  ->setOtherContact($row->otherContact)
+				  ->setAddress($row->address)
+				  ->setRemark($row->remark);
     }
+ 
+	public function delete($id) //check
+    {
+    	$result = $this->getDbTable()->delete('contractorId = ' . (int)$id);
+    	return $result;	
+    	}
  
 
     public function fetchAll()
-
     {
 
         $resultSet = $this->getDbTable()->fetchAll();
-
         $entries   = array();
-
         foreach ($resultSet as $row) {
+            $entry = new Contract_Models_Contract();
 
-            $entry = new Employee_Models_Employee();
-
-			$entry->setEmpId($row->empId)
-				  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setStatus($row->status);
+			 $entry ->setContractorId($row->contractorId)
+        				 ->setName($row->name)
+						 ->setArtiPerson($row->artiPerson)
+						 ->setLicenseNo($row->licenseNo)
+						 ->setBusiField($row->busiField)
+				         ->setPhoneNo($row->phoneNo)
+						 ->setOtherContact($row->otherContact)
+						 ->setAddress($row->address)
+						 ->setRemark($row->remark);
                   
             $entries[] = $entry;
 
         }
-
         return $entries;
-
     }
+
+	public function Search($key, $condition)
+	{
+		 $resultSet = $this->getDbTable()->Search($key, $condition);
+         $entries   = array();
+         foreach ($resultSet as $row) {
+             $entry = new Contract_Models_Contract();
+
+			 $entry ->setContractorId($row->contractorId)
+        				 ->setName($row->name)
+						 ->setArtiPerson($row->artiPerson)
+						 ->setLicenseNo($row->licenseNo)
+						 ->setPhoneNo($row->phoneNo)
+						 ->setOtherContact($row->otherContact)
+						 ->setAddress($row->address);
+                  
+            $entries[] = $entry;
+        }
+        return $entries;
+	}
+
 }
 ?>
