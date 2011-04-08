@@ -15,69 +15,54 @@ class Contract_Models_ContrqualifMapper
         $this->_dbTable = $dbTable;
         return $this;
     }
+
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Employee_Models_DbTable_Employee');
+            $this->setDbTable('Contract_Models_DbTable_Contrqualif');
         }
         return $this->_dbTable;
     }
-    public function save(Employee_Models_Employee $employee,$option) //check
+
+    public function save(Contract_Models_Contrqualif $contrqualif) //check
     {
         $data = array(
-            'empId' => $employee->getEmpId(),
-            'deptName' => $employee->getDeptName(),
-            'dutyName' => $employee->getDutyName(),
-            'status' => $employee->getStatus(),
+            'cqId' => $contrqualif->getCqId(),
+            'ContractorId' => $contrqualif->getContractorId(),
+            'qualifSerie' => $contrqualif->getQualifSerie(),
+            'qualifType' => $contrqualif->getQualifType(),
+			'qualifGrade' => $contrqualif->getQualifGrade()
         );
-        if ($option == 'add') {
+        if (null === ($id = $contrqualif->getCqId())) {
+            unset($data['cqId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('empId = ?' => $employee->getEmpId()));
+            $this->getDbTable()->update($data, array('cqId = ?' => $cqId));
         }
     }
-    public function find($empId, Employee_Models_Employee $employee)
 
+    public function find($cqId, Contract_Models_Contrqualif $contrqualif)
     {
-
-        $result = $this->getDbTable()->find($empId);
-
+        $result = $this->getDbTable()->find($cqId);
         if (0 == count($result)) {
-
             return;
-
         }
-
         $row = $result->current();
 
-        $employee ->setEmpId($row->empId)
-        		  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setStatus($row->status);
+        $contrqualif->setCqId($row->cqId)
+        		  ->setContractorId($row->ContractorId)
+                  ->setQualifSerie($row->qualifSerie)
+                  ->setQualifType($row->qualifType)
+				  ->setQualifGrade($row->qualifGrade);
     }
  
-
-    public function fetchAll()
+    public function fetchAllQualifTypes($key)
     {
+		$qualiftypes = new General_Models_QualifTypeMapper();
 
-        $resultSet = $this->getDbTable()->fetchAll();
+		$arrayQualifTypes = $qualiftypes->fetchAll($key);
 
-        $entries   = array();
-
-        foreach ($resultSet as $row) {
-
-            $entry = new Employee_Models_Employee();
-
-			$entry->setEmpId($row->empId)
-				  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setStatus($row->status);
-                  
-            $entries[] = $entry;
-
-        }
-
-        return $entries;
+		return $arrayQualifTypes;
     }
     
     public function findArrayEmployee($id) //check
@@ -126,5 +111,6 @@ class Contract_Models_ContrqualifMapper
 			$form->getElement('dutyName')->addMultiOption($duty->getName(),$duty->getName());
 			}
   	}
+
 }
 ?>
