@@ -175,6 +175,6 @@ class Project_Models_ProjectMapper
 		{
 			$form->getElement('structype')->addMultiOption($structype->getName(),$structype->getName());
 			}
-	}         
+	}  
 }
 ?>

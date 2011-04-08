@@ -28,6 +28,7 @@ class Project_Models_LogMapper
     public function save(Project_Models_Log $log)
     {
         $data = array(
+			'pLogId' => $log->getPLogId(),
 			'projectId' => $log->getProjectId(),
 			'logDate' => $log->getLogDate(),
 			'weather' => $log->getWeather(),
@@ -43,30 +44,28 @@ class Project_Models_LogMapper
 			'material' => $log->getMaterial(),
 			'machine' => $log->getMachine(),
 			'utility' => $log->getUtility(),
-			'remark' => $progress->getRemark(),
-			'cTime' => $progress->getCTime()
+			'remark' => $progress->getRemark()
         );
-        if (null === ($id = $log->getProjectId())) {
-            unset($data['projectId']);
+        if (null === ($id = $log->getPLogId())) {
+            unset($data['pLogId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('projectId = ?' => $projectId));
+            $this->getDbTable()->update($data, array('pLogId = ?' => $log->getPLogId()));
         }
     }
 
-    public function find($projectId)
+    public function find($pLogId)
     {
-		$log = new Project_Models_Progress();
-        $result = $this->getDbTable()->find($projectId);
-
+		$pLog = new Project_Models_Log();
+        $result = $this->getDbTable()->find($pLogId);
         if (0 == count($result)) {
 
             return;
         }
-
         $row = $result->current();
 
-        $log  ->setProjectId($row->projectId)
+        $pLog  ->setPLogId($row->pLogId)
+			  ->setProjectId($row->projectId)
               ->setLogDate($row->logDate)
 			  ->setWeather($row->weather)
 			  ->setTempHi($row->tempHi)
@@ -84,94 +83,23 @@ class Project_Models_LogMapper
 			  ->setRemark($row->remark)
 			  ->setCTmie($row->cTime);
 		
-		return $log;
+		return $pLog;
     }
-///// 以下内容需要根据controller 来改动
-	/*public function fetchAll()
+
+	public function populateLogDd($form)         //填充projectId and projectName
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
-		$entries = array();
-		foreach($resultSet as $row){
-			$entry = new Project_Models_Project();
-			$entry ->setProjectId($row->projectId)
-				   ->setName($row->name);
-
-			$entries[] = $entry;
-		} 
-	}*/
-
-    public function getAllInfo()
-    {
-		//fetch all projects and contact id and name whos post id is 000001 in relevant project. also progress stage
-
-		//1 fetch all project add in to project object
-
-		$dbPro = new Project_Models_DbTable_Project();
-        $select = $dbPro->select()
-			->setIntegrityCheck(false)
-			->from('pm_projects')
-			->order('cTime DESC');
-		$resultSet = $this->getDbTable()->fetchAll($select);
-
-        $projects   = array();
-
-        foreach ($resultSet as $row) {
-		$project = new Project_Models_Project(); 
-        $project ->setProjectId($row->projectId)
-                   ->setName($row->name)
-			       //->setAddress($row->address)
-				   ->setStatus($row->status)
-				   ->setStructType($row->structType)
-				   /*->setLevel($row->level)
-				   ->setAmount($row->amount)
-				   ->setPurpose($row->purpose)
-				   ->setConstrArea($row->constrArea)*/
-				   ->setStaffNo($row->staffNo);
-				   /*->setRemark($row->remark)
-				   ->setCTime($row->cTime);*/
-
-            $projects[] = $project;
-        }
-		//2 loop all project, search for contact id ,name and max number of stage
-		foreach($projects as $pro)
+		$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames();
+		foreach($arrayProjects as $project)
 		{
-			$pid = $pro->getProjectId();
-
-			//2.1 find postId of project manager
-			$dbGer = new General_Models_DbTable_Post();
-			$postName =  "工程总负责人";
-			$select = $dbGer->select()
-				->setIntegrityCheck(false)
-				->from('ge_posts',array('postId'))
-				->where('name = ?',$postName);  
-			$result = $dbGer->fetchAll($select);
-			$postId = $result[0]->postId;
-
-			//2.2 search for contact id and name 
-			$dbCpp = new Employee_Models_DbTable_Cpp();
-			$select = $dbCpp->select()
-				->setIntegrityCheck(false)
-				->from(array('e'=>'em_cpp'),array('contactId'))
-				->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
-				->where('e.projectId = ?',$pid)
-				->where('e.postId = ?',$postId);
-			$result = $dbCpp->fetchAll($select);
-			$pro->setCId($result[0]->contactId);
-			$pro->setCName($result[0]->name);
-		
-			//2.3 search for max stage number
-			$dbProgress = new Project_Models_DbTable_Progress();
-			$select = $dbProgress->select()
-				->setIntegrityCheck(false)
-				->from('pm_progresses','stage')
-				->where('projectId = ?',$pid);
-			$rows = $dbProgress->fetchAll($select);
-			$pro->setStage(count($rows));
-			
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
 			}
-		//3 return object
-       
-        return $projects;
-    }  
+	} 
+
+	public function fetchAllDates($startDate,$endDate,$projectId)   //根据projectId, start date, end date获得 projectLogId  //and logDate
+	{
+		return $this->getDbTable()->fetchAllDates($startDate,$endDate,$projectId);
+	}
+
 }
 ?>
