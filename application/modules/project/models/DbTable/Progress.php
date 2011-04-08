@@ -87,6 +87,15 @@ class Project_Models_DbTable_Progress extends Zend_Db_Table_Abstract
 		{
 			$form->getElement('projectId')->addMultiOption($op->projectId,$op->name);
 			}
-	} 
+	}
+	
+	public function fetchAllStages($projectId) //check
+	{
+		$select = $this->select()
+				->from('pm_progresses',array('stage'))
+				->where('projectId = ?',$projectId);
+		$entries = $this->fetchAll($select);
+		return $entries;
+		} 
 }
 ?>

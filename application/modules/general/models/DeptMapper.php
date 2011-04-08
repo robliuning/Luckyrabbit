@@ -23,7 +23,7 @@ class General_Models_DeptMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('General_Model_DbTable_Dept');
+            $this->setDbTable('General_Models_DbTable_Dept');
         }
         return $this->_dbTable;
     }

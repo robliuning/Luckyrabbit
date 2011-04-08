@@ -1,9 +1,8 @@
 <?php
 /*created: 2011.3.27
   author: mingtingling
-  review:mingtingling
+  review:mingtingling rob
   review time:2011.4.3
-  version: v0.1
 */
 class Employee_Forms_CppSave extends Zend_Form
 {
@@ -29,7 +28,7 @@ class Employee_Forms_CppSave extends Zend_Form
 		);
 		$this->addElement(
 			/*所属工程*/
-		     'select','projectName',array(
+		     'select','projectId',array(
 			    'label'=>'所属工程:',
 			    'required'=>true,
 			    'class'=>'tbLarge tbText'
@@ -59,35 +58,7 @@ class Employee_Forms_CppSave extends Zend_Form
 			    'class'=>'tbLarge tbText'
 		      )
 		);
-		$this->addElement(
-		     /*员工姓名对应的Id,隐藏域*/
-		      'text','contactId',array(
-			    'required'=>false,
-			    'class'=>'hide',
-			    'value'=>'000002'
-			  )
-		);
-		$this->addElement(
-		     /*未更新前的岗位编号,隐藏域*/
-		      'text','prePostId',array(
-			    'required'=>false,
-			    'class'=>'hide'
-			  )		
-		);
-		$this->addElement(
-		     /*未更新前的岗位编号,隐藏域*/
-		      'text','preContactId',array(
-			    'required'=>false,
-			    'class'=>'hide'
-			  )		
-		);
-		$this->addElement(
-		     /*未更新前的工程ID,隐藏域*/
-		      'text','preProjectName',array(
-			    'required'=>false,
-			    'class'=>'hide'
-			  )		
-		);
+
 	   $this->addElement(
 		   /*按钮一*/
 		      'submit','submit',array(
@@ -104,6 +75,15 @@ class Employee_Forms_CppSave extends Zend_Form
 		          'name'=>'submit'
 	          )
 	  );
+	  		$this->addElement(
+		     /*员工姓名对应的Id,隐藏域*/
+		      'text','contactId',array(
+			    'required'=>false,
+			    'class'=>'hide',
+			    'value'=>'000020'
+			  )
+		);
+				
       $this->setElementDecorators(array(
               'ViewHelper','Errors',
                   array(array('data'=>'HtmlTag'),

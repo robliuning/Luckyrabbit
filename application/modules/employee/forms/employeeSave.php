@@ -26,7 +26,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
-     $this->addElement(
+     	$this->addElement(
 			'select', 'dutyName', array(
 			'label' => '职务: ',
 			'required' => false,
@@ -34,7 +34,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 			)
 		);
 
-    $this->addElement(
+    	$this->addElement(
 			'select', 'status', array(
 			'label' => '员工状态: ',
 		    'multiOptions'=>array('0'=>'在职','1'=>'离职'),
@@ -61,7 +61,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	$this->addElement(                 
 			'text','empId',array(
 		//	'filters'=>array('StringTrim'),
-			'value'=>'000009',
+			'value'=>'100009',
 			'class'=>'hide'
 			)
 		);
@@ -72,8 +72,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
             array(array('data'=>'HtmlTag'),
             array('tag'=>'td','class'=>'element')),
             array('Label',array('tag'=>'td')),
-            array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
-
+            array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
    		 ));
 
 		$this->setDecorators(array(
@@ -81,8 +80,6 @@ class Employee_Forms_EmployeeSave extends Zend_Form
             array('HtmlTag',array('tag'=>'table')),
             'Form'
         ));
-
-
     }
 }
 ?>

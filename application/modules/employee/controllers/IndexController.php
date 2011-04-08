@@ -19,7 +19,60 @@ class Employee_IndexController extends Zend_Controller_Action
     	$contacts = new Employee_Models_ContactMapper();
       	$this->view->arrayContacts = $contacts->fetchAll();
     }
-    
+     
+    public function addAction()                       
+    {
+        $addForm = new Employee_Forms_ContactSave();
+        $addForm->submit->setLabel('保存继续新建');
+        $addForm->submit2->setLabel('保存返回上页');
+        
+    	$contacts=new Employee_Models_ContactMapper();
+    	$contacts->populateContactDd($addForm);
+    	    	
+    	if($this->getRequest()->isPost())
+    	{
+    		$btClicked = $this->getRequest()->getPost('submit');
+    		$formData = $this->getRequest()->getPost();
+    		if($addForm->isValid($formData))
+    		{  			
+    			$contact = new Employee_Models_Contact();
+    			$contact->setName($addForm->getValue('name'));
+    			$contact->setGender($addForm->getValue('gender'));
+    			$contact->setTitleName($addForm->getValue('titleName'));
+    			$contact->setBirth($addForm->getValue('birth'));
+    			$contact->setIdCard($addForm->getValue('idCard'));
+    			$contact->setPhoneNo($addForm->getValue('phoneNo'));
+    			$contact->setOtherContact($addForm->getValue('otherContact'));
+    			$contact->setAddress($addForm->getValue('adress'));
+    			$contact->setRemark($addForm->getValue('remark'));
+    			$contacts->save($contact);   
+    			
+    			if($btClicked == '保存继续新建')
+    			{
+   					$addForm->getElement('name')->setValue('');
+   					$addForm->getElement('gender')->setValue('');
+   					$addForm->getElement('titleName')->setValue('');
+   					$addForm->getElement('birth')->setValue('');
+   					$addForm->getElement('idCard')->setValue('');
+   					$addForm->getElement('phoneNo')->setValue('');
+   					$addForm->getElement('otherContact')->setValue('');
+					$addForm->getElement('address')->setValue('');
+   					$addForm->getElement('remark')->setValue('');
+   					}
+   					else
+    				{
+    					$this->_redirect('/employee');
+    					} 			
+    			}
+    			else
+    			{
+    				$editForm->populate($formData);
+    				}
+    		}
+        	
+        $this->view->addForm = $addForm;
+    }
+         
     public function editAction()                                  
     {
     	$editForm = new Employee_Forms_ContactSave();
@@ -70,62 +123,7 @@ class Employee_IndexController extends Zend_Controller_Action
     	$this->view->editForm = $editForm;
     	$this->view->id = $contactId;
     	}
-    
-    public function addAction()                       
-    {
-        $addForm = new Employee_Forms_ContactSave();
-        $addForm->submit->setLabel('保存继续新建');
-        $addForm->submit2->setLabel('保存返回上页');
-        
-    	$contacts=new Employee_Models_ContactMapper();
-    	$contacts->populateContactDd($addForm);
-   
-    	$tbId = $addForm->getElement('contactId');
-    	$tbId->setValue('通讯录编号在保存新建后自动生成');
-    	    	
-    	if($this->getRequest()->isPost())
-    	{
-    		$btClicked = $this->getRequest()->getPost('submit');
-    		$formData = $this->getRequest()->getPost();
-    		if($addForm->isValid($formData))
-    		{  			
-    			$contact = new Employee_Models_Contact();
-    			$contact->setName($addForm->getValue('name'));
-    			$contact->setGender($addForm->getValue('gender'));
-    			$contact->setTitleName($addForm->getValue('titleName'));
-    			$contact->setBirth($addForm->getValue('birth'));
-    			$contact->setIdCard($addForm->getValue('idCard'));
-    			$contact->setPhoneNo($addForm->getValue('phoneNo'));
-    			$contact->setOtherContact($addForm->getValue('otherContact'));
-    			$contact->setAddress($addForm->getValue('adress'));
-    			$contact->setRemark($addForm->getValue('remark'));
-    			$contacts->save($contact);   
-    			
-    			if($btClicked == '保存继续新建')
-    			{
-   					$addForm->getElement('name')->setValue('');
-   					$addForm->getElement('gender')->setValue('');
-   					$addForm->getElement('titleName')->setValue('');
-   					$addForm->getElement('birth')->setValue('');
-   					$addForm->getElement('idCard')->setValue('0');
-   					$addForm->getElement('phoneNo')->setValue('0');
-   					$addForm->getElement('otherContact')->setValue('');
-					$addForm->getElement('address')->setValue('');
-   					$addForm->getElement('remark')->setValue('');
-   					}
-   					else
-    				{
-    					$this->_redirect('/employee');
-    					} 			
-    			}
-    			else
-    			{
-    				$editForm->populate($formData);
-    				}
-    		}
-        	
-        $this->view->addForm = $addForm;
-    }
+
     
     public function ajaxdeleteAction()               
     {
@@ -145,8 +143,20 @@ class Employee_IndexController extends Zend_Controller_Action
     			}
     }
    	
+   	public function autocompleteAction()
+   	{
+   	    $this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$key = $this->_getParam('key');
+    	$contacts = new Employee_Models_ContactMapper();
+    	$arrayNames = $contacts->findContactNames($key);
+    	
+    	echo $key;
+   		}
+   	
    	public function searchAction()
    	{
+   	//get search key
    	
    	}
    	public function ajaxdisplayAction()              

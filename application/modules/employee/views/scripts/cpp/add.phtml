@@ -21,13 +21,13 @@
 				<div class="button_group">
 					<div><a href="/employee/index/add"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="/employee"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/employee/cpp"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
 					<?php
-						$this->form->setAction($this->url());
-						echo $this->form;
+						$this->addForm->setAction($this->url());
+						echo $this->addForm;
 					?>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->

@@ -2,9 +2,11 @@
 
 /* create by lxj
    2011-04-06  v 0.2
+   review rob
+   date 2011.4.3
  */
 
-class General_Models_Post
+class General_Models_Structype
 {     
     protected $_structypeId;
 	protected $_name;

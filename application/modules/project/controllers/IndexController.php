@@ -15,7 +15,7 @@ class Project_IndexController extends Zend_Controller_Action
 	     $this -> view ->render("_sidebar.phtml");
 	 }
 
-    public function indexAction()
+    public function indexAction() 
     {
        $projects  = new Project_Models_ProjectMapper();
 	   $this -> view ->arrayProjects = $projects -> fetchAllJoin();
@@ -24,46 +24,43 @@ class Project_IndexController extends Zend_Controller_Action
     public function addAction()                                        
     {
     	$addForm = new Project_Forms_ProjectSave();
-        $addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-        $addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
-    	$tbId = $addForm->getElement('projectId');
-    	$tbId->setValue('¹¤³Ì±àºÅÔÚ±£´æÐÂ½¨ºó×Ô¶¯Éú³É');
-		//populate dd structure type
-		$projs = new Project_Models_DbTable_Project();			
-		$projs->populateDd($addForm);
-		//end
-    	$this->view->form = $addForm;
-    	
+        $addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+        $addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
+        
+		$projects = new Project_Models_ProjectMapper();
+		$projects->populateDd($addForm);
+	    	
     	if($this->getRequest()->isPost())
     	{
-    		$dec = $this->getRequest()->getPost('submit');
+    		$btClicked = $this->getRequest()->getPost('submit');
     		$formData = $this->getRequest()->getPost();
     		if($addForm->isValid($formData))
     		{
-    			$name = $addForm->getValue('name');
-    			$address = $addForm->getValue('address');
-    			$status = $addForm->getValue('status');
-    			$structType = $addForm->getValue('strucTypesId');
-    			$level = $addForm->getValue('level');
-    			$amount = $addForm->getValue('amount');
-    			$purpose = $addForm->getValue('purpose');
-    			$constrArea = $addForm->getValue('constrArea');
-				$staffNo = $addForm->getValue('staffNo');
-				$remark = $addForm->getValue('remark');
-    			$projs->addProject($name,$address,$status,$structType,$level,$amount,$purpose,$constrArea,$staffNo,$remark);   
-    			if($dec == '±£´æ¼ÌÐøÐÂ½¨')
+    			$project = new Project_Models_Project();
+    			$project->setName($addForm->getValue('name'));
+    			$project->setAddress($addForm->getValue('address'));
+    			$project->setStatus($addForm->getValue('status'));
+    			$project->setStructype($addForm->getValue('structype'));
+    			$project->setLevel($addForm->getValue('level'));
+    			$project->setAmount($addForm->getValue('amount'));
+    			$project->setPurpose($addForm->getValue('purpose'));
+    			$project->setConstrArea($addForm->getValue('constrArea'));
+    			$project->setStaffNo($addForm->getValue('staffNo'));
+     			$project->setRemark($addForm->getValue('remark'));
+    			$projects->save($project);   
+    			
+    			if($btClicked == 'ä¿å­˜ç»§ç»­æ–°å»º')
     			{
    					$addForm->getElement('name')->setValue('');
    					$addForm->getElement('address')->setValue('');
    					$addForm->getElement('status')->setValue('');
-   					$addForm->getElement('structType')->setValue('0');
+   					$addForm->getElement('structype')->setValue('0');
    					$addForm->getElement('level')->setValue('0');
    					$addForm->getElement('amount')->setValue('');
 					$addForm->getElement('purpose')->setValue('');
    					$addForm->getElement('constrArea')->setValue('');
 					$addForm->getElement('staffNo')->setValue('');
 					$addForm->getElement('remark')->setValue('');
-					$addForm->getElement('cTime')->setValue('');
    					}
    					else
     				{
@@ -75,40 +72,39 @@ class Project_IndexController extends Zend_Controller_Action
     				$addForm->populate($formData);
     				}
     		}
-		// fill the structType db
-    
+		    $this->view->addForm = $addForm;
     	}
     
-    public function editAction()                                //±à¼­
+    public function editAction()                                //ç¼–è¾‘
     {
         $editForm = new Project_Forms_ProjectSave();
-    	$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+    	$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
-		//populate dd structure type
-    	$projs = new Project_Models_DbTable_Project();
-		$projs->populateDd($editForm);
-		//end
-    	$this->view->form = $editForm;
-    	$this->view->id = $this->_getParam('id');    	
-		$proj = new Project_Models_DbTable_Project();
 
+		$projects = new Project_Models_ProjectMapper();
+		$projects->populateDd($editForm);
+		
+		$projectId = $this->_getParam('id',0); 
+   	
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
     		{
-    			$projectId = $this->_getParam('id');
-    			$name = $editForm->getValue('name');	
-    			$address = $editForm->getValue('address');
-    			$status = $editForm->getValue('status');
-    			$structType = $editForm->getValue('structType');
-    			$level = $editForm->getValue('level');
-    			$amount = $editForm->getValue('amount');
-    			$purpose = $editForm->getValue('purpose');
-    			$constrArea = $editForm->getValue('constrArea');
-				$staffNo = $editForm->getValue('staffNo');
-				$remark = $editForm->getValue('remark');
-    			$projs->updateProject($projectId,$name,$address,$status,$structType,$level,$amount,$purpose,$constrArea,$staffNo,$remark);    					
+    			$project = new Project_Models_Project();
+    			$project->setProjectId($projectId);
+       			$project->setName($editForm->getValue('name'));
+    			$project->setaddress($editForm->getValue('address'));
+    			$project->setStatus($editForm->getValue('status'));
+    			$project->setStructype($editForm->getValue('structype'));
+    			$project->setLevel($editForm->getValue('level'));
+    			$project->setAmount($editForm->getValue('amount'));
+    			$project->setPurpose($editForm->getValue('purpose'));
+    			$project->setConstrArea($editForm->getValue('constrArea'));
+    			$project->setStaffNo($editForm->getValue('staffNo'));
+     			$project->setRemark($editForm->getValue('remark'));
+    			$projects->save($project); 
+    			 
     			$this->_redirect('/project');
     			}
     			else
@@ -121,53 +117,54 @@ class Project_IndexController extends Zend_Controller_Action
     			$id=$this->_getParam('id',0);
     			if($id >0)
     			{
-    				$editForm->populate($projs->getProject($id));
+    			    $arrayProject = $projects->findArrayProject($projectId);
+    				$editForm->populate($arrayProject);
     				}
     				else
     				{
     					$this->_redirect('/project');
     					}
+    			}		
+    	$this->view->form = $editForm;
+    	$this->view->id = $projectId;     	
+    }
+    
+   public function displayAction()                                                    
+    {  
+       $projects = new Project_Models_ProjectMapper();
+	   $projectId = $this->_getParam('id',0);
+	   if($projectId >0)
+       {
+       		$project = $projects->find($projectId);   
+       		$this->view->id = $projectId;
+	   		$this ->view->project = $project;      		
+    		}
+    		else
+    		{
+    			$this->_redirect('/project');
     			}
-		
-		// fill the structType db
-    	}
-    
-   public function displayAction()                //ä¯ÀÀ                                        
-    {  //ÏÔÊ¾projectÐÅÏ¢  £¨display project info£©
-       $displayOne = new Project_Models_ProjectMapper();   
-	   $projectId = $this->_getParam('id');
-	   $this->view->id = $projectId;
-	   $this -> view ->projects = $displayOne -> Find($projectId);
-       
-	    //ÏÔÊ¾¸ÃprojectÏÂµÄ¸ÚÎ»¼°ÈËÔ±£¨display employees related to this project£©
-	   $cpp = new Employee_Models_Dbtable_Cpp(); 
-	   $condition = "projectId";
-	   $this -> view -> cpps = $cpp -> fetchALL($projectId,$condition);   
-    
-    
-    //display relevant project progress
-    //display relevant log
+	    //æ˜¾ç¤ºè¯¥projectä¸‹çš„å²—ä½åŠäººå‘˜ï¼ˆdisplay employees related to this projectï¼‰    
+    	//display relevant project progress
+    	//display relevant log
     	}
    
-    public function ajaxDeleteAction()
+    public function ajaxdeleteAction()
     {
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
    
    
-   		$id=$this->_getParam('id',0);
-    	if($id >0)
+   		$projectId = $this->_getParam('id',0);
+    	if($projectId > 0)
     	{
-    		$projects = new Project_Models_DbTable_Project();
-    		$projects->deleteProject($id);
+    		$projects = new Project_Models_ProjectMapper();
+    		$projects->delete($projectId);
     		echo "1";
     		}
     		else
     		{
     			$this->_redirect('/project');
     			}
-    	//check if has log or progress
-    	//either one exist, the deletion can not be processed
     	}
 }
 ?>

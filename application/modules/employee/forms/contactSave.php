@@ -9,15 +9,6 @@ class Employee_Forms_ContactSave extends Zend_Form
     public function init()
     {
     	$this->setMethod('post');
-		
-		$this->addElement(                   // 通讯录编号
-			'text','contactId',array(
-			'label'=>'通讯录编号: ',
-			'disabled'=>'disabled',
-			'filters'=>array('StringTrim'),
-			'class'=>'tbLarge tbText',
-			)
-		);
 			
 		$this->addElement(                   //姓名
 			'text', 'name', array(

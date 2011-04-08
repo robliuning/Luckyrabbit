@@ -29,11 +29,11 @@ $(document).ready(function()
 		var htmlDelete = "<div id='msgBox_delete'>";
 		if(count == 0)
 		{
-			htmlDelete += "请先选择您要删除的员工。";
+			htmlDelete += "请先选择您要删除的项目。";
 			}
 			else
 			{
-				htmlDelete = "您选择了"+count+"名员工，点击确认后他们的资料将被删除。<div><p id='btDeleteEmp' class='btDelete radius'>确认删除</p></div>";
+				htmlDelete = "您选择了"+count+"个项目，点击确认后他们的资料将被删除。<div><p id='btDeleteEmp' class='btDelete radius'>确认删除</p></div>";
 				}
 		htmlDelete+="</div>";
 		$('#msgBox').html(htmlDelete);
@@ -44,7 +44,7 @@ $(document).ready(function()
 				var result = 1;
 				$.ajax({
 					type:"post",
-					url:"/employee/index/ajaxdelete/id/"+id,
+					url:"/project/index/ajaxdelete/id/"+id,
 					success:function(rt){
 						if(rt == "0")
 						{
@@ -54,14 +54,15 @@ $(document).ready(function()
 					});
 				if(result == "1")
 				{
-					alert("删除成功！");
-					window.location = "/employee";	
+				
 					}
 					else
 					{
-						
+						alert("项目编号"+id+"删除不成功！");				
 						}		
-			});		
+			});
+			alert("删除完成！");
+			window.location = "/project";	
 		});
 	});
 });

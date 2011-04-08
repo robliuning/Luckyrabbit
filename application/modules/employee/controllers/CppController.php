@@ -1,9 +1,11 @@
 <?php
 /*
-  created: 2011.4.3
   author: mingtingling
-  version: v0.2
+  date:2011.4.3
+  review rob
+  date.2011.4.7
 */
+
 class Employee_CppController extends  Zend_Controller_Action
 {
    public function init()
@@ -14,181 +16,162 @@ class Employee_CppController extends  Zend_Controller_Action
 	{
 	   $this->view->render("_sidebar.phtml");
 	}
-	public function indexAction()
+	public function indexAction() //check
     {
-	 	$cpp = new Employee_Models_CppMapper();
-      	$this->view->entries = $cpp->fetchAll(null,null);
+	 	$cpps = new Employee_Models_CppMapper();
+      	$this->view->cpps = $cpps->fetchAllJoin(null,null);
 	 }
+	  
+	public function addAction()//check
+    {
+     	$addForm=new Employee_Forms_CppSave();
+	 	$addForm->submit->setLabel("保存继续新建");
+	 	$addForm->submit2->setLabel("保存返回上页");
+	 	
+	 	$cpps=new Employee_Models_CppMapper();
+     	$cpps->populateCppDd($addForm);
+		
+     	$this->view->addForm = $addForm;
+	 	if($this->getRequest()->isPost())
+		{
+		   	$btClicked = $this->getRequest()->getPost('submit');
+			$formData = $this->getRequest()->getPost();
+		   	if($addForm->isValid($formData))
+			{
+				$cpp = new Employee_Models_Cpp();
+				$cpp->setPostId($addForm->getValue('postId'));
+				$cpp->setContactId($addForm->getValue('contactId'));
+				$cpp->setProjectId($addForm->getValue('projectId'));
+				$cpp->setPostType($addForm->getValue('postType'));
+				$cpp->setPostCardId($addForm->getValue('postCardId'));
+				$cpp->setCertId($addForm->getValue('certId'));
+				
+				$errorMsg = null;
+			    $validatorRe = new Zend_Validate_Db_RecordExists(
+			    array(
+			  		 'table'=>'em_cpp',
+			  		 'field'=>'postId',
+					 'field'=>'contactId',
+					 'field'=>'projectId' 
+			  	     	)
+			        );
+			        
+			   	if($validatorRe->isValid($cpp->getPostId(),$cpp->getContactId(),$cpp->getProjectId())) 
+			  	{
+			  		$errorMsg = "该岗位信息已经存在。";
+			  		$addForm->populate($formData);
+			  		}
+			  		else
+			  		{
+			  			$result = $cpps->save($cpp); 
+			  			$addForm->getElement('contactName')->setValue('');	
+			  			$addForm->getElement('postId')->setValue('');	
+			  			$addForm->getElement('projectId')->setValue('');	
+			  			$addForm->getElement('postType')->setValue('');			    	
+			  			$addForm->getElement('postCardId')->setValue('');	
+			  			$addForm->getElement('certId')->setValue('');	
+			  			}
+
+				if($btClicked=="保存继续新建")
+			    {
+			    	$this->view->errorMsg = $errorMsg;
+			    }
+				else
+			   	{
+					$this->_redirect('/employee/cpp');
+			   		}
+				}
+		    else
+		    {
+				$addForm->populate($formData);
+		    	}
+		   	}
+		} 
 	   	
-	public function editAction() /*修改*/
+	public function editAction() 
 	{
-	 $editForm=new Employee_Forms_CppSave();
-	 $editForm->submit->setLabel("保存修改");
-     $editForm->submit2->setAttrib('class','hide');
-	 /*下拉条*/
-	 $cpps=new Employee_Models_DbTable_Cpp();
-	 $cpps->populateCppDd($editForm);
-	 /*end*/
-	 $this->view->form=$editForm;
-	 if($this->getRequest()->isPost())
+	 	$editForm=new Employee_Forms_CppSave();
+	 	$editForm->submit->setLabel("保存修改");
+     	$editForm->submit2->setAttrib('class','hide');
+
+	 	$cpps=new Employee_Models_CppMapper();
+	 	$cpps->populateCppDd($editForm);
+	 	$cppId = $this->_getParam('id',0);
+
+	 	if($this->getRequest()->isPost())
 		{
 		  $formData=$this->getRequest()->getPost();
 		  if($editForm->isValid($formData))
 			{
-			     $postId=$editForm->getValue('postId');
-				 $contactId=$editForm->getValue('contactId'); /*从隐藏域中读出员工姓名的ID*/
-                 $postName=$editForm->getValue('postName');
-                 $contactName=$editForm->getValue('contactName');
-                 $projectName=$editForm->getValue('projectName');/*实际上得到的是projectId*/
-                 $postType=$editForm->getValue('postType');
-                 $postCardId=$editForm->getValue('postCardId');
-                 $certId=$editForm->getValue('certId');
-				 /*取得em_cpp对应的cppId编号*/
-                 $cppId=$this->_getParam('id');
-				 /*end*/
-				 /*查找是否存在该记录*/
-				        $errorMsg;
-			            $validatorRe = new Zend_Validate_Db_RecordExists(
-			        	array(
-			  		     'table'=>'em_cpp',
-			  		     'field'=>'postId',
-						 'field'=>'contactId',
-						 'field'=>'projectId' 
-			  	            	)
-			              );
-			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*已经存在这条记录*/
-			  	          {
-			  		       $errorMsg="该岗位信息已经存在。";
+				$cpp = new Employee_Models_Cpp();
+				$cpp->setCppId($cppId);
+				$cpp->setPostId($editForm->getValue('postId'));
+				$cpp->setContactId($editForm->getValue('contactId'));
+				$cpp->setProjectId($editForm->getValue('projectId'));
+				$cpp->setPostType($editForm->getValue('postType'));
+				$cpp->setPostCardId($editForm->getValue('postCardId'));
+				$cpp->setCertId($editForm->getValue('certId'));
+				
+				$errorMsg = null;
+			    $validatorRe = new Zend_Validate_Db_RecordExists(
+			    array(
+			  	 	'table'=>'em_cpp',
+			  		'field'=>'postId',
+					'field'=>'contactId',
+					'field'=>'projectId' 
+			  	   	 )
+			    );
+			    if($validatorRe->isValid($cpp->getPostId(),$cpp->getContactId(),$cpp->getProjectName())) 
+			  	{
+			        $errorMsg="该岗位信息已经存在。";
+			  		}
+			  		else 
+			  		{
+			  			$cpps->save($cpp);
+						$this->_redirect('/employee/cpp');
 			  		      }
-			  		  else /*不存在这条记录，可以update一条记录*/
-			  		      {
-			  			    $cpps->updateCpp($cppId,$contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
-						 	$this->_redirect('/employee/cpp');
-			  		      }
-			  		 }
-			    					 
-				 /*end*/
+			  		 }			    					 
 			else
-		   {
-                 $editForm->populate($formData);
-		   }
-		 }
-		   
-		else
-	   {
-	   	   $cppId=$this->_getParam('id',0); /*传递过来的cppId*/
-		   if($cppId>0)
-		   {
-		   	 $cppMapper = new Employee_Models_Cppmapper();
-		   	 $data = $cppMapper->getCpp($cppId);
-			 foreach($data as $da)
-			 {
-				 $contactId=$editForm->getElement('contactId');
-                 $contactId->setValue($da->getContactId());
-				 $preContactId->$editForm->getElement('preContactId');
-                 $preContactId->setValue($da->getContactId());
-				 $postId=$editForm->getElement('postId');
-                 $postId->setValue($da->getPostId());
-				 $prePostId=$editForm->getElement('prePostId');
-				 $prePostId->setValue($da->getPostId());
-				 $projectName=$editForm->getElement('projectName');
-                 $projectName->setValue($da->getProjectName());
-				 $preProjectName=$editForm->getElement('preProjectName');
-				 $preProjectName->setValue($da->getProjectName());
-				 $postCardId=$editForm->getElement('postCardId');
-                 $postCardId->setValue($da->getPostCardId());
-				 $postType=$editForm->getElement('postType');
-                 $postType->setValue($da->getPostType());
-				 $certId=$editForm->getElement('certId');
-                 $certId->setValue($da->getCertId());
-				 $contactName=$editForm->getElement('contactName');
-				 $contactName->setValue($da->getContactName());
-			   }
-		   }
-		 else /*非法访问*/
-		   {
-           $this->_redirect('/employee/cpp');
-		   }
-	   }
-	 }
- 	public function addAction()/*新建*/
-    {
-     $addForm=new Employee_Forms_CppSave();
-	 $addForm->submit->setLabel("保存继续新建");
-	 $addForm->submit2->setLabel("保存返回上页");
-	 /*下拉条*/
-	 $cpps=new Employee_Models_DbTable_Cpp();
-     $cpps->populateCppDd($addForm);
-	/*end*/
-     $this->view->form=$addForm;
-	 if($this->getRequest()->isPost())
-		{
-		   $dec=$this->getRequest()->getPost('submit');
-		   $formData=$this->getRequest()->getPost();
-		   if($addForm->isValid($formData))
-			{
-			     $postId=$addForm->getValue('postId');
-				 $contactId=$addForm->getValue('contactId'); /*从隐藏域中读出员工姓名的ID*/
-                 $postName=$addForm->getValue('postName');
-                 $contactName=$addForm->getValue('contactName');
-                 $projectName=$addForm->getValue('projectName');/*实际上得到的是projectId*/
-                 $postType=$addForm->getValue('postType');
-                 $postCardId=$addForm->getValue('postCardId');
-                 $certId=$addForm->getValue('certId');
-                 /*查找em_cpp是否存在该记录*/
-				     	$errorMsg = null;
-			            $validatorRe = new Zend_Validate_Db_RecordExists(
-			        	array(
-			  		     'table'=>'em_cpp',
-			  		     'field'=>'postId',
-						 'field'=>'contactId',
-						 'field'=>'projectId' 
-			  	            	)
-			              );
-			          if($validatorRe->isValid($postId,$contactId,$projectName)) /*已经存在这条记录*/
-			  	          {
-			  		       $errorMsg="该岗位信息已经存在。";
-			  		      }
-			  		  else /*不存在这条记录，可以insert一条记录*/
-			  		      {
-			  			    $cpps->addCpp($contactId,$postId,$projectName,$postCardId,$postType,$certId); /*projectName实际上是projectId*/
-			  		      }
-				/*查找结束*/
-				if($dec=="保存继续新建")
-			    {
-			    	$this->view->errorMsg=$errorMsg;
-			    }
-				else
-			   {
-					$this->_redirect('/employee/cpp');
-			   }
-			}
-		    else
-		    {
-				$addForm->populate($formData);
-		    }
-		   }
+		   	{
+                $editForm->populate($formData);
+		   		}
 		}
-	public function ajaxDeleteAction()/*删除*/
+		else
+	   	{
+		   	if($cppId > 0)
+		   	{
+		   	 	$arrayCpp = $cpps->findArrayCpp($cppId);
+		   	 	$editForm->populate($arrayCpp);
+			 	   }
+			else
+			{
+           		$this->_redirect('/employee/cpp');
+		   		}
+	   		}
+	   $this->view->editForm = $editForm;
+	   $this->view->cppId = $cppId;
+	 }
+ 	
+ 	public function ajaxdeleteAction()/*删除*/
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-        $cppId=$this->getParam('id',0);
-		if($cppId>0)
+        $cppId = $this->_getParam('id',0);
+		if($cppId > 0)
 		{
-			$cpps=new Employee_Models_DbTable_Cpp();
-			$cpps->deleteCpp($cppId);
-			echo "1";
+			$cpps=new Employee_Models_CppMapper();
+			$result = $cpps->delete($cppId);
+			echo $result;
 		}
 		else
 		{
          $this->_redirect('/employee');
 		}
 	}
-   public function ajaxDisplayAction() /*显示*/
+   public function ajaxdisplayAction() /*显示*/
     {
 		$this->_helper->layout()->disableLayout();
-        $cppId=$this->getParam('id',0);
+        $cppId=$this->_getParam('id',0);
 		if($cppId>0)
 		{
 			$cpps=new Employee_Models_DbTable_Cpp();

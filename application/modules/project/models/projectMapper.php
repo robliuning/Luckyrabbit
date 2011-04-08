@@ -25,47 +25,45 @@ class Project_Models_ProjectMapper
         }
         return $this->_dbTable;
     }
-    public function save(Project_Models_Project $project)
+    public function save(Project_Models_Project $project) //check
     {
         $data = array(
 			'projectId' => $project->getProjectId(),
             'name' => $project->getName() ,
 			'address' => $project->getAddress(),
 			'status' => $project->getStatus(),
-			'structType' => $project->getStructType(),
+			'structype' => $project->getStructype(),
 			'level' => $project->getLevel(),
 			'amount' => $project->getAmount(),
 			'purpose' => $project->getPurpose(),
 			'constrArea' => $project->getConstrArea(),
 			'staffNo' => $project->getStaffNo(),
-			'remark' => $project->getRemark(),
-			'cTime' => $project->getCTime()
+			'remark' => $project->getRemark()
         );
         if (null === ($id = $project->getProjectId())) {
             unset($data['projectId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('projectId = ?' => $projectId));
+            $this->getDbTable()->update($data, array('projectId = ?' => $project->getProjectId()));
         }
     }
 
-    public function find($projectId)
+    public function find($projectId) //check
     {
-		$project = new Project_Models_Project();
-        $result = $this->getDbTable()->find($projectId);
+        $resultSet = $this->getDbTable()->find($projectId);
 
-        if (0 == count($result)) {
+        if (0 == count($resultSet)) {
 
             return;
         }
 
-        $row = $result->current();
-
+        $row = $resultSet->current();
+		$project = new Project_Models_Project();
         $project  ->setProjectId($row->projectId)
                   ->setName($row->name)
 			      ->setAddress($row->address)
 				  ->setStatus($row->status)
-				  ->setStructType($row->structType)
+				  ->setStructype($row->structype)
 				  ->setLevel($row->level)
 				  ->setAmount($row->amount)
 				  ->setPurpose($row->purpose)
@@ -76,9 +74,9 @@ class Project_Models_ProjectMapper
 		return $project;
     }
 
-	/*public function fetchAll()
+	public function fetchAllNames() //check
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAllNames();
 		$entries = array();
 		foreach($resultSet as $row){
 			$entry = new Project_Models_Project();
@@ -86,23 +84,33 @@ class Project_Models_ProjectMapper
 				   ->setName($row->name);
 
 			$entries[] = $entry;
-		} 
-	}*/
+		}
+		return $entries; 
+	}
+	
+	public function findProjectName($id) //check
+	{
+		$arrayNames = $this->getDbTable()->findProjectName($id);
+		
+		$name = $arrayNames[0]->name;
+		
+		return $name;
+		}
 
-    public function fetchAllJoin()
+    public function fetchAllJoin() //check
     {
     	//1.get particular project info from projects
-    	$resultSet = $this->getDbTable()->fetchAllJoin();	
+    	$resultSet = $this->getDbTable()->fetchAll();	
         $projects   = array();
         
         foreach ($resultSet as $row) 
         {
-			$project = new Project_Models_Project(); 
+			$project = new Project_Models_Project();
         	$project ->setProjectId($row->projectId)
                    ->setName($row->name)
 			       //->setAddress($row->address)
 				   ->setStatus($row->status)
-				   ->setStructType($row->structType)
+				   ->setStructype($row->structype)
 				   /*->setLevel($row->level)
 				   ->setAmount($row->amount)
 				   ->setPurpose($row->purpose)
@@ -112,67 +120,61 @@ class Project_Models_ProjectMapper
 				   ->setCTime($row->cTime);*/
 				   
 			$projectId = $project->getProjectId();
-			
+			$postId = 000001;
 			//2. find postId of Project Manager
-			$posts = new General_Models_PostMapper();
-			$postName = "工程总负责人";
-			$arrayPost = $posts->findPostByName($postName);
-			$postId = $arrayPost->postId;
 			
 			$cpps = new Employee_Models_CppMapper();
 			$arrayContacts = $cpps->findContact($projectId,$postId);
-			$project->setCId($arrayContacts[0]->contactId);
-			$project->setCName($arrayContacts[0]->name);
+			if(count($arrayContacts)>0)
+			{
+				$project->setCId($arrayContacts[0]->contactId);
+				$project->setCName($arrayContacts[0]->name);
+			}
+			else
+			{	
+				$project->setCName("未指定");
+				$project->setCId(0);
+				}
 			
 			//3. find max stage number
 			$progresses = new Project_Models_ProgressMapper();
 			$arrayProgresses = $progresses->fetchAllStages($projectId);
-			$project->setStage(count($arrayProgresses));
+			if(count($arrayProgresses)>0)
+			{
+				$project->setStage(count($arrayProgresses));
+				}
+				else
+				{
+					$project->setStage(0);
+					}
 			
-			/*$dbProgress = new Project_Models_DbTable_Progress();
-			$select = $dbProgress->select()
-				->setIntegrityCheck(false)
-				->from('pm_progresses','stage')
-				->where('projectId = ?',$pid);
-			$rows = $dbProgress->fetchAll($select);
-			$pro->setStage(count($rows));*/	
             $projects[] = $project;
         }
-        
         return $projects;
-	}  
-		//2 loop all project, search for contact id ,name and max number of stage
-	/*	foreach($projects as $project)
+	}
+	
+	public function findArrayProject($id) //check
+	{
+		$id = (int)$id;
+		$row = $this->getDbTable()->fetchRow('projectId = ' . $id);
+		if (!$row) {
+			throw new Exception("Could not find row $id");
+		}
+		return $row->toArray();
+		}
+	public function delete($id)
+	{
+		$this->getDbTable()->delete('projectId = ' . (int)$id);
+		}
+	
+	public function populateDd($form)         //check
+	{
+		$structypes = new General_Models_StructypeMapper();
+		$arrayStructypes = $structypes->fetchAll();
+		foreach($arrayStructypes as $structype)
 		{
-
-			//2.1 find postId of project manager
-			$posts = new General_Models_PostMapper();
-			$postName =  "工程总负责人";
-			$arrayPost = $posts->findPostByName($postName);
-			$select = $dbGer->select()
-				->setIntegrityCheck(false)
-				->from('ge_posts',array('postId'))
-				->where('name = ?',$postName);  
-			$result = $dbGer->fetchAll($select);
-			$postId = $result[0]->postId;
-
-			//2.2 search for contact id and name 
-			$dbCpp = new Employee_Models_DbTable_Cpp();
-			$select = $dbCpp->select()
-				->setIntegrityCheck(false)
-				->from(array('e'=>'em_cpp'),array('contactId'))
-				->join(array('c'=>'em_contacts'),'e.contactId = c.contactId')
-				->where('e.projectId = ?',$pid)
-				->where('e.postId = ?',$postId);
-			$result = $dbCpp->fetchAll($select);
-			$pro->setCId($result[0]->contactId);
-			$pro->setCName($result[0]->name);
-		
-			//2.3 search for max stage number
-						
-			}*/
-		//3 return object
-       
-
+			$form->getElement('structype')->addMultiOption($structype->getName(),$structype->getName());
+			}
+	}         
 }
 ?>

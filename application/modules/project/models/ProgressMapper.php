@@ -113,5 +113,10 @@ class Project_Models_ProgressMapper
 		}
 		return $entries;
 	}
+	public function fetchAllStages($projectId) //check
+	{
+		$entries = $this->getDbTable()->fetchAllStages($projectId);
+		return $entries;
+		}
 }
 ?>

@@ -3,8 +3,11 @@
 class Employee_Models_Employee
 {     
     protected $_empId;
+    protected $_empName;
 	protected $_deptName;
 	protected $_dutyName;
+	protected $_titleName;
+	protected $_phoneNo;
 	protected $_status;
     
     public function __construct(array $options = null)
@@ -54,6 +57,17 @@ class Employee_Models_Employee
     {
         return $this->_empId;
     }
+    
+    public function setEmpName($empName)
+    {
+        $this->_empName = $empName;
+        return $this;
+    } 
+
+    public function getEmpName()
+    {
+        return $this->_empName;
+    }
 
     public function setDeptName($deptName)
     {
@@ -76,6 +90,28 @@ class Employee_Models_Employee
     public function getDutyName()
     {
         return $this->_dutyName;
+    }
+    
+    public function setTitleName($titleName)
+    {
+        $this->_titleName= (string) $titleName;
+        return $this;
+    } 
+
+    public function getTitleName()
+    {
+        return $this->_titleName;
+    }
+    
+    public function setPhoneNo($phoneNo)
+    {
+        $this->_phoneNo = $phoneNo;
+        return $this;
+    } 
+
+    public function getPhoneNo()
+    {
+        return $this->_phoneNo;
     }
  
      public function setStatus($status)

@@ -23,12 +23,25 @@ class General_Models_PostMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('General_Model_DbTable_Post');
+            $this->setDbTable('General_Models_DbTable_Post');
         }
         return $this->_dbTable;
     }
+    
+    public function findPostName($id) //check
+	{
+		$row = $this->getDbTable()->fetchRow('postId = '.$id);
+		
+		if (!$row) {
+			throw new Exception("Could not find row $postId");
+		}
+		
+		$name = $row->name;
+		
+		return $name;
+		}
 
-    public function fetchAll()
+    public function fetchAll() //check
     {
         $resultSet = $this->getDbTable()->fetchAll();
         $entries   = array();
@@ -41,17 +54,5 @@ class General_Models_PostMapper
         }
         return $entries;
     }
-
-	public function FindPostByName($postname)
-	{
-			$post = new General_Model_Dbtable_post();
-			$where = $postname;
-			$row = $post->fetchRow(
-			$where,
-			null
-			);
-			return $row;
-	}
-
 }
 ?>

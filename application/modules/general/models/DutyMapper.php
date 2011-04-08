@@ -23,7 +23,7 @@ class General_Models_DutyMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('General_Model_DbTable_Duty');
+            $this->setDbTable('General_Models_DbTable_Duty');
         }
         return $this->_dbTable;
     }

@@ -1,8 +1,9 @@
 <?php
-/*created: 2011.3.26
+/*
 author: mingtingling
-reviewed: rob:2001.3.31
-version: v0.2
+date.2011.3.26
+reviewed: rob
+date 2001.4.7
 */
 
 class Employee_EmployeeController extends Zend_Controller_Action
@@ -17,36 +18,116 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		$this->view->render("_sidebar.phtml");
 	}
 
-    public function indexAction()
+    public function indexAction() //check
     {
-    	$employee = new Employee_Models_DbTable_Employee();
-      	$this->view->entries = $employee->displayAll();
+    	$employees = new Employee_Models_EmployeeMapper();
+    	$this->view->employees = $employees->fetchAllJoin();
     }
-	public function editAction()
+    
+    public function addAction() //check
+	{
+    	$addForm = new Employee_Forms_EmployeeSave();
+	 	$addForm->submit->setLabel('保存继续新建');
+	 	$addForm->submit2->setLabel('保存返回上页');
+	 
+	 	$employees = new Employee_Models_EmployeeMapper();
+	 	$employees->populateEmployeeDd($addForm);
+	 
+		if($this->getRequest()->isPost())
+		{
+		  $btClicked = $this->getRequest()->getPost('submit');
+          $formData=$this->getRequest()->getPost();
+		  if($addForm->isValid($formData))
+			 {
+			 	$employee = new Employee_Models_Employee();
+			 	$employee->setEmpId($addForm->getValue('empId'));
+			 	$employee->setDeptName($addForm->getValue('deptName'));
+			 	$employee->setDutyName($addForm->getValue('dutyName'));
+			 	$employee->setStatus($addForm->getValue('status'));
+			 	$empId = $employee->getEmpId();
+				
+				//varify if this empId is exists in contacts but not recorded in employees since one contact can only be assigned to one position in the company.				
+			  	$errorMsg = "";
+			  	$validatorRe = new Zend_Validate_Db_RecordExists(
+			  		array(
+			  			'table'=>'em_contacts',
+			  			'field'=>'contactId'
+			  			)
+			  	);
+			  	if($validatorRe->isValid($empId))
+			  	{
+			  		$validatorNe = new Zend_Validate_Db_NoRecordExists(
+			  	 	array(
+			  	 		'table'=>'em_employees',
+			  	 		'field'=>'empId'
+			  	 		)
+			  		);
+			  		if($validatorNe->isValid($empId))
+			  		{
+			  			$option = 'add';
+						$employees->save($employee,$option);
+			  			}
+			  			else
+			  			{
+			  				/*foreach($validatorNe->getMessages() as $message)
+			  				{
+			  					$errorMsg.=$message."\n";
+			  					}*/
+			  				$errorMsg = "该员工已经注册过公司员工基本信息。";
+			  				}
+			  		}
+			  		else{
+			  			/*standard way
+			  			foreach($validatorRe->getMessages() as $message)
+			  			{
+			  				$errorMsg.=$message."\n";
+			  				}*/
+			  			$errorMsg = "输入的员工名无效，您可在通讯录管理页面录入其个人信息或点击上方工具栏’快速新建通讯录‘录入。";
+			  			}
+			  			
+			   if($btClicked == '保存继续新建')
+			   {
+					$this->view->errorMsg = $errorMsg;
+					}
+			   else
+			{
+				      $this->_redirect('/employee/employee');
+				 }
+			}
+		else
+		{
+			  $editForm->populate($formData);
+			}
+		}
+		$this->view->addForm = $addForm;
+    }
+
+	public function editAction()  //check
 	{
 		$editForm = new Employee_Forms_EmployeeSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
     	$tbName = $editForm->getElement('name');
     	$tbName->setAttrib('disabled','disabled');
-    	//populate dropdown  	
-        $emps=new Employee_Models_DbTable_Employee();
-    	$emps->populateEmployeeDd($editForm);
 
-		//end
-    	$this->view->form = $editForm;
-    	$this->view->id = $this->_getParam('id');
+        $employees = new Employee_Models_EmployeeMapper();
+    	$employees->populateEmployeeDd($editForm);
+
+		$empId = $this->_getParam('id',0);
+
 		if($this->getRequest()->isPost())
 		{
           $formData=$this->getRequest()->getPost();
 		  if($editForm->isValid($formData))
 			 {
-			  $empId=$this->_getParam('id');
-			  $deptName=$editForm->getValue('deptName');
-			  $dutyName=$editForm->getValue('dutyName');
-			  $status=$editForm->getValue('status');
-              $emps->updateEmployee($empId,$deptName,$dutyName,$status);
-			  $this->_redirect('/employee/employee');
+				$employee = new Employee_Models_Employee();
+				$employee->setEmpId($empId);
+				$employee->setDeptName($editForm->getValue('deptName'));
+				$employee->setDutyName($editForm->getValue('dutyName'));
+				$employee->setStatus($editForm->getValue('status'));
+				$option = 'edit';
+                $employees->save($employee,$option);
+			    $this->_redirect('/employee/employee');
 			}
 		  else
 			{
@@ -55,126 +136,32 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		}
 		else
 	    {
-			$id=$this->_getParam('id',0);
-			if($id>0)
+			if($empId > 0)
 			{
-            	$data = $emps->displayOne($id);
-            	foreach($data as $da)
-            	{
-            	    $empId = $editForm->getElement('empId');
-            		$empId->setValue($da->empId);
-            		$name = $editForm->getElement('name');
-            		$name->setValue($da->name);
-            		$dept = $editForm->getElement('deptName');
-            		$dept->setValue($da->deptName);
-            		$duty = $editForm->getElement('dutyName');
-            		$duty->setValue($da->dutyName);
-            		$status = $editForm->getElement('status');
-            		$status->setValue($da->status);
-            		}
+				$arrayEmployee = $employees->findArrayEmployee($empId);
+				$editForm->populate($arrayEmployee);
 				}
 			else
 			{
 		     $this->redirect('/employee');
 			}
 		}
+		
+		$this->view->editForm = $editForm;
+    	$this->view->id = $empId;
 	}
-  public function addAction()
-	{
-     $addForm = new Employee_Forms_EmployeeSave();
-	 $addForm->submit->setLabel('保存继续新建');
-	 $addForm->submit2->setLabel('保存返回上页');
-	 $emps = new Employee_Models_DbTable_Employee();
-	 $emps->populateEmployeeDd($addForm);
-	 $this->view->form=$addForm;
-		if($this->getRequest()->isPost())
-		{
-		  $dec=$this->getRequest()->getPost('submit');
-          $formData=$this->getRequest()->getPost();
-		  if($addForm->isValid($formData))
-			 {
-			  $empId=$addForm->getValue('empId');
-			  $deptName=$addForm->getValue('deptName');
-			  $dutyName=$addForm->getValue('dutyName');
-			  $status=$addForm->getValue('status');
-			  $contact = new Employee_Models_DbTable_Contact();
-			  //valdiate if the empid is exists in contacts but not recorded in employees since one contact can have up to 1 position within the company.
-			  $errorMsg;
-			  $validatorRe = new Zend_Validate_Db_RecordExists(
-			  	array(
-			  		'table'=>'em_contacts',
-			  		'field'=>'contactId'
-			  		)
-			  );
-			  if($validatorRe->isValid($empId))
-			  {
-			  	$validatorNe = new Zend_Validate_Db_NoRecordExists(
-			  	 array(
-			  	 	'table'=>'em_employees',
-			  	 	'field'=>'empId'
-			  	 )
-			  	);
-			  	if($validatorNe->isValid($empId))
-			  	{
-			  		$emps->addEmployee($empId,$deptName,$dutyName,$status);
-			  		}
-			  		else
-			  		{
-			  			/*foreach($validatorNe->getMessages() as $message)
-			  			{
-			  				$errorMsg.=$message."\n";
-			  				}*/
-			  			$errorMsg = "该员工已经注册过公司基本信息。";
-			  			}
-			  	}
-			  	else{
-			  	/*standard way
-			  		foreach($validatorRe->getMessages() as $message)
-			  		{
-			  			$errorMsg.=$message."\n";
-			  			}*/
-			  		$errorMsg = "输入的员工名无效，您需要首先在通讯录管理录入其个人信息或点击工具栏’快速新建通讯录‘录入。";
-			  		}
-			   if($dec=='保存继续新建')
-			   {
-					$this->view->errorMsg=$errorMsg;
-					}
-			   else
-				{
-				      $this->_redirect('/employee/employee');
-				 }
-			}
-		  else
-			{
-			  $editForm->populate($formData);
-			}
-	  }
-  }
-  public function ajaxdeleteAction()
+ 
+   public function ajaxdeleteAction() //check
   {
     $this->_helper->layout()->disableLayout();
     $this->_helper->viewRenderer->setNoRender(true);
-    $id=$this->_getParam('id',0);
-	if($id>0)
+    
+    $id = $this->_getParam('id',0);
+	if($id > 0)
 	  {
-		$emps=new Employee_Models_DbTable_Employee();
-        $emps->deleteEmployee($id);
+		$employees=new Employee_Models_EmployeeMapper();
+        $employees->delete($id);
 		echo "1";
-	  }
-	else
-	  {
-		$this->redirect('/employee');
-	  }
-  }
-  public function ajaxdisplayAction()
-  {
-	$this->_helper->layout()->disableLayout();
-	//$this->_helper->viewRenderer->setNoRender(true);
-	$id=$this->_getParam('id',0);
-	if($id>0)
-	  {
-   		$employee = new Employee_Models_DbTable_Employee();
-    	$this->view->entries=$employee->displayOne($id);  		
 	  }
 	else
 	  {

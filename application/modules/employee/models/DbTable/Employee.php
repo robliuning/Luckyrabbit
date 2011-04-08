@@ -4,6 +4,19 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 {
     protected $_name = 'em_employees';
 
+	public function findArrayEmployee($id)
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from(array('c'=>'em_contacts'),array('name'))
+			->join(array('e'=>'em_employees'),'e.empId = c.contactId')		
+			->where('e.empId = ?',$id);
+			
+		$entries = $this->fetchAll($select);
+		
+		return $entries;
+		}
+	
 	public function getEmployee($empId)
 	{
 		$empId = (int)$empId;
@@ -51,7 +64,7 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		$this->delete('empId = ' . (int)$empId);
 	}
 	
-	public function displayAll()
+	public function fetchAllJoin() //check
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)	
@@ -61,33 +74,17 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		return $entries;
 		}
 		
-	public function displayOne($empId)
+	public function displayOne($id)
 	{   		
 		$select = $this->select()
 			->setIntegrityCheck(false)
 			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','status'))
 			->join(array('c'=>'em_contacts'),'e.empId = c.contactId')
-			->where('e.empId = ?',$empId);
+			->where('e.empId = ?',$id);
 	
    		$entry = $this->fetchAll($select);
    		return $entry;
 		}
-	public function populateEmployeeDd($form)
-  	{
-  		$dept=new General_Models_DbTable_Dept();
-		$deptOptions = $dept->fetchAll(); 
-		$duty=new General_Models_DbTable_Duty();
-		$dutyOptions = $duty->fetchAll();
-
-		foreach($deptOptions as $op)
-		{
-			$form->getElement('deptName')->addMultiOption($op->name,$op->name);
-			}
-		foreach($dutyOptions as $op)
-		{
-			$form->getElement('dutyName')->addMultiOption($op->name,$op->name);
-			}
-  	}
 }
 
 ?>

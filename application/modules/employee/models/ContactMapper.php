@@ -77,11 +77,26 @@ class Employee_Models_ContactMapper
 		$id = (int)$id;
 		$row = $this->getDbTable()->fetchRow('contactId = ' . $id);
 		if (!$row) {
-			throw new Exception("Could not find row $contactId");
+			throw new Exception("Could not find row $id");
 		}
 		return $row->toArray();
 		}
-
+		
+	public function findContactName($id) // check //ref from cpp
+	{
+		$arrayNames = $this->getDbTable()->findContactName($id);
+		
+		$name = $arrayNames[0]->name;
+		
+		return $name;
+		}
+	public function findContactNames($key) //check
+	{
+		$arrayNames = $this->getDbTable()->findContactNames($key);
+		
+		return $arrayNames;
+		}
+		
     public function fetchAll() //check
     {
         $resultSet = $this->getDbTable()->fetchAll();

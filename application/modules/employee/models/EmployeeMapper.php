@@ -18,11 +18,11 @@ class Employee_Models_EmployeeMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Application_Model_DbTable_Employee');
+            $this->setDbTable('Employee_Models_DbTable_Employee');
         }
         return $this->_dbTable;
     }
-    public function save(Application_Model_Employee $employee)
+    public function save(Employee_Models_Employee $employee,$option) //check
     {
         $data = array(
             'empId' => $employee->getEmpId(),
@@ -30,11 +30,10 @@ class Employee_Models_EmployeeMapper
             'dutyName' => $employee->getDutyName(),
             'status' => $employee->getStatus(),
         );
-        if (null === ($id = $employee->getEmpId())) {
-            unset($data['empId']);
+        if ($option == 'add') {
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('empId = ?' => $empId));
+            $this->getDbTable()->update($data, array('empId = ?' => $employee->getEmpId()));
         }
     }
     public function find($empId, Employee_Models_Employee $employee)
@@ -59,7 +58,6 @@ class Employee_Models_EmployeeMapper
  
 
     public function fetchAll()
-
     {
 
         $resultSet = $this->getDbTable()->fetchAll();
@@ -80,7 +78,53 @@ class Employee_Models_EmployeeMapper
         }
 
         return $entries;
-
     }
+    
+    public function findArrayEmployee($id) //check
+    {
+		$id = (int)$id;
+		$entries = $this->getDbTable()->findArrayEmployee($id);
+		$entry = $entries[0]->toArray();
+		return $entry;
+	}
+    
+    public function fetchAllJoin() //check
+    {
+   		$resultSet = $this->getDbTable()->fetchAllJoin();
+   		
+   		$entries = array();
+   		
+   		foreach($resultSet as $row){
+   			$entry = new Employee_Models_Employee();
+   			
+   			$entry->setEmpId($row->empId)
+   				->setEmpName($row->name)
+   				->setDeptName($row->deptName)
+   				->setDutyName($row->dutyName)
+   				->setTitleName($row->titleName)
+   				->setPhoneNo($row->phoneNo)
+   				->setStatus($row->status);
+   				
+   			$entries[] = $entry;
+   			}
+    	return $entries;
+    	}
+    
+    public function populateEmployeeDd($form) //check
+  	{
+  		$depts = new General_Models_DeptMapper();
+		$arrayDepts = $depts->fetchAll(); 
+		$duties = new General_Models_DutyMapper();
+		$arrayDuties = $duties->fetchAll();
+
+		foreach($arrayDepts as $dept)
+		{
+			$form->getElement('deptName')->addMultiOption($dept->getName(),$dept->getName());
+			}
+		foreach($arrayDuties as $duty)
+		{
+			$form->getElement('dutyName')->addMultiOption($duty->getName(),$duty->getName());
+			}
+  	}
 }
 ?>

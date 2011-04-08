@@ -23,18 +23,18 @@ class General_Models_StructypeMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('General_Model_DbTable_Structype');
+            $this->setDbTable('General_Models_DbTable_Structype');
         }
         return $this->_dbTable;
     }
 
-    public function fetchAll()
+    public function fetchAll() //check
     {
         $resultSet = $this->getDbTable()->fetchAll();
         $entries   = array();
         foreach ($resultSet as $row) {
             $entry = new General_Models_Structype();
-			$entry->setStructypeId($row->StructypeId)
+			$entry->setStructypeId($row->structypeId)
 				  ->setName($row->name);
                   
             $entries[] = $entry;

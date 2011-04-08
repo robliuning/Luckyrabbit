@@ -12,21 +12,21 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>公司员工管理 - 通讯录信息 - 修改</h1>
+		<h1>项目岗位信息管理 - 项目岗位信息 - 修改</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为通讯录信息修改</h3>
+			<h3>本页显示内容为项目岗位信息修改</h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
 					<div><a href="/employee/index/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="/employee"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/employee/cpp"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
 					<?php
-						$this->form->setAction($this->url());
-						echo $this->form;
+						$this->editForm->setAction($this->url());
+						echo $this->editForm;
 					?>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->

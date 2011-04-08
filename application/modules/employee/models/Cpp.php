@@ -147,7 +147,7 @@ class Employee_Models_Cpp
  
      public function setPostCardId($postCardId)
     {
-        $this->_postCardId= (int) $postCardId;
+        $this->_postCardId= $postCardId;
         return $this;
     }
 
