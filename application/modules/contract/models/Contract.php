@@ -1,12 +1,20 @@
 <?php
 
-class Employee_Models_Employee
+/* write by lxj
+   2011-04-03   v2.0
+   rewrite by lxj
+   2011-04-08   v0.2
+   */
+
+
+class Contract_Models_Contract
 {     
     protected $_contractorId;
 	protected $_name;
 	protected $_artiPerson;
     protected $_licenseNo;
     protected $_busiField;
+	protected $_phoneNo,
     protected $_otherContact;
     protected $_address;
     protected $_remark;
@@ -102,6 +110,17 @@ class Employee_Models_Employee
     public function getBusiField()
     {
         return $this->_busiField;
+    }
+
+	public function setPhoneNo($phoneNo)
+    {
+        $this->_phoneNo = $phoneNo;
+        return $this;
+    }
+
+    public function getPhoneNo()
+    {
+        return $this->_phoneNo;
     }
 
      public function setOtherContact($otherContact)
