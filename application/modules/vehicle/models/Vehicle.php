@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 09-04-2011
 
-calss Vehicle_Models_Vehicle
+class Vehicle_Models_Vehicle
 {
 	protected $_veId;
 	protected $_plateNo;
@@ -178,4 +178,5 @@ calss Vehicle_Models_Vehicle
 	{
 		return $this->_contactName;
 	}
+}
 ?>
