@@ -1,24 +1,26 @@
 <?php
 
-/*create by lxj
-  2011-04-04	v1.1
-  */
+/* create by lxj
+   2011-04-08   v 0.2
+   rewrite by lxj
+   2011-04-09   v 0.2
+   */
 
 class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 {
     protected $_name = 'sc_contr_qualif'; 
 
-	public function getContract($cpId)
+	public function getContrqualif($cqId)
 	{
-		$cpId = (int)$cpId;
-		$row = $this->fetchRow('cpId = ' . $cpId);
+		$cqId = (int)$cqId;
+		$row = $this->fetchRow('cqId = ' . $cqId);
 		if (!$row) {
-			throw new Exception("Could not find row $cpId");
+			throw new Exception("Could not find row $cqId");
 		}
 		return $row->toArray();
 	}
 
-	public function addContract(
+	public function addContrqualif(
 								$contractorId,
 								$qualifSerie,
 								$qualifType,
@@ -34,8 +36,8 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 		$this->insert($data);
 	}
 
-	public function updateContract(
-								$cpId,
+	public function updateContrqualif(
+								$cqId,
 								$contractorId,
 								$qualifSerie,
 								$qualifType,
@@ -43,37 +45,20 @@ class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
 								)
 	{
 		$data = array (
-			'cpId' => $cpId,
+			'cqId' => $cqId,
 			'contractorId' => $contractorId,
 			'qualifSerie' => $qualifSerie,
 			'qualifType' => $qualifType,
 			'qualifGrade' => $qualifGrade
 		);
 
-		$this->update($data, 'cpId = '.(int)$cpId);
+		$this->update($data, 'cqId = '.(int)$cqId);
 	}
 
-	public function deleteCpp($cpId)
+	public function deleteContrqualif($cqId)
 	{
-		$this->delete('cpId = '.(int)$cpId);
+		$this->delete('cqId = '.(int)$cqId);
 	}
-		
-	public function populateCppDd($form)
-  	{
-  		$post=new General_Models_DbTable_Post();
-		$postname = $post->fetchAll(); 
-		$project=new Project_Models_DbTable_Project();
-		$projectName = $project->fetchAll();
-
-		foreach($postname as $op)
-		{
-			$form->getElement('postName')->addMultiOption($op->postId,$op->name);
-			}
-		foreach($projectName as $op)
-		{
-			$form->getElement('projectName')->addMultiOption($op->projectId,$op->name);
-			}
-  	}
 
 }
 

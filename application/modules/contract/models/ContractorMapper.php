@@ -123,5 +123,11 @@ class Contract_Models_ContractorMapper
         return $entries;
 	}
 
+	public function findArrayContractor($contractorId)
+	{
+		$resultSet = this->getDbtable()->findArrayContract($contractorId);
+        return $resultSet;
+	}
+
 }
 ?>
