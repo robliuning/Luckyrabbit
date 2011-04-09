@@ -135,8 +135,8 @@ class Project_IndexController extends Zend_Controller_Action
 	   $projectId = $this->_getParam('id',0);
 	   if($projectId >0)
        {
-       		$project = $projects->find($projectId);   
-       		$this->view->id = $projectId;
+       		$project = new Project_Models_Project();
+       		$projects->find($projectId,$project);   
 	   		$this ->view->project = $project;      		
     		}
     		else
