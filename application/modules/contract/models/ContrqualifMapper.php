@@ -83,7 +83,7 @@ class Contract_Models_ContrqualifMapper
 	
 	public function findArrayContrQualif($cqId)
 	{
-		$resultSet = this->getDbtable->findArrayContrqualif($cqId);
+		$resultSet = $this->getDbtable->findArrayContrqualif($cqId);
 		return $resultSet;
 	}
 }
