@@ -100,7 +100,7 @@ class Contract_Models_ContractorMapper
 
 	public function findArrayContractor($contractorId)
 	{
-		$resultSet = this->getDbtable()->findArrayContract($contractorId);
+		$resultSet = $this->getDbtable()->findArrayContract($contractorId);
         return $resultSet;
 	}
 
