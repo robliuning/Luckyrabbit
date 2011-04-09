@@ -3,10 +3,10 @@
   //creating by lincoy
   //completion date 09-04-2011
 
-calss Vehicle_Models_Vehicle
+class Vehicle_Models_Vehicle
 {
 	protected $_recordId;
-	protected $_plateNo;
+	protected $_veId;
 	protected $_startDate;
 	protected $_endDate;
 	protected $_purpose;
@@ -26,7 +26,7 @@ calss Vehicle_Models_Vehicle
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid vehicle property');
+            throw new Exception('Invalid verecord property');
         }
         $this->$method($value);
     }
@@ -35,7 +35,7 @@ calss Vehicle_Models_Vehicle
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid vehicle property');
+            throw new Exception('Invalid verecord property');
         }
         return $this->$method();
     } 
@@ -65,15 +65,15 @@ calss Vehicle_Models_Vehicle
 	}
 
 	/********************************************/
-	public function setPlateNo($plateNo)
+	public function setVeId($veId)
 	{
-		$this->_plateNo = $plateNo;
+		$this->_veId = $veId;
 		return $this;
 	}
 
-	public function getPlateNo()
+	public function getVeId()
 	{
-		return $this->_plateNo;
+		return $this->_veId;
 	}
 
 	/********************************************/
@@ -89,86 +89,75 @@ calss Vehicle_Models_Vehicle
 	}
 
 	/********************************************/
-	public function set($)
+	public function setEndDate($endDate)
 	{
-		$this->_ = $;
+		$this->_endDate = $endDate;
 		return $this;
 	}
 
-	public function get()
+	public function getEndDate()
 	{
-		return $this->_;
+		return $this->_endDate;
 	}
 
 	/********************************************/
-	public function set($)
+	public function setPurpose($purpose)
 	{
-		$this->_ = $;
+		$this->_purpose = $purpose;
 		return $this;
 	}
 
-	public function get()
+	public function getPurpose()
 	{
-		return $this->_;
+		return $this->_purpose;
 	}
 
 	/********************************************/
-	public function set($)
+	public function setMile($mile)
 	{
-		$this->_ = $;
+		$this->_mile = $mile;
 		return $this;
 	}
 
-	public function get()
+	public function getMile()
 	{
-		return $this->_;
+		return $this->_mile;
 	}
 
 	/********************************************/
-	public function set($)
+	public function setPilot($pilot)
 	{
-		$this->_ = $;
+		$this->_pilot = $pilot;
 		return $this;
 	}
 
-	public function get()
+	public function getPolit()
 	{
-		return $this->_;
+		return $this->_pilot;
 	}
 
 	/********************************************/
-	public function set($)
+	public function setOtherUser($otherUser)
 	{
-		$this->_ = $;
+		$this->_otherUser = $otherUser;
 		return $this;
 	}
 
-	public function get()
+	public function getOtherUser()
 	{
-		return $this->_;
+		return $this->_otherUser;
 	}
 
 	/********************************************/
-	public function set($)
+	public function setRemark($remark)
 	{
-		$this->_ = $;
+		$this->_remark = $remark;
 		return $this;
 	}
 
-	public function get()
+	public function getRemark()
 	{
-		return $this->_;
-	}
-
-	/********************************************/
-	public function set($)
-	{
-		$this->_ = $;
-		return $this;
-	}
-
-	public function get()
-	{
-		return $this->_;
+		return $this->_remark;
 	}
 }
+?>
