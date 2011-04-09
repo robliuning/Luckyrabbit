@@ -1,69 +1,28 @@
 <?php
-/*
-created by lincoy
-time of creating 3-27-2011
-completed time 3-27-2011
-*/
+  //creation date 09-04-2011
+  //creating by lincoy
+  //completion date 09-04-2011
 
-class Application_Model_DbTable_Vehicle extends Zend_Db_Table_Abstract
+  
+class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 {
-    protected $_name = 've_vehicle';
+    protected $_name = 've_vehicles';
 
-	public function getVehicle($vehicle)
+	public function search($key, $condition)
 	{
-		$plateNo = (string)$plateNo;   //³µÅÆºÅ
-		$row = $this->fetchRow('plateNo = ' . $plateNo);
-		if (!$row) {
-			throw new Exception("Could not find row $plateNo");
+		$select = $this->getDbTable()->select()
+			           ->setIntegrityCheck(false)	
+			           ->from(array('e'=>'em_contacts'),array('name'))
+			           ->join(array('v'=>'ve_vehicles'),'e.contactId = v.veId');
+		if($condition == "plateNo")
+		{
+			$select->where("plateNo like ?","%$key%");
 		}
-		return $row->toArray();
-	}
 
-	public function addVehicles(
-								$plateNo,
-		                        $name,
-		                        $license,
-		                        $personIC,
-		                        $users,
-		                        $fuelCons,
-		                        $remark)
-	{
-		$data = array (
-		    'plateNo' => $plateNo,
-		    'name' => $name,
-		    'license' => $license
-			'personIC' => $personIC,
-		    'users' => $users,
-		    'fuelCons' => $fuelCons,
-		    'remark' => $remark
-		);
-		$this->insert($data);
-	}
-
-	public function updateVehicle(
-								$plateNo,
-		                        $name,
-		                        $license,
-		                        $personIC,
-		                        $users,
-		                        $fuelCons,
-		                        $remark)
-	{
-		$data = array (
-		    'plateNo' => $plateNo,
-		    'name' => $name,
-		    'license' => $license
-			'personIC' => $personIC,
-		    'users' => $users,
-		    'fuelCons' => $fuelCons,
-		    'remark' => $remark
-		);
-		$this->update($data, 'plateNo = ' . (string)$plateNo);
-	}
-
-	public function deleteVehicle($plateNo)
-	{
-		$this->delete('plateNo = ' . (string)$plateNo);
+    	$resultSet = $this->fetchAll($select);
+		return $resultSet;
 	}
 }
 ?>
+
+

@@ -1,27 +1,29 @@
 <?php
-/*
-created by lincoy
-time of creating 3-27-2011
-completed time 3-27-2011
-*/
+//creation date 09-04-2011
+  //creating by lincoy
+  //completion date 09-04-2011
 
-class Application_Model_Vehicle{
-     protected $_plateNo; //车牌号
-	 protected $_name;    //车辆名称
-	 protected $_license; //车辆行驶证
-	 protected $_personIC;//车辆负责人
-	 protected $_users;   //主要使用人员
-	 protected $_fuelCons;//标准油耗
-	 protected $_remark;  //备注
+calss Vehicle_Models_Vehicle
+{
+	protected $_veId;
+	protected $_plateNo;
+	protected $_name;
+	protected $_color;
+	protected $_license;
+	protected $_contactId;
+	protected $_user;
+	protected $_fuelCons;
+	protected $_remark;
+	protected $_contactName; //鏁版嵁搴搗e_vehicles涓病鏈夛紝鍦ㄨ繖閲岀敤浜庡瓨鍌ㄦ潵鑷猠m_contacts涓殑Name
 
-	 public function __construct(array $options=null)
-	 {
-		if(is_array($optionas)){
-             $this->setOptions($options);
-		}
-	}
+	public function __construct(array $options = null)
+    {
+        if (is_array($options)) {
+            $this->setOptions($options);
+        }
+    }
 
-	public function __set($name, $value)
+    public function __set($name, $value)
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
@@ -30,7 +32,7 @@ class Application_Model_Vehicle{
         $this->$method($value);
     }
 
-	public function __get($name)
+    public function __get($name)
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
@@ -51,6 +53,19 @@ class Application_Model_Vehicle{
         return $this;
     }
 
+	public function setVeId($veId)
+	{
+		$this->_veId = $veId;
+		return $this;
+	}
+
+	public function getVeId()
+	{
+		return $this->_veId;
+	}
+
+	/*********************************************/
+
 	public function setPlateNo($plateNo)
 	{
 		$this->_plateNo = $plateNo;
@@ -62,6 +77,7 @@ class Application_Model_Vehicle{
 		return $this->_plateNo;
 	}
 
+	/************************************************/
 	public function setName($name)
 	{
 		$this->_name = $name;
@@ -73,9 +89,24 @@ class Application_Model_Vehicle{
 		return $this->_name;
 	}
 
+	/************************************************/
+
+	public function setColor($color)
+	{
+		$this->_color = $color;
+		return $this;
+	}
+
+	public function getColor()
+	{
+		return $this->_color;
+	}
+
+	/************************************************/
+
 	public function setLicense($license)
 	{
-		$this->__license = $license;
+		$this->_license = $license;
 		return $this;
 	}
 
@@ -83,39 +114,46 @@ class Application_Model_Vehicle{
 	{
 		return $this->_license;
 	}
-	
-	public function setPersonIC($personIC)
+
+	/************************************************/
+
+	public function setContactId($contactId)
 	{
-		$this->_personIC = $personIC;
+		$this->_contactId = $contactId;
 		return $this;
 	}
 
-	public function getPersonIC()
+	public function getContactId()
 	{
-		return $this->_personIC;
+		return $this->_contactId;
 	}
 
-	public function setUsers($users)
+	/************************************************/
+	public function setUser($user)
 	{
-		$this->_users = $users;
+		$this->_user = $user;
 		return $this;
 	}
 
-	public function getUsers()
+	public function getUser()
 	{
-		return $this->_users;
+		return $this->_user;
 	}
 
-	public function setFuelCons($fuleCons)
+	/************************************************/
+
+	public function setFuelCons($fuelCons)
 	{
-		$this->_fuelCons = $fuleCons;
+		$this->_fuelCons = $fuelCons;
 		return $this;
 	}
 
-	public function getFuleCons()
+	public function getFuelCons()
 	{
-		return  $this->_fuleCons;
+		return $this->_fuelCons;
 	}
+
+	/************************************************/
 
 	public function setRemark($remark)
 	{
@@ -128,5 +166,16 @@ class Application_Model_Vehicle{
 		return $this->_remark;
 	}
 
-}
+	/************************************************/
+
+	public function setContactName($contactName)
+	{
+		$this->_contactName = $contactName;
+		return $this;
+	}
+
+	public function getContactName()
+	{
+		return $this->_contactName;
+	}
 ?>
