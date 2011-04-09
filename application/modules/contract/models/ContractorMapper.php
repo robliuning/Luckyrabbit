@@ -50,31 +50,6 @@ class Contract_Models_ContractorMapper
             $this->getDbTable()->update($data, array('contractorId = ?' => $contractorId));
         }
     }
-
-    public function find($contractorId, Contract_Models_Contract $contractor)
-
-    {
-
-        $result = $this->getDbTable()->find($contractorId);
-
-        if (0 == count($result)) {
-
-            return;
-
-        }
-
-        $row = $result->current();
-
-        $contractor ->setContractorId($row->contractorId)
-        		  ->setName($row->name)
-                  ->setArtiPerson($row->artiPerson)
-                  ->setLicenseNo($row->licenseNo)
-				  ->setBusiField($row->busiField)
-				  ->setPhoneNo($row->phoneNo)
-				  ->setOtherContact($row->otherContact)
-				  ->setAddress($row->address)
-				  ->setRemark($row->remark);
-    }
  
 	public function delete($id) //check
     {

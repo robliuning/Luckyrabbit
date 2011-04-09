@@ -63,82 +63,249 @@ class Contract_Models_Subcontract
         return $this;
     }
 
-	public function setEmpId($empId)
+	public function setScontrId($scontrId)
     {
-        $this->_empId = (int)$empId;
+        $this->_scontrId = (int)$scontrId;
         return $this;
     } 
 
-    public function getEmpId()
+    public function getScontrId()
     {
-        return $this->_empId;
+        return $this->_scontrId;
     }
     
-    public function setEmpName($empName)
+    public function setProjectId($projectId)
     {
-        $this->_empName = $empName;
+        $this->_projectId = $projectId;
         return $this;
     } 
 
-    public function getEmpName()
+    public function getProjectId()
     {
-        return $this->_empName;
+        return $this->_projectId;
     }
 
-    public function setDeptName($deptName)
+    public function setScontrType($scontrType)
     {
-        $this->_deptName = (string)$deptName;
+        $this->_scontrType = $scontrType;
         return $this;
     } 
 
-    public function getDeptName()
+    public function getScontrType()
     {
-        return $this->_deptName;
+        return $this->_scontrType;
     }
 
 	
-    public function setDutyName($dutyName)
+    public function setContractorId($contractorId)
     {
-        $this->_dutyName= (string) $dutyName;
+        $this->_contractorId= $contractorId;
         return $this;
     } 
 
-    public function getDutyName()
+    public function getContractorId()
     {
-        return $this->_dutyName;
+        return $this->_contractorId;
     }
     
-    public function setTitleName($titleName)
+    public function setScontrDetail($scontrDetail)
     {
-        $this->_titleName= (string) $titleName;
+        $this->_scontrDetail= (string) $scontrDetail;
         return $this;
     } 
 
-    public function getTitleName()
+    public function getScontrDetail()
     {
-        return $this->_titleName;
+        return $this->_scontrDetail;
     }
     
-    public function setPhoneNo($phoneNo)
+    public function setQuality($quality)
     {
-        $this->_phoneNo = $phoneNo;
+        $this->_quality = $quality;
         return $this;
     } 
 
-    public function getPhoneNo()
+    public function getQuality()
     {
-        return $this->_phoneNo;
+        return $this->_quality;
     }
  
-     public function setStatus($status)
+     public function setStartDateExp($startDateExp)
     {
-        $this->_status= $status;
+        $this->_startDateExp= $startDateExp;
         return $this;
     }
 
-    public function getStatus()
+    public function getStartDateExp()
     {
-        return $this->_status;
+        return $this->_startDateExp;
+	}
+
+		public function setEndDateExp($endDateExp)
+    {
+        $this->_endDateExp = $endDateExp;
+        return $this;
+    } 
+
+    public function getEndDateExp()
+    {
+        return $this->_endDateExp;
+    }
+    
+    public function setPeriodExp($periodExp)
+    {
+        $this->_periodExp = $periodExp;
+        return $this;
+    } 
+
+    public function getPeriodExp()
+    {
+        return $this->_periodExp;
+    }
+
+    public function setStartDateAct($startDateAct)
+    {
+        $this->_startDateAct = $startDateAct;
+        return $this;
+    } 
+
+    public function getStartDateAct()
+    {
+        return $this->_startDateAct;
+    }
+
+	
+    public function setEndDateAct($endDateAct)
+    {
+        $this->_endDateAct= $endDateAct;
+        return $this;
+    } 
+
+    public function getEndDateAct()
+    {
+        return $this->_endDateAct;
+    }
+    
+    public function setPeriodAct($periodAct)
+    {
+        $this->_periodAct= $periodAct;
+        return $this;
+    } 
+
+    public function getPeriodAct()
+    {
+        return $this->_periodAct;
+    }
+    
+    public function setBrConContr($brConContr)
+    {
+        $this->_brConContr = $brConContr;
+        return $this;
+    } 
+
+    public function getBrConContr()
+    {
+        return $this->_brConContr;
+    }
+ 
+     public function setBrResContr($brResContr)
+    {
+        $this->_brResContr= $brResContr;
+        return $this;
+    }
+
+    public function getBrResContr()
+    {
+        return $this->_brResContr;
+	}
+
+	 public function setBrConSContr($brConSContr)
+    {
+        $this->_brConSContr= $brConSContr;
+        return $this;
+    }
+
+    public function getBrConSContr()
+    {
+        return $this->_brConSContr;
+	}
+
+		public function setBrResSContr($brResSContr)
+    {
+        $this->_brResSContr = $brResSContr;
+        return $this;
+    } 
+
+    public function getBrResSContr()
+    {
+        return $this->_brResSContr;
+    }
+    
+    public function setWarranty($warranty)
+    {
+        $this->_warranty= $warranty;
+        return $this;
+    } 
+
+    public function getWarranty()
+    {
+        return $this->_warranty;
+    }
+
+    public function setContrAmt($contrAmt)
+    {
+        $this->_contrAmt = $contrAmt;
+        return $this;
+    } 
+
+    public function getContrAmt()
+    {
+        return $this->_contrAmt;
+    }
+
+	
+    public function setConsMargin($consMargin)
+    {
+        $this->_consMargin= $consMargin;
+        return $this;
+    } 
+
+    public function getConsMargin()
+    {
+        return $this->_consMargin;
+    }
+    
+    public function setPrjMargin($prjMargin)
+    {
+        $this->_prjMargin= $prjMargin;
+        return $this;
+    } 
+
+    public function getPrjMargin()
+    {
+        return $this->_prjMargin;
+    }
+    
+    public function setPrjWarr($prjWarr)
+    {
+        $this->_prjWarr = $prjWarr;
+        return $this;
+    } 
+
+    public function getPrjWarr()
+    {
+        return $this->_prjWarr;
+    }
+ 
+     public function setRemark($remark)
+    {
+        $this->_remark= $remark;
+        return $this;
+    }
+
+    public function getRemark()
+    {
+        return $this->_remark;
 	}
 }
 ?>
