@@ -6,7 +6,7 @@ review:mingtingling
 date:2011.4.9
 vision:2.0
 */
-class Contract_Forms_ContractSave extends Zend_Form
+class Contract_Forms_ContractorSave extends Zend_Form
 {
      public function init()
 	{

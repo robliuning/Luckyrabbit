@@ -24,7 +24,7 @@ class Contract_IndexController extends Zend_Controller_Action
 	}
 	public function editAction()  /*修改*/
 	{
-      $editForm=new Contract_Forms_ContractSave();
+      $editForm=new Contract_Forms_ContractorSave();
 	  $editForm->submit->setLabel("保存修改");
 	  $editForm->submit2->setAttrib('class','hide');
 	  $contractors=new Contract_Models_ContractorMapper();
@@ -69,7 +69,7 @@ class Contract_IndexController extends Zend_Controller_Action
 
 public function addAction() // 添加
  {
-	 $addForm=new Contract_Forms_ContractSave();
+	 $addForm=new Contract_Forms_ContractorSave();
 	 $addForm->submit->setLabel("保存继续新建:");
 	 $addForm->submit2->setLabel("保存返回上页");
 	 $contractors=new Contract_Models_ContractorMapper();
