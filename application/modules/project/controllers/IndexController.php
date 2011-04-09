@@ -114,8 +114,7 @@ class Project_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$id=$this->_getParam('id',0);
-    			if($id >0)
+    			if($projectId >0)
     			{
     			    $arrayProject = $projects->findArrayProject($projectId);
     				$editForm->populate($arrayProject);
@@ -125,7 +124,7 @@ class Project_IndexController extends Zend_Controller_Action
     					$this->_redirect('/project');
     					}
     			}		
-    	$this->view->form = $editForm;
+    	$this->view->editForm = $editForm;
     	$this->view->id = $projectId;     	
     }
     

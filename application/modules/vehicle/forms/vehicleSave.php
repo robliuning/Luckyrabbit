@@ -38,7 +38,7 @@ class Vehicle_Forms_VehicleSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'contactId', array(
+			'text', 'contactName', array(
 			'label' => '车辆负责人: ',
 			'required' => true,
 			'class'=>'tbMedium tbText'
@@ -83,6 +83,14 @@ class Vehicle_Forms_VehicleSave extends Zend_Form
     		'name'=>'submit'
     		)
     	);
+    	
+    	$this->addElement(
+			'text', 'contactId', array(
+			'required' => true,
+			'class'=>'hide',
+			'value'=>'000009'
+			)
+		);
     	
     	$this->setElementDecorators(array(
             'ViewHelper',
