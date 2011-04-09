@@ -23,7 +23,7 @@ class Contract_Models_Contrqualif
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid cpp property');
+            throw new Exception('Invalid contrqualif property');
         }
         $this->$method($value);
     }
@@ -32,7 +32,7 @@ class Contract_Models_Contrqualif
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid cpp property');
+            throw new Exception('Invalid contrqualif property');
         }
         return $this->$method();
     } 
@@ -103,12 +103,6 @@ class Contract_Models_Contrqualif
     {
         return $this->_qualifGrade;
     }	
-    
-    public function setProjectId($projectId)
-    {
-        $this->_projectId= (int)$projectId;
-        return $this;
-    } 
 
 }
 ?>

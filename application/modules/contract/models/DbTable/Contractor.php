@@ -20,63 +20,6 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 
-	public function deleteContract($contractId)
-	{
-		$this->delete('contractId = '.(int)$contractorId);
-	}
-
-
-	public function addContract(
-								$name,
-								$artiPerson,
-								$licenseNo,
-								$busiField,
-								$phoneNo,
-                                $otherContact, 
-                                $address,
-                                $remark
-								)
-	{
-		$data = array (
-			'name' => $name,
-			'artiPerson' => $artiPerson,
-			'licenseNo' => $licenseNo,
-			'busiField' => $busiField,
-			'phoneNo' => $phoneNo,
-			'otherContact' => $otherContact,
-			'address' => $address,
-			'remark' => $remark
-		);
-		$this->insert($data);
-	}
-
-	public function updateContract(
-								$contractorId,
-								$name,
-								$artiPerson,
-								$licenseNo,
-								$busiField,
-								$phoneNo,
-                                $otherContact,
-                                $address,
-                                $remark
-								)
-	{
-		$data = array (
-			'contractorId' => $contractorId,
-			'name' => $name,
-			'artiPerson' => $artiPerson,
-			'licenseNo' => $licenseNo,
-			'busiField' => $busiField,
-			'phoneNo' => $phoneNo,
-            'otherContact' => $otherContact,
-            'address' => $address,
-            'remark' => $remark
-		);
-
-		$this->update($data, 'contractId = '.(int)$contractorId);
-	}
-
 	public function Search($key, $condition)
 	{
 		$select = $this->select();
@@ -100,7 +43,6 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
     	$resultSet = $this->fetchAll($select);
 		return $resultSet;
 	}
-
 
 }
 
