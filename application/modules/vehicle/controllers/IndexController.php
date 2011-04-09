@@ -59,7 +59,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
    					}
    					else
     				{
-    					$this->_redirect('/Vehicle');
+    					$this->_redirect('/vehicle');
     					} 			
     			}
     			else
@@ -87,17 +87,17 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		{
     			$vehicle = new Vehicle_Models_Vehicle();
 				$vehicle->setVeId($veId);
-    			$vehicle->setPlateNo($addForm->getValue('plateNo'));
-    			$vehicle->setName($addForm->getValue('name'));
-    			$vehicle->setColor($addForm->getValue('color'));
-    			$vehicle->setLicense($addForm->getValue('license'));
-    			$vehicle->setContactId($addForm->getValue('contactId'));
-    			$vehicle->setUser($addForm->getValue('user'));
-    			$vehicle->setFuelCons($addForm->getValue('fuelCons'));
-    			$vehicle->setRemark($addForm->getValue('remark'));    			
-    			$Vehicles->save($Vehicle); 
+    			$vehicle->setPlateNo($editForm->getValue('plateNo'));
+    			$vehicle->setName($editForm->getValue('name'));
+    			$vehicle->setColor($editForm->getValue('color'));
+    			$vehicle->setLicense($editForm->getValue('license'));
+    			$vehicle->setContactId($editForm->getValue('contactId'));
+    			$vehicle->setUser($editForm->getValue('user'));
+    			$vehicle->setFuelCons($editForm->getValue('fuelCons'));
+    			$vehicle->setRemark($editForm->getValue('remark'));    			
+    			$vehicles->save($vehicle); 
     			 
-    			$this->_redirect('/Vehicle');
+    			$this->_redirect('/vehicle');
     			}
     			else
     			{
@@ -106,18 +106,17 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$id=$this->_getParam('id',0);
-    			if($id >0)
+    			if($veId >0)
     			{
-    			    $arrayVehicle = $Vehicles->findArrayVehicle($veId);
+    			    $arrayVehicle = $vehicles->findArrayVehicle($veId);
     				$editForm->populate($arrayVehicle);
     				}
     				else
     				{
-    					$this->_redirect('/Vehicle');
+    					$this->_redirect('/vehicle');
     					}
     			}		
-    	$this->view->form = $editForm;
+    	$this->view->editForm = $editForm;
     	$this->view->id = $veId;     	
     }
     
@@ -133,7 +132,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redirect('/Vehicle');
+    			$this->_redirect('/vehicle');
     			}
     	}
    
@@ -152,7 +151,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redirect('/Vehicle');
+    			$this->_redirect('/vehicle');
     			}
     	}
 }

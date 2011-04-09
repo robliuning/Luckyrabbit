@@ -47,21 +47,6 @@ class Contract_Models_ContrqualifMapper
             $this->getDbTable()->update($data, array('cqId = ?' => $cqId));
         }
     }
-
-    public function find($cqId, Contract_Models_Contrqualif $contrqualif)
-    {
-        $result = $this->getDbTable()->find($cqId);
-        if (0 == count($result)) {
-            return;
-        }
-        $row = $result->current();
-
-        $contrqualif->setCqId($row->cqId)
-        		  ->setContractorId($row->ContractorId)
-                  ->setQualifSerie($row->qualifSerie)
-                  ->setQualifType($row->qualifType)
-				  ->setQualifGrade($row->qualifGrade);
-    }
  
     public function fetchAllQualifTypes($key)
     {
@@ -95,6 +80,11 @@ class Contract_Models_ContrqualifMapper
 		$arrayQualiftype = $qualifType->fetchAll($key);
 		return $arrayQualiftype;
 	}
-
+	
+	public function findArrayContrQualif($cqId)
+	{
+		$resultSet = this->getDbtable->findArrayContrqualif($cqId);
+		return $resultSet;
+	}
 }
 ?>
