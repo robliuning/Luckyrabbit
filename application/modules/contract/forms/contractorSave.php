@@ -2,36 +2,21 @@
 /*
 author:ming tingling
 create date:2011.4.4
+review:mingtingling
+date:2011.4.9
 vision:2.0
 */
-class Contract_Forms_ContractSave extends Zend_Form
+class Contract_Forms_ContractorSave extends Zend_Form
 {
      public function init()
 	{
 		 $this->setMethod('post');
-		 $this->addElement(
-		   /*承包商编号*/      
-		 'text','contractorId',array(
-			 'label'=>'承包商编号:',
-			 'class'=>'tbLarge tbText',
-             'required'=>false,
-			 'disabled'=>'disabled'
-		   )
-		 );
           $this->addElement(
 		      /*承包商名称*/
 		  'text','name',array(
 			   'label'=>'承包商名称:',
 			   'class'=>'tbLarge tbText',
 			   'required'=>true
-		     )
-		  );
-		  $this->addElement(
-			  /*联系电话*/
-		   'text','phoneNo',array(
-			    'label'=>'联系电话:' ,
-			    'class'=>'tbLarge tbText',
-			    'required'=>false
 		     )
 		  );
 		  $this->addElement(
@@ -42,30 +27,6 @@ class Contract_Forms_ContractSave extends Zend_Form
 			    'required'=>false
 		     )
 		  );
-		  $this->addElement(
-			  /*资质序列*/
-			   'select','qualifSerie', array(
-				  'label'=>'资质序列:',
-				   'class'=>'tbLarge tbText',
-				   'required'=>false
-			     )
-		   );
-		 $this->addElement(
-		      /*资质类别*/
-		       'select','qualifType',array(
-				 'label'=>'资质类别:',
-				 'class'=>'tbLarge tbText',
-				  'required'=>false
-			   )
-		  );
-		$this->addElement(
-		    /*资质等级*/
-		   'select','qualifGrade',array(
-			    'label'=>'资质等级:',
-			    'class'=>'tbLarge tbText',
-			    'required'=>false
-		    )
-		);
        $this->addElement(
 		    /*许可证号*/
 	        'text','licenseNo',array(
@@ -74,6 +35,22 @@ class Contract_Forms_ContractSave extends Zend_Form
 				 'required'=>false
 			  )
 	   );
+       $this->addElement(
+		    /*承包商业务范围*/
+	        'textarea','busiField',array(
+			     'label'=>'承包商业务范围:',
+				 'class'=>'tbLarge tbText',
+				 'required'=>false
+			  )
+	   );
+	  $this->addElement(
+			  /*联系电话*/
+		   'text','phoneNo',array(
+			    'label'=>'联系电话:' ,
+			    'class'=>'tbLarge tbText',
+			    'required'=>false
+		     )
+		  );
 	 $this->addElement(
 	      /*其他联系方式*/
 	       'text','otherContact',array(
@@ -90,14 +67,6 @@ class Contract_Forms_ContractSave extends Zend_Form
 			   'required'=>false
 		    )
 	 );
-	$this->addElement(
-	    /*承包商业务范围*/	
-		 'textarea','busiField',array(
-		     'label'=>'承包商业务范围:',
-		     'class'=>'tbLarge tbText',
-		     'required'=>false
-	   )
-	);
    $this->addElement(
         /*备注*/
         'textarea','remark',array(
