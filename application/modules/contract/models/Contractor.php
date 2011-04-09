@@ -7,14 +7,14 @@
    */
 
 
-class Contract_Models_Contract
+class Contract_Models_Contractor
 {     
     protected $_contractorId;
 	protected $_name;
 	protected $_artiPerson;
     protected $_licenseNo;
     protected $_busiField;
-	protected $_phoneNo,
+	protected $_phoneNo;
     protected $_otherContact;
     protected $_address;
     protected $_remark;
@@ -64,7 +64,7 @@ class Contract_Models_Contract
 
     public function getContractorId()
     {
-        return $this->_empId;
+        return $this->_contractorId;
     }
 
     public function setName($name)

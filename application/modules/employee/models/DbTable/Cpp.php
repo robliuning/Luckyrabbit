@@ -19,11 +19,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 		}
 		return $row->toArray();
 	}
-
-	public function deleteCpp($cppId) //check
-	{
-		$this->delete('cppId = ' . (int)$cppId);
-	}
 		
 	public function fetchAllJoin($data,$condition) //check
 	{

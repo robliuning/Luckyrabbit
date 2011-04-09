@@ -2,6 +2,44 @@
 //Validate deletion result
 $(document).ready(function()
 {  	
+	//Enable the auto-completing
+	$( "#name" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "/employee/employee/autocomplete/key/"+$("#name").val(),
+					//dataType: "jsonp",
+					data: {
+						featureClass: "P",
+						style: "full",
+						maxRows: 12,
+						name_startsWith: request.term
+					},
+					success: function( data ) {
+							response( $.map(data, function(item) {
+							return {
+								label: "123",
+								value: "123",
+								name:"test"
+							}
+						}));
+					}
+				});
+			},
+			minLength:1,
+			select: function( event, ui ) {
+				$("#empId").val(ui.item.name);
+				alert($("#empId").val());
+			},
+			open: function() {
+				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+		});
+	
+	//---------end	
+	
 	$('#btDel').hover(function(){
 		var count = $('[name="cb"]:checked').length;
 		var htmlDelete = "<div id='msgBox_delete'>";

@@ -6,7 +6,7 @@
   2011-04-08   v0.2
   */
 
-class Contract_Models_DbTable_Contract extends Zend_Db_Table_Abstract
+class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 {
     protected $_name = 'sc_contractors'; 
 

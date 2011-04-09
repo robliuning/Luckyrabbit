@@ -11,14 +11,16 @@ class Project_Models_DbTable_Log extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from($_name,array('pLogId','logDate'))		
+			->from('pm_projectlogs',array('pLogId','logDate'))		
 			->where('projectId = ?',$projectId)
-            ->where('logDate between ? and ?',$startDate,$endDate)
+            //->where("'logDate' between $startDate and $endDate")
+          	->where('logDate > ?', $startDate)
+             ->where('logDate < ?', $endDate)
 			->order('cTime DESC');
 			
 		$entries = $this->fetchAll($select);
 		
 		return $entries;
-	} 
+	}
 }
 ?>

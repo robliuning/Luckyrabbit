@@ -3,40 +3,7 @@ $(document).ready(function()
 	//Enable the date picker
 	$( "#birth" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
 
-	//Enable the auto-completing
-	$( "#name" ).autocomplete({
-			source: function( request, response ) {
-				$.ajax({
-					url: "/employee/index/autocomplete/key/"+$("#name").val(),
-					/*dataType: "jsonp",
-					data: {
-						featureClass: "P",
-						style: "full",
-						maxRows: 12,
-						name_startsWith: request.term
-					},*/
-					success: function( data ) {
-						response( $.map(function(){
-							return data;
-						}));
-					}
-				});
-			},
-			minLength:1,
-			select: function( event, ui ) {
-				log( ui.item ?
-					"Selected: " + ui.item.label :
-					"Nothing selected, input was " + this.value);
-			},
-			open: function() {
-				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-			},
-			close: function() {
-				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-			}
-		});
-	
-	//---------end			
+		
 	$('#btDel').hover(function(){
 		var count = $('[name="cb"]:checked').length;
 		var htmlDelete = "<div id='msgBox_delete'>";

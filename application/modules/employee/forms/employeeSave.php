@@ -61,8 +61,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	$this->addElement(                 
 			'text','empId',array(
 		//	'filters'=>array('StringTrim'),
-			'value'=>'100009',
-			'class'=>'hide'
+			'class'=>''
 			)
 		);
     	

@@ -1,10 +1,10 @@
 <?php
 	/*
 	Created by Meimo
-	Date of creation 4.1.2011
+	Date of creation 4.1.6011
 	Completion date
 	*/
-	class project_Forms_projectSave extends Zend_Form
+	class Project_Forms_LogSave extends Zend_Form
 {
 
     public function init()
@@ -12,126 +12,141 @@
     	$this->setMethod('post');
 		
 		$this->addElement(                   //
-			'text','projectId',array(
-			'label'=>'¹¤³Ì±àºÅ: ',
+			'select','projectId',array(
+			'label'=>'å·¥ç¨‹ç¼–å·: ',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
-			'required' => true,
-			'disabled' =>'disabled',
+			'required' => true
 			)
 		);
 			
 		 $this->addElement(             //
 			'text', 'logDate', array(
-			'label' => 'ÈÕÆÚ: ',
+			'label' => 'æ—¥æœŸ: ',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
      $this->addElement(                //
 			'select', 'weather', array(
-			'label' => 'ÌìÆø: ',
-			'multiOptions'=>array('0'=>'Çç','1'=>'Òõ','2'=>'¶àÔÆ','3'=>'Óê','4'=>'Ð¡Óê','5'=>'´óÓê','6'=>'ÕóÓê','7'=>'±©Óê','8'=>'Óê¼ÐÑ©','9'=>'Ð¡Ñ©','10'=>'´óÑ§','11'=>'±©·çÑ©','12'=>'É³³¾±©','13'=>'Îí','14'=>'´óÎí'),
+			'label' => 'å¤©æ°”: ',
+			'multiOptions'=>array('0'=>'æ™´','1'=>'é˜´','2'=>'å¤šäº‘','3'=>'é›¨','4'=>'å°é›¨','5'=>'å¤§é›¨','6'=>'é˜µé›¨','7'=>'æš´é›¨','8'=>'é›¨å¤¹é›ª','9'=>'å°é›ª','10'=>'å¤§å­¦','11'=>'æš´é£Žé›ª','12'=>'æ²™å°˜æš´','13'=>'é›¾','14'=>'å¤§é›¾'),
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	 $this->addElement(              //
 			'text', 'tempHi', array(
-			'label' => '×î¸ßÎÂ¶È: ',
+			'label' => 'æœ€é«˜æ¸©åº¦: ',
 			'required' => false,
 			'class'=>'tbSmall tbText'
 			)
 		);
     $this->addElement(                 //
 			'text', 'tempLo', array(
-			'label' => '×îµÍÎÂ¶È: ',
+			'label' => 'æœ€ä½Žæ¸©åº¦: ',
 			'required' => false,
 			'class'=>'tbSmall tbText'
 			)
 		);
 	$this->addElement(                  //
 			'textarea', 'progress', array(
-			'label' => 'Éú²ú½ø¶ÈÇé¿ö: ',
+			'label' => 'ç”Ÿäº§è¿›åº¦æƒ…å†µ: ',
 			'required' => false,
-			'class'=>'tbSmall tbText'
+			'class'=>'tbSmall tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                        //
 			'textarea', 'qualityPbl', array(
-			'label' => 'ÖÊÁ¿ÎÊÌâ: ',
+			'label' => 'è´¨é‡é—®é¢˜: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>'tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                           //
-			'textarea', 'saftyPbl', array(
-			'label' => '°²È«ÎÊÌâ: ',
+			'textarea', 'safetyPbl', array(
+			'label' => 'å®‰å…¨é—®é¢˜: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                        //
 			'textarea', 'otherPbl', array(
-			'label' => 'ÆäËûÎÊÌâ: ',
+			'label' => 'å…¶ä»–é—®é¢˜: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                           //
 			'textarea', 'relatedFile', array(
-			'label' => 'À´ÍùÎÄ¼þ: ',
+			'label' => 'æ¥å¾€æ–‡ä»¶: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                          //
 			'textarea', 'mMinutes', array(
-			'label' => '»áÒé¼ÇÂ¼: ',
+			'label' => 'ä¼šè®®è®°å½•: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                        //
 			'textarea', 'changeSig', array(
-			'label' => '±ä¸üÇ©Ö¤: ',
+			'label' => 'å˜æ›´ç­¾è¯: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                        //
 			'textarea', 'material', array(
-			'label' => '²ÄÁÏÉè±¸Ê¹ÓÃÇé¿ö: ',
+			'label' => 'ææ–™è®¾å¤‡ä½¿ç”¨æƒ…å†µ: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                      //
 			'textarea', 'machine', array(
-			'label' => 'Ê©¹¤»ú¾ßÊ¹ÓÃÇé¿ö: ',
+			'label' => 'æ–½å·¥æœºå…·ä½¿ç”¨æƒ…å†µ: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
+		
     $this->addElement(                        //
 			'textarea', 'utility', array(
-			'label' => 'Ë®µçÆøÇé¿ö: ',
+			'label' => 'æ°´ç”µæ°”æƒ…å†µ: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 	$this->addElement(                           //
 			'textarea', 'remark', array(
-			'label' => '±¸×¢',
+			'label' => 'å¤‡æ³¨',
 			'required' => false,
-			'class'=>'tbMedium tbText'
-			)
-		);
-	$this->addElement(                                //
-			'textarea', 'cTime', array(
-			'label' => '´´½¨Ê±¼ä: ',
-			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>' tbText',
+			'cols' => 60,
+			'rows' => 5
 			)
 		);
 
@@ -150,14 +165,6 @@
     		'name'=>'submit'
     		)
     	);
-    	
-    $this->addElement(                 
-			'text','empId',array(
-		//	'filters'=>array('StringTrim'),
-			'value'=>'000009',
-			'class'=>'hide'
-			)
-		);
     	
     $this->setElementDecorators(array(
             'ViewHelper',

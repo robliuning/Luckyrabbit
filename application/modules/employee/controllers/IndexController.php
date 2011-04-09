@@ -143,17 +143,6 @@ class Employee_IndexController extends Zend_Controller_Action
     			}
     }
    	
-   	public function autocompleteAction()
-   	{
-   	    $this->_helper->layout()->disableLayout();
-    	$this->_helper->viewRenderer->setNoRender(true);
-    	$key = $this->_getParam('key');
-    	$contacts = new Employee_Models_ContactMapper();
-    	$arrayNames = $contacts->findContactNames($key);
-    	
-    	echo $key;
-   		}
-   	
    	public function searchAction()
    	{
    	//get search key

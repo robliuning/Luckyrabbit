@@ -6,7 +6,7 @@
    2011-04-08   v0.2
    */
 
-class Contract_Models_ContractMapper
+class Contract_Models_ContractorMapper
 {
 	protected $_dbTable;
 	
@@ -25,7 +25,7 @@ class Contract_Models_ContractMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Contract_Models_Dbtable_Contract');
+            $this->setDbTable('Contract_Models_Dbtable_Contractor');
         }
         return $this->_dbTable;
     }
@@ -83,26 +83,22 @@ class Contract_Models_ContractMapper
     	}
  
 
-    public function fetchAll()
+    public function fetchAll() //check
     {
-
         $resultSet = $this->getDbTable()->fetchAll();
         $entries   = array();
         foreach ($resultSet as $row) {
-            $entry = new Contract_Models_Contract();
+            $entry = new Contract_Models_Contractor();
 
 			 $entry ->setContractorId($row->contractorId)
         				 ->setName($row->name)
 						 ->setArtiPerson($row->artiPerson)
 						 ->setLicenseNo($row->licenseNo)
-						 ->setBusiField($row->busiField)
 				         ->setPhoneNo($row->phoneNo)
 						 ->setOtherContact($row->otherContact)
-						 ->setAddress($row->address)
-						 ->setRemark($row->remark);
+						 ->setAddress($row->address);
                   
             $entries[] = $entry;
-
         }
         return $entries;
     }

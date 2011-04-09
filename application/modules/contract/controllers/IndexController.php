@@ -2,7 +2,8 @@
 /*
 author:ming tingling
 create date:2011.4.4
-vision:2.0
+review rob 
+date 2011.4.8
 */
 class Contract_IndexController extends Zend_Controller_Action
 {
@@ -16,8 +17,8 @@ class Contract_IndexController extends Zend_Controller_Action
 	}
 	public function indexAction()
 	{
-       $contractor=new Contract_Models_ContractMapper();
-	   $this->view->entries=$contracotr->fetchAll(); /*调用models/contractorMapper.php的fetchAll方法，没有参数*/
+       $contractors=new Contract_Models_ContractorMapper();
+	   $this->view->arrayContractors = $contractors->fetchAll(); 
 	}
 	public function editAction()  /*修改*/
 	{

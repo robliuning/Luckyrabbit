@@ -168,18 +168,4 @@ class Employee_CppController extends  Zend_Controller_Action
          $this->_redirect('/employee');
 		}
 	}
-   public function ajaxdisplayAction() /*显示*/
-    {
-		$this->_helper->layout()->disableLayout();
-        $cppId=$this->_getParam('id',0);
-		if($cppId>0)
-		{
-			$cpps=new Employee_Models_DbTable_Cpp();
-			$this->view->entries=$cpps->getCpp($cppId);
-		}
-		else
-		{
-           $this->_redirect('/employee');
-		}
-	}
 }

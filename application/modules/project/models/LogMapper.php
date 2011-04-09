@@ -44,7 +44,7 @@ class Project_Models_LogMapper
 			'material' => $log->getMaterial(),
 			'machine' => $log->getMachine(),
 			'utility' => $log->getUtility(),
-			'remark' => $progress->getRemark()
+			'remark' => $log->getRemark()
         );
         if (null === ($id = $log->getPLogId())) {
             unset($data['pLogId']);
@@ -53,6 +53,16 @@ class Project_Models_LogMapper
             $this->getDbTable()->update($data, array('pLogId = ?' => $log->getPLogId()));
         }
     }
+    
+    public function findArrayLog($id)
+    {
+		$id = (int)$id;
+		$row = $this->getDbTable()->fetchRow('pLogId = ' . $id);
+		if (!$row) {
+			throw new Exception("Could not find row $id");
+		}
+		return $row->toArray();
+    	}
 
     public function find($pLogId)
     {
@@ -81,7 +91,7 @@ class Project_Models_LogMapper
 			  ->setMachine($row->machine)
 			  ->setUtility($row->utility)
 			  ->setRemark($row->remark)
-			  ->setCTmie($row->cTime);
+			  ->setCTime($row->cTime);
 		
 		return $pLog;
     }

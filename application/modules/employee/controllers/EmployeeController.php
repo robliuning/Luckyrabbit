@@ -151,23 +151,33 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	$this->view->id = $empId;
 	}
  
-   public function ajaxdeleteAction() //check
-  {
-    $this->_helper->layout()->disableLayout();
-    $this->_helper->viewRenderer->setNoRender(true);
+  	public function ajaxdeleteAction() //check
+  	{
+    	$this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
     
-    $id = $this->_getParam('id',0);
-	if($id > 0)
-	  {
-		$employees=new Employee_Models_EmployeeMapper();
-        $employees->delete($id);
-		echo "1";
-	  }
-	else
-	  {
-		$this->redirect('/employee');
-	  }
-  }
-
+    	$id = $this->_getParam('id',0);
+		if($id > 0)
+	  	{
+			$employees=new Employee_Models_EmployeeMapper();
+        	$employees->delete($id);
+			echo "1";
+	  		}
+			else
+	  		{
+				$this->redirect('/employee');
+	  			}
+  	}
+  
+  	public function autocompleteAction()
+   	{
+   	    $this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$key = $this->_getParam('key');
+    	$contacts = new Employee_Models_ContactMapper();
+    	$arrayNames = $contacts->findContactNames($key);
+    	
+    	echo $key;
+   		}
 }
 
