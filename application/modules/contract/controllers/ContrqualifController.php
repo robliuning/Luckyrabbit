@@ -35,12 +35,12 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 			{
 				$contrqualif = new Contract_Models_Contrqualif();
                 $contrqualif->setContractorId($addForm->getValue('contractorId'));
-				$contrqualif->setQualifSerie($addForm->getValue('qualifSerie'));
+				//$contrqualif->setQualifSerie($addForm->getValue('qualifSerie'));
 				$contrqualif->setQualifType($addForm->getValue('qualifType'));
 				$contrqualif->setQualifGrade($addForm->getValue('qualifGrade'));             
               	$contrqualifs->save($contrqualif);
 				$addForm->getElement('contractorId')->setValue('');
-				$addForm->getElement('qualifSerie')->setValue('');
+				//$addForm->getElement('qualifSerie')->setValue('');
 				$addForm->getElement('qualifType')->setValue('');
 				$addForm->getElement('qualifGrade')->setValue('');
 				}
@@ -70,7 +70,7 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 				$contrqualif = new Contract_Models_Contrqualif();
 				$contrqualif->setContractorId($cqId);				
 				$contrqualif->setContractorId($editForm->getValue('contractorId'));
-				$contrqualif->setQualifSerie($editForm->getValue('qualifSerie'));
+				//$contrqualif->setQualifSerie($editForm->getValue('qualifSerie'));
 				$contrqualif->setQualifType($editForm->getValue('qualifType'));
 				$contrqualif->setQualifGrade($editForm->getValue('qualifGrade'));
                 $contrqualifs->save($contrqualif);
@@ -113,14 +113,14 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 		$this->_redirect('/contract');
 	 }
  }
- 	public function ajaxdisplayall()
+ 	public function ajaxdisplayallAction()
  	{
  		$contractorId = $this->_getParam('id',0);
  		if($contractorId > 0)
  		{
  			$contrqualifs = new Contract_Models_ContrqualifMapper();
  			$arrayContrqualifs = $contrqualifs->fetchAllContrqualifs();
- 			
+ 			$this->view->arrayContrqualifs=$arrayContrqualifs;
  			}
  			else
  			{

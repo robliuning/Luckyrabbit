@@ -119,7 +119,7 @@ public function addAction() // 添加
 	 if($contractorId>0)
 	     {
 		   $contractors=new Contract_Models_ContractorMapper();
-		   $result=$contractors->delete($contractorId);
+		   $result=$contractors->delete($contractorId); 
 	     }
 	 else
 	    {
@@ -129,6 +129,17 @@ public function addAction() // 添加
  
 	public function ajaxdisplayAction()
 	{
-			
+			$contractorId=$this->_getParam('id',0);
+            if($contractorId>0)
+		    {
+				$contractors=new Contract_Models_ContractorMapper();
+				$object=new Contract_Models_Contractor();
+				$arrayContractors=$contractors->find($contractors,$object);
+               $this->view->arrayContractors=$arrayContractors;
+		       }
+			   else
+		        {
+				   $this->_redirect('/contract');
+		        }
 		}
 }

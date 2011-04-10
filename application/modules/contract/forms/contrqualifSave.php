@@ -10,33 +10,35 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 	{
 		$this->setMethod('post');
 		$this->addElement(
-			/*³Ğ°üÉÌ±àºÅ*/
+			/*æ‰¿åŒ…å•†ç¼–å·*/
 		  'select','contractorId',array(
-			 'label'=>'³Ğ°üÉÌ:',
+			 'label'=>'æ‰¿åŒ…å•†:',
 			 'class'=>'tbLarge tbText',
 			 'required'=>true
 		   )
 		);
        $this->addElement(
-		  /*×ÊÖÊĞòÁĞ*/
+		  /*èµ„è´¨åºåˆ—*/
 	      'select','qualifSerie',array(
-		  	 'label'=>'×ÊÖÊĞòÁĞ:',
+		  	 'label'=>'èµ„è´¨åºåˆ—:',
+			 'multiOptions'=>array('0'=>'æ–½å·¥æ€»æ‰¿åŒ…','1'=>'ä¸“ä¸šæ‰¿åŒ…','2'=>'åŠ³åŠ¡åˆ†åŒ…'),
 			 'class'=>'tbLarge tbText',
 			 'required'=>true
 		  )
 	   );
 	 $this->addElement(
-	    /*×ÊÖÊÀà±ğ*/	
+	    /*èµ„è´¨ç±»åˆ«*/	
 		 'select','qualifTypeId',array(
-		   'label'=>'×ÊÖÊÀà±ğ:',
+		   'label'=>'èµ„è´¨ç±»åˆ«:',
 		   'class'=>'tbLarge tbText',
 		   'required'=>true
 	     )
 	  );
 	 $this->addElement(
-	    /*×ÊÖÊµÈ¼¶*/
+	    /*èµ„è´¨ç­‰çº§*/
 	     'select','qualifGrade',array(
-		    'label'=>'×ÊÖÊµÈ¼¶:',
+		    'label'=>'èµ„è´¨ç­‰çº§:',
+			 'multiOptions'=>array('0'=>'ç‰¹çº§','1'=>'ä¸€çº§','2'=>'äºŒçº§','3'=>'ä¸‰çº§'),
 			 'class'=>'tbLarge tbText',
 			 'required'=>false
 		 )
