@@ -27,7 +27,7 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 	   );
 	 $this->addElement(
 	    /*资质类别*/	
-		 'select','qualifType',array(
+		 'select','qualifTypeId',array(
 		   'label'=>'资质类别:',
 		   'class'=>'tbLarge tbText',
 		   'required'=>true

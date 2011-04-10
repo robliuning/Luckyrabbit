@@ -34,8 +34,9 @@ class Contract_IndexController extends Zend_Controller_Action
 		      $formData=$this->getRequest()->getPost();
                if($editForm->isValid($formData))
 			     { 
-				      $contractor=new  Contract_Models_Contractor();
+				      $contractor=new Contract_Models_Contractor();
                       $contractor->setContractorId($contractorId);
+                      $contractor->setArtiPerson($editForm->getValue('artiPerson'));
 					  $contractor->setName($editForm->getValue('name'));
 					  $contractor->setLicenseNo($editForm->getValue('licenseNo'));
 					  $contractor->setBusiField($editForm->getValue('busiField'));
@@ -44,33 +45,33 @@ class Contract_IndexController extends Zend_Controller_Action
 					  $contractor->setAddress($editForm->getValue('address'));
 					  $contractor->setRemark($editForm->getValue('remark'));
 					  $contractors->save($contractor);
-					  $this->_redirect('/contract/contractor');
+					  $this->_redirect('/contract');
 			     }
 			   else
 			    {
 				   $editForm->populate($formData);
 			    }
 		}
-     else
+     	else
 		{
-		       if($contractorId>0)
-			      {
-				    $arrayContractor=$contractors->findArrayContractor($contractorId);
-					$editForm->populate($arrayContractor);
-			      }
-			  else
-			     {
-				   $this->_redirect('/contract/contractor');
-			     }
+			if($contractorId>0)
+			{
+				$arrayContractor = $contractors->findArrayContractor($contractorId);
+				$editForm->populate($arrayContractor);
+			    }
+			    else
+			    {
+					$this->_redirect('/contract/');
+			     	}
 		}
-		$this->view->editForm=$editForm;
-		$this->view->contractorId=$contractorId;
+		$this->view->editForm = $editForm;
+		$this->view->contractorId = $contractorId;
 	}
 
 public function addAction() // 添加
  {
 	 $addForm=new Contract_Forms_ContractorSave();
-	 $addForm->submit->setLabel("保存继续新建:");
+	 $addForm->submit->setLabel("保存继续新建");
 	 $addForm->submit2->setLabel("保存返回上页");
 	 $contractors=new Contract_Models_ContractorMapper();
 	 if($this->getRequest()->isPost())
@@ -99,15 +100,16 @@ public function addAction() // 添加
 				 $addForm->getElement('remark')->setValue(' ');
 				 if($btClicked=="保存返回上页")
 				     {
-					   $this->_redirect('/contract/contractor');
+					   $this->_redirect('/contract');
 				     }
+				     
 		      }
+		      else
+	   			{
+		    		$addForm->populate($formData);
+	   			}
 	   }
-	   else
-	   {
-		    $addForm->populate($formData);
-	   }
-	   $this->view->addForm=$addForm;
+	   $this->view->addForm = $addForm;
  }
  public function ajaxdeleteAction() /*删除*/
  {
@@ -124,4 +126,9 @@ public function addAction() // 添加
 		 $this->_redirect('/contract');
 	    }
  }
+ 
+	public function ajaxdisplayAction()
+	{
+			
+		}
 }

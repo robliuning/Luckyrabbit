@@ -30,24 +30,24 @@ class Contract_Models_ContractorMapper
         return $this->_dbTable;
     }
 
-    public function save(Contract_Models_Contract $contract)
+    public function save(Contract_Models_Contractor $contractor)
     {
         $data = array(
-            'ContractorId' => $contract->getContractorId(),
-            'name' => $contract->getName(),
-            'artiPerson' => $contract->getArtiPerson(),
-            'licenseNo' => $contract->getLicenseNo(),
-			'busiField' => $contract->getBusiField(),
-			'phoneNo' => $contract->getPhoneNo(),
-			'otherContact' => $contract->getOtherContact(),
-			'address' => $contract->getAddress(),
-			'remark' => $contract->getRemark()
+            'ContractorId' => $contractor->getContractorId(),
+            'name' => $contractor->getName(),
+            'artiPerson' => $contractor->getArtiPerson(),
+            'licenseNo' => $contractor->getLicenseNo(),
+			'busiField' => $contractor->getBusiField(),
+			'phoneNo' => $contractor->getPhoneNo(),
+			'otherContact' => $contractor->getOtherContact(),
+			'address' => $contractor->getAddress(),
+			'remark' => $contractor->getRemark()
         );
-        if (null === ($id = $contract->getContractorId())) {
+        if (null === ($id = $contractor->getContractorId())) {
             unset($data['contractorId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('contractorId = ?' => $contractorId));
+            $this->getDbTable()->update($data, array('contractorId = ?' => $contractor->getContractorId()));
         }
     }
  

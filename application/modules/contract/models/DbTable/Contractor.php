@@ -10,12 +10,12 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 {
     protected $_name = 'sc_contractors'; 
 
-	public function findArrayContract($ContractId)
+	public function findArrayContract($contractorId)
 	{
-		$ContractId = (int)$ContractId;
-		$row = $this->fetchRow('ContractId = ' . $ContractId);
+		$contractorId = (int)$contractorId;
+		$row = $this->fetchRow('contractorId = ' . $contractorId);
 		if (!$row) {
-			throw new Exception("Could not find row $ContractId");
+			throw new Exception("Could not find row $contractorId");
 		}
 		return $row->toArray();
 	}
