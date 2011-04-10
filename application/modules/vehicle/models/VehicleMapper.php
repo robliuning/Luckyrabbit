@@ -1,7 +1,7 @@
 <?php
   //creation date 09-04-2011
   //creating by lincoy
-  //completion date 09-09-2011
+  //completion date 09-04-2011
 
 class Vehicle_Models_VehicleMapper
 {
@@ -73,7 +73,7 @@ class Vehicle_Models_VehicleMapper
 		$this->getDbTable()->delete('veId = '.(int)$veId);
 	}
 
-    public function fetchAllJoin()  //根据contactId 来找name，一起返回  //check
+    public function fetchAllJoin()  // according to contactId from name  //check
     {
     	$resultSet = $this->getDbTable()->fetchAll();	
         $vehicles   = array();
@@ -136,6 +136,18 @@ class Vehicle_Models_VehicleMapper
 		$row = $row->toArray();
 		$row["contactName"] = $name;
 	   	return $row;
+	}
+
+	public function fetchAllVeId($key,$condition)
+	{
+		$resultSet = $this->getDbTable()->fetchAllVeId($key,$condition);
+		return $resultSet;
+	}
+
+
+	public function fetchAllPalteNo()
+	{
+		return $this->getDbTable()->fetchAllPalteNo();
 	}
 	
 }
