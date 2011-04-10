@@ -1,6 +1,8 @@
 <?php
 /* create by lxj
    2011-04-06  v 0.2
+   rewrite by lxj
+   2011-04-09  v 0.2
  */
 
 class General_Models_QualifTypeMapper
@@ -29,7 +31,6 @@ class General_Models_QualifTypeMapper
 
     public function fetchAll($key) //check
     {
-		$resultSet = $this->getDbTable()->fetchAll();
 		if($key == null)
 		{
 			$resultSet  = $this->getDbTable->fetchAll();

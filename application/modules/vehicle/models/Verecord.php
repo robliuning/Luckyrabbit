@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 09-04-2011
 
-class Vehicle_Models_Vehicle
+class Vehicle_Models_Verecord
 {
 	protected $_recordId;
 	protected $_veId;
@@ -14,6 +14,9 @@ class Vehicle_Models_Vehicle
 	protected $_pilot;
 	protected $_otherUser;
 	protected $_remark;
+	protected $_plateNo; //from ve_vehicles
+	protected $_contactId;//from em_contacts
+	protected $_contactName;//from em_contacts
 
 	public function __construct(array $options = null)
     {
@@ -158,6 +161,42 @@ class Vehicle_Models_Vehicle
 	public function getRemark()
 	{
 		return $this->_remark;
+	}
+
+	/********************************************/
+	public function setPlateNo($plateNo)
+	{
+		$this->_plateNo = $plateNo;
+		return $this;
+	}
+
+	public function getPlateNo()
+	{
+		return $this->_plateNo;
+	}
+
+	/********************************************/
+	public function setContactId($contactId)
+	{
+		$this->_contactId = $contactId;
+		return $this;
+	}
+
+	public function getContactId()
+	{
+		return $this->_contactId;
+	}
+
+	/********************************************/
+	public function setContactName($contactName)
+	{
+		$this->_contactName = $contactName;
+		return $this;
+	}
+
+	public function getContactName()
+	{
+		return $this->_contactName;
 	}
 }
 ?>

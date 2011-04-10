@@ -1,0 +1,93 @@
+ <?php 
+ 	$this->headTitle('-车辆管理');
+ 	$this->headScript()->prependFile('/js/vehicle/p_vehicle.js');
+ ?>
+ 	<div id="p_id" class="hide">nav_generalInfo</div>
+	<div id="s_id" class="hide">none</div>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>车辆管理 - 车辆信息 - 总览</h1>
+		<div class="p_msg">
+			<h3>本页显示内容为车辆信息总览</h3>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><input class="tbMedium tbtext" type="text" /></div>
+					<div><a href="#"><img src="/images/icons/functions/search.png"/><p>查询</p></a></div>	
+					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
+						<col style="width:15%"></col>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>						
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th></th>
+						<th>车牌号</th>
+						<th>车辆名称</th>
+						<th>车辆颜色</th>
+						<th>车辆行驶证号</th>
+						<th>车辆负责人</th>
+						<th>主要使用人员</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayVehicles as $vehicle):?>
+					<?php $veId = $this->escape($vehicle->getVeId());?>
+					<tr>
+						<td><input type="checkbox" name="cbEmp" value="<?php echo $veId ?>"></td>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$veId))?>"><?php echo $this->escape($vehicle->getPlateNo()) ?></a></td>
+						<td><?php echo $this->escape($vehicle->getName()) ?></td>	
+						<td><?php echo $this->escape($vehicle->getColor()) ?></td>
+						<td>
+						<?php echo $this->escape($vehicle->getLicense())?>
+						</td>
+						<td>
+							<?php echo $this->escape($vehicle->getContactName()) ?></td>
+						<td><?php echo $this->escape($vehicle->getUser())?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$veId))?>">修改</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$veId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

@@ -48,7 +48,7 @@ class Project_Models_ProjectMapper
         }
     }
 
-    public function find($projectId) //check
+    public function find($projectId,$project) //check
     {
         $resultSet = $this->getDbTable()->find($projectId);
 
@@ -58,7 +58,7 @@ class Project_Models_ProjectMapper
         }
 
         $row = $resultSet->current();
-		$project = new Project_Models_Project();
+
         $project  ->setProjectId($row->projectId)
                   ->setName($row->name)
 			      ->setAddress($row->address)
@@ -71,7 +71,6 @@ class Project_Models_ProjectMapper
 				  ->setStaffNo($row->staffNo)
 				  ->setRemark($row->remark)
 				  ->setCTime($row->cTime);
-		return $project;
     }
 
 	public function fetchAllNames() //check

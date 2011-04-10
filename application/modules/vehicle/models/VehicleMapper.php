@@ -73,7 +73,7 @@ class Vehicle_Models_VehicleMapper
 		$this->getDbTable()->delete('veId = '.(int)$veId);
 	}
 
-    public function fetchAllJoin()  //根据contactId 来找name，一起返回
+    public function fetchAllJoin()  // according to contactId from name  //check
     {
     	$resultSet = $this->getDbTable()->fetchAll();	
         $vehicles   = array();
@@ -81,7 +81,7 @@ class Vehicle_Models_VehicleMapper
         foreach ($resultSet as $row) 
         {
 			$vehicle = new Vehicle_Models_Vehicle();
-            $vehicle  ->setVeId($row->veId)
+            $vehicle->setVeId($row->veId)
 			      ->setPlateNo($row->plateNo)
 			      ->setName($row->name)
 			      ->setColor($row->color)
@@ -91,18 +91,15 @@ class Vehicle_Models_VehicleMapper
 			      //->setFuelCons($row->fuelCons)
 			      //->setRemark($row->remark);
 				  
-		    $contact = new Employee_Models_ContactMapper();
+		    $contacts = new Employee_Models_ContactMapper();
 			$contactId = $vehicle->getContactId();
-			$select = $contact->getDbTable()->select()
-			->setIntegrityCheck(false)	
-			->from(array('e'=>'em_contacts'),array('name'))
-			->join(array('v'=>'ve_vehicles'),'e.contactId = v.veId');
+			$name = $contacts->findContactName($contactId);
             
-			$name = $contact->getDbTable()->fetchAll($select);
-			$vechile->setContactName($name);
-			$vechiles[] = $vechile;
-		}
-		return $vechiles;
+			$vehicle->setContactName($name);
+			
+			$vehicles[] = $vehicle;
+			}
+		return $vehicles;
 	}
 
 	public function search($key,$condition)
@@ -124,5 +121,34 @@ class Vehicle_Models_VehicleMapper
         }
         return $entries;
 	}
+	
+	public function findArrayVehicle($id)
+	{
+		$id = (int)$id;
+	   	$row = $this->getDbTable()->fetchRow('veId = '.$id);
+	   	if (!$row) {
+			throw new Exception("Could not find row $id");
+		}
+		
+		$contacts = new Employee_Models_ContactMapper();
+		$contactId = $row->contactId;
+		$name = $contacts->findContactName($contactId);
+		$row = $row->toArray();
+		$row["contactName"] = $name;
+	   	return $row;
+	}
+
+	public function fetchAllVeId($key,$condition)
+	{
+		$resultSet = $this->getDbTable()->fetchAllVeId($key,$condition);
+		return $resultSet;
+	}
+
+
+	public function fetchAllPalteNo()
+	{
+		return $this->getDbTable()->fetchAllPalteNo();
+	}
+	
 }
 ?>
