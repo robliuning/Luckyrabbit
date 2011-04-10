@@ -10,16 +10,24 @@ class Contract_Models_DbTable_Contrqualif extends Zend_Db_Table_Abstract
 {
     protected $_name = 'sc_contr_qualif'; 
 
-	public function findArrayContrQualif($cqId)
+	public function findArrayContrqualif($id)
 	{
-		$cqId = (int)$cqId;
-		$row = $this->fetchRow('cqId = ' . $cqId);
+		$id = (int)$id;
+		$row = $this->fetchRow('cqId = ' . $id);
 		if (!$row) {
-			throw new Exception("Could not find row $cqId");
+			throw new Exception("Could not find row $id");
 		}
 		return $row->toArray();
 	}
-
+	
+	public function fetchAllContrqualifs($id)
+	{
+		$select = $this->select()
+			->where("contractorId = ?",$contractorId);
+		$resultSet = $this->fetchAll($select);
+		
+		return $resultSet;
+	}
 }
 
 ?>

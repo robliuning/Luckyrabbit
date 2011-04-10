@@ -29,11 +29,11 @@ class General_Models_QualifTypeMapper
         return $this->_dbTable;
     }
 
-    public function fetchAll($key) //check
+    public function fetchAllBySerie($key) //check
     {
 		if($key == null)
 		{
-			$resultSet  = $this->getDbTable->fetchAll();
+			$resultSet  = $this->getDbTable()->fetchAll();
 			}
 			else
 			{	
@@ -42,7 +42,7 @@ class General_Models_QualifTypeMapper
         $entries   = array();
         foreach ($resultSet as $row) {
             $entry = new General_Models_QualifType();
-			$entry->setName($row->name)
+			$entry->setName($row->name);
                   
             $entries[] = $entry;
         }

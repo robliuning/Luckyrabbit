@@ -30,7 +30,7 @@ class Contract_Models_Contractor
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid employee property');
+            throw new Exception('Invalid contractor property');
         }
         $this->$method($value);
     }
@@ -39,7 +39,7 @@ class Contract_Models_Contractor
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid employee property');
+            throw new Exception('Invalid contractor property');
         }
         return $this->$method();
     } 

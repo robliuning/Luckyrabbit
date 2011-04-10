@@ -2,112 +2,85 @@
 /*
 author:ming tingling
 create date:2011.4.4
+review:mingtingling
+date:2011.4.9
 vision:2.0
 */
-class Contract_Forms_ContractSave extends Zend_Form
+class Contract_Forms_ContractorSave extends Zend_Form
 {
      public function init()
 	{
 		 $this->setMethod('post');
-		 $this->addElement(
-		   /*³Ð°üÉÌ±àºÅ*/      
-		 'text','contractorId',array(
-			 'label'=>'³Ð°üÉÌ±àºÅ:',
-			 'class'=>'tbLarge tbText',
-             'required'=>false,
-			 'disabled'=>'disabled'
-		   )
-		 );
           $this->addElement(
-		      /*³Ð°üÉÌÃû³Æ*/
+		      /*æ‰¿åŒ…å•†åç§°*/
 		  'text','name',array(
-			   'label'=>'³Ð°üÉÌÃû³Æ:',
+			   'label'=>'æ‰¿åŒ…å•†åç§°:',
 			   'class'=>'tbLarge tbText',
 			   'required'=>true
 		     )
 		  );
 		  $this->addElement(
-			  /*ÁªÏµµç»°*/
-		   'text','phoneNo',array(
-			    'label'=>'ÁªÏµµç»°:' ,
-			    'class'=>'tbLarge tbText',
-			    'required'=>false
-		     )
-		  );
-		  $this->addElement(
-			  /*·¨¶¨¸ºÔðÈË*/
+			  /*æ³•å®šè´Ÿè´£äºº*/
 		    'text','artiPerson',array(
-			    'label'=>'·¨¶¨¸ºÔðÈË:',
+			    'label'=>'æ³•å®šè´Ÿè´£äºº:',
 			    'class'=>'tbLarge tbText',
 			    'required'=>false
 		     )
 		  );
-		  $this->addElement(
-			  /*×ÊÖÊÐòÁÐ*/
-			   'select','qualifSerie', array(
-				  'label'=>'×ÊÖÊÐòÁÐ:',
-				   'class'=>'tbLarge tbText',
-				   'required'=>false
-			     )
-		   );
-		 $this->addElement(
-		      /*×ÊÖÊÀà±ð*/
-		       'select','qualifType',array(
-				 'label'=>'×ÊÖÊÀà±ð:',
-				 'class'=>'tbLarge tbText',
-				  'required'=>false
-			   )
-		  );
-		$this->addElement(
-		    /*×ÊÖÊµÈ¼¶*/
-		   'select','qualifGrade',array(
-			    'label'=>'×ÊÖÊµÈ¼¶:',
-			    'class'=>'tbLarge tbText',
-			    'required'=>false
-		    )
-		);
        $this->addElement(
-		    /*Ðí¿ÉÖ¤ºÅ*/
+		    /*è®¸å¯è¯å·*/
 	        'text','licenseNo',array(
-			     'label'=>'Ðí¿ÉÖ¤ºÅ:',
+			     'label'=>'è®¸å¯è¯å·:',
 				 'class'=>'tbLarge tbText',
 				 'required'=>false
 			  )
 	   );
+       $this->addElement(
+		    /*æ‰¿åŒ…å•†ä¸šåŠ¡èŒƒå›´*/
+	        'textarea','busiField',array(
+			     'label'=>'æ‰¿åŒ…å•†ä¸šåŠ¡èŒƒå›´:',
+				 'class'=>'tbLarge tbText',
+				 'required'=>false,
+				 'cols' =>60,
+			     'rows' =>5
+			  )
+	   );
+	  $this->addElement(
+			  /*è”ç³»ç”µè¯*/
+		   'text','phoneNo',array(
+			    'label'=>'è”ç³»ç”µè¯:' ,
+			    'class'=>'tbLarge tbText',
+			    'required'=>false
+		     )
+		  );
 	 $this->addElement(
-	      /*ÆäËûÁªÏµ·½Ê½*/
+	      /*å…¶ä»–è”ç³»æ–¹å¼*/
 	       'text','otherContact',array(
-			   'label'=>'ÆäËûÁªÏµ·½Ê½:',
+			   'label'=>'å…¶ä»–è”ç³»æ–¹å¼:',
 			   'class'=>'tbLarge tbText',
 			   'required'=>false
 		    )
 	 );
 	$this->addElement(
-	     /*	µØÖ·*/
+	     /*	åœ°å€*/
 	       'text','address',array(
-			   'label'=>'µØÖ·:',
+			   'label'=>'åœ°å€:',
 			   'class'=>'tbLarge tbText',
 			   'required'=>false
 		    )
 	 );
-	$this->addElement(
-	    /*³Ð°üÉÌÒµÎñ·¶Î§*/	
-		 'textarea','busiField',array(
-		     'label'=>'³Ð°üÉÌÒµÎñ·¶Î§:',
-		     'class'=>'tbLarge tbText',
-		     'required'=>false
-	   )
-	);
    $this->addElement(
-        /*±¸×¢*/
+        /*å¤‡æ³¨*/
         'textarea','remark',array(
-		    'label'=>'±¸×¢:',
+		    'label'=>'å¤‡æ³¨:',
 			'class'=>'tbLarge tbText',
-			'required'=>false
+			'required'=>false,
+			'cols' =>60,
+			'rows' =>5
 		 )
    );
   $this->addElement(
-       /*°´Å¥Ò»*/
+       /*æŒ‰é’®ä¸€*/
        'submit','submit',array(
 		   'ignore'=>true,
 		   'class'=>'btConfirm radius',
@@ -115,7 +88,7 @@ class Contract_Forms_ContractSave extends Zend_Form
 	     )
   );
   $this->addElement(
-      /*°´Å¥¶þ*/
+      /*æŒ‰é’®äºŒ*/
       'submit','submit2',array(
 	      'ignore'=>true,
 		  'class'=>'btConfirm radius',

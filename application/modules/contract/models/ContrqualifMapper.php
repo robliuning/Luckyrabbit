@@ -57,16 +57,19 @@ class Contract_Models_ContrqualifMapper
 		return $arrayQualifTypes;
     }
     
-    public function populateDd($form) //check
+    public function populateAllDd($form) //check
   	{
   		$contractors = new Contract_Models_ContractorMapper();
-		$arrayContractors = $contractors->fetchAll(); 
+		$arrayContractors = $contractors->fetchAll();  //contractor name and id
 		$qualifTypes = new General_Models_QualifTypeMapper();
-		$arrayQualiftypes = $qualifTypes->fetchAll(null);
+		
+		$serie = $form->getValue("qualifSerie");
+		
+		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie); 
 
 		foreach($arrayContractors as $contr)
 		{
-			$form->getElement('contractId')->addMultiOption($contr->getContractorId(),$contr->getName());
+			$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getName());
 			}
 		foreach($arrayQualiftype as $qualif)
 		{
@@ -77,14 +80,20 @@ class Contract_Models_ContrqualifMapper
 	public function populateQualifDd($key)
 	{
 		$qualifType = new General_Models_QualifTypeMapper();
-		$arrayQualiftype = $qualifType->fetchAll($key);
+		$arrayQualiftype = $qualifType->fetchAllBySerie($key);
 		return $arrayQualiftype;
 	}
 	
-	public function findArrayContrQualif($cqId)
+	public function findArrayContrqualif($id)
 	{
-		$resultSet = this->getDbtable->findArrayContrqualif($cqId);
+		$resultSet = $this->getDbTable()->findArrayContrqualif($id);
 		return $resultSet;
+	}
+	
+	public function fetchAllContrqualifs($id)
+	{
+		$resultSet = $this->getDbTable()->fetchAllContrqualifs($id);
+		return $resultSet;	
 	}
 }
 ?>
