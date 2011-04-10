@@ -134,7 +134,7 @@ class Vehicle_Models_Verecord
 		return $this;
 	}
 
-	public function getPolit()
+	public function getPilot()
 	{
 		return $this->_pilot;
 	}

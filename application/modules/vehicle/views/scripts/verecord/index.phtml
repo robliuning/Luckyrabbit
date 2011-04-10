@@ -65,7 +65,7 @@
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayVerecords as $verecord):?>
-					<?php $verecordId = $this->escape($verecord->getVerecordId());?>
+					<?php $verecordId = $this->escape($verecord->getRecordId());?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $verecordId ?>"></td>
 						<td><?php 

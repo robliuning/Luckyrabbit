@@ -11,8 +11,9 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 	public function fetchAllJoin($data = null,$condition=null)
 	{
 		$select = $this->select()
-			->from(array('ve => ve_vehicles'),array('plateNo','contactId'))
-			->join(array('re => ve_verecords'),'ve.veId = re.veId');
+			->setIntegrityCheck(false)
+			->from(array('ve' => 've_vehicles'),array('plateNo','contactId'))
+			->join(array('re' => 've_verecords'),'ve.veId = re.veId');
 
 		if($condition == 'plateNo')
 		{
@@ -26,8 +27,17 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 		$resultSet = $this->fetchAll($select);
 		return $resultSet;
 	}
-
-		
+	
+	public function findVerecordJoin($id)
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from(array('ve' => 've_vehicles'),array('plateNo'))
+			->join(array('re' => 've_verecords'),'ve.veId = re.veId')
+			->where('recordId = ?',$id);
+			
+			$resultSet = $this->fetchAll($select);
+		}
 }
 ?>
 

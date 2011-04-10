@@ -48,16 +48,23 @@ class Vehicle_Models_VerecordMapper
         }  
     }
 
-    public function find($recordId,Vehicle_Models_Verecord $verecord) 
+	public function findArrayVerecord($id)
+	{
+		$row = $this->getDbTable()->fetchRow('recordId = '.$id);
+		
+		return $row->toArray();
+	}
+
+    public function findVerecordJoin($recordId,Vehicle_Models_Verecord $verecord) 
     {
-        $resultSet = $this->getDbTable()->find($recordId);
+        $resultSet = $this->getDbTable()->findVerecordJoin($recordId);
 
         if (0 == count($resultSet)) {
 
             return;
         }
 
-        $row = $resultSet->current();
+        $row = $resultSet[0];
         $verecord  ->setRecordId($row->recordId)
 			       ->setVeId($row->veId)
 			       ->setStartDate($row->startDate)
@@ -66,7 +73,8 @@ class Vehicle_Models_VerecordMapper
 			       ->setMile($row->mile)
 			       ->setPilot($row->pilot)
 			       ->setOtherUser($row->otherUser)
-			       ->setRemark($row->remark);
+			       ->setRemark($row->remark)
+			       ->setPlateNo($row->plateNo);
     }
 
 	public function delete($recordId)
@@ -74,7 +82,7 @@ class Vehicle_Models_VerecordMapper
 		$this->getDbTable()->delete('recordId = '.(int)$recordId);
 	}
 
-	public function fetchAllJoin($date = null,$condition = null)
+	public function fetchAllJoin($data = null,$condition = null)
 	{
 		$resultSet = $this->getDbTable()->fetchAllJoin($data,$condition);	
         $verecords   = array();
@@ -85,12 +93,12 @@ class Vehicle_Models_VerecordMapper
             $verecord->setRecordId($row->recordId)
 				     ->setVeId($row->veId)
 				     ->setStartDate($row->startDate)
-				     ->setEndDate($row->EndDate)
+				     ->setEndDate($row->endDate)
 				     ->setMile($row->mile)
 				     ->setPilot($row->pilot)
 				     ->setOtherUser($row->otherUser)
 					 ->setPlateNo($row->plateNo)
-					 ->setContactId($row->ContactId);
+					 ->setContactId($row->contactId);
 
 			//get contactName according to contactId
 		    $contacts = new Employee_Models_ContactMapper();
@@ -104,14 +112,14 @@ class Vehicle_Models_VerecordMapper
 		return $verecords;
 	}
 
-	public function populateDd($form) 
+	public function populateVeDd($form) 
 	{
 		$vehicles = new Vehicle_Models_VehicleMapper();
 		$arrayVehicles = $vehicles->fetchAllPalteNo();
 
 		foreach($arrayVehicles as $vehicle)
 		{
-			$form->getElement('plateNo')->addMultiOption($vehicle->getVeId(),$vehicle->getPlateNo());//veId is hiden and                                                                                           //plateNo is shown
+			$form->getElement('veId')->addMultiOption($vehicle->getVeId(),$vehicle->getPlateNo());//veId is hiden and                                                                                           //plateNo is shown
 		}
 	}
 

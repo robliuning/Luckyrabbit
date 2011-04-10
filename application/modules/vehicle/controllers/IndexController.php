@@ -122,10 +122,11 @@ class Vehicle_IndexController extends Zend_Controller_Action
     
    public function ajaxdisplayAction()                                                    
     {  
-       $vehicles = new Vehicle_Models_VehicleMapper();
-	   $veId = $this->_getParam('id',0);
-	   if($VeId >0)
-       {
+    	$this->_helper->layout()->disableLayout();
+       	$vehicles = new Vehicle_Models_VehicleMapper();
+	   	$veId = $this->_getParam('id',0);
+	   	if($veId >0)
+       	{
        		$vehicle = new Vehicle_Models_Vehicle();
        		$vehicles->find($veId,$vehicle);   
 	   		$this ->view->vehicle = $vehicle;      		

@@ -147,7 +147,17 @@ class Vehicle_Models_VehicleMapper
 
 	public function fetchAllPalteNo()
 	{
-		return $this->getDbTable()->fetchAllPalteNo();
+		$resultSet = $this->getDbTable()->fetchAllPalteNo();		
+		$vehicles   = array();
+        foreach ($resultSet as $row) 
+        {
+			$vehicle = new Vehicle_Models_Vehicle();
+            $vehicle->setVeId($row->veId)
+			      ->setPlateNo($row->plateNo);
+			      			
+			$vehicles[] = $vehicle;
+			}
+		return $vehicles;	
 	}
 	
 }

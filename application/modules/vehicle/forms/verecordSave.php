@@ -10,7 +10,7 @@ class Vehicle_Forms_VerecordSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'select', 'plateNo', array(
+			'select', 'veId', array(
 			'label' => '车牌号: ',
 			'required' => true,
 			'class'=>'tbMedium tbText'
@@ -45,7 +45,7 @@ class Vehicle_Forms_VerecordSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'user', array(
+			'text', 'otherUser', array(
 			'label' => '其他使用人: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
@@ -85,14 +85,6 @@ class Vehicle_Forms_VerecordSave extends Zend_Form
     		)
     	);
     	
-    	$this->addElement(
-			'text', 'veId', array(
-			'required' => true,
-			'class'=>'hide',
-			'value'=>'000003'
-			)
-		);
-		
     	$this->setElementDecorators(array(
             'ViewHelper',
             'Errors',
