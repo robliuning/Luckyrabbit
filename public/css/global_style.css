@@ -164,6 +164,10 @@ a:link, a:visited
 	color: #ffffff;
 	text-decoration: underline;
 	}
+#searchForm
+{
+	float: left;
+	}
 /*menu*/
 #panel_uinfo
 {
