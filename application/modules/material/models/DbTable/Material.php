@@ -21,17 +21,20 @@ class Material_Models_DbTable_Material extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select();
 		
-		if($condtion == 'name')
+		if($condition == 'name')
 		{
-			$select->where('name = ?',$key);
+			$select->where('name like ?','%'.$key.'%');
 			}
-			elseif($condtion == 'type')
+			elseif($condition == 'type')
 			{
-				$select->where('typeId = ?',$key);
+				$select->setIntegrityCheck(false)
+						->from(array('m'=> 'mm_materials'))
+						->join(array('t'=>'ge_mtrtypes'),'m.typeId = t.typeId')
+						->where('t.Name like ?','%'.$key.'%');
 				}
-				elseif($condtion == 'spec')
+				elseif($condition == 'spec')
 				{
-					$select->where('spec = ?',$key);
+					$select->where('spec like ?','%'.$key.'%');
 					}
 					
 		$resultSet = $this->fetchAll($select);

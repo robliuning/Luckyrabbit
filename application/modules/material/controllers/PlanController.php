@@ -1,7 +1,7 @@
 <?php
 //Author: Meimo
 //Date: 2011.4.14
-class Material_IndexController extends Zend_Controller_Action
+class Material_PlanController extends Zend_Controller_Action
 {
 
     public function init()

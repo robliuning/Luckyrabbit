@@ -50,9 +50,9 @@ class Material_Models_MaterialMapper
 		return $entry;
 	}
     
-    public function fetchAllJoin($key == null,$condition == null) //check
+    public function fetchAllJoin($key = null,$condition = null) //check
     {
-    	if($key == null)
+    	if($condition == null)
     	{
     		$resultSet = $this->getDbTable()->fetchAll();
     		}
@@ -70,16 +70,22 @@ class Material_Models_MaterialMapper
    				->setName($row->name)
    				->setTypeId($row->typeId)
    				->setSpec($row->spec)
-   				->setUnit($row->Unit)
+   				->setUnit($row->unit)
    				->setRemark($row->remark);
+   				
    			$typeId = $entry->getTypeId();
    			$mtrtypes = new General_Models_MtrtypeMapper();
    			$typeName = $mtrtypes->findTypeName($typeId);
    			$entry->setTypeName($typeName);
-   				
+   			 				
    			$entries[] = $entry;
    			}
     	return $entries;
     	}
+    
+	public function delete($mtrId)
+	{
+		$this->getDbTable()->delete("mtrId = ".(int)$mtrId);
+		}
 }
 ?>

@@ -2,10 +2,8 @@
 	/*
 	Created by Meimo
 	Date 2011.4.14
-	review: rob
-	Date 2011.4.3
 	*/
-class Project_Forms_ProjectSave extends Zend_Form
+class Material_Forms_MaterialSave extends Zend_Form
 {
     public function init()
     {
@@ -13,28 +11,28 @@ class Project_Forms_ProjectSave extends Zend_Form
 			
 		$this->addElement(
 			'text', 'name', array(
-			'label' => '材料名称: ',
+			'label' => '鏉愭枡鍚嶇О: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
      	$this->addElement(
 			'text', 'typeId', array(
-			'label' => '类型: ',
+			'label' => '绫诲瀷: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	  	$this->addElement(
 			'text', 'spec', array(
-			'label' => '规格型号: ',
+			'label' => '瑙勬牸鍨嬪彿: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
     	$this->addElement(
 			'text', 'unit', array(
-			'label' => '单位: ',
+			'label' => '鍗曚綅: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
@@ -43,7 +41,7 @@ class Project_Forms_ProjectSave extends Zend_Form
 
 		$this->addElement(
 			'textarea', 'remark', array(
-			'label' => '备注: ',
+			'label' => '澶囨敞: ',
 			'required' => false,			
 			'class'=>'tbLarge tbText',
 			'cols'=>40,
