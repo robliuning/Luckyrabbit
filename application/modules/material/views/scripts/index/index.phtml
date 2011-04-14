@@ -13,14 +13,23 @@
 		<div id="p_content">
 		<h1>材料管理 - 材料管理 - 总览</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为通材料总览</h3>
+			<h3>本页显示内容为材料总览</h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<form method="post" action="<?php echo $this->url(array('controller'=>'index','action'=>'search'))?>" class="searchForm">
-						<div><input class="tbMedium tbtext" type="text" /></div>
-						<div><a href="#"><img src="/images/icons/functions/search.png"/><p>查询</p></a></div>	
-					</form>
+					<div>
+						<form method="post" action="<?php echo $this->url()?>">
+							<div class="tbShort">
+								<select name="condition">
+  									<option value="name">材料名</option>
+									<option value="type">类型</option>
+  									<option value="spec">规格</option>
+								</select>
+							</div>
+							<div><input class="tbMedium" name="key" type="text" /></div>
+							<div><input type="submit" value="查询"></input></div>	
+						</form>
+					</div>
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
@@ -31,27 +40,23 @@
 			<div class="overall_content">
 				<table>
 					<colgroup>
-						<col style="width:4%"></col>
-						<col style="width:4%"></col>
-						<col style="width:10%"></col>
 						<col style="width:5%"></col>
-						<col style="width:10%"></col>
+						<col style="width:5%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
 						<col style="width:15%"></col>
 						<col style="width:20%"></col>
-						<col style="width:20%"></col>
-						<col style="width:5%"></col>
-						<col style="width:7%"></col>
+						<col style="width:10%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
 						<th></th>
-						<th>姓名</th>
-						<th>性别</th>
-						<th>年龄</th>
-						<th>职称</th>
-						<th>电话</th>
-						<th>其他联系方式</th>
-						<th></th>
+						<th>材料名</th>
+						<th>类型</th>
+						<th>规格型号</th>
+						<th>单位</th>
+						<th>备注</th>
 						<th></th>
 					</thead>
 					<tr>
@@ -66,28 +71,23 @@
 						<td></td>
 					</tr>
 					<?php $counter = 1;?>	
-					<?php foreach($this->arrayContacts as $contact):?>
-					<?php $contactId = $this->escape($contact->getContactId()); ?>
+					<?php foreach($this->arrayMaterials as $material):?>
+					<?php $mtrId = $this->escape($material->getMtrId()); ?>
 					<tr>
-						<td><input type="checkbox" name="cb" value="<?php echo $contactId; ?>"></td>
+						<td><input type="checkbox" name="cb" value="<?php echo $mtrId; ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$contactId))?>" class="lightbox"><?php echo $this->escape($contact->getName()); ?></a></td>
-						<td><?php 
-							$gender = $this->escape($contact->getGender());
-							echo $gender?"男":"女";
-						?></td>	
+						<td><?php echo $this->escape($material->getName()); ?></td>
+						<td><?php echo $this->escape($material->getTypeName())?></td>	
 						<td><?php
-							echo $contact->getAge();
+							echo $material->getSpec();
 						?>
 						</td>
-						<td><?php echo $this->escape($contact->getTitleName()) ?></td>
-						<td><?php echo $this->escape($contact->getPhoneNo()) ?></td>
-						<td><?php echo $this->escape($contact->getOtherContact()) ?></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$contactId))?>">详情</a></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contactId))?>">修改</a></td>
+						<td><?php echo $this->escape($material->getUnit()) ?></td>
+						<td><?php echo $this->escape($material->getRemark()) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$mtrId))?>">修改</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>
