@@ -179,5 +179,9 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	
     	echo $key;
    		}
+   	public function searchAction()
+   	{
+   		//..to be added
+   		}
 }
 

@@ -152,7 +152,7 @@ class Employee_CppController extends  Zend_Controller_Action
 	   $this->view->cppId = $cppId;
 	 }
  	
- 	public function ajaxdeleteAction()/*删除*/
+ 	public function ajaxdeleteAction()
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -168,4 +168,9 @@ class Employee_CppController extends  Zend_Controller_Action
          $this->_redirect('/employee');
 		}
 	}
+	
+	public function searchAction()
+	{
+		//to be added
+		}
 }

@@ -16,6 +16,7 @@ class Employee_Models_Contact
 	protected $_otherContact;
 	protected $_address;
 	protected $_remark;
+	protected $_age;
 
     public function __construct(array $options=null)
 	{
@@ -162,6 +163,17 @@ class Employee_Models_Contact
 	public function getRemark()
 	{
 		return $this->_remark;
+	}
+	
+	public function setAge($age)
+	{
+		$this->_age = $age;
+        return $this;
+	}
+
+	public function getAge()
+	{
+		return $this->_age;
 	}
 
 }

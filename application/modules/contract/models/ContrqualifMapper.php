@@ -36,15 +36,14 @@ class Contract_Models_ContrqualifMapper
         $data = array(
             'cqId' => $contrqualif->getCqId(),
             'contractorId' => $contrqualif->getContractorId(),
-            'qualifSerie' => $contrqualif->getQualifSerie(),
-            'qualifType' => $contrqualif->getQualifType(),
+            'qualifTypeId' => $contrqualif->getQualifTypeId(),
 			'qualifGrade' => $contrqualif->getQualifGrade()
         );
         if (null === ($id = $contrqualif->getCqId())) {
             unset($data['cqId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('cqId = ?' => $cqId));
+            $this->getDbTable()->update($data, array('cqId = ?' => $contrqualif->getCqId()));
         }
     }
  
@@ -63,7 +62,8 @@ class Contract_Models_ContrqualifMapper
 		$arrayContractors = $contractors->fetchAll();  //contractor name and id
 		$qualifTypes = new General_Models_QualifTypeMapper();
 		
-		$serie = $form->getValue("qualifSerie");
+		//$serie = $form->getValue("qualifSerie");
+		$serie = '0';
 		
 		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie); 
 
@@ -71,7 +71,7 @@ class Contract_Models_ContrqualifMapper
 		{
 			$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getName());
 			}
-		foreach($arrayQualiftype as $qualif)
+		foreach($arrayQualifTypes as $qualif)
 		{
 			$form->getElement('qualifTypeId')->addMultiOption($qualif->getQualifTypeId(),$qualif->getName());
 			}

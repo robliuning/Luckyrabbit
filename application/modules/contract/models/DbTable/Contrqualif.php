@@ -23,7 +23,7 @@ class Contract_Models_DbTable_Contrqualif extends Zend_Db_Table_Abstract
 	public function fetchAllContrqualifs($id)
 	{
 		$select = $this->select()
-			->where("contractorId = ?",$contractorId);
+			->where("contractorId = ?",$id);
 		$resultSet = $this->fetchAll($select);
 		
 		return $resultSet;

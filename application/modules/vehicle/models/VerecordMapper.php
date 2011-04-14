@@ -57,14 +57,12 @@ class Vehicle_Models_VerecordMapper
 
     public function findVerecordJoin($recordId,Vehicle_Models_Verecord $verecord) 
     {
-        $resultSet = $this->getDbTable()->findVerecordJoin($recordId);
+        $row = $this->getDbTable()->fetchRow('recordId = '.$recordId);
 
-        if (0 == count($resultSet)) {
+        if (0 == count($row)) {
 
             return;
         }
-
-        $row = $resultSet[0];
         $verecord  ->setRecordId($row->recordId)
 			       ->setVeId($row->veId)
 			       ->setStartDate($row->startDate)
@@ -73,8 +71,11 @@ class Vehicle_Models_VerecordMapper
 			       ->setMile($row->mile)
 			       ->setPilot($row->pilot)
 			       ->setOtherUser($row->otherUser)
-			       ->setRemark($row->remark)
-			       ->setPlateNo($row->plateNo);
+			       ->setRemark($row->remark);
+		$veId = $verecord->getVeId();
+		$vehicles = new Vehicle_Models_VehicleMapper();
+		$plateNo = $vehicles->findPlateNo($veId);
+		$verecord->setPlateNo($plateNo);
     }
 
 	public function delete($recordId)

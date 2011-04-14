@@ -144,7 +144,13 @@ class Vehicle_Models_VehicleMapper
 		return $resultSet;
 	}
 
-
+	public function findPlateNo($id)
+	{
+		$resultSet = $this->getDbTable()->findPlateNo($id);
+		$plateNo = $resultSet[0]->plateNo;
+		return $plateNo;
+		}
+	
 	public function fetchAllPalteNo()
 	{
 		$resultSet = $this->getDbTable()->fetchAllPalteNo();		

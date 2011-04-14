@@ -43,7 +43,7 @@ class General_Models_QualifType
         return $this;
     }
 
-	public function setQualifTypeId($qulifTypeId)
+	public function setQualifTypeId($qualifTypeId)
     {
         $this->_qualifTypeId = (int)$qualifTypeId;
         return $this;

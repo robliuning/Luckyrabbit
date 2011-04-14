@@ -42,6 +42,16 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 			           ->from(array('ve_vehicles'),array('plateNo','veId'));
 		return $this->fetchAll($select);
 	}
+	
+	public function findPlateNo($id)
+	{		
+		$select = $this->select()
+			           ->setIntegrityCheck(false)	
+			           ->from(array('ve_vehicles'),array('plateNo'))
+			           ->where('veId = ?',$id);
+		return $this->fetchAll($select);
+		
+		}
 }
 ?>
 

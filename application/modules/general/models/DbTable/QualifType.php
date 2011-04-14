@@ -9,12 +9,12 @@ class General_Models_DbTable_QualifType extends Zend_Db_Table_Abstract
 		$this->delete('empId = ' . (int)$empId);
 	}
 	
-	public function fetchAllBySerie($key) //check
+	public function fetchAllBySerie($serie) //check
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)	
-			->from('ge_qualiftypes',array('name'))
-			->where('serie = ?',$key);
+			->from('ge_qualiftypes',array('qualifTypeId','name'))
+			->where('serie = ?',$serie);
 		$entries = $this->fetchAll($select);
 		return $entries;
 		}

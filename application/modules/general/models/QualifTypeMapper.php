@@ -29,19 +29,15 @@ class General_Models_QualifTypeMapper
         return $this->_dbTable;
     }
 
-    public function fetchAllBySerie($key) //check
+    public function fetchAllBySerie($serie) //check
     {
-		if($key == null)
-		{
-			$resultSet  = $this->getDbTable()->fetchAll();
-			}
-			else
-			{	
-				$resultSet  = $this->getDbTable->fetchAllBySerie($key);
-				}
+		$resultSet  = $this->getDbTable()->fetchAllBySerie($serie);
+
         $entries   = array();
+        
         foreach ($resultSet as $row) {
             $entry = new General_Models_QualifType();
+            $entry->setQualifTypeId($row->qualifTypeId);
 			$entry->setName($row->name);
                   
             $entries[] = $entry;

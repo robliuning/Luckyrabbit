@@ -117,6 +117,12 @@ class Employee_Models_ContactMapper
                    ->setAddress($row->address)
                    ->setRemark($row->remark);
                    
+            $strtimes = explode(" ",$entry->getBirth());
+			$timearray = explode("-",$strtimes[0]);
+			$birthYear = $timearray[0];
+			$thisYear = date('Y');
+			$age = $thisYear - $birthYear;
+			$entry->setAge($age);    
             $entries[] = $entry;
         }
         return $entries;

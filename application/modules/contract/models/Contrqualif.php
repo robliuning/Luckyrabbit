@@ -8,8 +8,7 @@ class Contract_Models_Contrqualif
 {    
 	protected $_cqId;
     protected $_contractorId;
-    protected $_qualifSerie;
-	protected $_qualifType;
+	protected $_qualifTypeId;
 	protected $_qualifGrade;
     
     public function __construct(array $options = null)
@@ -70,27 +69,16 @@ class Contract_Models_Contrqualif
     {
         return $this->_contractorId;
     }
-
-    public function setQualifSerie($qualifSerie)
-    {
-        $this->_qualifSerie= (string)$qualifSerie;
-        return $this;
-    } 
-
-    public function getQualifSerie()
-    {
-        return $this->_qualifSerie;
-    }
     
-	public function setQualifType($qualifType)
+	public function setQualifTypeId($qualifTypeId)
     {
-        $this->_qualifType= (int)$qualifType;
+        $this->_qualifTypeId = (int)$qualifTypeId;
         return $this;
     } 
 
-    public function getQualifType()
+    public function getQualifTypeId()
     {
-        return $this->_qualifType;
+        return $this->_qualifTypeId;
     }
 
     public function setQualifGrade($qualifGrade)
