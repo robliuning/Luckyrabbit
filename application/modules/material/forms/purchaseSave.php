@@ -58,6 +58,27 @@ class Material_Forms_purchaseSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
+	 	$this->addElement(
+			'text', 'approvId', array(
+			'label' => '审批人: ',
+			'required' => false,
+			'class'=>'tbMedium tbText'
+			)
+		);
+	 	$this->addElement(
+			'text', 'approvDate', array(
+			'label' => '审批时间: ',
+			'required' => false,
+			'class'=>'tbLarge tbText'
+			)
+		);
+		$this->addElement(
+			'text', 'total', array(
+			'label' => '总金额: ',
+			'required' => false,
+			'class'=>'tbLarge tbText'
+			)
+		);
 		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注: ',

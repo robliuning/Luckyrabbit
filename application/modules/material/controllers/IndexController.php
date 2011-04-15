@@ -17,21 +17,34 @@ class Material_IndexController extends Zend_Controller_Action
     public function indexAction()
     {
 		$materials = new Material_Models_MaterialMapper();
-		
-		if($this->getRequest()->isPost())
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			
+			$arrayMaterials = array();
 			$key = $formData['key'];
-			$condition = $formData['condition'];
-			$arrayMaterials = $materials->fetchAllJoin($key,$condition);
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayMaterials = $materials->fetchAllJoin($key,$condition);
+				if(count($arrayMaterials)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
 		}
 		else
 		{
 			$arrayMaterials = $materials->fetchAllJoin();
-			}
-		
+		}
 		$this->view->arrayMaterials = $arrayMaterials;
+		$this->view->errorMsg = $errorMsg;
     }
     
     public function addAction()
@@ -39,6 +52,9 @@ class Material_IndexController extends Zend_Controller_Action
     	$addForm = new Material_Forms_MaterialSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
+		$addForm->approvId->setAttrib('class','hide');
+		$addForm->approvDate->setAttrib('class','hide');
+
 		$materials = new Material_Models_MaterialMapper();
 
 		if($this->getRequest()->isPost())
@@ -56,11 +72,11 @@ class Material_IndexController extends Zend_Controller_Action
 				$materials->save($material);
 				if($btClicked=='保存继续新建')
 				{
-					$addFrom->getElement('name')->setValue('');
-					$addFrom->getElement('type')->setValue('');
-					$addFrom->getElement('spec')->setValue('');
-					$addFrom->getElement('unit')->setValue('');
-					$addFrom->getElement('remark')->setValue('');
+					$addForm->getElement('name')->setValue('');
+					$addForm->getElement('type')->setValue('');
+					$addForm->getElement('spec')->setValue('');
+					$addForm->getElement('unit')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
