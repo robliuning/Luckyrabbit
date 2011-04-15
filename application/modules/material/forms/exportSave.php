@@ -1,51 +1,67 @@
 <?php
 	/*
 	Created by Meimo
-	Date 2011.4.1
+	Date 2011.4.15
 	*/
-class Material_Forms_planSave extends Zend_Form
+class Material_Forms_exportSave extends Zend_Form
 {
     public function init()
     {
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'select', 'type', array(
-			'label' => '计划类型: ',
-			'multiOptions'=>array('日计划','周计划','月计划','年计划','项目计划','其他'),
-			'required' => true,
-			'class'=>'tbMedium tbText'
-			)
-		);
-     	$this->addElement(
-			'text', 'dueDate', array(
-			'label' => '计划到位时间: ',
-			'required' => true,
-			'class'=>'tbLarge tbText'
-			)
-		);
-	  	$this->addElement(
 			'select', 'projectId', array(
 			'label' => '工程名称: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
-    	$this->addElement(
+     	$this->addElement(
+			'select', 'expType', array(
+			'label' => '出库类型: ',
+			'multiOptions'=>array('正常使用','报损','退货','退货','其他'),
+			'required' => true,
+			'class'=>'tbLarge tbText'
+			)
+		);
+	  	$this->addElement(
+			'text', 'expDate', array(
+			'label' => '出库日期: ',
+			'required' => true,
+			'class'=>'tbLarge tbText'
+			)
+		);
+		$this->addElement(
+			'select', 'destId', array(
+			'label' => '出库地: ',
+			'required' => true,
+			'class'=>'tbMedium tbText'
+			)
+		);
+	   $this->addElement(
 			'text', 'applicId', array(
 			'label' => '申报人: ',
 			'required' => true,
 			'class'=>'tbMedium tbText'
 			)
 		);
-		$this->addElement(
+	   	$this->addElement(
 			'text', 'applicDate', array(
 			'label' => '申报日期: ',
-			'required' => false,
+			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
+			'select', 'palnType', array(
+			'label' => '计划类型: ',
+			'multiOptions'=>array('日计划','周计划','月计划''年计划''项目计划','其他'),
+			'required' => false,
+			'class'=>'tbMedium tbText'
+			)
+		);
+
+	 	$this->addElement(
 			'text', 'approvId', array(
 			'label' => '审批人: ',
 			'required' => false,
@@ -66,6 +82,7 @@ class Material_Forms_planSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
+
 		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注: ',
@@ -109,4 +126,5 @@ class Material_Forms_planSave extends Zend_Form
         ));
     }
 }
+
 ?>

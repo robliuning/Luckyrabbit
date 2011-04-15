@@ -3,6 +3,8 @@
 author:mingtingling
 date:2011.4.10
 vision:2.0
+Modified Meimo
+Date :  Apr.15.2011
 */
 class Contract_SubcontractController  extends Zend_Controller_Action
 {
@@ -16,7 +18,38 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 	}
   public function indexAction() /*addAction*/
     {
-		$addForm=new Contract_Forms_SubcontractSave();
+		$subcontracts = new Contract_Models_SubcontractMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arraySubcontracts = array();
+			$key = $formData['key'];
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arraySubcontracts = $subcontracts->fetchAllJoin($key,$condition);
+				if(count($arraySubcontracts)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
+		}
+		else
+		{
+			$arraySubcontracts = $subcontracts->fetchAllJoin();
+		}
+		$this->view->arraySubcontracts = $arraySubcontracts;
+		$this->view->errorMsg = $errorMsg;
+
+
+		$addForm=new Contract_Forms_subcontractSave();
 		$addForm->submit->setLabel("±£´æĞÂ½¨");
 		$addForm->submit2->setAttrib('class','hide');
 		$subcontracts=new Contract_Models_SubcontractMapper();
@@ -139,8 +172,4 @@ public function editForm()
 		       }
 			   else
 		      {
-				   $this->_redirect('/contract');
-		      }
-		   
-	}
-}
+				   $this->_redirect('

@@ -6,12 +6,14 @@ review rob
 date 2011.4.8
 rewrite:mingtingling
 date:2011.4.9
+Modified by Meimo
+Date : Apr.15.2011
 */
 class Contract_IndexController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		/*初始化*/
+		/*初始?*/
 	}
 	public function preDisPatch()
 	{
@@ -19,9 +21,35 @@ class Contract_IndexController extends Zend_Controller_Action
 	}
 	public function indexAction()
 	{
-       $contractors=new Contract_Models_ContractorMapper();
-	   $this->view->arrayContractors = $contractors->fetchAll(); 
-	}
+		$contracts = new Contract_Models_ContractMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayContracts = array();
+			$key = $formData['key'];
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayContracts = $contracts->fetchAllJoin($key,$condition);
+				if(count($arrayContracts)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
+		}
+		else
+		{
+			$arrayContracts = $contracts->fetchAllJoin();
+		}
+		$this->view->arrayContracts = $arrayContracts;
+		$this->view->errorMsg = $errorMsg;	}
 	public function editAction()  /*修改*/
 	{
       $editForm=new Contract_Forms_ContractorSave();

@@ -37,7 +37,13 @@ class Material_Forms_MaterialSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
-
+		$this->addElement(
+			'text', 'total', array(
+			'label' => '总金额: ',
+			'required' => false,
+			'class'=>'tbLarge tbText'
+			)
+		);
 
 		$this->addElement(
 			'textarea', 'remark', array(

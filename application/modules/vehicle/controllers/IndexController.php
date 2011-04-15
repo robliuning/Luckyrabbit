@@ -16,13 +16,39 @@ class Vehicle_IndexController extends Zend_Controller_Action
 
     public function indexAction() 
     {
-       $vehicles  = new Vehicle_Models_VehicleMapper();
-	   $this -> view ->arrayVehicles = $vehicles -> fetchAllJoin();
-    }
+		$vehicles = new Vehicle_Models_VehicleMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayVehicles = array();
+			$key = $formData['key'];
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayVehicles = $vehicles->fetchAllJoin($key,$condition);
+				if(count($arrayVehicles)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
+		}
+		else
+		{
+			$arrayVehicles = $vehicles->fetchAllJoin();
+		}
+		$this->view->arrayVehicles = $arrayVehicles;
+		$this->view->errorMsg = $errorMsg;    }
     
     public function addAction()                                        
     {
-    	$addForm = new Vehicle_Forms_VehicleSave();
+    	$addForm = new Vehicle_Forms_vehicleSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
         

@@ -16,22 +16,35 @@ class Material_PurchaseController extends Zend_Controller_Action
 
     public function indexAction()
     {
-	$purchases = new Material_Models_PurchaseMapper();
-		
-		if($this->getRequest()->isPost())
+		$purchases = new Material_Models_PurchaseMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			
+			$arrayPurchases = array();
 			$key = $formData['key'];
-			$condition = $formData['condition'];
-			$arrayPurchases = $purchases->fetchAllJoin($key,$condition);
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayPurchases = $purchases->fetchAllJoin($key,$condition);
+				if(count($arrayPurchases)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
 		}
 		else
 		{
 			$arrayPurchases = $purchases->fetchAllJoin();
-			}
-		
+		}
 		$this->view->arrayPurchases = $arrayPurchases;
+		$this->view->errorMsg = $errorMsg;
     }
     
     public function addAction()
@@ -39,6 +52,8 @@ class Material_PurchaseController extends Zend_Controller_Action
        	$addForm = new Material_Forms_purchaseSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
+		$addForm->approvId->setAttrib('class','hide');
+		$addForm->approvDate->setAttrib('class','hide');
 
 		$purchases = new Material_Models_PurchaseMapper();
 		$purchases->populatePurchaseDd($addForm);
@@ -53,7 +68,7 @@ class Material_PurchaseController extends Zend_Controller_Action
 				$purchase->setProjectId($addForm->getValue('projectId'));
 				$purchase->setVenId($addForm->getValue('venId'));
 				$purchase->set	BuyerId($addForm->getValue('buyerId'));
-				$purchase->setDate($addForm->getValue('date'));
+				$purchase->setPurDate($addForm->getValue('purDate'));
 				$purchase->setDestId($addForm->getValue('destId'));
 				$purchase->setFreight($addForm->getValue('freight'));
 				$purchase->setInvoice($addForm->getValue('invoice'));
@@ -61,14 +76,14 @@ class Material_PurchaseController extends Zend_Controller_Action
 				$purchases->save($purchase);
 				if($btClicked=='保存继续新建')
 				{
-					$addFrom->getElement('projectId')->setValue('');
-					$addFrom->getElement('venId')->setValue('');
-					$addFrom->getElement('buyerId')->setValue('');
-					$addFrom->getElement('date')->setValue('');
-					$addFrom->getElement('destId')->setValue('');
-					$addFrom->getElement('freight')->setValue('');
-					$addFrom->getElement('invoice')->setValue('');
-					$addFrom->getElement('remark')->setValue('');
+					$addForm->getElement('projectId')->setValue('');
+					$addForm->getElement('venId')->setValue('');
+					$addForm->getElement('buyerId')->setValue('');
+					$addForm->getElement('purDate')->setValue('');
+					$addForm->getElement('destId')->setValue('');
+					$addForm->getElement('freight')->setValue('');
+					$addForm->getElement('invoice')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
@@ -83,9 +98,9 @@ class Material_PurchaseController extends Zend_Controller_Action
 		 $this->view->addForm = $addForm;
    	}
     
-    public function editAction()
+public function editAction()
     {
-$editForm = new Material_Forms_purchaseSave();
+        $editForm = new Material_Forms_purchaseSave();
 		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 
@@ -98,13 +113,16 @@ $editForm = new Material_Forms_purchaseSave();
     		if($editForm->isValid($formData))
 			{
 				$purchase = new Material_Models_Purchase();
+				$purchase->setPurId($purId);
 				$purchase->setProjectId($editForm->getValue('projectId'));
 				$purchase->setVenId($editForm->getValue('venId'));
 				$purchase->set	BuyerId($editForm->getValue('buyerId'));
-				$purchase->setDate($editForm->getValue('date'));
+				$purchase->setPurDate($editForm->getValue('purDate'));
 				$purchase->setDestId($editForm->getValue('destId'));
 				$purchase->setFreight($editForm->getValue('freight'));
 				$purchase->setInvoice($editForm->getValue('invoice'));
+				$purchase->setApprovId($editForm->getValue('approvId'));
+				$purchase->setApprovDate($editForm->getValue('approvDate'));
 				$purchase->setRemark($editForm->getValue('remark'));
 				$purchases->save($purchase);
 
