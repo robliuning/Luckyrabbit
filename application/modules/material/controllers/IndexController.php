@@ -40,6 +40,7 @@ class Material_IndexController extends Zend_Controller_Action
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 		$materials = new Material_Models_MaterialMapper();
+		$result = null;
 
 		if($this->getRequest()->isPost())
 		{
@@ -53,14 +54,15 @@ class Material_IndexController extends Zend_Controller_Action
 				$material->setSpec($addForm->getValue('spec'));
 				$material->setUnit($addForm->getValue('unit'));
 				$material->setRemark($addForm->getValue('remark'));
-				$materials->save($material);
+				$result = $materials->save($material);
 				if($btClicked=='保存继续新建')
 				{
-					$addFrom->getElement('name')->setValue('');
-					$addFrom->getElement('type')->setValue('');
-					$addFrom->getElement('spec')->setValue('');
-					$addFrom->getElement('unit')->setValue('');
-					$addFrom->getElement('remark')->setValue('');
+					$addForm->getElement('name')->setValue('');
+					$addForm->getElement('typeId')->setValue('');
+					$addForm->getElement('spec')->setValue('');
+					$addForm->getElement('unit')->setValue('');
+					$addForm->getElement('remark')->setValue('');
+					
 					}
 					else
 					{
@@ -73,6 +75,7 @@ class Material_IndexController extends Zend_Controller_Action
 			}
 		}
 		 $this->view->addForm = $addForm;
+		 $this->view->result = $result;
 	}
     
     public function editAction()
@@ -83,6 +86,7 @@ class Material_IndexController extends Zend_Controller_Action
 
 		$materials = new Material_Models_MaterialMapper();
     	$mtrId = $this->_getParam('id',0);
+    	$result = null;
 
 		if($this->getRequest()->isPost())
 		{
@@ -96,9 +100,9 @@ class Material_IndexController extends Zend_Controller_Action
 				$material->setSpec($editForm->getValue('spec'));
 				$material->setUnit($editForm->getValue('unit'));
 				$material->setRemark($editForm->getValue('remark'));
-				$materials->save($material);
+				$result = $materials->save($material);
 
-				$this->_redirect('/material');
+				//$this->_redirect('/material');
 			}
 			else
     			{
@@ -119,6 +123,7 @@ class Material_IndexController extends Zend_Controller_Action
     		}		
     	$this->view->editForm = $editForm;
     	$this->view->id = $mtrId; 
+    	$this->view->result = $result;
     }
     
     public function ajaxdeleteAction()

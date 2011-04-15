@@ -26,6 +26,7 @@ class Material_Models_MaterialMapper
     
     public function save(Material_Models_Material $material) //check
     {
+    	$id = null;
         $data = array(
             'mtrId' => $material->getMtrId(),
             'name' => $material->getName(),
@@ -36,10 +37,11 @@ class Material_Models_MaterialMapper
         );
         if (null === ($id = $material->getMtrId())) {
             unset($data['mtrId']);
-            $this->getDbTable()->insert($data);
+            $id = $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('mtrId = ?' => $material->getMtrId()));
+            $id = $this->getDbTable()->update($data, array('mtrId = ?' => $material->getMtrId()));
         }
+       return $id;
     }
      
     public function findArrayMaterial($id) //check

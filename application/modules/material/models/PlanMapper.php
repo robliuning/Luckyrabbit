@@ -24,15 +24,18 @@ class Material_Models_PlanMapper
         return $this->_dbTable;
     }
     
-    public function save(Material_Models_Material $material) //check
+    public function save(Material_Models_Plan $plan) //check
     {
         $data = array(
-            'mtrId' => $material->getMtrId(),
-            'name' => $material->getName(),
-            'typeId' => $material->getTypeId(),
-            'spec' => $material->getSpec(),
-            'unit' => $material->getUnit(),
-            'remark' => $material->getRemark(),
+            'planId' => $plan->getPlanId(),
+            'type' => $plan->getType(),
+            'projectId' => $plan->getProjectId(),
+            'dueDate' => $plan->getDueDate(),
+            'applicId' => $plan->getApplicId(),
+            'applicDate'=>$plan->getApplicDate(),
+            'approvId' => $plan->getApprovId(),
+            'approvDate' => $plan->getApprovDate(),
+            'remark' => $plan->getRemark()
         );
         if (null === ($id = $material->getMtrId())) {
             unset($data['mtrId']);

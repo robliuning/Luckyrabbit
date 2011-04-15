@@ -5,10 +5,13 @@ class Material_Models_Plan
     protected $_planId;
     protected $_type;
 	protected $_projectId;
+	protected $_projectName;
 	protected $_dueDate;
 	protected $_applicId;
+	protected $_applicName;
 	protected $_applicDate;
 	protected $_approvId;
+	protected $_approvName;
 	protected $_approvDate;
 	protected $_remark;
  	protected $_cTime;
@@ -105,6 +108,17 @@ class Material_Models_Plan
         return $this->_applicId;
     }
     
+    public function setApplicName($applicName)
+    {
+        $this->_applicName = $applicName;
+        return $this;
+    } 
+
+    public function getApplicName()
+    {
+        return $this->_applicName;
+    }
+    
     public function setApplicDate($applicDate)
     {
         $this->_applicDate = $applicDate;
@@ -125,6 +139,17 @@ class Material_Models_Plan
     public function getApprovId()
     {
         return $this->_approvId;
+    }
+    
+    public function setApprovName($approvName)
+    {
+        $this->_approvName = $approvName;
+        return $this;
+    } 
+
+    public function getApprovName()
+    {
+        return $this->_approvName;
     }
     
     public function setApprovDate($approvDate)
