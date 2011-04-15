@@ -1,18 +1,20 @@
 <?php
- //creation date 15-04-2011
+  //creation date 15-04-2011
   //creating by lincoy
-  //completion date 15-04-2011 
-class Material_Models_Plan
+  //completion date 15-04-2011
+class Material_Models_Export
 {     
-    protected $_planId;
-    protected $_planType;
+    protected $_expId;
 	protected $_projectId;
 	protected $_projectName; //from pm_projects
-	protected $_dueDate;
+	protected $_expDate;
+	protected $_expType;
+	protected $_destId;
+	protected $_destName; //from ge_sites
 	protected $_applicId;
 	protected $_applicName; //from em_contacts 
 	protected $_applicDate;
-	protected $_approvId;
+	protected $_planType;
 	protected $_approvName; //from em_contacts
 	protected $_approvDate;
 	protected $_total;
@@ -30,7 +32,7 @@ class Material_Models_Plan
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid plan property');
+            throw new Exception('Invalid export property');
         }
         $this->$method($value);
     }
@@ -39,7 +41,7 @@ class Material_Models_Plan
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid plan property');
+            throw new Exception('Invalid export property');
         }
         return $this->$method();
     } 
@@ -56,28 +58,18 @@ class Material_Models_Plan
         return $this;
     }
 
-	public function setPlanId($planId)
+	public function setExpId($expId)
     {
-        $this->_planId = (int)$planId;
+        $this->_expId = (int)$expId;
         return $this;
     } 
 
-    public function getPlanId()
+    public function getExpId()
     {
-        return $this->_planId;
+        return $this->_expId;
     }
     
-    public function setPlanType($planType)
-    {
-        $this->_planType = $planType;
-        return $this;
-    } 
-
-    public function getPlanType()
-    {
-        return $this->_planType;
-    }
-
+	/************************************************/
     public function setProjectId($projectId)
     {
         $this->_projectId = (int)$projectId;
@@ -89,6 +81,7 @@ class Material_Models_Plan
         return $this->_projectId;
     }
 
+	/************************************************/
 	public function setProjectName($projectName)
     {
         $this->_projectName = $projectName;
@@ -99,18 +92,60 @@ class Material_Models_Plan
     {
         return $this->_projectName;
     }
-	
-    public function setDueDate($dueDate)
+
+	/************************************************/
+    public function setExpDate($expDate)
     {
-        $this->_dueDate = $dueDate;
+        $this->_expDate = $expDate;
         return $this;
     } 
 
-    public function getDueDate()
+    public function getExpDate()
     {
-        return $this->_dueDate;
+        return $this->_expDate;
     }
     
+    /************************************************/
+
+	public function setExpType($expType)
+    {
+        $this->_expType = $expType;
+        return $this;
+    } 
+
+    public function getExpType()
+    {
+        return $this->_expType;
+    }
+    
+    /************************************************/
+
+	public function setDestId($destId)
+    {
+        $this->_destId = $destId;
+        return $this;
+    } 
+
+    public function getDestId()
+    {
+        return $this->_destId;
+    }
+    
+    /************************************************/
+
+	public function setDestName($destName)
+    {
+        $this->_destName = $destName;
+        return $this;
+    } 
+
+    public function getDestName()
+    {
+        return $this->_destName;
+    }
+    
+    /************************************************/
+
     public function setApplicId($applicId)
     {
         $this->_applicId = $applicId;
@@ -122,6 +157,7 @@ class Material_Models_Plan
         return $this->_applicId;
     }
 
+	/************************************************/
 	public function setApplicName($applicName)
     {
         $this->_applicName = $applicName;
@@ -133,6 +169,7 @@ class Material_Models_Plan
         return $this->_applicName;
     }
     
+	/************************************************/
     public function setApplicDate($applicDate)
     {
         $this->_applicDate = $applicDate;
@@ -143,7 +180,20 @@ class Material_Models_Plan
     {
         return $this->_applicDate;
     }
+    
+	/************************************************/
+    public function setPlanType($planType)
+    {
+        $this->_planType = $planType;
+        return $this;
+    } 
 
+    public function getPlanType()
+    {
+        return $this->_planType;
+    }
+
+    /*********************************************/
     public function setApprovId($approvId)
     {
         $this->_approvId = $approvId;
@@ -155,6 +205,8 @@ class Material_Models_Plan
         return $this->_approvId;
     }
 
+	/************************************************/
+
 	public function setApprovName($approvName)
     {
         $this->_approvName = $approvName;
@@ -165,18 +217,20 @@ class Material_Models_Plan
     {
         return $this->_approvName;
     }
-    
+
+    /************************************************/
     public function setApprovDate($approvDate)
     {
         $this->_approvDate = $approvDate;
         return $this;
     } 
-
+   
     public function getApprovDate()
     {
         return $this->_approvDate;
     }
 
+    /************************************************/
 	public function setTotal($total)
     {
         $this->_total = $total;
@@ -187,6 +241,8 @@ class Material_Models_Plan
     {
         return $this->_total;
 	}
+
+	/************************************************/
     
     public function setRemark($remark)
     {
@@ -198,7 +254,8 @@ class Material_Models_Plan
     {
         return $this->_remark;
 	}
-	
+
+	/************************************************/
 	public function setCTime($cTime)
     {
         $this->_cTime= $cTime;
