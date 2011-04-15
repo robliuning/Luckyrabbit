@@ -17,8 +17,9 @@ class Project_IndexController extends Zend_Controller_Action
 
     public function indexAction() 
     {
-       $projects  = new Project_Models_ProjectMapper();
-	   $this -> view ->arrayProjects = $projects -> fetchAllJoin();
+    	//add search 
+       	$projects  = new Project_Models_ProjectMapper();
+	   	$this -> view ->arrayProjects = $projects -> fetchAllJoin();
     }
     
     public function addAction()                                        

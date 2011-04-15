@@ -16,15 +16,27 @@ class Material_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+    	$errorMsg = null;
 		$materials = new Material_Models_MaterialMapper();
 		
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			
+			$arrayMaterials = array();
 			$key = $formData['key'];
-			$condition = $formData['condition'];
-			$arrayMaterials = $materials->fetchAllJoin($key,$condition);
+			if($key != null)
+			{
+				$condition = $formData['condition'];
+				$arrayMaterials = $materials->fetchAllJoin($key,$condition);
+				if(count($arrayMaterials) == 0)
+				{
+					$errorMsg = 2;
+					}
+				}
+				else
+				{
+					$errorMsg = 1;
+					}
 		}
 		else
 		{
@@ -32,6 +44,7 @@ class Material_IndexController extends Zend_Controller_Action
 			}
 		
 		$this->view->arrayMaterials = $arrayMaterials;
+		$this->view->errorMsg = $errorMsg;
     }
     
     public function addAction()

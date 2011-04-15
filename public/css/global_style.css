@@ -312,6 +312,11 @@ h3
 	font-size: 15px;
 	color: #000000;
 	}
+.errorMsg
+{
+	color: red;
+	font-size: small;
+}
 /* overall tools*/
 .overall_tool
 {
@@ -403,12 +408,38 @@ label
 	}
 .tbText
 {
-	background: none repeat scroll 0 0 #FAFAFA;
+	background: none repeat scroll 0 0 #F7F7F7;
+	border-radius:4px 4px 4px 4px;
 	border: 1px solid #EEEEEE;
+	box-shadow:1px 1px 1px #BBBBBB inset, 0 0 1px #CCCCCC inset;
 	font-size: 14px;
 	line-height: 20px;
 	margin: 0;
+	padding: 5px 8px;
+	color: #777777;
+	outline:medium none;
+	}
+#searchBox div
+{
+	float: left;
+	padding: 0 5px;
+	}
+#searchBox:hover
+{
+	background: #F7F7F7;
+	border: none;
+	}
+#searchBox div:hover
+{
+	background: #F7F7F7;
+	border: none;
+	}
+.stStyle
+{
+	margin: 12px 0 0 0;
 	padding: 3px;
+	height: 25px;
+	line-height: 25px;
 	}
 .tbLarge
 {
@@ -418,9 +449,22 @@ label
 {
 	width: 200px;
 	}
+.tbMediumer
+{
+	width: 100px;
+	}
 .tbShort
 {
 	width:50px;
+	}
+.btSearch
+{
+	background: url("../images/icons/functions/search2.png") no-repeat scroll 0 0;
+	cursor: pointer;
+	height: 34px;
+	line-height: 34px;
+	width: 34px;
+	border: none;
 	}
 .btConfirm
 {

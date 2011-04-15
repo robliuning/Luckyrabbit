@@ -2,28 +2,6 @@
 //Validate deletion result
 $(document).ready(function()
 {  
-	$('#cb_sa').click(function(){
-		
-		if($(this).attr("checked") == true)
-		{
-			$("[name='cbEmp']").each(function(){
-				if($(this).attr("checked") == false)
-				{
-					$(this).attr("checked", true);
-				}
-			});
-		}
-		else
-		{
-			$("[name='cbEmp']").each(function(){
-				if($(this).attr("checked") == true)
-				{
-					$(this).attr("checked",false);
-				}
-			});
-			}
-	});
-	
 	$('#btDelete').hover(function(){
 		var count = $('[name="cbEmp"]:checked').length;
 		var htmlDelete = "<div id='msgBox_delete'>";

@@ -1,9 +1,7 @@
  <?php 
- 	$this->headTitle('-车辆管理');
+ 	$this->headTitle('-车辆信息管理');
  	$this->headScript()->prependFile('/js/vehicle/p_vehicle.js');
  ?>
- 	<div id="p_id" class="hide">nav_generalInfo</div>
-	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -14,11 +12,35 @@
 		<h1>车辆管理 - 车辆信息 - 总览</h1>
 		<div class="p_msg">
 			<h3>本页显示内容为车辆信息总览</h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					if($this->errorMsg == 2)
+					{
+						echo '错误: 没有找到符合条件的结果。'; 
+						}
+						elseif($this->errorMsg == 1)
+						{
+							echo '错误: 请输入搜索关键字。';
+							}
+			 		}?>
+			 		</p>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><input class="tbMedium tbtext" type="text" /></div>
-					<div><a href="#"><img src="/images/icons/functions/search.png"/><p>查询</p></a></div>	
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+  									<option value="plateNo">车牌号</option>
+									<option value="name">车辆名称</option>
+  									<option value="contactId">负责人</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+				</div>		
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
