@@ -1,24 +1,25 @@
 <?php
-  
+
 /*write by lxj
   2011-04-16 v0.2*/
 
-class Equipment_Models_Rent
+
+class Equipment_Models_Purchase
 {     
-    protected $_renId;
-	protected $_projectId;
-	protected $_projectName; //from pm_projects
+    protected $_purId;
+    protected $_projectId;
+	protected $_projectName;
 	protected $_venId;
 	protected $_venName;
-	protected $_venRes;
-	protected $_personId;
-	protected $_personName;
-	protected $_startDate;
-	protected $_endDate; 
+	protected $_buyerId;
+	protected $_buyerName;
+	protected $_purDate;
 	protected $_planType;
 	protected $_approvId;
-	protected $_approvName; //from em_contacts
+	protected $_approvName;
 	protected $_approvDate;
+	protected $_destId;
+	protected $_destName;
 	protected $_freight;
 	protected $_invoice;
 	protected $_total;
@@ -35,7 +36,7 @@ class Equipment_Models_Rent
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid export property');
+            throw new Exception('Invalid purchase property');
         }
         $this->$method($value);
     }
@@ -44,7 +45,7 @@ class Equipment_Models_Rent
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid export property');
+            throw new Exception('Invalid purchase property');
         }
         return $this->$method();
     } 
@@ -60,22 +61,22 @@ class Equipment_Models_Rent
         }
         return $this;
     }
-
-	public function setRenId($renId)
+ /***************************************************/
+	public function setPurId($purId)
     {
-        $this->_renId = (int)$renId;
+        $this->_purId = (int)$purId;
         return $this;
     } 
 
-    public function getRenId()
+    public function getPurId()
     {
-        return $this->_renId;
+        return $this->_purId;
     }
-    
-	/************************************************/
-    public function setProjectId($projectId)
+
+	 /***************************************************/
+	public function setProjectId($projectId)
     {
-        $this->_projectId = (int)$projectId;
+        $this->_projectId = $projectId;
         return $this;
     } 
 
@@ -84,7 +85,7 @@ class Equipment_Models_Rent
         return $this->_projectId;
     }
 
-	/************************************************/
+	 /***************************************************/
 	public function setProjectName($projectName)
     {
         $this->_projectName = $projectName;
@@ -96,8 +97,8 @@ class Equipment_Models_Rent
         return $this->_projectName;
     }
 
-	/************************************************/
-    public function setVenId($venId)
+	 /***************************************************/
+	public function setVenId($venId)
     {
         $this->_venId = $venId;
         return $this;
@@ -107,73 +108,57 @@ class Equipment_Models_Rent
     {
         return $this->_venId;
     }
-    
-    /************************************************/
 
-	public function setRenRes($renRes)
+	 /***************************************************/
+	public function setVenName($venName)
     {
-        $this->_renRes = $renRes;
+        $this->_venName = $venName;
         return $this;
     } 
 
-    public function getRenRes()
+    public function getVenName()
     {
-        return $this->_renRes;
+        return $this->_venName;
     }
-    
-    /************************************************/
 
-	public function setPersonId($personId)
+	 /***************************************************/
+	public function setBuyerId($buyerId)
     {
-        $this->_personId = $personId;
+        $this->_buyerId = $buyerId;
         return $this;
     } 
 
-    public function getPersonId()
+    public function getBuyerId()
     {
-        return $this->_personId;
+        return $this->_buyerId;
     }
-    
-    /************************************************/
 
-	public function setPersonName($personName)
+	/***************************************************/
+	public function setBuyerName($buyerName)
     {
-        $this->_personName = $personName;
+        $this->_buyerName = $buyerName;
         return $this;
     } 
 
-    public function getPersonName()
+    public function getBuyerName()
     {
-        return $this->_personName;
+        return $this->_buyerName;
     }
-    
-    /************************************************/
 
-    public function setStartDate($startDate)
+	 /***************************************************/
+	public function setPurDate($purDate)
     {
-        $this->_startDate = $startDate;
+        $this->_purDate = $purDate;
         return $this;
     } 
 
-    public function getStartDate()
+    public function getPurDate()
     {
-        return $this->_startDate;
+        return $this->_purDate;
     }
 
-	/************************************************/
-	public function setEndDate($EndDate)
-    {
-        $this->_endDate = $endDate;
-        return $this;
-    } 
-
-    public function getEndDate()
-    {
-        return $this->_endDate;
-    }
-    
-	/************************************************/
-    public function setPlanType($planType)
+	 /***************************************************/
+	public function setPlanType($planType)
     {
         $this->_planType = $planType;
         return $this;
@@ -184,8 +169,8 @@ class Equipment_Models_Rent
         return $this->_planType;
     }
 
-    /*********************************************/
-    public function setApprovId($approvId)
+	 /***************************************************/
+	public function setApprovId($approvId)
     {
         $this->_approvId = $approvId;
         return $this;
@@ -196,8 +181,7 @@ class Equipment_Models_Rent
         return $this->_approvId;
     }
 
-	/************************************************/
-
+	 /***************************************************/
 	public function setApprovName($approvName)
     {
         $this->_approvName = $approvName;
@@ -209,31 +193,55 @@ class Equipment_Models_Rent
         return $this->_approvName;
     }
 
-    /************************************************/
-    public function setApprovDate($approvDate)
+	 /***************************************************/
+	public function setApprovDate($approvDate)
     {
         $this->_approvDate = $approvDate;
         return $this;
     } 
-   
+
     public function getApprovDate()
     {
         return $this->_approvDate;
     }
-	
-	/************************************************/
+
+	 /***************************************************/
+	public function setDestId($destId)
+    {
+        $this->_destId = $destId;
+        return $this;
+    } 
+
+    public function getDestId()
+    {
+        return $this->_destId;
+    }
+
+	 /***************************************************/
+	public function setDestName($destName)
+    {
+        $this->_destName = $destName;
+        return $this;
+    } 
+
+    public function getDestName()
+    {
+        return $this->_destName;
+    }
+
+	 /***************************************************/
 	public function setFreight($freight)
     {
         $this->_freight = $freight;
         return $this;
-    }
+    } 
 
     public function getFreight()
     {
         return $this->_freight;
-	}
+    }
 
-	/***************************************************/
+	 /***************************************************/
 	public function setInvoice($invoice)
     {
         $this->_invoice = $invoice;
@@ -268,5 +276,6 @@ class Equipment_Models_Rent
     {
         return $this->_remark;
 	}
+
 }
 ?>
