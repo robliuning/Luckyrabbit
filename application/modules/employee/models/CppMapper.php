@@ -78,7 +78,7 @@ class Employee_Models_CppMapper
     	return $result;	
     	}
  
-    public function fetchAllJoin($data,$condition) //check
+    /*public function fetchAllJoin($data,$condition) //check
     {
     	$resultSet = $this->getDbTable()->fetchAllJoin($data,$condition);
     	
@@ -109,7 +109,47 @@ class Employee_Models_CppMapper
 			$entries[] = $entry;
 			}
     		return $entries;
-    }
+    }  */
+
+	public function fetchAllJoin($key,$condition) //check
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+    	
+    	$entries   = array();
+    	
+ 		foreach ($resultSet as $row) 
+ 		{
+            $entry = new Employee_Models_Cpp();
+			$entry->setCppId($row->cppId)
+				  ->setContactId($row->contactId)
+				  ->setPostId($row->postId)
+				  ->setProjectId($row->projectId)
+                  ->setPostType($row->postType)
+                  ->setPostCardId($row->postCardId)
+				  ->setCertId($row->certId);
+    		$contactId = $entry->getContactId();
+    		$projectId = $entry->getProjectId();
+    		$postId = $entry->getPostId();
+    	
+    		$contacts = new Employee_Models_ContactMapper();
+    		$entry->setContactName($contacts->FindContactName($contactId));
+    	    
+    		$projects = new Project_Models_ProjectMapper();
+    		$entry->setProjectName($projects->FindProjectName($projectId));
+    	    	    
+    		$posts = new General_Models_PostMapper();
+    		$entry->setPostName($posts->FindPostName($postId));
+			$entries[] = $entry;
+			}
+    		return $entries;
+    } 
     
     public function findArrayCpp($id) //check
     {

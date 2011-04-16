@@ -3,6 +3,7 @@
 created by ËïÁÖ
 time of creating 3-26-2011
 completed time 3-26-2011
+add fetchAllJoin  by lincoy 04-16
 */
 
 class Employee_Models_ContactMapper
@@ -127,6 +128,45 @@ class Employee_Models_ContactMapper
         }
         return $entries;
     }
+
+	public function fetchAllJoin($key = null,$condition = null) 
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+
+		$entries   = array();
+
+        foreach ($resultSet as $row) {
+
+            $entry = new Employee_Models_Contact();
+		    $entry ->setContactId($row->contactId)
+        		   ->setName($row->name)
+        		   ->setTitleName($row->titleName)
+                   ->setGender($row->gender)
+                   ->setBirth($row->birth)
+                   ->setIdCard($row->idCard)
+                   ->setPhoneNo($row->phoneNo)
+                   ->setOtherContact($row->otherContact)
+                   ->setAddress($row->address)
+                   ->setRemark($row->remark);
+                   
+            $strtimes = explode(" ",$entry->getBirth());
+			$timearray = explode("-",$strtimes[0]);
+			$birthYear = $timearray[0];
+			$thisYear = date('Y');
+			$age = $thisYear - $birthYear;
+			$entry->setAge($age);    
+            $entries[] = $entry;
+        }
+        return $entries;
+    }
+			
     
     public function delete($id) //check
     { 	

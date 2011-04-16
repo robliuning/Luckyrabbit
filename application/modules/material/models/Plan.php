@@ -56,6 +56,7 @@ class Material_Models_Plan
         return $this;
     }
 
+    /*******************************************/
 	public function setPlanId($planId)
     {
         $this->_planId = (int)$planId;
@@ -67,6 +68,8 @@ class Material_Models_Plan
         return $this->_planId;
     }
     
+
+	/*******************************************/
     public function setPlanType($planType)
     {
         $this->_planType = $planType;
@@ -77,7 +80,9 @@ class Material_Models_Plan
     {
         return $this->_planType;
     }
+    
 
+	/*******************************************/
     public function setProjectId($projectId)
     {
         $this->_projectId = (int)$projectId;
@@ -89,6 +94,7 @@ class Material_Models_Plan
         return $this->_projectId;
     }
 
+    /*******************************************/
 	public function setProjectName($projectName)
     {
         $this->_projectName = $projectName;
@@ -100,6 +106,8 @@ class Material_Models_Plan
         return $this->_projectName;
     }
 	
+
+	/*******************************************/
     public function setDueDate($dueDate)
     {
         $this->_dueDate = $dueDate;
@@ -111,6 +119,8 @@ class Material_Models_Plan
         return $this->_dueDate;
     }
     
+
+	/*******************************************/
     public function setApplicId($applicId)
     {
         $this->_applicId = $applicId;
@@ -122,17 +132,7 @@ class Material_Models_Plan
         return $this->_applicId;
     }
 
-	public function setApplicName($applicName)
-    {
-        $this->_applicName = $applicName;
-        return $this;
-    } 
-
-    public function getApplicName()
-    {
-        return $this->_applicName;
-    }
-    
+	/*******************************************/
     public function setApplicName($applicName)
     {
         $this->_applicName = $applicName;
@@ -144,6 +144,7 @@ class Material_Models_Plan
         return $this->_applicName;
     }
     
+	/*******************************************/
     public function setApplicDate($applicDate)
     {
         $this->_applicDate = $applicDate;
@@ -155,6 +156,7 @@ class Material_Models_Plan
         return $this->_applicDate;
     }
 
+    /*******************************************/
     public function setApprovId($approvId)
     {
         $this->_approvId = $approvId;
@@ -165,18 +167,9 @@ class Material_Models_Plan
     {
         return $this->_approvId;
     }
-
-	public function setApprovName($approvName)
-    {
-        $this->_approvName = $approvName;
-        return $this;
-    } 
-
-    public function getApprovName()
-    {
-        return $this->_approvName;
-    }
     
+
+	/*******************************************/
     public function setApprovName($approvName)
     {
         $this->_approvName = $approvName;
@@ -188,6 +181,8 @@ class Material_Models_Plan
         return $this->_approvName;
     }
     
+
+	/*******************************************/
     public function setApprovDate($approvDate)
     {
         $this->_approvDate = $approvDate;
@@ -198,7 +193,8 @@ class Material_Models_Plan
     {
         return $this->_approvDate;
     }
-
+    
+	/*******************************************/
 	public function setTotal($total)
     {
         $this->_total = $total;
@@ -210,6 +206,8 @@ class Material_Models_Plan
         return $this->_total;
 	}
     
+
+	/*******************************************/
     public function setRemark($remark)
     {
         $this->_remark= $remark;
@@ -221,6 +219,7 @@ class Material_Models_Plan
         return $this->_remark;
 	}
 	
+	/*******************************************/
 	public function setCTime($cTime)
     {
         $this->_cTime= $cTime;

@@ -1,14 +1,15 @@
 <?php
-  //creation date 15-04-2011
+  //creation date 16-04-2011
   //creating by lincoy
-  //completion date 15-04-2011
-class Material_Models_Export
+  //completion date 16-04-2011
+class Material_Models_Transfer
 {     
-    protected $_expId;
+    protected $_trsId;
 	protected $_projectId;
 	protected $_projectName; //from pm_projects
-	protected $_expDate;
-	protected $_expType;
+	protected $_trsDate;
+	protected $_origId;
+	protected $_origName; //from ge_sites
 	protected $_destId;
 	protected $_destName; //from ge_sites
 	protected $_applicId;
@@ -33,7 +34,7 @@ class Material_Models_Export
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid export property');
+            throw new Exception('Invalid transfer property');
         }
         $this->$method($value);
     }
@@ -42,7 +43,7 @@ class Material_Models_Export
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid export property');
+            throw new Exception('Invalid transfer property');
         }
         return $this->$method();
     } 
@@ -59,15 +60,15 @@ class Material_Models_Export
         return $this;
     }
 
-	public function setExpId($expId)
+	public function setTrsId($trsId)
     {
-        $this->_expId = (int)$expId;
+        $this->_trsId = (int)$trsId;
         return $this;
     } 
 
-    public function getExpId()
+    public function getTrsId()
     {
-        return $this->_expId;
+        return $this->_trsId;
     }
     
 	/************************************************/
@@ -95,28 +96,41 @@ class Material_Models_Export
     }
 
 	/************************************************/
-    public function setExpDate($expDate)
+    public function setTrsDate($trsDate)
     {
-        $this->_expDate = $expDate;
+        $this->_trsDate = $trsDate;
         return $this;
     } 
 
-    public function getExpDate()
+    public function getTrsDate()
     {
-        return $this->_expDate;
+        return $this->_trsDate;
     }
     
     /************************************************/
 
-	public function setExpType($expType)
+	public function setOrigId($origId)
     {
-        $this->_expType = $expType;
+        $this->_origId = (int)$origId;
         return $this;
     } 
 
-    public function getExpType()
+    public function getOrigId()
     {
-        return $this->_expType;
+        return $this->_origId;
+    }
+
+	/************************************************/
+
+	public function setOrigName($origName)
+    {
+        $this->_origName = $origName;
+        return $this;
+    } 
+
+    public function getOrigName()
+    {
+        return $this->_origName;
     }
     
     /************************************************/

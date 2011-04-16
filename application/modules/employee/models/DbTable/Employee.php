@@ -26,43 +26,6 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		}
 		return $row->toArray();
 	}
-
-	public function addEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$status
-								)
-	{
-		$data = array (
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'status' => $status
-		);
-		$this->insert($data);
-	}
-
-	public function updateEmployee(
-								$empId,
-								$deptName,
-								$dutyName,
-								$status
-								)
-	{
-		$data = array (
-			'empId' => $empId,
-			'deptName' => $deptName,
-			'dutyName' => $dutyName,
-			'status' => $status
-		);
-		$this->update($data, 'empId = ' . (int)$empId);
-	}
-
-	public function deleteEmployee($empId)
-	{
-		$this->delete('empId = ' . (int)$empId);
-	}
 	
 	public function fetchAllJoin() //check
 	{
@@ -85,6 +48,31 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
    		$entry = $this->fetchAll($select);
    		return $entry;
 		}
+
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'name')
+		{
+			$select->setIntegrityCheck(false)
+						->from(array('c'=> 'em_contacts'),array('name'))
+						->join(array('e'=>'em_employees'),'c.contactId = e.empId')
+						->where('e.name like ?','%'.$key.'%');
+			}
+			elseif($condition == 'deptName')
+			{
+				$select->where('deptName like ?','%'.$key.'%');
+				}
+				elseif($condition == 'dutyName')
+				{
+                   $select->where('dutyName like ?','%'.$key.'%');				
+				   }
+					
+		$resultSet = $this->fetchAll($select);
+		
+		return $resultSet;
+	}
 }
 
 ?>

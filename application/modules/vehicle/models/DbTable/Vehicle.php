@@ -8,7 +8,7 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 {
     protected $_name = 've_vehicles';
 
-	public function search($key, $condition)
+	/*public function search($key, $condition)
 	{
 		$select = $this->select()
 			           ->setIntegrityCheck(false)	
@@ -21,7 +21,7 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 
     	$resultSet = $this->fetchAll($select);
 		return $resultSet;
-	}
+	} */
 
 	public function fetchAllVeId($key,$condition)
 	{
@@ -52,7 +52,30 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 		return $this->fetchAll($select);
 		
 		}
+
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'plateNo')
+		{
+			$select->where('plateNo like ?','%'.$key.'%');
+			}
+			elseif($condition == 'name')
+			{
+				$select->where('name like ?','%'.$key.'%');
+				}
+				elseif($condition == 'contactName')
+				{
+                   $select->setIntegrityCheck(false)
+						->from(array('e'=> 'em_contacts'),array('name'))
+						->join(array('v'=>'ve_vehicles'),'e.contactId = v.contactId')
+						->where('e.name like ?','%'.$key.'%');				
+				   }
+					
+		$resultSet = $this->fetchAll($select);
+		
+		return $resultSet;
+	}
 }
 ?>
-
-

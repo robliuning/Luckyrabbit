@@ -65,7 +65,8 @@ class Vehicle_Models_VehicleMapper
 			      ->setContactId($row->contactId)
 			      ->setUser($row->user)
 			      ->setFuelCons($row->fuelCons)
-			      ->setRemark($row->remark);
+			      ->setRemark($row->remark)
+			      ->setCTime($row->cTime);
     }
 
 	public function delete($veId)
@@ -73,7 +74,7 @@ class Vehicle_Models_VehicleMapper
 		$this->getDbTable()->delete('veId = '.(int)$veId);
 	}
 
-    public function fetchAllJoin()  // according to contactId from name  //check
+    /*public function fetchAllJoin()  // according to contactId from name  //check
     {
     	$resultSet = $this->getDbTable()->fetchAll();	
         $vehicles   = array();
@@ -100,6 +101,43 @@ class Vehicle_Models_VehicleMapper
 			$vehicles[] = $vehicle;
 			}
 		return $vehicles;
+	} */
+
+	public function fetchAllJoin($key = null,$condition = null) 
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}	
+
+        $entries = array();
+        
+        foreach ($resultSet as $row) 
+        {
+			$entry = new Vehicle_Models_Vehicle();
+            $entry->setVeId($row->veId)
+			      ->setPlateNo($row->plateNo)
+			      ->setName($row->name)
+			      ->setColor($row->color)
+			      ->setLicense($row->license)
+			      ->setContactId($row->contactId)
+			      ->setUser($row->user);
+			      //->setFuelCons($row->fuelCons)
+			      //->setRemark($row->remark);
+				  
+		    $contacts = new Employee_Models_ContactMapper();
+			$contactId = $vehicle->getContactId();
+			$name = $contacts->findContactName($contactId);
+            
+			$entry->setContactName($name);
+			
+			$entries[] = $entry;
+			}
+		return $entries;
 	}
 
 	public function search($key,$condition)

@@ -51,5 +51,36 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 		$entries = $this->fetchAll($select);
 		return $entries;
 		}
+
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'name')
+		{
+			$select->setIntegrityCheck(false)
+						->from(array('c'=> 'em_contacts'),array('name'))
+						->join(array('e'=>'em_cpp'),'c.contactId = e.contactId')
+						->where('e.name like ?','%'.$key.'%');
+			}
+			elseif($condition == 'projectName')
+			{
+				$select->setIntegrityCheck(false)
+						->from(array('p'=> 'pm_projects'),array('name'))
+						->join(array('e'=>'em_cpp'),'p.projectId = e.projectId')
+						->where('p.name like ?','%'.$key.'%');
+				}
+				elseif($condition == 'dutyName')
+				{
+                   $select->setIntegrityCheck(false)
+						->from(array('p'=> 'ge_posts'),array('name'))
+						->join(array('e'=>'em_cpp'),'p.postId = e.postId')
+						->where('p.name like ?','%'.$key.'%');				
+				   }
+					
+		$resultSet = $this->fetchAll($select);
+		
+		return $resultSet;
+	}
 }
 ?>
