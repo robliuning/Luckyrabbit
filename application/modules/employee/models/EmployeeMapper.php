@@ -88,7 +88,7 @@ class Employee_Models_EmployeeMapper
 		return $entry;
 	}
     
-    public function fetchAllJoin() //check
+    /*public function fetchAllJoin() //check
     {
    		$resultSet = $this->getDbTable()->fetchAllJoin();
    		
@@ -108,7 +108,37 @@ class Employee_Models_EmployeeMapper
    			$entries[] = $entry;
    			}
     	return $entries;
+    	} */
+
+	public function fetchAllJoin($key = null,$condition = null) 
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+   		
+   		$entries = array();
+   		
+   		foreach($resultSet as $row){
+			$entry = new Employee_Models_Employee();
+   			
+   			$entry->setEmpId($row->empId)
+   				->setEmpName($row->name)
+   				->setDeptName($row->deptName)
+   				->setDutyName($row->dutyName)
+   				->setTitleName($row->titleName)
+   				->setPhoneNo($row->phoneNo)
+   				->setStatus($row->status);
+
+				$entries[] = $entry;
+   			}
+    	return $entries;
     	}
+    
     
     public function populateEmployeeDd($form) //check
   	{

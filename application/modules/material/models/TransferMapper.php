@@ -1,9 +1,9 @@
 <?php
-  //creation date 15-04-2011
+  //creation date 16-04-2011
   //creating by lincoy
-  //completion date 15-04-2011
+  //completion date 16-04-2011
 
-class Material_Models_ExportMapper
+class Material_Models_TransferMapper
 {
 	protected $_dbTable;
 	
@@ -22,51 +22,54 @@ class Material_Models_ExportMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Material_Models_DbTable_Export');
+            $this->setDbTable('Material_Models_DbTable_Transfer');
         }
         return $this->_dbTable;
     }
     
-    public function save(Material_Models_Export $export) 
+    public function save(Material_Models_Transfer $transfer) 
     {
         $data = array(
-            'expId' => $export->getExpId(),
-            'projectId' => $export->getProjectId(),
-			'expDate' => $export->getExpDate(),
-            'expType' => $export->getExpType(),
-			'destId' => $export->getDestId(),
-            'applicId' => $export->getApplicId(),
-			'applicDate' => $export->getApplicDate(),
-			'planType' => $export->getPlanType()
-			'approvId' => $export->getApprovId(),
-			'approvDate' => $export->getApprovDate(),	
-			'total' =>$export->getTotal(),
-            'remark' => $export->getRemark()
+            'trsId' => $transfer->getTrsId(),
+            'projectId' => $transfer->getProjectId(),
+			'trsDate' => $transfer->getTrsDate(),
+            'origId' => $transfer->getOrigId(),
+			'destId' => $transfer->getDestId(),
+            'applicId' => $transfer->getApplicId(),
+			'applicDate' => $transfer->getApplicDate(),
+			'planType' => $transfer->getPlanType()
+			'approvId' => $transfer->getApprovId(),
+			'approvDate' => $transfer->getApprovDate(),	
+			'total' =>$transfer->getTotal(),
+            'remark' => $transfer->getRemark()
         );
-        if (null === ($id = $export->getExpId())) {
-            unset($data['expId']);
+        if (null === ($id = $transfer->getTrsId())) {
+            unset($data['trsId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('expId = ?' => $export->getExpId()));
+            $this->getDbTable()->update($data, array('trsId = ?' => $transfer->getTrsId()));
         }
     }
      
-    public function findArrayExport($id) 
+    public function findArrayTransfer($id) 
     {
 		$id = (int)$id;
-		$export = $this->getDbTable()->fetchRow('expId = '.$id);
-		$projectId = $export->getProjectId();
-		$destId = $export->getDestId();
-		$applicId = $export->getApplicId();
-		$approvId = $export->getApprovId();
-		$entry = $export->toArray();
+		$transfer = $this->getDbTable()->fetchRow('trsId = '.$id);
+		$projectId = $transfer->getProjectId();
+		$origId = $transfer->getOrigId();
+		$destId = $transfer->getDestId();
+		$applicId = $transfer->getApplicId();
+		$approvId = $transfer->getApprovId();
+		$entry = $transfer->toArray();
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
         $entry[] = $projectName;
 
 		$sites = new General_Models_SiteMapper();
-		$destName = $vendors->findSiteName($destId);
+		$origName = $sites->findSiteName($origId);
+		$destName = $sites->findSiteName($destId);
+	    $entry[] = $origName;
 	    $entry[] = $destName;
 
 		$contacts = new Employee_Models_ContactMapper();
@@ -92,11 +95,11 @@ class Material_Models_ExportMapper
    		$entries = array();
    		
    		foreach($resultSet as $row){
-   			$entry = new Material_Models_Export();
-   			$entry->setExpId($row->expId)		
+   			$entry = new Material_Models_Transfer();
+   			$entry->setTrsId($row->trsId)		
 				->setProjectId($row->projectId)
-				->setExpDate($row->expDate)
-				->setExpType($row->expType)
+				->setTrsDate($row->trsDate)
+				->setOrigId($row->origId)
                 ->setDestId($row->destId)
 				->setApplicId($row->applicId)
 				->setApplicDate($row->applicDate)
@@ -112,6 +115,8 @@ class Material_Models_ExportMapper
             $entry->setProjectName($projectName);
 
    			$sites = new General_Models_SiteMapper();
+			$origName = $sites->findSiteName($entry->getOrigId());
+			$entry->setOrigName($origName);
 			$destName = $sites->findSiteName($entry->getDestId());
 			$entry->setDestName($destName);
 
@@ -126,9 +131,9 @@ class Material_Models_ExportMapper
     	return $entries;
     	}
     
-	public function delete($expId)
+	public function delete($trsId)
 	{
-		$this->getDbTable()->delete("expId = ".(int)$expId);
+		$this->getDbTable()->delete("trsId = ".(int)$trsId);
 		}
 }
 ?>

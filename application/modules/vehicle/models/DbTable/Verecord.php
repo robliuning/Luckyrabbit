@@ -1,7 +1,8 @@
 <?php
   //creation date 09-04-2011
   //creating by lincoy
-  //completion date
+  //modifying by lincoy 16-04
+  //completion date  10-04-2011
 
   
 class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
@@ -38,7 +39,28 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 			
 			$resultSet = $this->fetchAll($select);
 		}
+
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'plateNo')
+		{
+			$select->where('plateNo like ?','%'.$key.'%');
+			}
+			elseif($condition == 'date')
+			{
+				$select->where('startDate < ?',$key)
+					   ->where('endDate > ?',$key);
+				}
+				elseif($condition == 'pilot')
+				{
+                   $select->where('pilot like ?','%'.$key.'%');				
+				   }
+					
+		$resultSet = $this->fetchAll($select);
+		
+		return $resultSet;
+	}
 }
 ?>
-
-

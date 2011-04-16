@@ -3,6 +3,7 @@
 author sunlin
 date 2011.3.26
 reviewd rob and lxj
+add search()  by lincoy 4-16
 date 2011.4.6
 */
 
@@ -31,5 +32,27 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
     	
     	return $entries;
     	}
+
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'name')
+		{
+			$select->where('name like ?','%'.$key.'%');
+			}
+			elseif($condition == 'titleName')
+			{
+				$select->where('titleName like ?','%'.$key.'%');
+				}
+				elseif($condition == 'phoneNo')
+				{
+                   $select->where('phoneNo like ?','%'.$key.'%');				
+				   }
+					
+		$resultSet = $this->fetchAll($select);
+		
+		return $resultSet;
+	}
 }
 ?>

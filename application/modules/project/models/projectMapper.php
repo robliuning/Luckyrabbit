@@ -87,7 +87,7 @@ class Project_Models_ProjectMapper
 		return $entries; 
 	}
 	
-	public function findProjectName($id) //check
+	/*public function findProjectName($id) //check
 	{
 		$arrayNames = $this->getDbTable()->findProjectName($id);
 		
@@ -105,6 +105,69 @@ class Project_Models_ProjectMapper
         foreach ($resultSet as $row) 
         {
 			$project = new Project_Models_Project();
+        	$project ->setProjectId($row->projectId)
+                   ->setName($row->name)
+			       //->setAddress($row->address)
+				   ->setStatus($row->status)
+				   ->setStructype($row->structype)
+				   /*->setLevel($row->level)
+				   ->setAmount($row->amount)
+				   ->setPurpose($row->purpose)
+				   ->setConstrArea($row->constrArea)*/
+				   /*->setStaffNo($row->staffNo);
+				   /*->setRemark($row->remark)
+				   ->setCTime($row->cTime);*/
+				   
+			/*$projectId = $project->getProjectId();
+			$postId = 000001;
+			//2. find postId of Project Manager
+			
+			$cpps = new Employee_Models_CppMapper();
+			$arrayContacts = $cpps->findContact($projectId,$postId);
+			if(count($arrayContacts)>0)
+			{
+				$project->setCId($arrayContacts[0]->contactId);
+				$project->setCName($arrayContacts[0]->name);
+			}
+			else
+			{	
+				$project->setCName("未指定");
+				$project->setCId(0);
+				}
+			
+			//3. find max stage number
+			/*$progresses = new Project_Models_ProgressMapper();
+			$arrayProgresses = $progresses->fetchAllStages($projectId);
+			if(count($arrayProgresses)>0)
+			{
+				$project->setStage(count($arrayProgresses));
+				}
+				else
+				{
+					$project->setStage(0);
+					}
+			
+            $projects[] = $project;
+        }
+        return $projects;
+	}  */
+	
+
+	public function fetchAllJoin($key = null,$condition = null) //check
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+   		
+   		$entries = array();
+   		
+   		foreach($resultSet as $row){
+   			$project = new Project_Models_Project();
         	$project ->setProjectId($row->projectId)
                    ->setName($row->name)
 			       //->setAddress($row->address)
@@ -148,10 +211,9 @@ class Project_Models_ProjectMapper
 					}
 			
             $projects[] = $project;
-        }
-        return $projects;
-	}
-	
+   			}
+    	return $projects;
+    	}
 	public function findArrayProject($id) //check
 	{
 		$id = (int)$id;

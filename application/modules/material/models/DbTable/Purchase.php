@@ -19,14 +19,14 @@ class Material_Models_DbTable_Purchase extends Zend_Db_Table_Abstract
 			{
 				$select->setIntegrityCheck(false)
 						->from(array('p'=> 'pm_projects'),array('name'))
-						->join(array('m'=>'mm_plans'),'p.projectId = m.projectId')
+						->join(array('m'=>'mm_purchases'),'p.projectId = m.projectId')
 						->where('p.name like ?','%'.$key.'%');
 				}
 				elseif($condition == 'venName')
 				{
                    $select->setIntegrityCheck(false)
-						->from(array('mv'=> 'mm_vendors'),array('name'))
-						->join(array('mp'=>'mm_purchases'),'mp.venId = mv.venId')
+						->from(array('ge'=> 'ge_vendors'),array('name'))
+						->join(array('mp'=>'mm_purchases'),'mp.venId = ge.venId')
 						->where('mv.name like ?','%'.$key.'%');				
 				   }
 				   elseif($condition == 'buyerName')

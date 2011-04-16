@@ -83,10 +83,47 @@ class Vehicle_Models_VerecordMapper
 		$this->getDbTable()->delete('recordId = '.(int)$recordId);
 	}
 
-	public function fetchAllJoin($data = null,$condition = null)
+	/*public function fetchAllJoin($data = null,$condition = null)
 	{
 		$resultSet = $this->getDbTable()->fetchAllJoin($data,$condition);	
         $verecords   = array();
+        
+        foreach ($resultSet as $row) 
+        {
+			$verecord = new Vehicle_Models_Verecord();
+            $verecord->setRecordId($row->recordId)
+				     ->setVeId($row->veId)
+				     ->setStartDate($row->startDate)
+				     ->setEndDate($row->endDate)
+				     ->setMile($row->mile)
+				     ->setPilot($row->pilot)
+				     ->setOtherUser($row->otherUser)
+					 ->setPlateNo($row->plateNo)
+					 ->setContactId($row->contactId);
+
+			//get contactName according to contactId
+		    $contacts = new Employee_Models_ContactMapper();
+			$contactId = $verecord->getContactId();
+			$name = $contacts->findContactName($contactId);
+            
+			$verecord->setContactName($name);
+			
+			$verecords[] = $verecord;
+			}
+		return $verecords;
+	}*/
+
+	public function fetchAllJoin($key = null,$condition = null)
+	{
+		if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}	
+        $verecords = array();
         
         foreach ($resultSet as $row) 
         {
