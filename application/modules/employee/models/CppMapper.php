@@ -111,7 +111,7 @@ class Employee_Models_CppMapper
     		return $entries;
     }  */
 
-	public function fetchAllJoin($key,$condition) //check
+	public function fetchAllJoin($key = null,$condition = null) //check
     {
     	if($condition == null)
     	{

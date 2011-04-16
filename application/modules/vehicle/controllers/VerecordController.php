@@ -23,7 +23,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			$arrayVerecords = array();
 			$key = $formData['key'];
-			if($key!==null)
+			if($key!=null)
 			{
 				$condition = $formData['condition'];
 				$arrayVerecords = $verecords->fetchAllJoin($key,$condition);

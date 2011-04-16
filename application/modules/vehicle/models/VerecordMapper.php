@@ -134,11 +134,15 @@ class Vehicle_Models_VerecordMapper
 				     ->setEndDate($row->endDate)
 				     ->setMile($row->mile)
 				     ->setPilot($row->pilot)
-				     ->setOtherUser($row->otherUser)
-					 ->setPlateNo($row->plateNo)
-					 ->setContactId($row->contactId);
+				     ->setOtherUser($row->otherUser);
 
 			//get contactName according to contactId
+			$vehicles = new Vehicle_Models_VehicleMapper();
+			$veId = $verecord->getVeId();
+			$plateNo = $vehicles->findPlateNo($veId);
+			$verecord->setPlateNo($plateNo);
+			$contactId = $vehicles->findContactId($veId);
+			$verecord->setContactId($contactId);
 		    $contacts = new Employee_Models_ContactMapper();
 			$contactId = $verecord->getContactId();
 			$name = $contacts->findContactName($contactId);

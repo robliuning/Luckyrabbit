@@ -164,7 +164,7 @@ class Project_Models_ProjectMapper
     			$resultSet = $this->getDbTable()->search($key,$condition);
     			}
    		
-   		$entries = array();
+   		$projects = array();
    		
    		foreach($resultSet as $row){
    			$project = new Project_Models_Project();

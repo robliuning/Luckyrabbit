@@ -52,6 +52,15 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 		return $this->fetchAll($select);
 		
 		}
+	
+	public function findContactId($id)
+	{
+		$select = $this->select()
+			           ->setIntegrityCheck(false)	
+			           ->from(array('ve_vehicles'),array('contactId'))
+			           ->where('veId = ?',$id);
+		return $this->fetchAll($select);
+		}
 
 	public function search($key,$condition)
 	{

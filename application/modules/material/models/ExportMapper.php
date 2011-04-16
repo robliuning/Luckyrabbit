@@ -51,7 +51,7 @@ class Material_Models_ExportMapper
         }
     }
      
-    public function findArrayExport($id) 
+    public function findArrayExport($id) //test
     {
 		$id = (int)$id;
 		$export = $this->getDbTable()->fetchRow('expId = '.$id);

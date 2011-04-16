@@ -46,7 +46,11 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 		
 		if($condition == 'plateNo')
 		{
-			$select->where('plateNo like ?','%'.$key.'%');
+		   $select = $this->select()
+			  ->setIntegrityCheck(false)
+			  ->from(array('ve' => 've_vehicles'),array('plateNo'))
+			  ->join(array('re' => 've_verecords'),'ve.veId = re.veId')
+			->where('ve.plateNo like ?','%'.$key.'%');			
 			}
 			elseif($condition == 'date')
 			{

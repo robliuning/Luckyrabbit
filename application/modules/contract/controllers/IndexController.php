@@ -28,7 +28,7 @@ class Contract_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			$arrayContractors = array();
 			$key = $formData['key'];
-			if($key!==null)
+			if($key != null)
 			{
 				$condition = $formData['condition'];
 				$arrayContractors = $contractors->fetchAllJoin($key,$condition);

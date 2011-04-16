@@ -23,10 +23,10 @@ class Project_IndexController extends Zend_Controller_Action
 		$errorMsg = null;
 		if($this->getRequest()->isPost())
 		{
-			$formData = $this->getRequest()->getPost();
 			$arrayProjects = array();
+			$formData = $this->getRequest()->getPost();
 			$key = $formData['key'];
-			if($key!==null)
+			if($key!=null)
 			{
 				$condition = $formData['condition'];
 				$arrayProjects = $projects->fetchAllJoin($key,$condition);
