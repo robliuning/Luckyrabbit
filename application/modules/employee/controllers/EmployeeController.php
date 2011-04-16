@@ -24,7 +24,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
     {
 		$employees = new Employee_Models_EmployeeMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayEmployees = array();
@@ -205,4 +205,9 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	$key = $this->_getParam('key');
     	$contacts = new Employee_Models_ContactMapper();
     	$arrayNames = $contacts->findContactNames($key);
+    	    	
+    	echo $key;
+   		}
+}
+?>
   
