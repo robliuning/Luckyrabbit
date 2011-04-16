@@ -21,7 +21,7 @@ class Project_IndexController extends Zend_Controller_Action
     {
 		$projects = new	 Project_Models_ProjectMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayProjects = array();
@@ -181,7 +181,6 @@ class Project_IndexController extends Zend_Controller_Action
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
    
-   
    		$projectId = $this->_getParam('id',0);
     	if($projectId > 0)
     	{
@@ -191,4 +190,8 @@ class Project_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redir
+    			$this->_redirect('/project');
+    			}
+    	}
+}
+?>

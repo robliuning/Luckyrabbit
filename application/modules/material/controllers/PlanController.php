@@ -20,7 +20,7 @@ class Material_PlanController extends Zend_Controller_Action
     {
 		$plans = new Material_Models_PlanMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayPlans = array();

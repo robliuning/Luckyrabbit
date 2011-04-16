@@ -15,9 +15,36 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 	 }
 
     public function indexAction() 
-    {
-       $verecords  = new Vehicle_Models_VerecordMapper();
-	   $this -> view ->arrayVerecords = $verecords -> fetchAllJoin();
+    {	   
+	   	$verecords = new Vehicle_Models_VerecordMapper();
+		$errorMsg = null;
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayVerecords = array();
+			$key = $formData['key'];
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayVerecords = $verecords->fetchAllJoin($key,$condition);
+				if(count($arrayVerecords)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
+		}
+		else
+		{
+			$arrayVerecords = $verecords->fetchAllJoin();
+		}
+		$this -> view ->arrayVerecords = $arrayVerecords;
+		$this->view->errorMsg = $errorMsg;   
     }
     
     public function addAction()                                        

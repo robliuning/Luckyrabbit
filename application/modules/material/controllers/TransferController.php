@@ -20,7 +20,7 @@ class Material_TransferController extends Zend_Controller_Action
 		//
 		$transfers = new Material_Models_TransferMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayTransfers = array();

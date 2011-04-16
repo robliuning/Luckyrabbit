@@ -30,19 +30,19 @@
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div>
-						<form method="post" action="<?php echo $this->url()?>">
-							<div class="tbShort">
-								<select name="condition">
+					<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
   									<option value="name">材料名</option>
 									<option value="type">类型</option>
   									<option value="spec">规格</option>
 								</select>
 							</div>
-							<div><input class="tbMedium" name="key" type="text" /></div>
-							<div><input type="submit" value="查询"></input></div>	
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
 						</form>
-					</div>
+					</div>	
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>

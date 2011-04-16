@@ -20,7 +20,7 @@ class Material_ExportController extends Zend_Controller_Action
 		//
 		$exports = new Material_Models_ExportMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayExports = array();

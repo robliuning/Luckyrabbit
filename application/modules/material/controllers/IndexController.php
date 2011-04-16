@@ -19,7 +19,7 @@ class Material_IndexController extends Zend_Controller_Action
     	$errorMsg = null;
 		$materials = new Material_Models_MaterialMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayMaterials = array();

@@ -58,7 +58,7 @@ class Contract_Models_ContractorMapper
     	}
  
 
-    public function fetchAll() //check
+    public function fetchAllJoin($key=null,$condition=null) //check
     {
         $resultSet = $this->getDbTable()->fetchAll();
         $entries   = array();
@@ -77,26 +77,6 @@ class Contract_Models_ContractorMapper
         }
         return $entries;
     }
-
-	public function Search($key, $condition)
-	{
-		 $resultSet = $this->getDbTable()->Search($key, $condition);
-         $entries   = array();
-         foreach ($resultSet as $row) {
-             $entry = new Contract_Models_Contract();
-
-			 $entry ->setContractorId($row->contractorId)
-        				 ->setName($row->name)
-						 ->setArtiPerson($row->artiPerson)
-						 ->setLicenseNo($row->licenseNo)
-						 ->setPhoneNo($row->phoneNo)
-						 ->setOtherContact($row->otherContact)
-						 ->setAddress($row->address);
-                  
-            $entries[] = $entry;
-        }
-        return $entries;
-	}
 
 	public function findArrayContractor($contractorId)
 	{

@@ -21,18 +21,18 @@ class Contract_IndexController extends Zend_Controller_Action
 	}
 	public function indexAction()
 	{
-		$contracts = new Contract_Models_ContractMapper();
+		$contractors = new Contract_Models_ContractorMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			$arrayContracts = array();
+			$arrayContractors = array();
 			$key = $formData['key'];
 			if($key!==null)
 			{
 				$condition = $formData['condition'];
-				$arrayContracts = $contracts->fetchAllJoin($key,$condition);
-				if(count($arrayContracts)==0)
+				$arrayContractors = $contractors->fetchAllJoin($key,$condition);
+				if(count($arrayContractors)==0)
 				{
 					$errorMsg = 2;
 					//waring a message  :  no match result
@@ -46,10 +46,12 @@ class Contract_IndexController extends Zend_Controller_Action
 		}
 		else
 		{
-			$arrayContracts = $contracts->fetchAllJoin();
+			$arrayContractors = $contractors->fetchAllJoin();
 		}
-		$this->view->arrayContracts = $arrayContracts;
-		$this->view->errorMsg = $errorMsg;	}
+		$this->view->arrayContractors = $arrayContractors;
+		$this->view->errorMsg = $errorMsg;	
+		}
+		
 	public function editAction()  /*修改*/
 	{
       $editForm=new Contract_Forms_ContractorSave();

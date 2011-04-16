@@ -59,7 +59,7 @@ class Contract_Models_ContrqualifMapper
     public function populateAllDd($form) //check
   	{
   		$contractors = new Contract_Models_ContractorMapper();
-		$arrayContractors = $contractors->fetchAll();  //contractor name and id
+		$arrayContractors = $contractors->fetchAllJoin();  //contractor name and id
 		$qualifTypes = new General_Models_QualifTypeMapper();
 		
 		//$serie = $form->getValue("qualifSerie");

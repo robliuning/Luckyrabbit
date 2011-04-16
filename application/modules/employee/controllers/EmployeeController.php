@@ -50,7 +50,8 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			$arrayEmployees  = $employees->fetchAllJoin();
 		}
 		$this->view->arrayEmployees  = $arrayEmployees ;
-		$this->view->errorMsg = $errorMsg;    }
+		$this->view->errorMsg = $errorMsg;    
+		}
     
     public function addAction() //check
 	{

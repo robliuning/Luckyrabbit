@@ -29,7 +29,7 @@ class Employee_IndexController extends Zend_Controller_Action
 			{
 				$condition = $formData['condition'];
 				$arrayContacts  = $contacts->fetchAllJoin($key,$condition);
-				if(count($arrayContacts)==0)
+				if(count($arrayContacts)== 0)
 				{
 					$errorMsg = 2;
 					//waring a message  :  no match result
@@ -46,7 +46,8 @@ class Employee_IndexController extends Zend_Controller_Action
 			$arrayContacts  = $contacts->fetchAllJoin();
 		}
 		$this->view->arrayContacts  = $arrayContacts ;
-		$this->view->errorMsg = $errorMsg;    }
+		$this->view->errorMsg = $errorMsg;    
+		}
      
     public function addAction()                       
     {

@@ -18,7 +18,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     {
 		$vehicles = new Vehicle_Models_VehicleMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayVehicles = array();
@@ -44,7 +44,8 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			$arrayVehicles = $vehicles->fetchAllJoin();
 		}
 		$this->view->arrayVehicles = $arrayVehicles;
-		$this->view->errorMsg = $errorMsg;    }
+		$this->view->errorMsg = $errorMsg;   
+		}
     
     public function addAction()                                        
     {

@@ -18,7 +18,7 @@ class Material_PurchaseController extends Zend_Controller_Action
     {
 		$purchases = new Material_Models_PurchaseMapper();
 		$errorMsg = null;
-		if($this->getRequet()->isPost())
+		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayPurchases = array();
