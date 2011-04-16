@@ -4,6 +4,8 @@ author: mingtingling
 date.2011.3.26
 reviewed: rob
 date 2001.4.7
+Modified Meimo
+Date :  Apr.15.2011
 */
 
 class Employee_EmployeeController extends Zend_Controller_Action
@@ -20,9 +22,35 @@ class Employee_EmployeeController extends Zend_Controller_Action
 
     public function indexAction() //check
     {
-    	$employees = new Employee_Models_EmployeeMapper();
-    	$this->view->employees = $employees->fetchAllJoin();
-    }
+		$employees = new Employee_Models_EmployeeMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayEmployees = array();
+			$key = $formData['key'];
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayEmployees  = $employees->fetchAllJoin($key,$condition);
+				if(count($arrayEmployees )==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
+		}
+		else
+		{
+			$arrayEmployees  = $employees->fetchAllJoin();
+		}
+		$this->view->arrayEmployees  = $arrayEmployees ;
+		$this->view->errorMsg = $errorMsg;    }
     
     public function addAction() //check
 	{
@@ -73,7 +101,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  				{
 			  					$errorMsg.=$message."\n";
 			  					}*/
-			  				$errorMsg = "该员工已经注册过公司员工基本信息。";
+			  				$errorMsg = "该员工已经注册过公司员工基本信息";
 			  				}
 			  		}
 			  		else{
@@ -82,7 +110,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  			{
 			  				$errorMsg.=$message."\n";
 			  				}*/
-			  			$errorMsg = "输入的员工名无效，您可在通讯录管理页面录入其个人信息或点击上方工具栏’快速新建通讯录‘录入。";
+			  			$errorMsg = "输入的员工名无效，您可在通讯录管理页面录入其个人信息或点击上方工具栏’快速新建通讯录‘录入";
 			  			}
 			  			
 			   if($btClicked == '保存继续新建')
@@ -176,12 +204,4 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	$key = $this->_getParam('key');
     	$contacts = new Employee_Models_ContactMapper();
     	$arrayNames = $contacts->findContactNames($key);
-    	
-    	echo $key;
-   		}
-   	public function searchAction()
-   	{
-   		//..to be added
-   		}
-}
-
+  

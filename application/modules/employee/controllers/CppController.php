@@ -1,176 +1,170 @@
 <?php
-/*
-  author: mingtingling
-  date:2011.4.3
-  review rob
-  date.2011.4.7
-*/
+//Author Rob
+//2011.4.6
+//Modified Meimo
+// Date :  Apr.15.2011
 
-class Employee_CppController extends  Zend_Controller_Action
+class Employee_IndexController extends Zend_Controller_Action
 {
-   public function init()
-	{
-		/* Initialize action controller here */
-	}
-   public function preDispatch()
-	{
-	   $this->view->render("_sidebar.phtml");
-	}
-	public function indexAction() //check
+    public function init()
     {
-	 	$cpps = new Employee_Models_CppMapper();
-      	$this->view->cpps = $cpps->fetchAllJoin(null,null);
-	 }
-	  
-	public function addAction()//check
+        /* Initialize action controller here */
+    }
+    
+    public function preDispatch()
+	{
+		$this->view->render("_sidebar.phtml");
+	}
+
+    public function indexAction()
     {
-     	$addForm=new Employee_Forms_CppSave();
-	 	$addForm->submit->setLabel("保存继续新建");
-	 	$addForm->submit2->setLabel("保存返回上页");
-	 	
-	 	$cpps=new Employee_Models_CppMapper();
-     	$cpps->populateCppDd($addForm);
-		
-     	$this->view->addForm = $addForm;
-	 	if($this->getRequest()->isPost())
+		$contacts = new Employee_Models_ContactMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
 		{
-		   	$btClicked = $this->getRequest()->getPost('submit');
 			$formData = $this->getRequest()->getPost();
-		   	if($addForm->isValid($formData))
+			$arrayContacts = array();
+			$key = $formData['key'];
+			if($key!==null)
 			{
-				$cpp = new Employee_Models_Cpp();
-				$cpp->setPostId($addForm->getValue('postId'));
-				$cpp->setContactId($addForm->getValue('contactId'));
-				$cpp->setProjectId($addForm->getValue('projectId'));
-				$cpp->setPostType($addForm->getValue('postType'));
-				$cpp->setPostCardId($addForm->getValue('postCardId'));
-				$cpp->setCertId($addForm->getValue('certId'));
-				
-				$errorMsg = null;
-			    $validatorRe = new Zend_Validate_Db_RecordExists(
-			    array(
-			  		 'table'=>'em_cpp',
-			  		 'field'=>'postId',
-					 'field'=>'contactId',
-					 'field'=>'projectId' 
-			  	     	)
-			        );
-			        
-			   	if($validatorRe->isValid($cpp->getPostId(),$cpp->getContactId(),$cpp->getProjectId())) 
-			  	{
-			  		$errorMsg = "该岗位信息已经存在。";
-			  		$addForm->populate($formData);
-			  		}
-			  		else
-			  		{
-			  			$result = $cpps->save($cpp); 
-			  			$addForm->getElement('contactName')->setValue('');	
-			  			$addForm->getElement('postId')->setValue('');	
-			  			$addForm->getElement('projectId')->setValue('');	
-			  			$addForm->getElement('postType')->setValue('');			    	
-			  			$addForm->getElement('postCardId')->setValue('');	
-			  			$addForm->getElement('certId')->setValue('');	
-			  			}
-
-				if($btClicked=="保存继续新建")
-			    {
-			    	$this->view->errorMsg = $errorMsg;
-			    }
-				else
-			   	{
-					$this->_redirect('/employee/cpp');
-			   		}
+				$condition = $formData['condition'];
+				$arrayContacts  = $contacts->fetchAllJoin($key,$condition);
+				if(count($arrayContacts)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
 				}
-		    else
-		    {
-				$addForm->populate($formData);
-		    	}
-		   	}
-		} 
-	   	
-	public function editAction() 
-	{
-	 	$editForm=new Employee_Forms_CppSave();
-	 	$editForm->submit->setLabel("保存修改");
-     	$editForm->submit2->setAttrib('class','hide');
-
-	 	$cpps=new Employee_Models_CppMapper();
-	 	$cpps->populateCppDd($editForm);
-	 	$cppId = $this->_getParam('id',0);
-
-	 	if($this->getRequest()->isPost())
-		{
-		  $formData=$this->getRequest()->getPost();
-		  if($editForm->isValid($formData))
-			{
-				$cpp = new Employee_Models_Cpp();
-				$cpp->setCppId($cppId);
-				$cpp->setPostId($editForm->getValue('postId'));
-				$cpp->setContactId($editForm->getValue('contactId'));
-				$cpp->setProjectId($editForm->getValue('projectId'));
-				$cpp->setPostType($editForm->getValue('postType'));
-				$cpp->setPostCardId($editForm->getValue('postCardId'));
-				$cpp->setCertId($editForm->getValue('certId'));
-				
-				$errorMsg = null;
-			    $validatorRe = new Zend_Validate_Db_RecordExists(
-			    array(
-			  	 	'table'=>'em_cpp',
-			  		'field'=>'postId',
-					'field'=>'contactId',
-					'field'=>'projectId' 
-			  	   	 )
-			    );
-			    if($validatorRe->isValid($cpp->getPostId(),$cpp->getContactId(),$cpp->getProjectName())) 
-			  	{
-			        $errorMsg="该岗位信息已经存在。";
-			  		}
-			  		else 
-			  		{
-			  			$cpps->save($cpp);
-						$this->_redirect('/employee/cpp');
-			  		      }
-			  		 }			    					 
-			else
-		   	{
-                $editForm->populate($formData);
-		   		}
-		}
-		else
-	   	{
-		   	if($cppId > 0)
-		   	{
-		   	 	$arrayCpp = $cpps->findArrayCpp($cppId);
-		   	 	$editForm->populate($arrayCpp);
-			 	   }
+			}
 			else
 			{
-           		$this->_redirect('/employee/cpp');
-		   		}
-	   		}
-	   $this->view->editForm = $editForm;
-	   $this->view->cppId = $cppId;
-	 }
- 	
- 	public function ajaxdeleteAction()
-	{
-		$this->_helper->layout()->disableLayout();
-		$this->_helper->viewRenderer->setNoRender(true);
-        $cppId = $this->_getParam('id',0);
-		if($cppId > 0)
-		{
-			$cpps=new Employee_Models_CppMapper();
-			$result = $cpps->delete($cppId);
-			echo $result;
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
 		}
 		else
 		{
-         $this->_redirect('/employee');
+			$arrayContacts  = $contacts->fetchAllJoin();
 		}
-	}
+		$this->view->arrayContacts  = $arrayContacts ;
+		$this->view->errorMsg = $errorMsg;    }
+     
+    public function addAction()                       
+    {
+        $addForm = new Employee_Forms_contactSave();
+        $addForm->submit->setLabel('保存继续新建');
+        $addForm->submit2->setLabel('保存返回上页');
+        
+    	$contacts=new Employee_Models_ContactMapper();
+    	$contacts->populateContactDd($addForm);
+    	    	
+    	if($this->getRequest()->isPost())
+    	{
+    		$btClicked = $this->getRequest()->getPost('submit');
+    		$formData = $this->getRequest()->getPost();
+    		if($addForm->isValid($formData))
+    		{  			
+    			$contact = new Employee_Models_Contact();
+    			$contact->setName($addForm->getValue('name'));
+    			$contact->setGender($addForm->getValue('gender'));
+    			$contact->setTitleName($addForm->getValue('titleName'));
+    			$contact->setBirth($addForm->getValue('birth'));
+    			$contact->setIdCard($addForm->getValue('idCard'));
+    			$contact->setPhoneNo($addForm->getValue('phoneNo'));
+    			$contact->setOtherContact($addForm->getValue('otherContact'));
+    			$contact->setAddress($addForm->getValue('adress'));
+    			$contact->setRemark($addForm->getValue('remark'));
+    			$contacts->save($contact);   
+    			
+    			if($btClicked == '保存继续新建')
+    			{
+   					$addForm->getElement('name')->setValue('');
+   					$addForm->getElement('gender')->setValue('');
+   					$addForm->getElement('titleName')->setValue('');
+   					$addForm->getElement('birth')->setValue('');
+   					$addForm->getElement('idCard')->setValue('');
+   					$addForm->getElement('phoneNo')->setValue('');
+   					$addForm->getElement('otherContact')->setValue('');
+					$addForm->getElement('address')->setValue('');
+   					$addForm->getElement('remark')->setValue('');
+   					}
+   					else
+    				{
+    					$this->_redirect('/employee');
+    					} 			
+    			}
+    			else
+    			{
+    				$editForm->populate($formData);
+    				}
+    		}
+        	
+        $this->view->addForm = $addForm;
+    }
+         
+    public function editAction()                                  
+    {
+    	$editForm = new Employee_Forms_ContactSave();
+    	$editForm->submit->setLabel('保存修改');
+    	$editForm->submit2->setAttrib('class','hide');
 	
-	public function searchAction()
-	{
-		//to be added
-		}
-}
+		$contacts = new Employee_Models_ContactMapper();
+		$contacts->populateContactDd($editForm);
+		$contactId = $this->_getParam('id',0);
+    	
+    	if($this->getRequest()->isPost())
+    	{
+    		$formData = $this->getRequest()->getPost();
+    		if($editForm->isValid($formData))
+    		{
+    			$contact = new Employee_Models_Contact();
+    			$contact->setContactId($contactId);
+    			$contact->setName($editForm->getValue('name'));
+    			$contact->setGender($editForm->getValue('gender'));
+    			$contact->setTitleName($editForm->getValue('titleName'));
+    			$contact->setBirth($editForm->getValue('birth'));
+    			$contact->setIdCard($editForm->getValue('idCard'));
+    			$contact->setPhoneNo($editForm->getValue('phoneNo'));
+    			$contact->setOtherContact($editForm->getValue('otherContact'));
+    			$contact->setAddress($editForm->getValue('address'));
+    			$contact->setRemark($editForm->getValue('remark'));
+    			$contacts->save($contact);    			
+    			
+    			$this->_redirect('/employee');
+    			}
+    			else
+    			{
+    				$editForm->populate($formData);
+    				}
+    		}
+    		else
+    		{
+    			if($contactId >0)
+    			{
+    				$arrayContact = $contacts->findArrayContact($contactId);
+    				$editForm->populate($arrayContact);
+    				}
+    				else
+    				{
+    					$this->_redirect('/employee');
+    					}
+    			}
+    	$this->view->editForm = $editForm;
+    	$this->view->id = $contactId;
+    	}
+
+    
+    public function ajaxdeleteAction()               
+    {
+        $this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    
+   		$contactId = $this->_getParam('id',0);
+    	if($contactId >0)
+    	{
+    		$contacts = new Employee_Models_ContactMapper();
+    		$contacts->delete($contactId);
+    		echo "1";//Missing validate if deletion succeed.
+    		}
+    		else
+    		{
+    			$t

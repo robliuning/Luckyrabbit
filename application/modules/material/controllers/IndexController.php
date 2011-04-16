@@ -18,8 +18,8 @@ class Material_IndexController extends Zend_Controller_Action
     {
     	$errorMsg = null;
 		$materials = new Material_Models_MaterialMapper();
-		
-		if($this->getRequest()->isPost())
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayMaterials = array();
@@ -41,8 +41,7 @@ class Material_IndexController extends Zend_Controller_Action
 		else
 		{
 			$arrayMaterials = $materials->fetchAllJoin();
-			}
-		
+		}
 		$this->view->arrayMaterials = $arrayMaterials;
 		$this->view->errorMsg = $errorMsg;
     }
@@ -52,6 +51,9 @@ class Material_IndexController extends Zend_Controller_Action
     	$addForm = new Material_Forms_MaterialSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
+		$addForm->approvId->setAttrib('class','hide');
+		$addForm->approvDate->setAttrib('class','hide');
+
 		$materials = new Material_Models_MaterialMapper();
 		$result = null;
 
@@ -75,7 +77,6 @@ class Material_IndexController extends Zend_Controller_Action
 					$addForm->getElement('spec')->setValue('');
 					$addForm->getElement('unit')->setValue('');
 					$addForm->getElement('remark')->setValue('');
-					
 					}
 					else
 					{

@@ -21,7 +21,7 @@ class Material_Models_Material
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid employee property');
+            throw new Exception('Invalid metarial property');
         }
         $this->$method($value);
     }
@@ -30,7 +30,7 @@ class Material_Models_Material
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid employee property');
+            throw new Exception('Invalid metarial property');
         }
         return $this->$method();
     } 

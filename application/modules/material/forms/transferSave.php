@@ -1,44 +1,50 @@
 <?php
 	/*
 	Created by Meimo
-	Date 2011.4.1
+	Date 2011.4.15
 	*/
-class Material_Forms_planSave extends Zend_Form
+class Material_Forms_transferSave extends Zend_Form
 {
     public function init()
     {
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'select', 'type', array(
-			'label' => '计划类型: ',
-			'multiOptions'=>array('日计划','周计划','月计划','年计划','项目计划','其他'),
-			'required' => true,
-			'class'=>'tbMedium tbText'
-			)
-		);
-     	$this->addElement(
-			'text', 'dueDate', array(
-			'label' => '计划到位时间: ',
-			'required' => true,
-			'class'=>'tbLarge tbText'
-			)
-		);
-	  	$this->addElement(
 			'select', 'projectId', array(
 			'label' => '工程名称: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
-    	$this->addElement(
+     	$this->addElement(
+			'text', 'trsDate', array(
+			'label' => '调拨日期: ',
+			'required' => true,
+			'class'=>'tbLarge tbText'
+			)
+		);
+	  	$this->addElement(
+			'select', 'origId', array(
+			'label' => '调拨出发地: ',
+			'required' => true,
+			'class'=>'tbMedium tbText'
+			)
+		);
+		$this->addElement(
+			'select', 'destId', array(
+			'label' => '调拨目的地: ',
+			'required' => true,
+			'class'=>'tbMedium tbText'
+			)
+		);
+	   $this->addElement(
 			'text', 'applicId', array(
 			'label' => '申报人: ',
 			'required' => true,
 			'class'=>'tbMedium tbText'
 			)
 		);
-		$this->addElement(
+	   	$this->addElement(
 			'text', 'applicDate', array(
 			'label' => '申报日期: ',
 			'required' => false,
@@ -46,6 +52,15 @@ class Material_Forms_planSave extends Zend_Form
 			)
 		);
 		$this->addElement(
+			'select', 'palnType', array(
+			'label' => '计划类型: ',
+			'multiOptions'=>array('日计划','周计划','月计划','年计划','项目计划','其他'),
+			'required' => false,
+			'class'=>'tbMedium tbText'
+			)
+		);
+
+	 	$this->addElement(
 			'text', 'approvId', array(
 			'label' => '审批人: ',
 			'required' => false,
@@ -109,4 +124,5 @@ class Material_Forms_planSave extends Zend_Form
         ));
     }
 }
+
 ?>

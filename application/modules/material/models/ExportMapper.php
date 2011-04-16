@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 15-04-2011
 
-class Material_Models_PlanMapper
+class Material_Models_ExportMapper
 {
 	protected $_dbTable;
 	
@@ -22,50 +22,56 @@ class Material_Models_PlanMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Material_Models_DbTable_Plan');
+            $this->setDbTable('Material_Models_DbTable_Export');
         }
         return $this->_dbTable;
     }
-   
-    public function save(Material_Models_Plan $plan) 
+    
+    public function save(Material_Models_Export $export) 
     {
         $data = array(
-            'planId' => $plan->getPlanId(),
-            'planType' => $plan->getPlanType(),
-            'projectId' => $plan->getProjectId(),
-            'dueDate' => $plan->getDueDate(),
-            'applicId' => $plan->getApplicId(),
-			'applicDate' => $plan->getApplicDate(),
-			'approvId' => $plan->getApprovId(),
-			'approvDate' => $plan->getApprovDate(),	
-			'total' =>$plan->getTotal(),
-            'remark' => $plan->getRemark()
+            'expId' => $export->getExpId(),
+            'projectId' => $export->getProjectId(),
+			'expDate' => $export->getExpDate(),
+            'expType' => $export->getExpType(),
+			'destId' => $export->getDestId(),
+            'applicId' => $export->getApplicId(),
+			'applicDate' => $export->getApplicDate(),
+			'planType' => $export->getPlanType()
+			'approvId' => $export->getApprovId(),
+			'approvDate' => $export->getApprovDate(),	
+			'total' =>$export->getTotal(),
+            'remark' => $export->getRemark()
         );
-        if (null === ($id = $plan->getPlanId())) {
-            unset($data['planId']);
+        if (null === ($id = $export->getExpId())) {
+            unset($data['expId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('planId = ?' => $plan->getPlanId()));
+            $this->getDbTable()->update($data, array('expId = ?' => $export->getExpId()));
         }
     }
      
     public function findArrayPlan($id) 
     {
 		$id = (int)$id;
-		$plan = $this->getDbTable()->fetchRow('planId = '.$id);
-		$projectId = $plan->getProjectId();
-		$applicId = $plan->getApplicId();
-		$approvId = $plan->getApprovId();
-		$entry = $plan->toArray();
+		$export = $this->getDbTable()->fetchRow('expId = '.$id);
+		$projectId = $export->getProjectId();
+		$destId = $export->getDestId();
+		$applicId = $export->getApplicId();
+		$approvId = $export->getApprovId();
+		$entry = $export->toArray();
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
         $entry[] = $projectName;
 
+		$vendors = new General_Models_VendorMapper();
+		$venName = $vendors->findVenName($destId);
+	    $entry[] = $venName;
+
 		$contacts = new Employee_Models_ContactMapper();
 		$applicName = $contacts->findContactName($applicId);
-		$approvName = $contacts->findContactName($approvId);
-		
+		$approvName = $contacts->findContactName($approvId);	
 		$entry[] = $applicName;
 		$entry[] = $approName;
 		
@@ -86,13 +92,15 @@ class Material_Models_PlanMapper
    		$entries = array();
    		
    		foreach($resultSet as $row){
-   			$entry = new Material_Models_Plan();
-   			$entry->setPlanId($row->planId)
-				->setPlanType($row->planType)
+   			$entry = new Material_Models_Export();
+   			$entry->setExpId($row->ExpId)		
 				->setProjectId($row->projectId)
-				->setDueDate($row->dueDate)
+				->setExpDate($row->expDate)
+				->setExpType($row->expType)
+                ->setDestId($row->destId)
 				->setApplicId($row->applicId)
 				->setApplicDate($row->applicDate)
+				->setPlanType($row->planType)
 				->setApprovId($row->approvId)
 				->setApprovDate($row->approvDate)
 				->setTotal($row->total)
@@ -102,7 +110,11 @@ class Material_Models_PlanMapper
 			$projects = new Project_Models_ProjectMapper();
 			$projectName = $projects->findProjectName($entry->getProjectId());
             $entry->setProjectName($projectName);
-   				
+
+   			$sites = new General_Models_SiteMapper();
+			$destName = $sites->findSiteName($entry->getDestId());
+			$entry->setDestName($destName);
+
 			$contacts = new Employee_Models_ContactMapper();
 		    $applicName = $contacts->findContactName($entry->getApplicId());
 			$entry->setApplicName($applicName);
@@ -114,9 +126,9 @@ class Material_Models_PlanMapper
     	return $entries;
     	}
     
-	public function delete($planId)
+	public function delete($expId)
 	{
-		$this->getDbTable()->delete("planId = ".(int)$planId);
+		$this->getDbTable()->delete("expId = ".(int)$expId);
 		}
 }
 ?>

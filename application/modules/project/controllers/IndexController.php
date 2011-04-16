@@ -3,6 +3,8 @@
 //Date: 2011.4.1
 //Reviewed: Rob
 //Date: 2011.4.6
+//Modified : Meimo
+//Date :  Apr.15.2011
 
 class Project_IndexController extends Zend_Controller_Action
 {
@@ -17,10 +19,36 @@ class Project_IndexController extends Zend_Controller_Action
 
     public function indexAction() 
     {
-    	//add search 
-       	$projects  = new Project_Models_ProjectMapper();
-	   	$this -> view ->arrayProjects = $projects -> fetchAllJoin();
-    }
+		$projects = new	 Project_Models_ProjectMapper();
+		$errorMsg = null;
+		if($this->getRequet()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayProjects = array();
+			$key = $formData['key'];
+			if($key!==null)
+			{
+				$condition = $formData['condition'];
+				$arrayProjects = $projects->fetchAllJoin($key,$condition);
+				if(count($arrayProjects)==0)
+				{
+					$errorMsg = 2;
+					//waring a message  :  no match result
+				}
+			}
+			else
+			{
+				$errorMsg = 1;
+				//waring a message  :  please input a key word
+			}
+		}
+		else
+		{
+			$arrayProjects = $projects->fetchAllJoin();
+		}
+		$this->view->arrayProjects = $arrayProjects;
+		$this->view->errorMsg = $errorMsg;    
+		}
     
     public function addAction()                                        
     {
@@ -143,7 +171,7 @@ class Project_IndexController extends Zend_Controller_Action
     		{
     			$this->_redirect('/project');
     			}
-	    //显示该project下的岗位及人员（display employees related to this project）    
+	    //显示该project下的岗位及人员（display employees related to this project?   
     	//display relevant project progress
     	//display relevant log
     	}
@@ -163,8 +191,4 @@ class Project_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redirect('/project');
-    			}
-    	}
-}
-?>
+    			$this->_redir

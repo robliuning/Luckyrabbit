@@ -33,7 +33,7 @@ class Material_Models_MaterialMapper
             'typeId' => $material->getTypeId(),
             'spec' => $material->getSpec(),
             'unit' => $material->getUnit(),
-            'remark' => $material->getRemark(),
+            'remark' => $material->getRemark()
         );
         if (null === ($id = $material->getMtrId())) {
             unset($data['mtrId']);
