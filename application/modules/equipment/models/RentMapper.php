@@ -94,7 +94,7 @@ class Equipment_Models_RentMapper
    		$entries = array();
    		
    		foreach($resultSet as $row){
-   			$entry = new Material_Models_Export();
+   			$entry = new Material_Models_Rent();
    			$entry->setRenId($row->renId)		
 				->setProjectId($row->projectId)
 				->setVenId($row->venId)
@@ -108,7 +108,8 @@ class Equipment_Models_RentMapper
 				->setFreight($row->freight)
 				->setInvoice($row->invoice)
 				->setTotal($row->total)
-   				->setRemark($row->remark);
+   				->setRemark($row->remark)
+				->setCTime($row->cTime);
 
 			$projects = new Project_Models_ProjectMapper();
 			$projectName = $projects->findProjectName($entry->getProjectId());

@@ -77,7 +77,7 @@ class Equipment_Models_PurchaseMapper
 		$entry[] = $buyerName;
 		$entry[] = $approName;
 
-		$sites = new General_Models_siteMapper();
+		$sites = new General_Models_SiteMapper();
 		$destName = $sites->findSiteName($destId);
 		$entry[] = $destName;
 		
