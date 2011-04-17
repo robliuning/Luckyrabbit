@@ -21,16 +21,44 @@ class Equipment_IndexController extends Zend_Controller_Action
 	}
     public function indexAction()
     {
-           $equipments=new Equipment_Models_EquipmentMapper();
-		   $this->view->equipments=$equipments->fetchAllJoin();
+		$errorMsg = null;
+		$equipments=new Equipment_Models_EquipmentMapper();
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayEquipments = array();
+			$key = $formData['key'];
+			if($key != null)
+			{
+				$condition = $formData['condition'];
+				$equipments->fetchAllJoin($key,$condition);
+				
+				if(count($arrayEquipments) == 0)
+				{
+					$errorMsg = 0;
+					//warning will be displayed: "没有找到符合条件的结果。"
+					}
+				}
+				else
+				{
+					$errorMsg = 1;
+					//warning will be displayed: "请输入搜索关键字。"
+					}
+		}
+		else
+		{
+			$arrayEquipments = $equipments->fetchAllJoin();
+			}
+		
+		$this->view->arrayEquipments = $arrayEquipments;
+		$this->view->errorMsg = $errorMsg;
+
     }
     public function addAction()
     {
            $addForm=new Equipment_Forms_EquipmentSave();
-		   $addForm->submit->setLabel("清空");
-		   $addForm->submit2->setLabel("保存并继续添加");
-		   $addForm->submit3->setLabel("保存并返回");
-		   $addForm->submit4->setLabel("返回");
+		   $addForm->submit->setLabel("保存并继续添加");
+		   $addForm->submit2->setLabel("保存并返回");
 		   $equipments=new Equipment_Models_EquipmentMapper();
 		   $equipments->populateEquipmentDb($addForm);/*下拉菜单*/
 	       if($this->getRequest()->isPost())
@@ -48,39 +76,21 @@ class Equipment_IndexController extends Zend_Controller_Action
 				   $equipment->setSpec($addForm->getValue('spec'));
 				   $equipment->setUnit($addForm->getValue('unit'));
 				   $equipment->setRemark($addForm->getValue('remark'));
-				   if($btClicked=="清空")
-					 {
-					   $addForm->getElement('name')->setValue('');
-					   /* 此三项好像不需要清空，但是需要被还原成初始状态
-					   $addForm->getElement('typeId1')->setValue('');
-					   $addForm->getElement('typeId2')->setValue('');
-					   $addForm->getElement('typeId3')->setValue('');
-					   */
-					   $addForm->getElement('spec')->setValue('');
-					   $addForm->getElement('unit')->setValue('');
-					   $addForm->getElement('remark')->setValue('');
-					   /*下面这个populateEquipmentDb可能是有问题的*/
-					   $equipments->populateEquipmentDb($addForm);		 
-					     }
-				         else if($btClicked=="保存并继续添加")
+				    if($btClicked=="保存并继续添加")
 					     {
 						    $equipments->save($equipment);
 							/*以下有可能出错*/
 							$addForm->getElement('name')->setValue('');
+							$addForm->getElement('typeId')->setValue('');
 							$addForm->getElement('spec')->setValue('');
 							$addForm->getElement('unit')->setValue('');
 							$addForm->getElement('remark')->setValue('');
-							$equipments->populateEquipmentDb($addForm);
 						    }
-							else if($btClicked=="保存并返回")
+							else
 					        {
 								$equipments->save($equipment);
 								$this->_redirect('/equipment');
 							   }
-							   else
-					           {
-								$this->_redirect('/equipment');
-						       }
  
 				 }
 				 else
@@ -94,10 +104,8 @@ class Equipment_IndexController extends Zend_Controller_Action
     public function editAction()
     {
      $editForm=	new Equipment_Forms_EquipmentSave();
-	 $editForm->submit->setLabel('清空');
-	 $editForm->submit2->setLabel('保存修改');
-	 $editForm->submit3->setAttrib('class','hide');
-	 $editForm->submit4->setLabel('返回');
+	 $editForm->submit->setLabel('保存修改');
+	 $editForm->submit2->setAttrib('class','hide');
      $equipments=new Equipment_Models_EquipmentMapper();
 	 $equipments->populateEquipmentDb($editForm);/*下拉条*/
      $eqpId=$this->_getParam('id',0);
@@ -117,30 +125,8 @@ class Equipment_IndexController extends Zend_Controller_Action
 			  $equipment->setSpec($editForm->getValue('spec'));
 			  $equipment->setUnit($editForm->getValue('unit'));
 			  $equipment->setRemark($editForm->getValue('remark'));
-			  if($btClicked=="清空")
-				{
-					   $editForm->getElement('name')->setValue('');
-					   /* 此三项好像不需要清空，但是需要被还原成初始状态
-					   $editForm->getElement('typeId1')->setValue('');
-					   $editForm->getElement('typeId2')->setValue('');
-					   $editForm->getElement('typeId3')->setValue('');
-					   */
-					   $editForm->getElement('spec')->setValue('');
-					   $editForm->getElement('unit')->setValue('');
-					   $editForm->getElement('remark')->setValue('');
-					   /*下面这个populateEquipmentDb可能是有问题的*/
-					   $equipments->populateEquipmentDb($editForm);	
-				    }
-					else if($btClicked=="返回")
-				    {
-                     $this->_redirect('/equipment');
-				       }
-					   else  /*允许修改*/
-			           {
-                        $equipments->save($equipment);
-						$this->_redirect('/equipment');
-					   }
-
+			  $equipments->save($equipment);
+			  $this->_redirect('/equipment');
 			}/*end of isValid()*/
 			else
 			{
