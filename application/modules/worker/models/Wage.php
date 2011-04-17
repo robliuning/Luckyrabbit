@@ -2,14 +2,15 @@
   //creation date 17-04-2011
   //creating by lincoy
   //completion date 17-04-2011
-class Worker_Models_Team
+class Worker_Models_Wage
 {     
-    protected $_teamId;
-	protected $_name;
-	protected $_contactId;
-	protected $_contactName;
+    protected $_wagId;
+	protected $_amount;
+	protected $_startDate;
+	protected $_endDate;
+	protected $_workerId;
+	protected $_workerName;
 	protected $_remark;
- 	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -22,7 +23,7 @@ class Worker_Models_Team
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid team property');
+            throw new Exception('Invalid wage property');
         }
         $this->$method($value);
     }
@@ -31,7 +32,7 @@ class Worker_Models_Team
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid team property');
+            throw new Exception('Invalid wage property');
         }
         return $this->$method();
     } 
@@ -48,79 +49,92 @@ class Worker_Models_Team
         return $this;
     }
 
-	public function setTeamId($teamId)
+	public function setWagId($wagId)
     {
-        $this->_teamId = (int)$teamId;
+        $this->_wagId = (int)$wagId;
         return $this;
     } 
 
-    public function getTeamId()
+    public function getWagId()
     {
-        return $this->_teamId;
+        return $this->_wagId;
     }
     
 	/************************************************/
 
-	public function setName($name)
+	public function setAmount($amount)
     {
-        $this->_name = $name;
+        $this->_amount = $amount;
         return $this;
     } 
 
-    public function getName()
+    public function getAmount()
     {
-        return $this->_name;
+        return $this->_amount;
     }
     
 	/************************************************/
 
-	public function setContactId($contactId)
+	public function setStartDate($startDate)
     {
-        $this->_contactId = (int)$contactId;
+        $this->_startDate = $startDate;
         return $this;
     } 
 
-    public function getContactId()
+    public function getStartDate()
     {
-        return $this->_contactId;
+        return $this->_startDate;
     }
     
 	/************************************************/
 
-	public function setContactName($contactName)
+	public function setEndDate($endDate)
     {
-        $this->_contactName = $contactName;
+        $this->_endDate = $endDate;
         return $this;
     } 
 
-    public function getContactName()
+    public function getEndDate()
     {
-        return $this->_contactName;
+        return $this->_endDate;
     }
+
+    /************************************************/
     
+    public function setWorkerId($workerId)
+    {
+        $this->_workerId = $workerId;
+        return $this;
+    }
+
+    public function getWorkerId()
+    {
+        return $this->_workerId;
+	}
+
+	/************************************************/
+    
+    public function setWorkerName($workerName)
+    {
+        $this->_workerName = $workerName;
+        return $this;
+    }
+
+    public function getWorkerName()
+    {
+        return $this->_workerName;
+	}
 	/************************************************/
     
     public function setRemark($remark)
     {
-        $this->_remark= $remark;
+        $this->_remark = $remark;
         return $this;
     }
 
     public function getRemark()
     {
         return $this->_remark;
-	}
-
-	/************************************************/
-	public function setCTime($cTime)
-    {
-        $this->_cTime= $cTime;
-        return $this;
-    }
-
-    public function getCTime()
-    {
-        return $this->_cTime;
 	}
 }
 ?>
