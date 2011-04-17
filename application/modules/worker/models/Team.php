@@ -1,18 +1,15 @@
 <?php
-
-/*write by lxj
- 2011-04-16 v0.2
- */
-
-class Equipment_Models_Equipment
+  //creation date 17-04-2011
+  //creating by lincoy
+  //completion date 17-04-2011
+class Worker_Models_Team
 {     
-    protected $_eqpId;
-    protected $_name;
-	protected $_typeId;
-	protected $_spec;
-	protected $_unit;
+    protected $_teamId;
+	protected $_name;
+	protected $_contactId;
+	protected $_contactName;
 	protected $_remark;
-	protected $_cTime;
+ 	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -25,7 +22,7 @@ class Equipment_Models_Equipment
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid equipment property');
+            throw new Exception('Invalid team property');
         }
         $this->$method($value);
     }
@@ -34,7 +31,7 @@ class Equipment_Models_Equipment
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid equipment property');
+            throw new Exception('Invalid team property');
         }
         return $this->$method();
     } 
@@ -51,20 +48,22 @@ class Equipment_Models_Equipment
         return $this;
     }
 
-	public function setEqpId($eqpId)
+	public function setTeamId($teamId)
     {
-        $this->_eqpId = (int)$eqpId;
+        $this->_teamId = (int)$teamId;
         return $this;
     } 
 
-    public function getEqpId()
+    public function getTeamId()
     {
-        return $this->_eqpId;
+        return $this->_teamId;
     }
     
-    public function setName($name)
+	/************************************************/
+
+	public function setName($name)
     {
-        $this->_name = $name;
+        $this->_name = (int)$name;
         return $this;
     } 
 
@@ -72,41 +71,36 @@ class Equipment_Models_Equipment
     {
         return $this->_name;
     }
+    
+	/************************************************/
 
-    public function setTypeId($typeId)
+	public function setContactId($contactId)
     {
-        $this->_typeId = (int)$typeId;
+        $this->_contactId = (int)$contactId;
         return $this;
     } 
 
-    public function getTypeId()
+    public function getContactId()
     {
-        return $this->_typeId;
+        return $this->_contactId;
     }
     
-    public function setSpec($spec)
+	/************************************************/
+
+	public function setContactName($contactName)
     {
-        $this->_spec= (string) $spec;
+        $this->_contactName = (int)$contactName;
         return $this;
     } 
 
-    public function getSpec()
+    public function getContactName()
     {
-        return $this->_spec;
+        return $this->_contactName;
     }
     
-    public function setUnit($unit)
-    {
-        $this->_unit = $unit;
-        return $this;
-    } 
-
-    public function getUnit()
-    {
-        return $this->_unit;
-    }
- 
-     public function setRemark($remark)
+	/************************************************/
+    
+    public function setRemark($remark)
     {
         $this->_remark= $remark;
         return $this;
@@ -117,6 +111,7 @@ class Equipment_Models_Equipment
         return $this->_remark;
 	}
 
+	/************************************************/
 	public function setCTime($cTime)
     {
         $this->_cTime= $cTime;
