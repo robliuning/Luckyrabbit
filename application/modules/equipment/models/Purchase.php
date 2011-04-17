@@ -24,6 +24,7 @@ class Equipment_Models_Purchase
 	protected $_invoice;
 	protected $_total;
 	protected $_remark;
+	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -275,6 +276,18 @@ class Equipment_Models_Purchase
     public function getRemark()
     {
         return $this->_remark;
+	}
+
+	/***************************************************/
+    public function setCTime($cTime)
+    {
+        $this->_cTime= $cTime;
+        return $this;
+    }
+
+    public function getCTime()
+    {
+        return $this->_cTime;
 	}
 
 }

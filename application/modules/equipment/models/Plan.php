@@ -18,7 +18,7 @@ class Material_Models_Plan
 	protected $_approvDate;
 	protected $_total;
 	protected $_remark;
- 	protected $_cTime;
+	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -199,7 +199,7 @@ class Material_Models_Plan
     {
         return $this->_remark;
 	}
-	
+
 	public function setCTime($cTime)
     {
         $this->_cTime= $cTime;
@@ -210,5 +210,6 @@ class Material_Models_Plan
     {
         return $this->_cTime;
 	}
+	
 }
 ?>

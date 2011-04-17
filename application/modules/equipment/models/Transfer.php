@@ -22,6 +22,7 @@ class Equipment_Models_Transfer
 	protected $_approvDate;
 	protected $_total;
 	protected $_remark;
+	protected $_cTIme;
     
     public function __construct(array $options = null)
     {
@@ -34,7 +35,7 @@ class Equipment_Models_Transfer
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid export property');
+            throw new Exception('Invalid transfer property');
         }
         $this->$method($value);
     }
@@ -43,7 +44,7 @@ class Equipment_Models_Transfer
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid export property');
+            throw new Exception('Invalid transfer property');
         }
         return $this->$method();
     } 
@@ -255,6 +256,18 @@ class Equipment_Models_Transfer
     public function getRemark()
     {
         return $this->_remark;
+	}
+
+	/***************************************************/
+    public function setCTime($cTime)
+    {
+        $this->_cTime = $cTime;
+        return $this;
+    }
+
+    public function getCTime()
+    {
+        return $this->_cTime;
 	}
 }
 ?>

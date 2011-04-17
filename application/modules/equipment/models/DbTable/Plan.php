@@ -36,6 +36,10 @@ class Equipment_Models_DbTable_Plan extends Zend_Db_Table_Abstract
 						->join(array('q'=>'eq_plans'),'e.contactId = q.approvId')
 						->where('e.name like ?','%'.$key.'%');
 						}
+					elseif($condition == 'dueDate')
+					{
+						$select->where('dueDate like ?','%'.$key.'%');
+						}
 					
 		$resultSet = $this->fetchAll($select);
 		

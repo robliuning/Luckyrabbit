@@ -51,7 +51,7 @@ class Equipment_Models_EquipmentMapper
     public function findArrayEquipment($id) //check
     {
 		$id = (int)$id;
-		$entries = $this->getDbTable()->findArrayequipment($id);
+		$entries = $this->getDbTable()->findArrayEquipment($id);
 		$entry = $entries[0]->toArray();
 		return $entry;
 	}
@@ -77,11 +77,12 @@ class Equipment_Models_EquipmentMapper
    				->setTypeId($row->typeId)
    				->setSpec($row->spec)
    				->setUnit($row->unit)
-   				->setRemark($row->remark);
+   				->setRemark($row->remark)
+				->setCTime($row->cTime);
    				
    			$typeId = $entry->getTypeId();
-   			$mtrtypes = new General_Models_MtrtypeMapper();	//waiting modefing
-   			$typeName = $mtrtypes->findTypeName($typeId);
+   			$eqptypes = new General_Models_EqptypeMapper();	
+   			$typeName = $eqptypes->findTypeName($typeId);
    			$entry->setTypeName($typeName);
    			 				
    			$entries[] = $entry;

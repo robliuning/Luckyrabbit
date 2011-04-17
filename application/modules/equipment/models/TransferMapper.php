@@ -30,7 +30,7 @@ class Equipment_Models_TransferMapper
     public function save(Equipment_Models_Transfer $transfer) 
     {
         $data = array(
-            'trsId' => $transfer->getRenId(),
+            'trsId' => $transfer->getTrsId(),
             'projectId' => $transfer->getProjectId(),
 			'trsDate' => $transfer->getTrsDate(),
             'origId' => $transfer->getOrigId(),
@@ -107,7 +107,8 @@ class Equipment_Models_TransferMapper
 				->setApprovId($row->approvId)
 				->setApprovDate($row->approvDate)
 				->setTotal($row->total)
-   				->setRemark($row->remark);
+   				->setRemark($row->remark)
+				->setCTime($row->cTime);
 
 			$projects = new Project_Models_ProjectMapper();
 			$projectName = $projects->findProjectName($entry->getProjectId());
