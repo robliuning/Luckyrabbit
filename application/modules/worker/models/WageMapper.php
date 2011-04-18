@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 17-04-2011
 
-class Worker_Models_TeamMapper
+class Worker_Models_WageMapper
 {
 	protected $_dbTable;
 	
@@ -22,31 +22,33 @@ class Worker_Models_TeamMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Worker_Models_DbTable_Team');
+            $this->setDbTable('Worker_Models_DbTable_Wage');
         }
         return $this->_dbTable;
     }
     
-    public function save(Worker_Models_Team $team) 
+    public function save(Worker_Models_Wage $wage) 
     {
         $data = array(
-            'teamId' => $team->getTeamId(),
-            'name' => $team->getName(),
-			'contactId' => $team->getContactId(), 
-            'remark' => $team->getRemark()
+            'wagId' => $wage->getWagId(),
+            'amount' => $wage->getAmount(),
+			'startDate' => $wage->getStartDate(),
+			'endDate' =>$wage->getEndDate(),
+			'workerId' =>$wage->getWorkerId(),
+            'remark' => $wage->getRemark()
         );
-        if (null === ($id = $team->getTeamId())) {
-            unset($data['teamId']);
+        if (null === ($id = $wage->getWagId())) {
+            unset($data['wagId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('teamId = ?' => $team->getTeamId()));
+            $this->getDbTable()->update($data, array('wagId = ?' => $wage->getWagId()));
         }
     }
      
-    public function findArrayTeam($id) 
+    public function findArrayWage($id) 
     {
 		$id = (int)$id;
-		$entries = $this->getDbTable()->findArrayTeam($id);
+		$entries = $this->getDbTable()->findArrayWage($id);
 		$entry = $entries[0]->toArray();
 		return $entry;
 	}
@@ -65,32 +67,25 @@ class Worker_Models_TeamMapper
    		$entries = array();
    		
    		foreach($resultSet as $row){
-   			$entry = new Worker_Models_Team();
-   			$entry->setTeamId($row->teamId)		
-				->setName($row->name)
-				->setContactId($row->contactId)
-   				->setRemark($row->remark)
-				->setCTime($row->cTime);
+   			$entry = new Worker_Models_Wage();
+   			$entry->setWagId($row->wagId)		
+				->setAmount($row->amount)
+				->setStartDate($row->startDate)
+				->setEndDate($row->endDate)
+				->setWorkerId($row->workerId)
+   				->setRemark($row->remard);
 
-			$contacts = new Employee_Models_ContactMapper();
-		    $contactName = $contacts->findContactName($entry->getContactId());
-			$entry->setContactName($contactName);	 				
+			$workers = new Worker_Models_WorkerMapper();
+		    $workerName = $workers->findWorkerName($entry->getWorkerId());
+			$entry->setWorkerName($workerName);	 				
    			$entries[] = $entry;
    			}
     	return $entries;
     	}
     
-	public function delete($teamId)
+	public function delete($wagId)
 	{
-		$this->getDbTable()->delete("teamId = ".(int)$teamId);
+		$this->getDbTable()->delete("wagId = ".(int)$wagId);
 		}
-
-	public function findTeamName($id)
-	{
-		$arrayNames = $this->getDbTable()->findTeamName($id);
-		$name = $arrayNames[0]->name;
-
-		return $name;
-	}
 }
 ?>

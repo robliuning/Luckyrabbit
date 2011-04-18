@@ -2,18 +2,19 @@
   //creation date 17-04-2011
   //creating by lincoy
   //completion date 17-04-2011
-class Worker_Models_Worker
+class Worker_Models_Extra
 {     
-    protected $_workerId;
-	protected $_name;
-	protected $_teamId;
-	protected $_teamName;
-	protected $_phoneNo;
-	protected $_address;
-	protected $_skills;
-	protected $_cert;
+    protected $_extId;
+	protected $_projectId;
+	protected $_projectName;
+	protected $_workerId;
+	protected $_workerName;
+	protected $_startDate;
+	protected $_endDate;
+	protected $_period;
+	protected $_cost;
 	protected $_remark;
- 	protected $_cTime;
+	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -26,7 +27,7 @@ class Worker_Models_Worker
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid worker property');
+            throw new Exception('Invalid extra property');
         }
         $this->$method($value);
     }
@@ -35,7 +36,7 @@ class Worker_Models_Worker
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid worker property');
+            throw new Exception('Invalid extra property');
         }
         return $this->$method();
     } 
@@ -52,112 +53,127 @@ class Worker_Models_Worker
         return $this;
     }
 
-	public function setWorkerId($workerId)
+	public function setExtId($extId)
     {
-        $this->_workerId = (int)$workerId;
+        $this->_extId = (int)$extId;
+        return $this;
+    } 
+
+    public function getExttId()
+    {
+        return $this->_extId;
+    }
+    
+	/************************************************/
+
+	public function setProjectId($projectId)
+    {
+        $this->_projectId = (int)$projectId;
+        return $this;
+    } 
+
+    public function getProjectId()
+    {
+        return $this->_projectId;
+    }
+
+	/************************************************/
+
+	public function setProjectName($projectName)
+    {
+        $this->_projectName = $projectName;
+        return $this;
+    } 
+
+    public function getProjectName()
+    {
+        return $this->_projectName;
+    }
+
+	/************************************************/
+
+	public function setWorkerId($workId)
+    {
+        $this->_workId = $workId;
         return $this;
     } 
 
     public function getWorkerId()
     {
-        return $this->_workerId;
+        return $this->_workId;
     }
-    
+
 	/************************************************/
-	public function setName($name)
+
+	public function setWorkerName($workerName)
     {
-        $this->_name = $name;
+        $this->_workerName = $workerName;
         return $this;
     } 
 
-    public function getName()
+    public function getWorkerName()
     {
-        return $this->_name;
+        return $this->_workerName;
     }
-    
+
+
 	/************************************************/
 
-	public function setTeamId($teamId)
+	public function setStartDate($startDate)
     {
-        $this->_teamId = (int)$teamId;
+        $this->_startDate = $startDate;
         return $this;
     } 
 
-    public function getTeamId()
+    public function getStartDate()
     {
-        return $this->_teamId;
-    }
-    
-	/************************************************/
-
-	public function setTeamName($teamName)
-    {
-        $this->_teamName = $teamName;
-        return $this;
-    } 
-
-    public function getTeamName()
-    {
-        return $this->_teamName;
+        return $this->_startDate;
     }
     
 	/************************************************/
 
-	public function setPhoneNo($phoneNo)
+	public function setEndDate($endDate)
     {
-        $this->_phoneNo = $phoneNo;
+        $this->_endDate = $endDate;
         return $this;
     } 
 
-    public function getPhoneNo()
+    public function getEndDate()
     {
-        return $this->_phoneNo;
+        return $this->_endDate;
     }
     
+    /************************************************/
+
+	public function setPeriod($period)
+    {
+        $this->_period = $period;
+        return $this;
+    } 
+
+    public function getPeriod()
+    {
+        return $this->_period;
+    }
+
 	/************************************************/
 
-	public function setAddress($address)
+	public function setCost($cost)
     {
-        $this->_address = $address;
+        $this->_cost = $cost;
         return $this;
     } 
 
-    public function getAddress()
+    public function getCost()
     {
-        return $this->_address;
+        return $this->_cost;
     }
-    
-	/************************************************/
 
-	public function setSkills($skills)
-    {
-        $this->_skills = $skills;
-        return $this;
-    } 
-
-    public function getskills()
-    {
-        return $this->_skills;
-    }
-    
-	/************************************************/
-
-	public function setCert($cert)
-    {
-        $this->_cert = $cert;
-        return $this;
-    } 
-
-    public function getCert()
-    {
-        return $this->_cert;
-    }
-    
 	/************************************************/
     
     public function setRemark($remark)
     {
-        $this->_remark= $remark;
+        $this->_remark = $remark;
         return $this;
     }
 
@@ -167,15 +183,16 @@ class Worker_Models_Worker
 	}
 
 	/************************************************/
+
 	public function setCTime($cTime)
     {
-        $this->_cTime= $cTime;
+        $this->_cTime = $cTime;
         return $this;
-    }
+    } 
 
     public function getCTime()
     {
         return $this->_cTime;
-	}
+    }
 }
 ?>

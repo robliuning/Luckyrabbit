@@ -16,16 +16,44 @@ class Equipment_PlanController extends Zend_Controller_Action
 	}
 	public function indexAction()
 	{
+		$errorMsg = null;
 		$plans=new Equipment_Models_PlanMapper();
-		$this->view->plans=$plans->fetchAllJoin();
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayPlans = array();
+			$key = $formData['key'];
+			if($key != null)
+			{
+				$condition = $formData['condition'];
+				$plans->fetchAllJoin($key,$condition);
+				
+				if(count($arrayPlans) == 0)
+				{
+					$errorMsg = 0;
+					//warning will be displayed: "没有找到符合条件的结果。"
+					}
+				}
+				else
+				{
+					$errorMsg = 1;
+					//warning will be displayed: "请输入搜索关键字。"
+					}
+		}
+		else
+		{
+			$arrayPlans = $plans->fetchAllJoin();
+			}
+		
+		$this->view->arrayPlans = $arrayPlans;
+		$this->view->errorMsg = $errorMsg;
+
 	}
 	public function addAction()
 	{
 		$addForm=new Equipment_Forms_PlanSave();
-		$addForm->submit->setLabel("清空");
-		$addForm->submit2->setLabel("保存并继续添加");
-		$addForm->submit3->setLabel("保存并返回");
-		$addForm->submit4->setLabel("返回");
+		$addForm->submit->setLabel("保存并继续添加");
+		$addForm->submit2->setLabel("保存并返回");
 		$plans=new Equipment_Models_PlanMapper();
         $plans->populatePlanDb($addForm);
 		if($this->getRequest()->isPost())
@@ -44,34 +72,25 @@ class Equipment_PlanController extends Zend_Controller_Action
 			   $plan->setApprovDate($addForm->getValue('approvDate'));
 			   $plan->setTotal($addForm->getValue('total'));
 			   $plan->setRemark($addForm->getValue('remark'));
-			   if($btClicked=="清空")
-				{
-				   $addForm->getElement('dueDate').setValue('');
-				   $addForm->getElement('applicDate').setValue('');
-				   $addForm->getElement('approvDate').setValue('');
-				   $addForm->getElement('total').setValue('');
-				   $addForm->getElement('remark').setValue('');
-				   $plans->populatePlanDb($addForm);/*可能会出错，因为我把所有下拉菜单的项都放在这个里面了*/
-				    }
-				   else if($btClicked=="保存并继续添加")
+				if($btClicked=="保存并继续添加")
 				    {
 					   $plans->save($plan);
-				       $addForm->getElement('dueDate').setValue('');
-				       $addForm->getElement('applicDate').setValue('');
-				       $addForm->getElement('approvDate').setValue('');
-				       $addForm->getElement('total').setValue('');
-				       $addForm->getElement('remark').setValue('');
-                       $plans->populatePlanDb($addForm);/*可能会出错*/
+					   $addForm->getElement('planType')->setValue('');
+					   $addForm->getElement('projectId')->setValue('');
+				       $addForm->getElement('dueDate')->setValue('');
+				       $addForm->getElement('applicId')->setValue()
+					   $addForm->getElement('applicDate')->setValue('');
+					   $addForm->getElement('approvId')->setValue('');
+				       $addForm->getElement('approvDate')->setValue('');
+				       $addForm->getElement('total')->setValue('');
+				       $addForm->getElement('remark')->setValue('');
+                       
 					   }
-					   else if($btClicked=="保存并返回")
+					   else
 				       {
 						   $plans->save($plan);
 						   $this->_redirect('/equipment/plan');
 					      }
-						  else
-				          {
-						   $this->_redirect('/equipment/plan');
-						  }
 			}/*end isValid()*/
             else
 			{
@@ -83,10 +102,8 @@ class Equipment_PlanController extends Zend_Controller_Action
 	public function editAction()
 	{
        $editForm=new Equipment_Forms_PlanSave();
-       $editForm->submit->setLabel("清空");
-	   $editForm->submit2->setLabel("保存修改");
-	   $editForm->submit3->setAttrib('class','hide');
-	   $editForm->submit4->setLabel("返回");
+	   $editForm->submit->setLabel("保存修改");
+	   $editForm->submit2->setAttrib('class','hide');
 	   $planId=$this->_getParam('id',0);
 	   $plans=new Equipment_Models_PlanMapper();
 	   $plans->populatePlanDb($editForm);
@@ -107,24 +124,8 @@ class Equipment_PlanController extends Zend_Controller_Action
 			   $plan->setApprovDate($editForm->getValue('approvDate'));
 			   $plan->setTotal($editForm->getValue('total'));
 			   $plan->setRemark($editForm->getValue('remark'));
-			   if($btClicked=="清空")
-				{
-				   $editForm->getElement('dueDate').setValue('');
-				   $editForm->getElement('applicDate').setValue('');
-				   $editForm->getElement('approvDate').setValue('');
-				   $editForm->getElement('total').setValue('');
-				   $editForm->getElement('remark').setValue('');
-				   $plans->populatePlanDb($editForm); /*此处可能会出错*/
-				  }
-                  else if($btClicked=="保存修改")
-				  {
-					  $plans->save($plan);
-					  $this->_redirect('/equipment/plan');
-				  }
-				  else
-				  {
-					  $this->_redirect('/equipment/plan');
-				  }
+				$plans->save($plan);
+				$this->_redirect('/equipment/plan');
 			}/*end isValid()*/
 			else
 			{

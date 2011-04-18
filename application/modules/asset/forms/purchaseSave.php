@@ -1,74 +1,102 @@
 <?php
 /*
-机械设备调拨单表表单
+固定资产购置表表单
 author:mingtingling
 date:2011-4-17
 vision:2.0
 */
-class Equipment_Forms_TransferSave extends Zend_Form
+class Asset_Forms_PurchaseSave extends Zend_Form
 {
 	public function init()
 	{
 		$this->setMethod('post');
 		$this->addElement(
-		  'select','projectId',array(
-			  'label'=>'工程名称:',
+		  'text','name',array(
+			  'label'=>'固定资产名称:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
-		  'text','trsDate',array(
-			  'label'=>'调拨日期:',
+		  'select','venId',array(
+			  'label'=>'供应商名称:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
-		  'select','origId',array(
-			  'label'=>'调拨出发地:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
-		);
-		$this->addElement(
-		  'select','destId',array(
-			  'label'=>'调拨目的地:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
-		);
-		$this->addElement(
-		  'select','applicId',array(
-			  'label'=>'申报人:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-			)
-		);
-		$this->addElement(
-		  'text','applicDate',array(
-			  'label'=>'申报日期:',
+		  'text','type',array(
+			  'label'=>'固定资产类别:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>false
 		   )
 		);
 		$this->addElement(
-		  'select','approvId',array(
-			  'label'=>'审批人:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
-		);
-		$this->addElement(
-		  'text','approvDate',array(
-			  'label'=>'审批时间:',
+		  'text','spec',array(
+			  'label'=>'规格型号:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>false
 		   )
 		);
 		$this->addElement(
-		    'text','total',array(
-			   'label'=>'总金额:',
+		  'text','invoice',array(
+			  'label'=>'固定资产购置原始单号:',
+			  'class'=>'tbLarge tbText',
+			  'required'=>false		
+		   )
+		);
+		$this->addElement(
+		  'text','unit',array(
+			  'label'=>'单位:',
+			  'class'=>'tbLarge tbText',
+			  'required'=>true
+		   )
+		);
+		$this->addElement(
+		  'text','price',array(
+			  'label'=>'单价:',
+			  'class'=>'tbLarge tbText',
+			  'required'=>false
+		   )
+		);
+		$this->addElement(
+		  'text','quantity',array(
+			  'label'=>'数量:',
+			  'class'=>'tbLarge tbText',
+			  'required'=>true
+		   )
+		);
+		$this->addElement(
+		   'text','amount',array(
+			  'label'=>'金额:',
+			  'class'=>'tbLarge tbText',
+			  'required'=>false
+		   )
+		);
+		$this->addElement(
+		   'select','contactId',array(
+			   'label'=>'采购员:',
+			   'class'=>'tbLarge tbText',
+			   'required'=>false
+		   )
+		);
+		$this->addElement(
+		    'text','purDate',array(
+			   'label'=>'采购日期:',
+			   'class'=>'tbLarge tbText',
+			   'required'=>false
+		   )
+		);
+		$this->addElement(
+		    'select','approvId',array(
+			   'label'=>'审批人:',
+			   'class'=>'tbLarge tbText',
+			   'required'=>false
+		   )
+		);
+		$this->addElement(
+		    'text','approvDate',array(
+			   'label'=>'审批日期:',
 			   'class'=>'tbLarge tbText',
 			   'required'=>false
 		   )

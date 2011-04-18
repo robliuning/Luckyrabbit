@@ -1,15 +1,22 @@
 <?php
 /*
-机械设备调拨单表表单
+固定资产折旧表表单
 author:mingtingling
 date:2011-4-17
 vision:2.0
 */
-class Equipment_Forms_TransferSave extends Zend_Form
+class Asset_Forms_DepreSave extends Zend_Form
 {
 	public function init()
 	{
 		$this->setMethod('post');
+		$this->addElement(
+		  'select','purId',array(
+			  'label'=>'固定资产购置名称:',
+			  'class'=>'tbLarge tbText',
+			  'required'=>true
+		   )
+		);
 		$this->addElement(
 		  'select','projectId',array(
 			  'label'=>'工程名称:',
@@ -18,59 +25,38 @@ class Equipment_Forms_TransferSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		  'text','trsDate',array(
-			  'label'=>'调拨日期:',
+		  'text','quantity',array(
+			  'label'=>'数量:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
-		  'select','origId',array(
-			  'label'=>'调拨出发地:',
+		  'text','inDate',array(
+			  'label'=>'进场日期:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
-		  'select','destId',array(
-			  'label'=>'调拨目的地:',
+		  'text','outDate',array(
+			  'label'=>'出场日期:',
 			  'class'=>'tbLarge tbText',
-			  'required'=>true
+			  'required'=>true		
 		   )
 		);
 		$this->addElement(
-		  'select','applicId',array(
-			  'label'=>'申报人:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-			)
-		);
-		$this->addElement(
-		  'text','applicDate',array(
-			  'label'=>'申报日期:',
+		  'text','depre',array(
+			  'label'=>'折旧系数:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>false
 		   )
 		);
 		$this->addElement(
-		  'select','approvId',array(
-			  'label'=>'审批人:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
-		);
-		$this->addElement(
-		  'text','approvDate',array(
-			  'label'=>'审批时间:',
+		  'text','depreAmt',array(
+			  'label'=>'折旧金额:',
 			  'class'=>'tbLarge tbText',
 			  'required'=>false
-		   )
-		);
-		$this->addElement(
-		    'text','total',array(
-			   'label'=>'总金额:',
-			   'class'=>'tbLarge tbText',
-			   'required'=>false
 		   )
 		);
 		$this->addElement(
@@ -98,6 +84,7 @@ class Equipment_Forms_TransferSave extends Zend_Form
 		    'name'=>'submit'
 	       )
        );
+
         $this->setElementDecorators(
            array(
 	         'ViewHelper',

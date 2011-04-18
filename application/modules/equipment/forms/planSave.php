@@ -77,7 +77,7 @@ class Equipment_Forms_PlanSave extends Zend_Form
 	     )
 	   );
         $this->addElement(
-       /*按钮一,清空*/
+       /*按钮一*/
           'submit','submit',array(
 		    'ignore'=>true,
 		    'class'=>'btConfirm radius',
@@ -90,22 +90,6 @@ class Equipment_Forms_PlanSave extends Zend_Form
 	        'ignore'=>true,
 		    'class'=>'btConfirm radius',
 		    'name'=>'submit'
-	       )
-       );
-        $this->addElement(
-       /*按钮三*/
-          'submit','submit3',array(
-		    'ignore'=>true,
-		    'class'=>'btConfirm radius',
-            'name'=>'submit'
-	       )
-       );
-        $this->addElement(
-       /*按钮四,返回*/
-          'submit','submit4',array(
-		    'ignore'=>true,
-		    'class'=>'btConfirm radius',
-            'name'=>'submit'
 	       )
        );
 
