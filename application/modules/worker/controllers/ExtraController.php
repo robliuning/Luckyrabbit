@@ -21,18 +21,18 @@ class Worker_IndexController extends Zend_Controller_Action
     {
         // action body
 		$errorMsg = null;
-		$teams = new Worker_Models_TeamMapper();
+		$extras = new Worker_Models_ExtraMapper();
 		$errorMsg = null;
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			$arrayTeams = array();
+			$arrayExtras = array();
 			$key = $formData['key'];
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayTeams = $teams->fetchAllJoin($key,$condition);
-				if(count($arrayTeams) == 0)
+				$arrayExtras = $wages->fetchAllJoin($key,$condition);
+				if(count($arrayExtras) == 0)
 				{
 					$errorMsg = 2;
 					}
@@ -44,20 +44,20 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		else
 		{
-			$arrayTeams = $teams->fetchAllJoin();
+			$arrayExtras = $extras->fetchAllJoin();
 		}
-		$this->view->arrayTeams = $arrayTeams;
+		$this->view->arrayExtras = $arrayExtras;
 		$this->view->errorMsg = $errorMsg;
     }
 
 	public function addAction()
 	{
 		//
-		$addForm = new Worker_Forms_teamSave();
+		$addForm = new Worker_Forms_extraSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 
-		$teams = new Worker_Models_TeamMapper();
+		$extras = new Worker_Models_ExtraMapper();
 		$result = null;
 
 		if($this->getRequest()->isPost())
@@ -66,20 +66,26 @@ class Worker_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			if($addForm->isValid($formData))
 			{
-				$team = new Worker_Models_Team();
-				$team->setName($addForm->getValue('name'));
-				$team->setContactId($addForm->getValue('contactId'));
-				$team->setSum($addForm->getValue('sum'));
-				$result = $teams->save($team);
+				$extra = new Worker_Models_Extra();
+				$extra->setWorkerId($addForm->getValue('workerId'));
+				$extra->setProjectId($addForm->getValue('projectId'));
+				$extra->setStartDate($addForm->getValue('startDate'));
+				$extra->setEndDate($addForm->getValue('endDate'));
+				$extra->setPeriod($addForm->getValue('period'));
+				$extra->setCost($addForm->getValue('cost'));
+				$result = $extras->save($extra);
 				if($btClicked=='保存继续新建')
 				{
-					$addForm->getElement('name')->setValue('');
-					$addForm->getElement('contactId')->setValue('');
-					$addForm->getElement('sum')->setValue('');
+					$addForm->getElement('workerId')->setValue('');
+					$addForm->getElement('projectId')->setValue('');
+					$addForm->getElement('startDate')->setValue('');
+					$addForm->getElement('endDate')->setValue('');
+					$addForm->getElement('period')->setValue('');
+					$addForm->getElement('cost')->setValue('');
 					}
 					else
 					{
-						$this->_redirect('/worker');
+						$this->_redirect('/extra');
 						}
 			}
 			else
@@ -95,12 +101,12 @@ class Worker_IndexController extends Zend_Controller_Action
 	public function editAction(0
 	{
 		//
-		$editForm = new Worker_Forms_teamSave();
+		$editForm = new Worker_Forms_extraSave();
 		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 
-		$teams = new Worker_Models_TeamMapper();
-    	$teamId = $this->_getParam('id',0);
+		$extras = new Worker_Models_ExtraMapper();
+    	$extId = $this->_getParam('id',0);
     	$result = null;
 
 		if($this->getRequest()->isPost())
@@ -108,14 +114,16 @@ class Worker_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
 			{
-				$team = new Woker_Models_Team();
-				$team->setTeamId($teamId);
-				$team->setName($editForm->getValue('name'));
-				$team->setContactId($editForm->getValue('contactId'));
-				$team->setSum($editForm->getValue('sum'));
-				$result = $workers->save($worker);
+				$extra = new Worker_Models_Wage();
+				$extra->setExtId($extId);
+				$extra->setWorkerId($editForm->getValue('workerId'));
+				$extra->setProjectId($editForm->getValue('projectId'));
+				$extra->setStartDate$editForm->getValue('startDate'));
+				$extra->setEndDate($editForm->getValue('endDate'));
+				$extra->setPeriod($editForm->getValue('period'));
+				$extra->setCost($editForm->getValue('cost'));
+				$result = $extras->save($extra);
 
-			//	$this->_redirect('/material');
 			}
 			else
     			{
@@ -124,18 +132,18 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		else
     	{
-    		if($teamId >0)
+    		if($extId >0)
     		{
-    			$arrayTeams = $teams->findArrayWorker($teamId);
-    			$editForm->populate($arrayTeams);
+    			$arrayExtras = $extras->findArrayExtra($extId);
+    			$editForm->populate($arrayExtras);
     			}
     			else
     			{
-    				$this->_redirect('/worker');
+    				$this->_redirect('/extra');
     				}
     		}		
     	$this->view->editForm = $editForm;
-    	$this->view->id = $teamId; 
+    	$this->view->id = $extId; 
     	$this->view->result = $result;
 	}
 
@@ -146,16 +154,16 @@ class Worker_IndexController extends Zend_Controller_Action
     	$this->_helper->viewRenderer->setNoRender(true);
    
    
-   		$teamId = $this->_getParam('id',0);
-    	if($teamId > 0)
+   		$extId = $this->_getParam('id',0);
+    	if($extId > 0)
     	{
-    		$teams = new Worker_Models_TeamMapper();
-    		$teams->delete($teamId);
+    		$extras = new Worker_Models_ExtraMapper();
+    		$extras->delete($extId);
     		echo "1";
     		}
     		else
     		{
-    			$this->_redirect('/worker');
+    			$this->_redirect('/extra');
     			}
 
 	}
