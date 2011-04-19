@@ -29,13 +29,13 @@ class Vehicle_IndexController extends Zend_Controller_Action
 				$arrayVehicles = $vehicles->fetchAllJoin($key,$condition);
 				if(count($arrayVehicles)==0)
 				{
-					$errorMsg = General_Models_Text::$text_searchErrorNr;
+					$errorMsg = 2;
 					//waring a message  :  no match result
 				}
 			}
 			else
 			{
-				$errorMsg = General_Models_Text::$text_searchErrorNi;
+				$errorMsg = 1;
 				//waring a message  :  please input a key word
 			}
 		}
