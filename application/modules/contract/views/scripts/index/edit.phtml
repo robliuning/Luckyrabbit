@@ -1,6 +1,6 @@
  <?php 
  	$this->headTitle('- 分包管理 - 承包商信息');
- 	$this->headScript()->prependFile('/js/contract/p_contractor.js');
+ 	$this->headScript()->prependFile('/js/contractjs/p_contractor.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -17,7 +17,6 @@
 				<div class="button_group">
 					<div><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/einfo.png"/><p>浏览</p></a></div>	
 					<div><a href="/contract/contractor/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 					<div><a href="/contract/contractor"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->

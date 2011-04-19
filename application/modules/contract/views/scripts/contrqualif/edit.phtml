@@ -1,9 +1,7 @@
  <?php 
- 	$this->headTitle('-承包商信息');
- 	$this->headScript()->prependFile('/js/contract/p_contractor.js');
+ 	$this->headTitle('- 分包管理 - 承包商资质信息');
+ 	$this->headScript()->prependFile('/js/contractjs/p_contrqualif.js');
  ?>
- 	<div id="p_id" class="hide">nav_generalInfo</div>
-	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -11,16 +9,15 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>公司员工管理 - 公司员工基本信息 - 修改</h1>
+		<h1> - 分包管理 - 承包商资质信息 - 修改</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为公司员工基本信息修改</h3>
+			<h3></h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
 					<div><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/einfo.png"/><p>浏览</p></a></div>	
-					<div><a href="/employee/employee/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="/employee/employee"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/contract/contrqualif/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>
+					<div><a href="/contractor/contrqualif"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
