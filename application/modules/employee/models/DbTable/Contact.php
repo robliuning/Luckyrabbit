@@ -26,7 +26,7 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
     public function findContactNames($key)
     {
     	$select = $this->select()
-    			->from('em_contacts',array('contactId','name'))
+    			->from('em_contacts',array('contactId','name','phoneNo','titleName'))
     			->where('name LIKE ?', '%'.$key.'%');
     	
     	$entries = $this->fetchAll($select);

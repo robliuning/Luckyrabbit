@@ -34,12 +34,12 @@ class Worker_IndexController extends Zend_Controller_Action
 				$arrayTeams = $teams->fetchAllJoin($key,$condition);
 				if(count($arrayTeams) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$tex_searchErrorNi;
 					}
 		}
 		else
@@ -54,8 +54,8 @@ class Worker_IndexController extends Zend_Controller_Action
 	{
 		//
 		$addForm = new Worker_Forms_teamSave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$teams = new Worker_Models_TeamMapper();
 		$result = null;
@@ -69,13 +69,13 @@ class Worker_IndexController extends Zend_Controller_Action
 				$team = new Worker_Models_Team();
 				$team->setName($addForm->getValue('name'));
 				$team->setContactId($addForm->getValue('contactId'));
-				$team->setSum($addForm->getValue('sum'));
+				$team->setRemark($addForm->getValue('remark'));
 				$result = $teams->save($team);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('name')->setValue('');
-					$addForm->getElement('contactId')->setValue('');
-					$addForm->getElement('sum')->setValue('');
+					$addForm->getElement('contactName')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
@@ -96,7 +96,7 @@ class Worker_IndexController extends Zend_Controller_Action
 	{
 		//
 		$editForm = new Worker_Forms_teamSave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
 		$teams = new Worker_Models_TeamMapper();
@@ -112,10 +112,10 @@ class Worker_IndexController extends Zend_Controller_Action
 				$team->setTeamId($teamId);
 				$team->setName($editForm->getValue('name'));
 				$team->setContactId($editForm->getValue('contactId'));
-				$team->setSum($editForm->getValue('sum'));
+				$team->setRemark($editForm->getValue('remark'));
 				$result = $workers->save($worker);
 
-			//	$this->_redirect('/material');
+				$this->_redirect('/worker');
 			}
 			else
     			{
@@ -159,8 +159,22 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
 
 	}
-
-
+	public function ajaxdisplayAction()
+	{
+		$this->_helper->layout()->disableLayout();
+   		$id = $this->_getParam('id',0);
+    	if($id >0)
+    	{
+   		    $teams = new Worker_Models_TeamMapper();
+   		    $team = new Worker_Models_Team();
+   			$teams->find($id,$team);
+   			$this->view->team = $team;
+   			}
+    		else
+    		{
+   				$this->_redirect('/worker');
+   				}
+		}
 }
 
 ?>

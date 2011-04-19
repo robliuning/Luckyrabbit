@@ -39,7 +39,7 @@ class Employee_Forms_ContactSave extends Zend_Form
 			'text', 'birth', array(
 			'label' => '出生日期: ',
 			'required' => false,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		

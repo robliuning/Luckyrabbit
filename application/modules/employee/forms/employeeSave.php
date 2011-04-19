@@ -12,7 +12,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	$this->setMethod('post');
 		
 		$this->addElement(                   
-			'text','name',array(
+			'text','contactName',array(
 			'label'=>'员工姓名: ',
 			'required' => true,
 			'filters'=>array('StringTrim'),
@@ -60,7 +60,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	);
     	
     	$this->addElement(                 
-			'text','empId',array(
+			'text','contactId',array(
 			'required' => true,
 			'class'=>''
 			)

@@ -1,8 +1,6 @@
 $(document).ready(function()
 {  	
 	//Enable the date picker
-	$( "#birth" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
-
 		
 	$('#btDel').hover(function(){
 		var count = $('[name="cb"]:checked').length;
