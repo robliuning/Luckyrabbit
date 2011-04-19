@@ -42,7 +42,7 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 		  'text','invoice',array(
 			  'label'=>'固定资产购置原始单号:',
 			  'class'=>'tbLarge tbText',
-			  'required'=>false		
+			  'required'=>false
 		   )
 		);
 		$this->addElement(
@@ -74,40 +74,40 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		   'select','contactId',array(
+		   'select','buyerName',array(
 			   'label'=>'采购员:',
-			   'class'=>'tbLarge tbText',
+			   'class'=>'tbLarge tbText ac_contactName',
 			   'required'=>false
 		   )
 		);
 		$this->addElement(
 		    'text','purDate',array(
 			   'label'=>'采购日期:',
-			   'class'=>'tbLarge tbText',
+			   'class'=>'tbLarge tbText datepicker',
 			   'required'=>false
 		   )
 		);
 		$this->addElement(
-		    'select','approvId',array(
+		    'select','approvName',array(
 			   'label'=>'审批人:',
-			   'class'=>'tbLarge tbText',
+			   'class'=>'tbLarge tbText ac_contactName',
 			   'required'=>false
 		   )
 		);
 		$this->addElement(
 		    'text','approvDate',array(
 			   'label'=>'审批日期:',
-			   'class'=>'tbLarge tbText',
+			   'class'=>'tbLarge tbText datepicker',
 			   'required'=>false
 		   )
 		);
 		$this->addElement(
 		    'textarea','remark',array(
 			    'label'=>'备注:',
-			    'class'=>'tbLarge tbText',
+			    'class'=>'tbLarge tbText datepicker',
 			    'required'=>false,
-			    'rows'=>5,
-			    'cols'=>20
+			    'cols' => 60,
+			    'rows' => 20
 		   )
 		);
         $this->addElement(

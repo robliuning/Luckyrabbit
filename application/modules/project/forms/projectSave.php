@@ -59,8 +59,8 @@ class Project_Forms_ProjectSave extends Zend_Form
 			'label' => '用途: ',
 			'required' => false,
 			'class'=>'tbLarge tbText',
-			'cols'=>40,
-			'rows'=>5
+			'cols'=> 60,
+			'rows'=> 20
 			)
 		);
 		$this->addElement(
@@ -82,8 +82,8 @@ class Project_Forms_ProjectSave extends Zend_Form
 			'label' => '备注: ',
 			'required' => false,			
 			'class'=>'tbMedium tbText',
-			'cols'=>40,
-			'rows'=>5
+			'cols'=> 60,
+			'rows'=> 20
 			)
 		);
 

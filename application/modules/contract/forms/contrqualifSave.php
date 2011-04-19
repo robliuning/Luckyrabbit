@@ -11,24 +11,24 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 		$this->setMethod('post');
 		$this->addElement(
 			/*承包商编号*/
-		  'select','contractorId',array(
-			 'label'=>'承包商:',
-			 'class'=>'tbLarge tbText',
-			 'required'=>true
-		   )
+			'select','contractorId',array(
+			'label'=>'承包商:',
+			'class'=>'tbLarge tbText',
+			'required'=>true
+			)
 		);
        $this->addElement(
 		  /*资质序列*/
-	      'select','qualifSerie',array(
-		  	 'label'=>'资质序列:',
-			 'multiOptions'=>array('0'=>'施工总承包','1'=>'专业承包','2'=>'劳务分包'),
-			 'class'=>'tbLarge tbText',
-			 'required'=>true
+			'select','qualifSerie',array(
+			'label'=>'资质序列:',
+			'multiOptions'=>array('0'=>'施工总承包','1'=>'专业承包','2'=>'劳务分包'),
+			'class'=>'tbLarge tbText',
+			'required'=>true
 		  )
 	   );
 	 $this->addElement(
-	    /*资质类别*/	
-		 'select','qualifTypeId',array(
+	  	/*资质类别*/	
+			'select','qualifTypeId',array(
 		   'label'=>'资质类别:',
 		   'class'=>'tbLarge tbText',
 		   'required'=>true
