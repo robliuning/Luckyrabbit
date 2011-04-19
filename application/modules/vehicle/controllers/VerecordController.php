@@ -75,7 +75,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			
     			if($btClicked == '保存继续新建')
     			{
-   					$addForm->getElement('veId')->setValue('');
+					$addForm->getElement('plateNo')->setValue('');
    					$addForm->getElement('veId')->setValue('');
    					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDate')->setValue('');
