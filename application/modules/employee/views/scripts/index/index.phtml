@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('-通讯录管理');
+ 	$this->headTitle('- 员工及岗位管理 - 通讯录信息');
  	$this->headScript()->prependFile('/js/employeejs/p_contact.js');
  ?>
 	<div id="contentWrapper">
@@ -15,14 +15,7 @@
 			<p class="errorMsg"><?php
 				if($this->errorMsg != null)
 				{
-					if($this->errorMsg == 2)
-					{
-						echo '错误: 没有找到符合条件的结果。'; 
-						}
-						elseif($this->errorMsg == 1)
-						{
-							echo '错误: 请输入搜索关键字。';
-							}
+					echo $this->errorMsg;
 			 		}?>
 			 		</p>
 		</div>

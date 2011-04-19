@@ -19,7 +19,7 @@ class Equipment_Models_DbTable_Rent extends Zend_Db_Table_Abstract
 			{
 				$select->setIntegrityCheck(false)
 						->from(array('p'=> 'pm_projects'),array('name'))
-						->join(array('m'=>'eq_rents'),'p.projectId = m.projectId')
+						->join(array('e'=>'eq_rents'),'p.projectId = e.projectId')
 						->where('p.name like ?','%'.$key.'%');
 				}
 				elseif($condition == 'venName')
@@ -43,6 +43,10 @@ class Equipment_Models_DbTable_Rent extends Zend_Db_Table_Abstract
 								->join(array('q'=>'eq_rents'),'e.contactId = q.approvId')
 								->where('e.name like ?','%'.$key.'%');
 								}
+								elseif
+								{
+									$select->where('planType like ?','%'.$key.'%');
+									}
 
 					
 		$resultSet = $this->fetchAll($select);

@@ -18,9 +18,38 @@ class Employee_CppController extends  Zend_Controller_Action
 	}
 	public function indexAction() //check
     {
-	 	$cpps = new Employee_Models_CppMapper();
-      	$this->view->cpps = $cpps->fetchAllJoin();
-	 }
+    	$errorMsg = null;
+		$cpps = new Employee_Models_CppMapper();
+		
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayCpps = array();
+			$key = trim($formData['key']);
+			if($key != null)
+			{
+				$condition = $formData['condition'];
+				$arrayCpps = $cpps->fetchAllJoin($key,$condition);
+				if(count($arrayCpps) == 0)
+				{
+					$errorMsg = 2;
+					//warning will be displayed: "没有找到符合条件的结果。"
+					}
+				}
+				else
+				{
+					$errorMsg = 1;
+					//warning will be displayed: "请输入搜索关键字。"
+					}
+		}
+		else
+		{
+			$arrayCpps = $cpps->fetchAllJoin();
+			}
+			
+		$this->view->arrayCpps = $arrayCpps;
+		$this->view->errorMsg = $errorMsg;
+  	}
 	  
 	public function addAction()//check
     {

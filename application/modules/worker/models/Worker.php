@@ -7,6 +7,7 @@ class Worker_Models_Worker
     protected $_workerId;
 	protected $_name;
 	protected $_teamId;
+	protected $_teamName;
 	protected $_phoneNo;
 	protected $_address;
 	protected $_skills;
@@ -65,7 +66,7 @@ class Worker_Models_Worker
 	/************************************************/
 	public function setName($name)
     {
-        $this->_name = (int)$name;
+        $this->_name = $name;
         return $this;
     } 
 
@@ -89,28 +90,67 @@ class Worker_Models_Worker
     
 	/************************************************/
 
-	public function setContactId($contactId)
+	public function setTeamName($teamName)
     {
-        $this->_contactId = (int)$contactId;
+        $this->_teamName = $teamName;
         return $this;
     } 
 
-    public function getContactId()
+    public function getTeamName()
     {
-        return $this->_contactId;
+        return $this->_teamName;
     }
     
 	/************************************************/
 
-	public function setContactName($contactName)
+	public function setPhoneNo($phoneNo)
     {
-        $this->_contactName = (int)$contactName;
+        $this->_phoneNo = $phoneNo;
         return $this;
     } 
 
-    public function getContactName()
+    public function getPhoneNo()
     {
-        return $this->_contactName;
+        return $this->_phoneNo;
+    }
+    
+	/************************************************/
+
+	public function setAddress($address)
+    {
+        $this->_address = $address;
+        return $this;
+    } 
+
+    public function getAddress()
+    {
+        return $this->_address;
+    }
+    
+	/************************************************/
+
+	public function setSkills($skills)
+    {
+        $this->_skills = $skills;
+        return $this;
+    } 
+
+    public function getskills()
+    {
+        return $this->_skills;
+    }
+    
+	/************************************************/
+
+	public function setCert($cert)
+    {
+        $this->_cert = $cert;
+        return $this;
+    } 
+
+    public function getCert()
+    {
+        return $this->_cert;
     }
     
 	/************************************************/

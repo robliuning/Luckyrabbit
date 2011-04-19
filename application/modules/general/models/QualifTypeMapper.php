@@ -5,39 +5,39 @@
    2011-04-09  v 0.2
  */
 
-class General_Models_QualifTypeMapper
+class General_Models_QualiftypeMapper
 {
-	protected $_dbTable;
+	protected $_dbtable;
 	
-    public function setDbTable($dbTable)
+    public function setDbtable($dbtable)
     {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
+        if (is_string($dbtable)) {
+            $dbtable = new $dbtable();
         }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
+        if (!$dbtable instanceof Zend_Db_table_Abstract) {
             throw new Exception('Invalid table data gateway provided');
         }
-        $this->_dbTable = $dbTable;
+        $this->_dbtable = $dbtable;
         return $this;
     }
 
-    public function getDbTable()
+    public function getDbtable()
     {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('General_Models_DbTable_QualifType');
+        if (null === $this->_dbtable) {
+            $this->setDbtable('General_Models_Dbtable_Qualiftype');
         }
-        return $this->_dbTable;
+        return $this->_dbtable;
     }
 
     public function fetchAllBySerie($serie) //check
     {
-		$resultSet  = $this->getDbTable()->fetchAllBySerie($serie);
+		$resultSet  = $this->getDbtable()->fetchAllBySerie($serie);
 
         $entries   = array();
         
         foreach ($resultSet as $row) {
-            $entry = new General_Models_QualifType();
-            $entry->setQualifTypeId($row->qualifTypeId);
+            $entry = new General_Models_Qualiftype();
+            $entry->setTypeId($row->typeId);
 			$entry->setName($row->name);
                   
             $entries[] = $entry;

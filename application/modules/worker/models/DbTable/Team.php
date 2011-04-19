@@ -1,4 +1,7 @@
 <?php
+   //creation date 17-04-2011
+  //creating by lincoy
+  //completion date 17-04-2011
 
 class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
 {
@@ -8,9 +11,9 @@ class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from(array('c'=>'em_contacts'),array('name'))
+			->from(array('c'=>'em_contacts'),array('name','phoneNo'))
 			->join(array('w'=>'wm_teams'),'c.contactId = w.contactId')		
-			->where('w.contactId = ?',$id);
+			->where('w.teamId = ?',$id);
 			
 		$entries = $this->fetchAll($select);
 		
@@ -36,6 +39,18 @@ class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
 		$resultSet = $this->fetchAll($select);
 		
 		return $resultSet;
+	}
+
+	public function findTeamName($id)
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from('wm_teams',array('name'))
+			->where('teamId = ?',$id);
+
+		$entries = $this->fetchAll($select);
+   		
+   		return $entries;
 	}
 }
 ?>

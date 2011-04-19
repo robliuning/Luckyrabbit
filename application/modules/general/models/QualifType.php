@@ -1,8 +1,8 @@
 <?php
 
-class General_Models_QualifType
+class General_Models_Qualiftype
 {     
-    protected $_qualifTypeId;
+    protected $_typeId;
     protected $_serie;
 	protected $_name;
     
@@ -17,7 +17,7 @@ class General_Models_QualifType
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid qualifType property');
+            throw new Exception('Invalid qualiftype property');
         }
         $this->$method($value);
     }
@@ -26,7 +26,7 @@ class General_Models_QualifType
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid qualifType property');
+            throw new Exception('Invalid qualiftype property');
         }
         return $this->$method();
     } 
@@ -43,15 +43,15 @@ class General_Models_QualifType
         return $this;
     }
 
-	public function setQualifTypeId($qualifTypeId)
+	public function setTypeId($typeId)
     {
-        $this->_qualifTypeId = (int)$qualifTypeId;
+        $this->_typeId = (int)$typeId;
         return $this;
     } 
 
-    public function getQualifTypeId()
+    public function getTypeId()
     {
-        return $this->_qualifTypeId;
+        return $this->_typeId;
     }
     
     public function setSerie($serie)

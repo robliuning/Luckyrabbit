@@ -23,7 +23,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			$arrayVerecords = array();
 			$key = $formData['key'];
-			if($key!==null)
+			if($key!=null)
 			{
 				$condition = $formData['condition'];
 				$arrayVerecords = $verecords->fetchAllJoin($key,$condition);
@@ -75,8 +75,12 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			
     			if($btClicked == '保存继续新建')
     			{
+<<<<<<< HEAD
 					$addForm->getElement('plateNo')->setValue('');
    					$addForm->getElement('veId')->setValue('');
+=======
+    			   	$addForm->getElement('veId')->setValue('');
+>>>>>>> f17bd67d23615ec76accfe0e951456a7b9aecba3
    					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDate')->setValue('');
    					$addForm->getElement('purpose')->setValue('');

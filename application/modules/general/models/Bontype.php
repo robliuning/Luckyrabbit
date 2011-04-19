@@ -1,147 +1,70 @@
 <?php
-
-class Application_Model_Employee
-{
-    protected $_ename;
-    protected $_email;
-    protected $_eid;
+ //creation date 17-04-2011
+  //creating by lincoy
+  //completion date 17-04-2011
+class General_Models_Bontype
+{     
+    protected $_typeId;
+	protected $_name;
     
     public function __construct(array $options = null)
-
     {
-
         if (is_array($options)) {
-
             $this->setOptions($options);
-
         }
-
     }
 
- 
-
     public function __set($name, $value)
-
     {
-
         $method = 'set' . $name;
-
         if (('mapper' == $name) || !method_exists($this, $method)) {
-
-            throw new Exception('Invalid employee property');
-
+            throw new Exception('Invalid bontype property');
         }
-
         $this->$method($value);
-
     }
 
     public function __get($name)
-
     {
-
         $method = 'get' . $name;
-
         if (('mapper' == $name) || !method_exists($this, $method)) {
-
-            throw new Exception('Invalid employee property');
-
+            throw new Exception('Invalid bontype property');
         }
-
         return $this->$method();
-
-    }
-
- 
+    } 
 
     public function setOptions(array $options)
-
     {
-
         $methods = get_class_methods($this);
-
         foreach ($options as $key => $value) {
-
             $method = 'set' . ucfirst($key);
-
             if (in_array($method, $methods)) {
-
                 $this->$method($value);
-
             }
-
         }
-
         return $this;
-
     }
 
- 
-
-    public function setEname($name)
-
+	/**************************************/
+	public function setTypeId($typeId)
     {
-
-        $this->_ename = (string) $name;
-
+        $this->_typeId = $typeId;
         return $this;
-
     }
 
- 
-
-    public function getEname()
-
+    public function getTypeId()
     {
+        return $this->_typeId;
+	}
 
-        return $this->_ename;
-
-    }
-
- 
-
-    public function setEmail($email)
-
+	/**************************************/
+	public function setName($name)
     {
-
-        $this->_email = (string) $email;
-
+        $this->_name = $name;
         return $this;
-
     }
 
- 
-
-    public function getEmail()
-
+    public function getName()
     {
-
-        return $this->_email;
-
-    }
-
- 
-
-    public function setEid($eid)
-
-    {
-
-        $this->_eid = (int) $eid;
-
-        return $this;
-
-    }
-
- 
-
-    public function getEid()
-
-    {
-
-        return $this->_eid;
-
-    }
-
+        return $this->_name;
+	}
 }
-
-?>

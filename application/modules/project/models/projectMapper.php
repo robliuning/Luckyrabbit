@@ -87,7 +87,7 @@ class Project_Models_ProjectMapper
 		return $entries; 
 	}
 	
-	/*public function findProjectName($id) //check
+	public function findProjectName($id) //check
 	{
 		$arrayNames = $this->getDbTable()->findProjectName($id);
 		
@@ -96,7 +96,7 @@ class Project_Models_ProjectMapper
 		return $name;
 		}
 
-    public function fetchAllJoin() //check
+    /*public function fetchAllJoin() //check
     {
     	//1.get particular project info from projects
     	$resultSet = $this->getDbTable()->fetchAll();	
@@ -164,7 +164,7 @@ class Project_Models_ProjectMapper
     			$resultSet = $this->getDbTable()->search($key,$condition);
     			}
    		
-   		$entries = array();
+   		$projects = array();
    		
    		foreach($resultSet as $row){
    			$project = new Project_Models_Project();

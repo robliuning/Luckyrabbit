@@ -56,7 +56,7 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 				{
                    $select->setIntegrityCheck(false)
 						->from(array('e'=> 'em_contacts'),array('name')) //  waiting for check 
-				        ->from(array('c'=>'em.cpp'),array('contactId'))
+				        ->from(array('c'=>'em_cpp'),array('contactId'))
 						->join(array('p'=>'pm_projects'),'e.contactId = c.contactId' and 'p.projectId = c.projectId')
 						->where('e.name like ?','%'.$key.'%');				
 				   }

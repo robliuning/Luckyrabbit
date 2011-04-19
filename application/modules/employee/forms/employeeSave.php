@@ -14,6 +14,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 		$this->addElement(                   
 			'text','name',array(
 			'label'=>'员工姓名: ',
+			'required' => true,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)
@@ -60,7 +61,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	
     	$this->addElement(                 
 			'text','empId',array(
-		//	'filters'=>array('StringTrim'),
+			'required' => true,
 			'class'=>''
 			)
 		);

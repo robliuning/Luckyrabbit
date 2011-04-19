@@ -130,7 +130,7 @@ class Vehicle_Models_VehicleMapper
 			      //->setRemark($row->remark);
 				  
 		    $contacts = new Employee_Models_ContactMapper();
-			$contactId = $vehicle->getContactId();
+			$contactId = $entry->getContactId();
 			$name = $contacts->findContactName($contactId);
             
 			$entry->setContactName($name);
@@ -138,26 +138,6 @@ class Vehicle_Models_VehicleMapper
 			$entries[] = $entry;
 			}
 		return $entries;
-	}
-
-	public function search($key,$condition)
-	{
-		$resultSet = $this->getDbTable()->Search($key, $condition);
-         $entries   = array();
-         foreach ($resultSet as $row) {
-             $entry = new Vehicle_Models_Vehicle();
-			 $entry ->setVeId($row->veId)
-			        ->setPlateNo($row->plateNo)
-			        ->setName($row->name)
-			        ->setColor($row->color)
-			        ->setLicense($row->license)
-			        ->setContactId($row->contactId)
-			        ->setUser($row->user)
-			        ->setContactName($row->contactName);
-                  
-            $entries[] = $entry;
-        }
-        return $entries;
 	}
 	
 	public function findArrayVehicle($id)
@@ -187,6 +167,13 @@ class Vehicle_Models_VehicleMapper
 		$resultSet = $this->getDbTable()->findPlateNo($id);
 		$plateNo = $resultSet[0]->plateNo;
 		return $plateNo;
+		}
+		
+	public function findContactId($id)
+	{		
+		$resultSet = $this->getDbTable()->findContactId($id);
+		$contactId = $resultSet[0]->contactId;
+		return $contactId;
 		}
 	
 	public function fetchAllPalteNo()

@@ -23,7 +23,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			$arrayVehicles = array();
 			$key = $formData['key'];
-			if($key!==null)
+			if($key!=null)
 			{
 				$condition = $formData['condition'];
 				$arrayVehicles = $vehicles->fetchAllJoin($key,$condition);

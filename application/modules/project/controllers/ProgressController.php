@@ -36,7 +36,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$projectId = $addForm->getValue('projectId');
     			$stage = $addForm->getValue('stage');
     			$task = $addForm->getValue('task');
-    			$startDateExp = $addForm->getValue('startDateExp');
+    			$startDateExp = $addForm->getValue('startDate');
     			$endDateExp = $addForm->getValue('endDateExp');
     			$periodExp = $addForm->getValue('periodExp');
     			$endDateAct = $addForm->getValue('endDateAct');
@@ -62,7 +62,7 @@ class Project_ProgressController extends Zend_Controller_Action
 			  		      //}
 				 			
    					$addForm->getElement('task')->setValue('');
-   					$addForm->getElement('startDateExp')->setValue('');
+   					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDateExp')->setValue('');
    					$addForm->getElement('periodExp')->setValue('0');
 					$addForm->getElement('endDateAct')->setValue('');
@@ -130,7 +130,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$projectId = $editForm->getValue('projectId');
     			$stage = $editForm->getValue('stage');
     			$task = $editForm->getValue('task');
-    			$startDateExp = $editForm->getValue('startDateExp');
+    			$startDateExp = $editForm->getValue('startDate');
     			$endDateExp = $editForm->getValue('endDateExp');
     			$periodExp = $editForm->getValue('periodExp');
     			$endDateAct = $editForm->getValue('endDateAct');

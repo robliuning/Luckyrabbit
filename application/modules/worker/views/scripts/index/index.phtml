@@ -1,299 +1,105 @@
-<link href="css/p_generalinfo.css" rel="stylesheet" type="text/css" />
-	<div id="p_id" class="hide">nav_generalInfo</div>
-	<div id="s_id" class="hide">none</div>
-<title>工程管理DEMO - 基本信息管理</title>
+ <?php 
+ 	$this->headTitle('- 工人管理 - 班组信息');
+ 	$this->headScript()->prependFile('/js/worker/p_team.js');
+ ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
-	<div id="p_stage_sidebar">
-		<div id="p_sidebar" class="p_sidebar_general">
-			<ul>
-				<li><a href="generalInfo.php">固定资产<span class="hide">gi_gdzc</span></a></li>
-				<li><a href="#">仓库</a></li>
-				<li><a href="#">材料类别</a></li>
-				<li><a href="#">供应商</a></li>
-				<li><a href="#">设备</a></li>
-				<li><a href="#">单位及收支类别</a></li>
-				<li><a href="#">银行账户</a></li>
-				<li><a href="#">工程信息</a></li>
-			</ul>
-		</div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
 		<div id="p_content">
-		<h1>基本信息管理 - 固定资产 - 总览</h1>
+		<h1>工人管理 - 班组信息 - 总览</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为固定资产基本信息总览</h3>
-		</div>
+			<h3>本页显示内容为班组信息总览</h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					if($this->errorMsg == 2)
+					{
+						echo '错误: 没有找到符合条件的结果。'; 
+						}
+						elseif($this->errorMsg == 1)
+						{
+							echo '错误: 请输入搜索关键字。';
+							}
+			 		}?>
+			 		</p>
+			</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><input class="tbMedium tbtext" type="text" /></div>
-					<div><a href="#"><img src="images/icons/functions/search.png"/><p>查询</p></a></div>	
-					<div><a href="generalInfo_new.php"><img src="images/icons/functions/new.png"/><p>新建</p></a></div>
-					<div><a href="#"><img src="images/icons/functions/delete.png"/><p>删除</p></a></div>
-					<div><a href="generalInfo.php"><img src="images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
-					<div><a href="#"><img src="images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="#"><img src="images/icons/functions/help.png"/><p>帮助</p></a></div>	
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+  									<option value="name">班组名称</option>
+									<option value="contactName">负责人</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+				</div>		
+					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
 				<table>
 					<colgroup>
 						<col style="width:5%"></col>
-						<col style="width:10%"></col>
-						<col style="width:30%"></col>
-						<col style="width:10%"></col>
-						<col style="width:10%"></col>
-						<col style="width:35%"></col>
+						<col style="width:5%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>						
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th>资产编号</th>
-						<th>资产名称</th>
-						<th>单位</th>
-						<th>规格型号</th>
-						<th>生产厂家</th>
+						<th></th>
+						<th>班组名称</th>
+						<th>负责人</th>
+						<th>联系电话</th>
+						<th>工人数量</th>
+						<th></th>
+						<th></th>
 					</thead>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
 					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayTeams as $team):?>
+					<?php $teamId = $this->escape($team->getTeamId());?>
 					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
+						<td><input type="checkbox" name="cb" value="<?php echo $teamId ?>"></td>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$teamId))?>"><?php echo $this->escape($team->getName()) ?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($team->getContactId()) ?>"><?php echo $this->escape($team->getContactName()) ?></td>	
+						<td><?php echo $this->escape($team->getContactPhoneNo()) ?></td>
+						<td>
+						<?php echo $this->escape($team->getSum())?>
+						</td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$teamId))?>">修改</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$teamId))?>">详情</a></td>
 					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-						<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="#"><a href="generalInfo_update.php">ZC-0001</a></a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-						<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-										<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><a href="generalInfo_update.php">ZC-0001</a></td>
-						<td>推土机</td>
-						<td>辆</td>
-						<td>GASDF-ASDF11</td>
-						<td>一汽大众</td>
-					</tr>
-				</table>			</div><!-- end of overall content -->
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->
 	</div><!-- end of page stage -->
 	</div><!-- end of contentWrapper -->

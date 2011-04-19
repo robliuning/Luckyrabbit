@@ -8,7 +8,9 @@ class Worker_Models_Team
 	protected $_name;
 	protected $_contactId;
 	protected $_contactName;
+	protected $_contactPhoneNo;
 	protected $_remark;
+	protected $_sum;
  	protected $_cTime;
     
     public function __construct(array $options = null)
@@ -63,7 +65,7 @@ class Worker_Models_Team
 
 	public function setName($name)
     {
-        $this->_name = (int)$name;
+        $this->_name = $name;
         return $this;
     } 
 
@@ -89,7 +91,7 @@ class Worker_Models_Team
 
 	public function setContactName($contactName)
     {
-        $this->_contactName = (int)$contactName;
+        $this->_contactName = $contactName;
         return $this;
     } 
 
@@ -99,7 +101,18 @@ class Worker_Models_Team
     }
     
 	/************************************************/
-    
+	public function setContactPhoneNo($contactPhoneNo)
+    {
+        $this->_contactPhoneNo = $contactPhoneNo;
+        return $this;
+    } 
+
+    public function getContactPhoneNo()
+    {
+        return $this->_contactPhoneNo;
+    }    
+    /************************************************/
+    	
     public function setRemark($remark)
     {
         $this->_remark= $remark;
@@ -111,6 +124,18 @@ class Worker_Models_Team
         return $this->_remark;
 	}
 
+	/************************************************/
+	public function setSum($sum)
+    {
+        $this->_sum = $sum;
+        return $this;
+    }
+
+    public function getSum()
+    {
+        return $this->_sum;
+	}
+	
 	/************************************************/
 	public function setCTime($cTime)
     {

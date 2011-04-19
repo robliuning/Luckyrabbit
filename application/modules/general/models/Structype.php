@@ -8,7 +8,7 @@
 
 class General_Models_Structype
 {     
-    protected $_structypeId;
+    protected $_typeId;
 	protected $_name;
     
     public function __construct(array $options = null)
@@ -48,15 +48,15 @@ class General_Models_Structype
         return $this;
     }
 
-	public function setStructypeId($structypeId)
+	public function setTypeId($typeId)
     {
-        $this->_structypeId = (int)$structypeId;
+        $this->_typeId = (int)$typeId;
         return $this;
     } 
 
-    public function getStructypeId()
+    public function getTypeId()
     {
-        return $this->_structypeId;
+        return $this->_typeId;
     }
 
     public function setName($name)

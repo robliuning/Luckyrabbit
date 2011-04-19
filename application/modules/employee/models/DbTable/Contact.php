@@ -22,6 +22,7 @@ class Employee_Models_DbTable_Contact extends Zend_Db_Table_Abstract
    		
    		return $entries;
     	}
+    		
     public function findContactNames($key)
     {
     	$select = $this->select()

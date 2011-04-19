@@ -11,7 +11,7 @@ class Equipment_Models_DbTable_Transfer extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select();
 		
-		if($condition == 'startDate')
+		if($condition == 'trsDate')
 		{
 			$select->where('startDate like ?','%'.$key.'%');
 			}
@@ -19,30 +19,42 @@ class Equipment_Models_DbTable_Transfer extends Zend_Db_Table_Abstract
 			{
 				$select->setIntegrityCheck(false)
 						->from(array('p'=> 'pm_projects'),array('name'))
-						->join(array('m'=>'eq_rents'),'p.projectId = m.projectId')
+						->join(array('e'=>'eq_transfers'),'p.projectId = e.projectId')
 						->where('p.name like ?','%'.$key.'%');
 				}
-				elseif($condition == 'venName')
+				elseif($condition == 'origName')
 				{
                    $select->setIntegrityCheck(false)
-						->from(array('g'=> 'ge_vendors'),array('name'))
-						->join(array('e'=>'eq_rents'),'e.venId = g.venId')
+						->from(array('g'=> 'ge_sites'),array('name'))
+						->join(array('e'=>'eq_transfers'),'e.siteId = g.origId')
 						->where('g.name like ?','%'.$key.'%');				
 				   }
-				   elseif($condition == 'personName')
+				   elseif($condition == 'DestName')
 					{
 					   $select->setIntegrityCheck(false)
-						->from(array('e'=> 'em_contacts'),array('name'))
-						->join(array('q'=>'eq_rents'),'e.contactId = q.personId')
-						->where('e.name like ?','%'.$key.'%');
+						->from(array('g'=> 'ge_sites'),array('name'))
+						->join(array('e'=>'eq_transfers'),'g.siteId = e.destId')
+						->where('g.name like ?','%'.$key.'%');
 						}
 						elseif($condition == 'approvName')
 						{
 							$select->setIntegrityCheck(false)
 								->from(array('e'=> 'em_contacts'),array('name'))
-								->join(array('q'=>'eq_rents'),'e.contactId = q.approvId')
+								->join(array('q'=>'eq_transfers'),'e.contactId = q.approvId')
 								->where('e.name like ?','%'.$key.'%');
 								}
+								elseif($condition == 'applicName')
+								{
+									$select->setIntegrityCheck(false)
+										->from(array('e'=> 'em_contacts'),array('name'))
+										->join(array('q'=>'eq_transfers'),'e.contactId = q.applicId')
+										->where('e.name like ?','%'.$key.'%');
+										}
+										elseif($condition == 'planType')
+										{
+											$select->where('planType like ?','%'.$key.'%');
+										}
+
 
 					
 		$resultSet = $this->fetchAll($select);

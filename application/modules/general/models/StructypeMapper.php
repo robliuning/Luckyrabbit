@@ -34,7 +34,7 @@ class General_Models_StructypeMapper
         $entries   = array();
         foreach ($resultSet as $row) {
             $entry = new General_Models_Structype();
-			$entry->setStructypeId($row->structypeId)
+			$entry->setTypeId($row->typeId)
 				  ->setName($row->name);
                   
             $entries[] = $entry;

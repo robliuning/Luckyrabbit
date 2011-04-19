@@ -52,7 +52,7 @@ class Material_Models_PurchaseMapper
         }
     }
      
-    public function findArrayPlan($id) 
+    public function findArrayPurchase($id) 
     {
 		$id = (int)$id;
 		$purchase = $this->getDbTable()->fetchRow('purId = '.$id);

@@ -4,23 +4,23 @@
 //date: 2011.4.15
 
 //code in controller
-	public function xxxAction()
+    public function indexAction()
     {
     	$errorMsg = null;
-		$materials = new Material_Models_MaterialMapper();
+		$contacts = new Employee_Models_ContactMapper();
 		
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			$arrayMaterials = array();
-			$key = $formData['key'];
+			$arrayContacts = array();
+			$key = trim($formData['key']);
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayMaterials = $materials->fetchAllJoin($key,$condition);
-				if(count($arrayMaterials) == 0)
+				$arrayContacts = $contacts->fetchAllJoin($key,$condition);
+				if(count($arrayContacts) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = 2;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
@@ -32,10 +32,10 @@
 		}
 		else
 		{
-			$arrayMaterials = $materials->fetchAllJoin();
+			$arrayContacts = $contacts->fetchAllJoin();
 			}
-		
-		$this->view->arrayMaterials = $arrayMaterials;
+			
+		$this->view->arrayContacts = $arrayContacts;
 		$this->view->errorMsg = $errorMsg;
     }
     

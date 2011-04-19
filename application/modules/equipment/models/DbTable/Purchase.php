@@ -43,6 +43,10 @@ class Equipment_Models_DbTable_Purchase extends Zend_Db_Table_Abstract
 								->join(array('q'=>'eq_purchases'),'e.contactId = q.approvId')
 								->where('e.name like ?','%'.$key.'%');
 								}
+								elseif($condition == 'planType')
+								{
+									$select->where('planType like ?','%'.$key.'%');
+									}
 					
 		$resultSet = $this->fetchAll($select);
 		

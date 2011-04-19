@@ -77,41 +77,8 @@ class Employee_Models_CppMapper
     	$result = $this->getDbTable()->delete('cppId = ' . (int)$id);
     	return $result;	
     	}
- 
-    /*public function fetchAllJoin($data,$condition) //check
-    {
-    	$resultSet = $this->getDbTable()->fetchAllJoin($data,$condition);
-    	
-    	$entries   = array();
-    	
- 		foreach ($resultSet as $row) 
- 		{
-            $entry = new Employee_Models_Cpp();
-			$entry->setCppId($row->cppId)
-				  ->setContactId($row->contactId)
-				  ->setPostId($row->postId)
-				  ->setProjectId($row->projectId)
-                  ->setPostType($row->postType)
-                  ->setPostCardId($row->postCardId)
-				  ->setCertId($row->certId);
-    		$contactId = $entry->getContactId();
-    		$projectId = $entry->getProjectId();
-    		$postId = $entry->getPostId();
-    	
-    		$contacts = new Employee_Models_ContactMapper();
-    		$entry->setContactName($contacts->FindContactName($contactId));
-    	    
-    		$projects = new Project_Models_ProjectMapper();
-    		$entry->setProjectName($projects->FindProjectName($projectId));
-    	    	    
-    		$posts = new General_Models_PostMapper();
-    		$entry->setPostName($posts->FindPostName($postId));
-			$entries[] = $entry;
-			}
-    		return $entries;
-    }  */
 
-	public function fetchAllJoin($key,$condition) //check
+	public function fetchAllJoin($key = null,$condition = null) //check
     {
     	if($condition == null)
     	{
@@ -134,18 +101,20 @@ class Employee_Models_CppMapper
                   ->setPostType($row->postType)
                   ->setPostCardId($row->postCardId)
 				  ->setCertId($row->certId);
+				  
     		$contactId = $entry->getContactId();
     		$projectId = $entry->getProjectId();
     		$postId = $entry->getPostId();
     	
     		$contacts = new Employee_Models_ContactMapper();
-    		$entry->setContactName($contacts->FindContactName($contactId));
+    		$entry->setContactName($contacts->findContactName($contactId));
     	    
     		$projects = new Project_Models_ProjectMapper();
-    		$entry->setProjectName($projects->FindProjectName($projectId));
+    		$entry->setProjectName($projects->findProjectName($projectId));
     	    	    
     		$posts = new General_Models_PostMapper();
-    		$entry->setPostName($posts->FindPostName($postId));
+    		$entry->setPostName($posts->findPostName($postId));
+    		
 			$entries[] = $entry;
 			}
     		return $entries;

@@ -46,7 +46,7 @@ class Worker_Models_TeamMapper
     public function findArrayTeam($id) 
     {
 		$id = (int)$id;
-		$entries = $this->getDbTable()->findArraymaterial($id);
+		$entries = $this->getDbTable()->findArrayTeam($id);
 		$entry = $entries[0]->toArray();
 		return $entry;
 	}
@@ -73,8 +73,10 @@ class Worker_Models_TeamMapper
 				->setCTime($row->cTime);
 
 			$contacts = new Employee_Models_ContactMapper();
-		    $contactName = $contacts->findContactName($entry->getContactId());
-			$entry->setContactName($contactName);	 				
+		    $contact = $contacts->findArrayContact($entry->getContactId());
+			$entry->setContactName($contact['name']);
+			$entry->setContactPhoneNo($contact['phoneNo']);	 	
+			$entry->setSum(20);//test purpose			
    			$entries[] = $entry;
    			}
     	return $entries;
@@ -84,5 +86,13 @@ class Worker_Models_TeamMapper
 	{
 		$this->getDbTable()->delete("teamId = ".(int)$teamId);
 		}
+
+	public function findTeamName($id)
+	{
+		$arrayNames = $this->getDbTable()->findTeamName($id);
+		$name = $arrayNames[0]->name;
+
+		return $name;
+	}
 }
 ?>
