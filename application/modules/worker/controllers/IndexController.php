@@ -2,6 +2,8 @@
 /*
 Created Meimo
 Date Apr.17.2011
+reviewed rob
+Date 4.19
 */
 
 class Worker_IndexController extends Zend_Controller_Action
@@ -48,6 +50,9 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		$this->view->arrayTeams = $arrayTeams;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "worker";
+		$this->view->controller = "index";
+		$this->view->modelName = "班组信息";
     }
 
 	public function addAction()
@@ -108,12 +113,12 @@ class Worker_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
 			{
-				$team = new Woker_Models_Team();
+				$team = new Worker_Models_Team();
 				$team->setTeamId($teamId);
 				$team->setName($editForm->getValue('name'));
 				$team->setContactId($editForm->getValue('contactId'));
 				$team->setRemark($editForm->getValue('remark'));
-				$result = $workers->save($worker);
+				$result = $teams->save($team);
 
 				$this->_redirect('/worker');
 			}
@@ -126,7 +131,7 @@ class Worker_IndexController extends Zend_Controller_Action
     	{
     		if($teamId >0)
     		{
-    			$arrayTeams = $teams->findArrayWorker($teamId);
+    			$arrayTeams = $teams->findArrayTeam($teamId);
     			$editForm->populate($arrayTeams);
     			}
     			else
