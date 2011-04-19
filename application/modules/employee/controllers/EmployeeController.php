@@ -28,8 +28,8 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayEmployees = array();
-			$key = $formData['key'];
-			if($key!==null)
+			$key = trim($formData['key']);
+			if($key != null)
 			{
 				$condition = $formData['condition'];
 				$arrayEmployees  = $employees->fetchAllJoin($key,$condition);
@@ -49,7 +49,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		{
 			$arrayEmployees  = $employees->fetchAllJoin();
 		}
-		$this->view->arrayEmployees  = $arrayEmployees ;
+		$this->view->arrayEmployees  = $arrayEmployees;
 		$this->view->errorMsg = $errorMsg;    
 		}
     
@@ -197,17 +197,5 @@ class Employee_EmployeeController extends Zend_Controller_Action
 				$this->redirect('/employee');
 	  			}
   	}
-  
-  	public function autocompleteAction()
-   	{
-   	    $this->_helper->layout()->disableLayout();
-    	$this->_helper->viewRenderer->setNoRender(true);
-    	$key = $this->_getParam('key');
-    	$contacts = new Employee_Models_ContactMapper();
-    	$arrayNames = $contacts->findContactNames($key);
-    	    	
-    	echo $key;
-   		}
 }
 ?>
-  

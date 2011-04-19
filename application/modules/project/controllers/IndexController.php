@@ -25,7 +25,7 @@ class Project_IndexController extends Zend_Controller_Action
 		{
 			$arrayProjects = array();
 			$formData = $this->getRequest()->getPost();
-			$key = $formData['key'];
+			$key = trim($formData['key']);
 			if($key!=null)
 			{
 				$condition = $formData['condition'];

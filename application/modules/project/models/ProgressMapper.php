@@ -31,7 +31,7 @@ class Project_Models_ProgressMapper
 			'projectId' => $progress->getProjectId(),
             'stage' => $progress->getStage() ,
 			'task' => $progress->getTask(),
-			'startDateExp' => $progress->getStarDateExp(),
+			'startDate' => $progress->getStartDate(),
 			'endDateExp' => $progress->getEndDateExp(),
 			'periodExp' => $progress->getPeriodExp(),
 			'endDateAct' => $progress->getEndDateAct(),
@@ -63,7 +63,7 @@ class Project_Models_ProgressMapper
         $progress  ->setProjectId($row->projectId)
                   ->setStage($row->stage)
 			      ->setTask($row->task)
-				  ->setStartDateExp($row->startDateExp)
+				  ->setStartDate($row->startDate)
 			      ->setEndDateExp($row->endDateExp)
 			      ->setPeriodExp($row->periodExp)
 			      ->setEndDateAct($row->endDateAct)
@@ -91,6 +91,7 @@ class Project_Models_ProgressMapper
 		}
 		return $entries;
 	}
+	
 	public function getProgressInfo($progressId)
 	{
 		$select = $this->getDbTable()->select();

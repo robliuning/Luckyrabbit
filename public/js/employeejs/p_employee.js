@@ -4,9 +4,10 @@ $(document).ready(function()
 {  	
 	//Enable the auto-completing
 	$( "#name" ).autocomplete({
+			max:10,
 			source: function( request, response ) {
 				$.ajax({
-					url: "/employee/employee/autocomplete/key/"+$("#name").val(),
+					url: "/employee/index/autocomplete/key/"+ $("#name").val(),
 					//dataType: "jsonp",
 					data: {
 						featureClass: "P",
@@ -14,12 +15,14 @@ $(document).ready(function()
 						maxRows: 12,
 						name_startsWith: request.term
 					},
-					success: function( data ) {
-							response( $.map(data, function(item) {
+					scrollHeight: 150,  
+					success: function(data) {
+							var jsonObj = eval('('+data+')');
+							response( $.map(jsonObj, function(item) {
 							return {
-								label: "123",
-								value: "123",
-								name:"test"
+								label: item.name,
+								value: item.name,
+								name: item.contactId
 							}
 						}));
 					}
@@ -28,7 +31,6 @@ $(document).ready(function()
 			minLength:1,
 			select: function( event, ui ) {
 				$("#empId").val(ui.item.name);
-				alert($("#empId").val());
 			},
 			open: function() {
 				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );

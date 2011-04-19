@@ -1,7 +1,6 @@
 <?php
 //Author Rob
 //2011.4.6
-
 class Employee_IndexController extends Zend_Controller_Action
 {
     public function init()
@@ -16,8 +15,37 @@ class Employee_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$contacts = new Employee_Models_ContactMapper();
-      	$this->view->arrayContacts = $contacts->fetchAll();
+    	$errorMsg = null;
+		$contacts = new Employee_Models_ContactMapper();
+		
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$arrayContacts = array();
+			$key = trim($formData['key']);
+			if($key != null)
+			{
+				$condition = $formData['condition'];
+				$arrayContacts = $contacts->fetchAllJoin($key,$condition);
+				if(count($arrayContacts) == 0)
+				{
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
+					//warning will be displayed: "没有找到符合条件的结果。"
+					}
+				}
+				else
+				{
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
+					//warning will be displayed: "请输入搜索关键字。"
+					}
+		}
+		else
+		{
+			$arrayContacts = $contacts->fetchAllJoin();
+			}
+			
+		$this->view->arrayContacts = $arrayContacts;
+		$this->view->errorMsg = $errorMsg;
     }
      
     public function addAction()                       
@@ -158,6 +186,27 @@ class Employee_IndexController extends Zend_Controller_Action
     		{
    				$this->_redirect('/employee');
    				}
+   		}
+   	
+   	public function autocompleteAction()
+   	{
+   	    $this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$key = $this->_getParam('key');
+		//$key = iconv('UTF-8','gb2312//IGNORE',$key);    
+		//$key = "赵";
+    	$contacts = new Employee_Models_ContactMapper();
+    	$arrayNames = $contacts->findContactNames($key);
+    	  
+    	$test = array(0=>array(
+    	"contactId"=>"012345",
+    	"name"=>"赵一"
+    		),1=>array(
+    		"contactId"=>"99999","name"=>"刘宁")
+    	);
+    	
+    	$json = Zend_Json::encode($arrayNames);  	
+    	echo $json;
    		}
 }
 ?>

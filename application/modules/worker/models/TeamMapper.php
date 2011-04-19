@@ -73,8 +73,10 @@ class Worker_Models_TeamMapper
 				->setCTime($row->cTime);
 
 			$contacts = new Employee_Models_ContactMapper();
-		    $contactName = $contacts->findContactName($entry->getContactId());
-			$entry->setContactName($contactName);	 				
+		    $contact = $contacts->findArrayContact($entry->getContactId());
+			$entry->setContactName($contact['name']);
+			$entry->setContactPhoneNo($contact['phoneNo']);	 	
+			$entry->setSum(20);//test purpose			
    			$entries[] = $entry;
    			}
     	return $entries;

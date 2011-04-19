@@ -26,16 +26,6 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		}
 		return $row->toArray();
 	}
-	
-	public function fetchAllJoin() //check
-	{
-		$select = $this->select()
-			->setIntegrityCheck(false)	
-			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','status'))
-			->join(array('c'=>'em_contacts'),'e.empId = c.contactId');
-		$entries = $this->fetchAll($select);
-		return $entries;
-		}
 		
 	public function displayOne($id)
 	{   		
@@ -58,7 +48,7 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 			$select->setIntegrityCheck(false)
 						->from(array('c'=> 'em_contacts'),array('name'))
 						->join(array('e'=>'em_employees'),'c.contactId = e.empId')
-						->where('e.name like ?','%'.$key.'%');
+						->where('c.name like ?','%'.$key.'%');
 			}
 			elseif($condition == 'deptName')
 			{

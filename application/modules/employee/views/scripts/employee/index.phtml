@@ -83,7 +83,7 @@
 						<td></td>
 					</tr>	
 					<?php $counter = 1;?>	
-					<?php foreach($this->employees as $employee):?>
+					<?php foreach($this->arrayEmployees as $employee):?>
 					<?php $empId = $this->escape($employee->getEmpId()); ?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $empId; ?>"></td>

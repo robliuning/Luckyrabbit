@@ -16,7 +16,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 /** Zend_Application */
 require_once 'My/App.php';
-
 // Create application, bootstrap, and run
 $application = new My_App(APPLICATION_ENV);
 

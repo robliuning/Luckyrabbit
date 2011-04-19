@@ -11,9 +11,9 @@ class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from(array('c'=>'em_contacts'),array('name'))
+			->from(array('c'=>'em_contacts'),array('name','phoneNo'))
 			->join(array('w'=>'wm_teams'),'c.contactId = w.contactId')		
-			->where('w.contactId = ?',$id);
+			->where('w.teamId = ?',$id);
 			
 		$entries = $this->fetchAll($select);
 		

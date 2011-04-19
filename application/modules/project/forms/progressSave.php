@@ -42,7 +42,7 @@ class project_Forms_progressSave extends Zend_Form
 			)
 		);
 	 $this->addElement(
-			'text', 'startDateExp', array(
+			'text', 'startDate', array(
 			'label' => '起始日期: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'

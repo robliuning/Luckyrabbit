@@ -20,26 +20,6 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 		
-	public function fetchAllJoin($data,$condition) //check
-	{
-		$select = $this->select();
-		if($condition == "projectId")
-		{
-			$select->where("projectId = ?",$data);
-			}
-		elseif($condition == "postId")
-		{
-			$select->where("postId = ?",$data);
-			}
-		elseif($condition == "contactId")
-		{
-			$select->where("contactId = ?",$data);
-			}
-
-    	$resultSet = $this->fetchAll($select);
-		return $resultSet;
-		}
-	
 	public function findContact($projectId,$postId) //check
 	{
 		$select = $this->select()
@@ -61,7 +41,7 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 			$select->setIntegrityCheck(false)
 						->from(array('c'=> 'em_contacts'),array('name'))
 						->join(array('e'=>'em_cpp'),'c.contactId = e.contactId')
-						->where('e.name like ?','%'.$key.'%');
+						->where('c.name like ?','%'.$key.'%');
 			}
 			elseif($condition == 'projectName')
 			{

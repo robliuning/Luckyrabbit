@@ -73,7 +73,7 @@ class Contract_Models_ContrqualifMapper
 			}
 		foreach($arrayQualifTypes as $qualif)
 		{
-			$form->getElement('qualifTypeId')->addMultiOption($qualif->getQualifTypeId(),$qualif->getName());
+			$form->getElement('qualifTypeId')->addMultiOption($qualif->getTypeId(),$qualif->getName());
 			}
   	}
 

@@ -95,39 +95,20 @@ class Employee_Models_ContactMapper
 	{
 		$arrayNames = $this->getDbTable()->findContactNames($key);
 		
-		return $arrayNames;
+		$entries = array();
+		
+		$i = 0;
+		
+		foreach($arrayNames as $name)
+		{
+			$entries[$i]['name'] = $name->name;
+			$entries[$i]['contactId'] = $name->contactId;
+			$i++;
+			}
+		
+		return $entries;
 		}
 		
-    public function fetchAll() //check
-    {
-        $resultSet = $this->getDbTable()->fetchAll();
-
-        $entries   = array();
-
-        foreach ($resultSet as $row) {
-
-            $entry = new Employee_Models_Contact();
-		    $entry ->setContactId($row->contactId)
-        		   ->setName($row->name)
-        		   ->setTitleName($row->titleName)
-                   ->setGender($row->gender)
-                   ->setBirth($row->birth)
-                   ->setIdCard($row->idCard)
-                   ->setPhoneNo($row->phoneNo)
-                   ->setOtherContact($row->otherContact)
-                   ->setAddress($row->address)
-                   ->setRemark($row->remark);
-                   
-            $strtimes = explode(" ",$entry->getBirth());
-			$timearray = explode("-",$strtimes[0]);
-			$birthYear = $timearray[0];
-			$thisYear = date('Y');
-			$age = $thisYear - $birthYear;
-			$entry->setAge($age);    
-            $entries[] = $entry;
-        }
-        return $entries;
-    }
 
 	public function fetchAllJoin($key = null,$condition = null) 
     {
@@ -175,7 +156,7 @@ class Employee_Models_ContactMapper
     	
     public function populateContactDd($form) //check
   	{		
-  		$titles=new General_Models_TitleMapper();
+  		$titles = new General_Models_TitleMapper();
 		$arrayTitles = $titles->fetchAll();
   		foreach($arrayTitles as $title)
 		{

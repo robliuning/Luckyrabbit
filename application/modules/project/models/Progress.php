@@ -9,7 +9,7 @@ class Project_Models_Progress
 	protected $_projectId;	
 	protected $_stage;
 	protected $_task;
-	protected $_startDateExp;
+	protected $_startDate;
 	protected $_endDateExp;
 	protected $_periodExp;
 	protected $_endDateAct;
@@ -103,15 +103,15 @@ class Project_Models_Progress
 	}
 	/****************************/ 
 
-	public function setStartDateExp($startDateExp)
+	public function setStartDate($startDate)
 	{
 		$this->_startDateExp = $startDateExp;
 		return $this;
 	}
 
-	public function getStartDateExp()
+	public function getStartDate()
 	{
-		return $this->_startDateExp;
+		return $this->_startDate;
 	}
 	/****************************/
 

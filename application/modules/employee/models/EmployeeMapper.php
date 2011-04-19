@@ -88,28 +88,6 @@ class Employee_Models_EmployeeMapper
 		return $entry;
 	}
     
-    /*public function fetchAllJoin() //check
-    {
-   		$resultSet = $this->getDbTable()->fetchAllJoin();
-   		
-   		$entries = array();
-   		
-   		foreach($resultSet as $row){
-   			$entry = new Employee_Models_Employee();
-   			
-   			$entry->setEmpId($row->empId)
-   				->setEmpName($row->name)
-   				->setDeptName($row->deptName)
-   				->setDutyName($row->dutyName)
-   				->setTitleName($row->titleName)
-   				->setPhoneNo($row->phoneNo)
-   				->setStatus($row->status);
-   				
-   			$entries[] = $entry;
-   			}
-    	return $entries;
-    	} */
-
 	public function fetchAllJoin($key = null,$condition = null) 
     {
     	if($condition == null)
@@ -127,15 +105,20 @@ class Employee_Models_EmployeeMapper
 			$entry = new Employee_Models_Employee();
    			
    			$entry->setEmpId($row->empId)
-   				->setEmpName($row->name)
    				->setDeptName($row->deptName)
    				->setDutyName($row->dutyName)
-   				->setTitleName($row->titleName)
-   				->setPhoneNo($row->phoneNo)
    				->setStatus($row->status);
-
-				$entries[] = $entry;
+			
+			$empId = $entry->getEmpId($row->empId);
+			$contacts = new Employee_Models_ContactMapper();
+			$contact = $contacts->findArrayContact($empId);
+			$entry->setTitleName($contact['titleName']);
+			$entry->setEmpName($contact['name']);
+			$entry->setPhoneNo($contact['phoneNo']);
+			
+			$entries[] = $entry;
    			}
+   			
     	return $entries;
     	}
     
