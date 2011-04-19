@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('-工程管理');
+ 	$this->headTitle('- 工程管理 - 工程信息');
  	$this->headScript()->prependFile('/js/projectjs/p_project.js');
  ?>
 	<div id="contentWrapper">
@@ -9,20 +9,13 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程信息管理 - 总览</h1>
+		<h1>工程管理 - 工程信息 - 总览</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为工程信息总览</h3>
+			<h3></h3>
 			<p class="errorMsg"><?php
 				if($this->errorMsg != null)
 				{
-					if($this->errorMsg == 2)
-					{
-						echo '错误: 没有找到符合条件的结果。'; 
-						}
-						elseif($this->errorMsg == 1)
-						{
-							echo '错误: 请输入搜索关键字。';
-							}
+	·				echo $this->errorMsg;
 			 		}?>
 			 		</p>
 		</div>
@@ -44,8 +37,8 @@
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDelete"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>					
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

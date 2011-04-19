@@ -32,13 +32,13 @@ class Project_IndexController extends Zend_Controller_Action
 				$arrayProjects = $projects->fetchAllJoin($key,$condition);
 				if(count($arrayProjects)==0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//waring a message  :  no match result
 				}
 			}
 			else
 			{
-				$errorMsg = 1;
+				$errorMsg = General_Models_Text::$text_searchErrorNi;
 				//waring a message  :  please input a key word
 			}
 		}
