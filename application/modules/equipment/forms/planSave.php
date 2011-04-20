@@ -20,8 +20,8 @@ class Equipment_Forms_PlanSave extends Zend_Form
 	   );
 	   $this->addElement(
 		'text','dueDate',array(
-		    'label'=>'计划到位时间:',
-		    'class'=>'tbLarge tbText',
+		    'label'=>'计划到位日期:',
+		    'class'=>'tbLarge tbText datepicker',
 		    'required'=>true
 	     )
 	   );
@@ -33,30 +33,30 @@ class Equipment_Forms_PlanSave extends Zend_Form
 	     )
 	   );
 	   $this->addElement(
-		'select','applicId',array(
+		'select','applicName',array(
 		    'label'=>'申报人:',
-		    'class'=>'tbLarge tbText',
+		    'class'=>'tbLarge tbText ac_contactId',
 		    'required'=>true
 	     )
 	   );
 	   $this->addElement(
 		'text','applicDate',array(
 		    'label'=>'申报时间:',
-		    'class'=>'tbLarge tbText',
+		    'class'=>'tbLarge tbText datepicker',
 		    'required'=>false
 	     )
 	   );
 	   $this->addElement(
-		'select','approvId',array(
+		'select','approvName',array(
 		    'label'=>'审批人:',
-		    'class'=>'tbLarge tbText',
+		    'class'=>'tbLarge tbText ac_contactName',
 		    'required'=>true
 	     )
 	   );
 	   $this->addElement(
 		'text','approvDate',array(
 		    'label'=>'审批时间:',
-		    'class'=>'tbLarge tbText',
+		    'class'=>'tbLarge tbText datepicker',
 		    'required'=>false
 	     )
 	   );
@@ -72,8 +72,8 @@ class Equipment_Forms_PlanSave extends Zend_Form
 		    'label'=>'备注:',
 		    'class'=>'tbLarge tbText',
 		    'required'=>false,
-		    'rows'=>5,
-		    'cols'=>20
+			  'cols' => 60,
+			  'rows' => 20
 	     )
 	   );
         $this->addElement(
@@ -93,6 +93,20 @@ class Equipment_Forms_PlanSave extends Zend_Form
 	       )
        );
 
+			$this->addElement(
+				'text','applicId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
+			$this->addElement(
+				'text','approvId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
         $this->setElementDecorators(
            array(
 	         'ViewHelper',

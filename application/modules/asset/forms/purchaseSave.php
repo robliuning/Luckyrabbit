@@ -74,7 +74,7 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		   'select','buyerName',array(
+		   'select','contactName',array(
 			   'label'=>'²É¹ºÔ±:',
 			   'class'=>'tbLarge tbText ac_contactName',
 			   'required'=>false
@@ -126,6 +126,21 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 		    'name'=>'submit'
 	       )
        );
+       
+			$this->addElement(
+				'text','contactId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
+			$this->addElement(
+				'text','approvId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
         $this->setElementDecorators(
            array(
 	         'ViewHelper',
