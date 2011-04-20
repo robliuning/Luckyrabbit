@@ -50,9 +50,7 @@ class Worker_Models_TeamMapper
         if (0 == count($result)) {
 
             return;
-
         }
-
         $row = $result->current();
 
         $entry  ->setTeamId($row->teamId)

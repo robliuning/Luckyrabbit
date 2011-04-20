@@ -164,9 +164,8 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
 
 	}
-	public function ajaxdisplayAction()
+	public function displayAction()
 	{
-		$this->_helper->layout()->disableLayout();
    		$id = $this->_getParam('id',0);
     	if($id >0)
     	{

@@ -388,6 +388,11 @@ h3
 	color:#006bd8 ;
 	}
 /*classes*/
+.subMenu
+{
+	height: 27px;
+	background: url("/images/submenu.png") repeat-x scroll 0 0 transparent;
+	}
 .p_msg
 {
 	-moz-border-radius:4px 4px 4px 4px;
