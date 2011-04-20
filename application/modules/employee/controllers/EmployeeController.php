@@ -69,7 +69,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		  if($addForm->isValid($formData))
 			 {
 			 	$employee = new Employee_Models_Employee();
-			 	$employee->setEmpId($addForm->getValue('contactId'));
+			 	$employee->setEmpId($addForm->getValue('empId'));
 			 	$employee->setDeptName($addForm->getValue('deptName'));
 			 	$employee->setDutyName($addForm->getValue('dutyName'));
 			 	$employee->setStatus($addForm->getValue('status'));

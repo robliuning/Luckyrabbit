@@ -71,7 +71,11 @@ class Employee_Models_ContactMapper
                   ->setPhoneNo($row->phoneNo)
                   ->setOtherContact($row->otherContact)
                   ->setAddress($row->address)
-                  ->setRemark($row->remark);
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+                  
+        $age = $this->caculateAge($contact->getBirth());
+        $contact->setAge($age);  
     }
 	public function findArrayContact($id) //check
 	{
@@ -142,12 +146,7 @@ class Employee_Models_ContactMapper
                    ->setOtherContact($row->otherContact)
                    ->setAddress($row->address)
                    ->setRemark($row->remark);
-                   
-            $strtimes = explode(" ",$entry->getBirth());
-			$timearray = explode("-",$strtimes[0]);
-			$birthYear = $timearray[0];
-			$thisYear = date('Y');
-			$age = $thisYear - $birthYear;
+            $age = $this->caculateAge($entry->getBirth());   
 			$entry->setAge($age);    
             $entries[] = $entry;
         }
@@ -168,6 +167,15 @@ class Employee_Models_ContactMapper
 		{
 			$form->getElement('titleName')->addMultiOption($title->getName(),$title->getName());
 			}	
+  		}
+  	public function caculateAge($birth)
+  	{
+  		$strtimes = explode(" ",$birth);
+		$timearray = explode("-",$strtimes[0]);
+		$birthYear = $timearray[0];
+		$thisYear = date('Y');
+		$age = $thisYear - $birthYear;
+		return $age;
   		}
 }
 ?>

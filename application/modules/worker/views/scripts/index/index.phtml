@@ -54,13 +54,13 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th></th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
 						<th>班组名称</th>
 						<th>负责人</th>
 						<th>联系电话</th>
 						<th>工人数量</th>
-						<th></th>
-						<th></th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -80,14 +80,14 @@
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$teamId))?>"><?php echo $this->escape($team->getName()) ?></a></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($team->getContactId()) ?>"><?php echo $this->escape($team->getContactName()) ?></td>	
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$teamId))?>"><?php echo $this->escape($team->getName()) ?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($team->getContactId()) ?>"><?php echo $this->escape($team->getContactName()) ?></a></td>	
 						<td><?php echo $this->escape($team->getContactPhoneNo()) ?></td>
 						<td>
 						<?php echo $this->escape($team->getSum())?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$teamId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$teamId))?>">详情</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$teamId))?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

@@ -33,10 +33,10 @@ $(document).ready(function()
 	$( ".datepicker" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
 	
 		//Enable the auto-completing
-	$( "#contactName" ).autocomplete({
+	$( ".ac_contactName" ).autocomplete({
 			source: function( request, response ) {
 				$.ajax({
-					url: "/employee/index/autocomplete/key/"+ $("#contactName").val(),
+					url: "/employee/index/autocomplete/key/"+ $(".ac_contactName").val(),
 					//dataType: "jsonp",
 					data: {
 						featureClass: "P",
@@ -57,7 +57,7 @@ $(document).ready(function()
 			},
 			minLength:1,
 			select: function( event, ui ) {
-				$("#contactId").val(ui.item.name);
+				$(".ac_contactId").val(ui.item.name);
 			},
 			open: function() {
 				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
@@ -68,4 +68,49 @@ $(document).ready(function()
 		});
 	
 	//---------end
+	var modelName = $('#modelName').val();
+	var module = $('#module').val();
+	var controller = $('#controller').val();
+		
+	$('#btDel').hover(function(){
+		var count = $('[name="cb"]:checked').length;
+		var htmlDelete = "<div id='msgBox_delete'>";
+		if(count == 0)
+		{
+			htmlDelete += "请先选择您要删除的"+modelName+"。";
+			}
+			else
+			{
+				htmlDelete = "您选择了"+count+"个"+modelName+"，点击确认后相关资料将被永久删除。<div><p class='ajaxDelete btDelete radius'>确认删除</p></div>";
+				}
+		htmlDelete+="</div>";
+		$('#msgBox').html(htmlDelete);
+		
+		$('.ajaxDelete').click(function(){
+			$('[name="cb"]:checked').each(function(){
+				var id = $(this).val();
+				var result = 1;
+				$.ajax({
+					type:"post",
+					url:"/"+module+"/"+controller+"/ajaxdelete/id/"+id,
+					success:function(rt){
+						if(rt == "0")
+						{
+							result = "0";
+							}
+						}
+					});
+				if(result == "1")
+				{
+					}
+					else
+					{
+						alert(modelName+" id:"+id+"未能删除");
+						}		
+			});		
+			alert("删除完成");
+			window.location = "/"+module+"/"+controller;	
+		});
+	});
+	
 });

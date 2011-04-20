@@ -60,7 +60,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	);
     	
     	$this->addElement(                 
-			'text','contactId',array(
+			'text','empId',array(
 			'required' => true,
 			'class'=>'hide ac_contactId'
 			)
