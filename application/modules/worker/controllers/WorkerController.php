@@ -4,7 +4,7 @@ Created Meimo
 Date Apr.17.2011
 */
 
-class Worker_IndexController extends Zend_Controller_Action
+class Worker_WorkerController extends Zend_Controller_Action
 {
 
     public function init()
@@ -34,12 +34,12 @@ class Worker_IndexController extends Zend_Controller_Action
 				$arrayWorkers = $workers->fetchAllJoin($key,$condition);
 				if(count($arrayWorkers) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					}
 		}
 		else
@@ -48,16 +48,20 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		$this->view->arrayWorkers = $arrayWorkers;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "worker";
+		$this->view->controller = "worker";
+		$this->view->modelName = "å·¥äººä¿¡æ¯";
     }
 
 	public function addAction()
 	{
 		//
 		$addForm = new Worker_Forms_WorkerSave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$workers = new Worker_Models_WorkerMapper();
+		$workers->populateWorkerDd($addForm);
 		$result = null;
 
 		if($this->getRequest()->isPost())
@@ -70,9 +74,12 @@ class Worker_IndexController extends Zend_Controller_Action
 				$worker->setName($addForm->getValue('name'));
 				$worker->setTeamId($addForm->getValue('teamId'));
 				$worker->setPhoneNo($addForm->getValue('phoneNo'));
+				$worker->setAddress($addForm->getValue('address'));
 				$worker->setCert($addForm->getValue('cert'));
+				$worker->setSkill($addForm->getValue('skill'));
+				$worker->setRemark($addForm->getValue('remark'));
 				$result = $workers->save($worker);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('name')->setValue('');
 					$addForm->getElement('teamtId')->setValue('');
@@ -81,7 +88,7 @@ class Worker_IndexController extends Zend_Controller_Action
 					}
 					else
 					{
-						$this->_redirect('/worker');
+						$this->_redirect('/worker/worker');
 						}
 			}
 			else
@@ -94,14 +101,15 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
 		$editForm = new Worker_Forms_WorkerSave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
 		$workers = new Worker_Models_WorkerMapper();
+		$workers->populateWorkerDd($editForm);
     	$workerId = $this->_getParam('id',0);
     	$result = null;
 
@@ -114,10 +122,14 @@ class Worker_IndexController extends Zend_Controller_Action
 				$worker->setWorkerId($workerId);
 				$worker->setName($editForm->getValue('name'));
 				$worker->setTeamId($editForm->getValue('teamId'));
-				$worker->setPhoneNo$editForm->getValue('phoneNo'));
+				$worker->setPhoneNo($editForm->getValue('phoneNo'));
+				$worker->setAddress($editForm->getValue('address'));
 				$worker->setCert($editForm->getValue('cert'));
+				$worker->setSkill($editForm->getValue('skill'));
+				$worker->setRemark($editForm->getValue('remark'));
+			
 				$result = $workers->save($worker);
-
+				$this->_redirect('/worker/worker');
 			}
 			else
     			{
@@ -133,7 +145,7 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
     			else
     			{
-    				$this->_redirect('/worker');
+    				$this->_redirect('/worker/worker');
     				}
     		}		
     	$this->view->editForm = $editForm;
@@ -143,7 +155,6 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	public function ajaxdeleteAction()
 	{
-		//
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
    
@@ -157,12 +168,37 @@ class Worker_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redirect('/worker');
+    			$this->_redirect('/worker/worker');
     			}
-
 	}
-
-
+	
+	public function displayAction()
+	{
+   		$id = $this->_getParam('id',0);
+    	if($id >0)
+    	{
+   		    $workers = new Worker_Models_WorkerMapper();
+   		    $worker = new Worker_Models_Worker();
+   			$workers->find($id,$worker);
+   			$wages = new Worker_Models_WageMapper();
+   			$bonuses = new Worker_Models_BonuseMapper();
+   			$penalties = new Worker_Models_PenaltyMapper();
+   			$condition = "workerId";
+   			$arrayWages = $wages->fetchAllJoin($id,$condition);
+   			$arrayBonuse = $bonuses->fetchAllJoin($id,$condition);
+   			$arrayPenalties = $penalties->fetchAllJoin($id,$condition);
+   			
+   			$this->view->worker = $worker;
+   			$this->view->arrayWages = $arrayWages;
+   			$this->view->arrayBonuses = $arrayBonuses;
+   			$this->view->arrayPenalties = $arrayPenalities;
+   			
+   			}
+    		else
+    		{
+   				$this->_redirect('/worker/worker');
+   				}
+	}
 }
 
 ?>

@@ -35,7 +35,7 @@ class Worker_Models_WorkerMapper
             'teamId' => $worker->getTeamId(),
 			'phoneNo' => $worker->getPhoneNo(), 
 			'address' => $worker->getAddress(), 
-			'skills' => $worker->getSkills(), 
+			'skill' => $worker->getSkill(), 
 			'cert' => $worker->getCert(),
             'remark' => $worker->getRemark()
         );
@@ -75,14 +75,14 @@ class Worker_Models_WorkerMapper
 				->setTeamId($row->teamId)
 				->setPhoneNo($row->phoneNo)
 				->setAddress($row->address)
-				->setSkills($row->skills)
+				->setSkill($row->skill)
 				->setCert($row->cert)
    				->setRemark($row->remark)
 				->setCTime($row->cTime);
 
 			$teams = new Worker_Models_TeamMapper();
 		    $teamName = $teams->findTeamName($entry->getTeamId());
-			$entry->setContactName($teamName);	 				
+			$entry->setTeamName($teamName);	 				
    			$entries[] = $entry;
    			}
     	return $entries;
@@ -100,5 +100,16 @@ class Worker_Models_WorkerMapper
 
 		return $name;
 	}
+	
+	public function populateWorkerDd($form)
+	{
+		$teams = new Worker_Models_TeamMapper();
+		$arrayTeams = $teams->fetchAllNames(); 
+
+		foreach($arrayTeams as $team)
+		{
+			$form->getElement('teamId')->addMultiOption($team->getTeamId(),$team->getName());
+			}
+		}
 }
 ?>

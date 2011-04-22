@@ -1,6 +1,6 @@
  <?php 
- 	$this->headTitle('- 工人管理 - 班组信息');
- 	$this->headScript()->prependFile('/js/workerjs/p_team.js');
+ 	$this->headTitle('- 工人管理 - 工人信息');
+ 	$this->headScript()->prependFile('/js/workerjs/p_worker.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,7 +9,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工人管理 - 班组信息 - 总览</h1>
+		<h1>工人管理 - 工人信息 - 总览</h1>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
@@ -25,15 +25,15 @@
 					<form method="post" action="<?php echo $this->url()?>">
 							<div>
 								<select name="condition" class="tbMediumer stStyle">
-  									<option value="name">班组名称</option>
-									<option value="contactName">负责人</option>
+  									<option value="name">工人姓名</option>
+									<option value="phoneNo">联系电话</option>
 								</select>
 							</div>
 							<div><input class="tbMedium tbText" name="key" type="text" /></div>
 							<div><input class= "btSearch" type="submit" value=""></input></div>	
 						</form>
 				</div>		
-					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
@@ -45,20 +45,22 @@
 					<colgroup>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
+						<col style="width:16%"></col>
+						<col style="width:16%"></col>
+						<col style="width:16%"></col>
+						<col style="width:16%"></col>
+						<col style="width:16%"></col>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>						
 					</colgroup>
 					<thead>
 						<th>#</th>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>工人姓名</th>
 						<th>班组名称</th>
-						<th>负责人</th>
 						<th>联系电话</th>
-						<th>工人数量</th>
+						<th>家庭住址</th>
+						<th>岗位证编号</th>
 						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
 						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
@@ -70,24 +72,26 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 					</tr>	
 					<?php $counter = 1;?>
-					<?php foreach($this->arrayTeams as $team):?>
-					<?php $teamId = $this->escape($team->getTeamId());?>
+					<?php foreach($this->arrayWorkers as $worker):?>
+					<?php $workerId = $this->escape($worker->getWorkerId());?>
 					<tr>
-						<td><input type="checkbox" name="cb" value="<?php echo $teamId ?>"></td>
+						<td><input type="checkbox" name="cb" value="<?php echo $workerId ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$teamId))?>"><?php echo $this->escape($team->getName()) ?></a></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($team->getContactId()) ?>"><?php echo $this->escape($team->getContactName()) ?></a></td>	
-						<td><?php echo $this->escape($team->getContactPhoneNo()) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'display','id'=>$workerId))?>"><?php echo $this->escape($worker->getName()) ?></a></td>
+						<td><?php echo $this->escape($worker->getTeamName()) ?></td>	
+						<td><?php echo $this->escape($worker->getPhoneNo()) ?></td>
 						<td>
-						<?php echo $this->escape($team->getSum())?>
+						<?php echo $this->escape($worker->getAddress())?>
 						</td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$teamId))?>">修改</a></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$teamId))?>">详情</a></td>
+						<td><?php echo $this->escape($worker->getCert())?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'edit','id'=>$workerId))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'display','id'=>$workerId))?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

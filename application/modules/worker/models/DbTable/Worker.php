@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 17-04-2011
 
-class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
+class Worker_Models_DbTable_Worker extends Zend_Db_Table_Abstract
 {
     protected $_name = 'wm_workers';
 
@@ -11,9 +11,9 @@ class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from(array('v'=>'vw_teams'),array('name'))
+			->from(array('v'=>'wm_teams'),array('name'))
 			->join(array('w'=>'wm_workers'),'v.teamId = w.teamId')		
-			->where('w.teamId = ?',$id);
+			->where('w.workerId = ?',$id);
 			
 		$entries = $this->fetchAll($select);
 		
@@ -39,6 +39,10 @@ class Worker_Models_DbTable_Team extends Zend_Db_Table_Abstract
 				{
 					$select->where('phoneNo like ?','%'.$key.'%');
 					}
+					elseif($condition == 'teamId')
+					{
+						$select->where('teamId = ?',$key);
+						}
 				
 		$resultSet = $this->fetchAll($select);
 		

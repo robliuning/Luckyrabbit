@@ -10,7 +10,7 @@ class Worker_Models_Worker
 	protected $_teamName;
 	protected $_phoneNo;
 	protected $_address;
-	protected $_skills;
+	protected $_skill;
 	protected $_cert;
 	protected $_remark;
  	protected $_cTime;
@@ -129,15 +129,15 @@ class Worker_Models_Worker
     
 	/************************************************/
 
-	public function setSkills($skills)
+	public function setSkill($skill)
     {
-        $this->_skills = $skills;
+        $this->_skill = $skill;
         return $this;
     } 
 
-    public function getskills()
+    public function getSkill()
     {
-        return $this->_skills;
+        return $this->_skill;
     }
     
 	/************************************************/

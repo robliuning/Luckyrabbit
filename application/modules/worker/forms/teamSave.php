@@ -16,6 +16,7 @@ class Worker_Forms_teamSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
+		
      	$this->addElement(
 			'text', 'contactName', array(
 			'label' => '负责人: ',
@@ -23,6 +24,7 @@ class Worker_Forms_teamSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
+		
 		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注: ',
@@ -32,6 +34,7 @@ class Worker_Forms_teamSave extends Zend_Form
 			'rows'=>20
 			)
 		);
+		
     	$this->addElement(
     		'submit','submit',array(
     		'ignore'=>true,
@@ -53,8 +56,7 @@ class Worker_Forms_teamSave extends Zend_Form
 			'class'=>'hide'
 			)
 		);
-    	
-    	
+    	    	
     	$this->setElementDecorators(array(
             'ViewHelper',
             'Errors',

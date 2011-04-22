@@ -1,6 +1,6 @@
  <?php 
- 	$this->headTitle('- 工人管理 - 班组信息');
- 	$this->headScript()->prependFile('/js/workerjs/p_team.js');
+ 	$this->headTitle('- 工人管理 - 工人信息');
+ 	$this->headScript()->prependFile('/js/workerjs/p_worker.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,7 +9,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工人管理 - 班组信息 - 详情</h1>
+		<h1>工人管理 - 工人信息 - 详情</h1>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
@@ -27,7 +27,7 @@
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
-				<p class="subMenu">班组信息</p>
+				<p class="subMenu">工人信息</p>
 				<table>
 					<colgroup>
 						<col style="width:30%"></col>
@@ -55,7 +55,7 @@
 						<td><?php echo $this->team->getRemark()?></td>
 					</tr>	
 				</table>
-				<p class="subMenu">班组工人</p>
+				<p class="subMenu">日工工资记录</p>
 					<table>
 					<colgroup>
 						<col style="width:5%"></col>
@@ -94,6 +94,8 @@
 					</tr>
 					<?php endforeach ?>
 				</table>
+				<p class="subMenu">工人奖励</p>
+				<p class="subMenu">工人扣款</p>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->

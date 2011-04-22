@@ -392,6 +392,10 @@ h3
 {
 	height: 27px;
 	background: url("/images/submenu.png") repeat-x scroll 0 0 transparent;
+	font-size: 13px;
+	font-weight: bolder;
+	padding: 8px 0 0 15px;
+	margin: 5px 0 0 0;
 	}
 .p_msg
 {
@@ -525,4 +529,5 @@ label
 #ajaxMsgBox_Emp
 {
 	width:500px;
+	margin: 10px;
 	}

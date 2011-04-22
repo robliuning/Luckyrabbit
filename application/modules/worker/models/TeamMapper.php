@@ -121,5 +121,19 @@ class Worker_Models_TeamMapper
 
 		return $name;
 	}
+	
+	public function fetchAllNames()
+	{
+		$resultSet = $this->getDbTable()->fetchAllNames();
+		$entries = array();
+		foreach($resultSet as $row){
+			$entry = new Worker_Models_Team();
+			$entry ->setTeamId($row->teamId)
+				   ->setName($row->name);
+
+			$entries[] = $entry;
+		}
+		return $entries; 
+	}
 }
 ?>
