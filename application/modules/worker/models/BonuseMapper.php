@@ -88,18 +88,21 @@ class Worker_Models_BonuseMapper
 				->setTypeId($row->typeId)
 				->setDetail($row->detail)
 				->setAmount($row->amount)
-   			->setRemark($row->remark)
+   				->setRemark($row->remark)
 				->setCTime($row->cTime);
 
-				$projects = new Project_Models_ProjectMapper();
-				$projectName = $projects->findProjectName($entry->getProjectId());
+		$projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($entry->getProjectId());
         $entry->setProjectName($projectName);
-
-				$workers = new Worker_Models_WorkerMapper();
-		  	$workerName = $workers->findWorkerName($entry->getWorkerId());
-				$entry->setWorkerName($workerName);
-   			$entries[] = $entry;
-   			}
+		$workers = new Worker_Models_WorkerMapper();
+		$workerName = $workers->findWorkerName($entry->getWorkerId());
+		$entry->setWorkerName($workerName);
+		$bontypes = new General_Models_BontypeMapper();
+		$bonName = $bontypes->findBontypeName($entry->getTypeId());
+		$entry->setTypeName($bonName);
+		
+   		$entries[] = $entry;
+   		}
     	return $entries;
     	}
 

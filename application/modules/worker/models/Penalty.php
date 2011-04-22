@@ -95,7 +95,7 @@ class Worker_Models_Penalty
 
 	public function setWorkerId($workerId)
     {
-        $this->_workId = $workerId;
+        $this->_workerId = $workerId;
         return $this;
     }
 

@@ -38,7 +38,7 @@ class Worker_Models_DbTable_Wage extends Zend_Db_Table_Abstract
 				}
 				elseif($condition == "workerId")
 				{
-					$select->where('workerId = ?',$id);
+					$select->where('workerId = ?',$key);
 					}
 		$resultSet = $this->fetchAll($select);
 		

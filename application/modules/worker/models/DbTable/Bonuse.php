@@ -36,6 +36,10 @@ class Worker_Models_DbTable_Bonuse extends Zend_Db_Table_Abstract
 			    			->join(array('w'=>'wm_bonuses'),'g.typeId = w.typeId')
 			    			->where('g.name like ?','%'.$key.'%');
 							}
+							elseif($condition == "workerId")
+							{
+								$select->where('workerId = ?',$key);
+							}
 
 		$resultSet = $this->fetchAll($select);
 

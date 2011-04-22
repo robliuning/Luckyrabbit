@@ -88,17 +88,19 @@ class Worker_Models_PenaltyMapper
 				->setTypeId($row->typeId)
 				->setDetail($row->detail)
 				->setAmount($row->amount)
-   			->setRemark($row->remark)
+   				->setRemark($row->remark)
 				->setCTime($row->cTime);
 
-				$projects = new Project_Models_ProjectMapper();
-				$projectName = $projects->findProjectName($entry->getProjectId());
+		$projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($entry->getProjectId());
         $entry->setProjectName($projectName);
-
-				$workers = new Worker_Models_WorkerMapper();
-		  	$workerName = $workers->findWorkerName($entry->getWorkerId());
-				$entry->setWorkerName($workerName);
-   			$entries[] = $entry;
+		$workers = new Worker_Models_WorkerMapper();
+		$workerName = $workers->findWorkerName($entry->getWorkerId());
+		$entry->setWorkerName($workerName);
+		$pentypes = new General_Models_PentypeMapper();
+		$penName = $pentypes->findPentypeName($entry->getTypeId());
+		$entry->setTypeName($penName);
+   		$entries[] = $entry;
    			}
     	return $entries;
     	}

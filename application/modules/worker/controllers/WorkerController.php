@@ -185,13 +185,13 @@ class Worker_WorkerController extends Zend_Controller_Action
    			$penalties = new Worker_Models_PenaltyMapper();
    			$condition = "workerId";
    			$arrayWages = $wages->fetchAllJoin($id,$condition);
-   			$arrayBonuse = $bonuses->fetchAllJoin($id,$condition);
+   			$arrayBonuses = $bonuses->fetchAllJoin($id,$condition);
    			$arrayPenalties = $penalties->fetchAllJoin($id,$condition);
    			
    			$this->view->worker = $worker;
    			$this->view->arrayWages = $arrayWages;
    			$this->view->arrayBonuses = $arrayBonuses;
-   			$this->view->arrayPenalties = $arrayPenalities;
+   			$this->view->arrayPenalties = $arrayPenalties;
    			
    			}
     		else
