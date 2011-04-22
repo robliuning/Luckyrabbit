@@ -1,9 +1,7 @@
  <?php 
- 	$this->headTitle('-材料信息');
- 	$this->headScript()->prependFile('/materialjs/p_material.js');
+ 	$this->headTitle('- 材料管理 - 材料信息');
+ 	$this->headScript()->prependFile('/js/materialjs/p_material.js');
  ?>
- 	<div id="p_id" class="hide">nav_generalInfo</div>
-	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -13,13 +11,11 @@
 		<div id="p_content">
 		<h1>材料管理 - 材料信息 - 修改</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为材料信息修改</h3>
-			<p>"我在测试id-------"<?php echo $this->result; ?></p>
+			<h3></h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><a href="/employee/index/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/material/index/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
 					<div><a href="/material"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
