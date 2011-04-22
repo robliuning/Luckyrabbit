@@ -133,7 +133,7 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
     			else
     			{
-    				$this->_redirect('/wage');
+    				$this->_redirect('/worker/wage');
     				}
     		}		
     	$this->view->editForm = $editForm;
@@ -155,7 +155,7 @@ class Worker_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redirect('/wage');
+    			$this->_redirect('/worker/wage');
     			}
 	}
 
@@ -172,7 +172,7 @@ class Worker_IndexController extends Zend_Controller_Action
    			}
     		else
     		{
-   				$this->_redirect('/employee');
+   				$this->_redirect('/worker/wage');
    				}
    	}
 }
