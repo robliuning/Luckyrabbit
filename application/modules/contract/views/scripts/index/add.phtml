@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('- 分工管理 - 承包商信息');
+ 	$this->headTitle('- 分包管理 - 承包商信息');
  	$this->headScript()->prependFile('/js/contractjs/p_contractor.js');
  ?>
 	<div id="contentWrapper">
@@ -17,7 +17,7 @@
 			<div class="overall_tool">
 				<div class="button_group">
 					<div><a class="lightbox" href="/employee/index/ajaxadd"><img src="/images/icons/functions/new.png"/><p>快速新建通讯录</p></a></div>	
-					<div><a href="/contract/contractor/add"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>	
+					<div><a id="reset"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>	
 					<div><a href="/contract/contractor"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->

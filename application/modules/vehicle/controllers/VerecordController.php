@@ -53,8 +53,8 @@ class Vehicle_VerecordController extends Zend_Controller_Action
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
         
-		$verecords = new Vehicle_Models_VerecordMapper();
-		$verecords->populateVeDd($addForm);
+				$verecords = new Vehicle_Models_VerecordMapper();
+				$verecords->populateVeDd($addForm);
 	    	
     	if($this->getRequest()->isPost())
     	{
@@ -75,19 +75,16 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			
     			if($btClicked == '保存继续新建')
     			{
-<<<<<<< HEAD
-					$addForm->getElement('plateNo')->setValue('');
+						$addForm->getElement('plateNo')->setValue('');
    					$addForm->getElement('veId')->setValue('');
-=======
-    			   	$addForm->getElement('veId')->setValue('');
->>>>>>> f17bd67d23615ec76accfe0e951456a7b9aecba3
+    				$addForm->getElement('veId')->setValue('');
    					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDate')->setValue('');
    					$addForm->getElement('purpose')->setValue('');
    					$addForm->getElement('mile')->setValue('');
-					$addForm->getElement('pilot')->setValue('');
+						$addForm->getElement('pilot')->setValue('');
    					$addForm->getElement('otherUser')->setValue('');
-					$addForm->getElement('remark')->setValue('');
+						$addForm->getElement('remark')->setValue('');
    					}
    					else
     				{
@@ -188,6 +185,23 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			$this->_redirect('/vehicle/verecord');
     			}
     	}
+   public function ajaxdisplayAction()
+    	{
+    		$this->_helper->layout()->disableLayout();
+				$this->_helper->viewRenderer->setNoRender(true);
+				$verecordId = $this->_getParam('id',0);
+			if($verecordId>0)
+			{
+				$verecords = new Vehicle_Models_VerecordMapper();
+				$verecord = new Vehicle_Models_Verecord();
+				$verecords->find($verecordId,$verecord);
+				$this->view->transfer = $verecord;
+				}
+			else
+			{
+            $this->_redirect('/vehicle/verecord');
+			}
+    		}
   /*  public function searchAction()
     {        
 		$verecords = new Vehicle_Models_VerecordMapper();

@@ -30,12 +30,12 @@ class Material_IndexController extends Zend_Controller_Action
 				$arrayMaterials = $materials->fetchAllJoin($key,$condition);
 				if(count($arrayMaterials) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					}
 		}
 		else
@@ -48,7 +48,7 @@ class Material_IndexController extends Zend_Controller_Action
     
     public function addAction()
     {
-    	$addForm = new Material_Forms_MaterialSave();
+		$addForm = new Material_Forms_MaterialSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 		$addForm->approvId->setAttrib('class','hide');
@@ -95,10 +95,10 @@ class Material_IndexController extends Zend_Controller_Action
     public function editAction()
     {
     	$editForm = new Material_Forms_MaterialSave();
-		$editForm->submit->setLabel('保存修改');
+			$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 
-		$materials = new Material_Models_MaterialMapper();
+			$materials = new Material_Models_MaterialMapper();
     	$mtrId = $this->_getParam('id',0);
     	$result = null;
 

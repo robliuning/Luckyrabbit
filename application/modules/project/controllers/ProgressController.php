@@ -18,13 +18,13 @@ class Project_ProgressController extends Zend_Controller_Action
 	public function indexAction(){                                          //新建
 		//this is an indexAction
     	$addForm = new Project_Forms_ProgressSave();
-        $addForm->submit->setLabel('保存新建');
+      $addForm->submit->setLabel('保存新建');
     	$addForm->submit2->setAttrib('class','hide');
     	$tbId = $addForm->getElement('projectId');
     	$tbId->setValue('工程进度记录在保存新建后自动生成');
 		//populate dd project
-		$progs = new Project_Models_DbTable_Progress();			
-		$progs->populateDd($addForm);
+			$progs = new Project_Models_DbTable_Progress();			
+			$progs->populateDd($addForm);
 		//end
     	$this->view->form = $addForm;
     	
@@ -42,7 +42,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$endDateAct = $addForm->getValue('endDateAct');
     			$periodAct = $addForm->getValue('periodAct');
     			$quality = $addForm->getValue('quality');
-				$remark = $addForm->getValue('remark'); 
+					$remark = $addForm->getValue('remark'); 
 				
 				   /*  $errorMsg=null;
 			            $validatorRe = new Zend_Validate_Db_RecordExists(
@@ -65,7 +65,7 @@ class Project_ProgressController extends Zend_Controller_Action
    					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDateExp')->setValue('');
    					$addForm->getElement('periodExp')->setValue('0');
-					$addForm->getElement('endDateAct')->setValue('');
+						$addForm->getElement('endDateAct')->setValue('');
    					$addForm->getElement('periodAct')->setValue('');
    					$addForm->getElement('quality')->setValue('0');
    					$addForm->getElement('remark')->setValue('');	
@@ -84,7 +84,7 @@ class Project_ProgressController extends Zend_Controller_Action
    		$id=$this->_getParam('id',0);
     	if($id >0)
     	{
-   		    $progresses = new Project_Models_ProgressMapper();
+   		  $progresses = new Project_Models_ProgressMapper();
    			$progress = $progresses->fetchInfo($id);
    			$this->view->progress = $progress;
    			}
@@ -116,8 +116,8 @@ class Project_ProgressController extends Zend_Controller_Action
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 		//populate dd project
-		$progs = new Project_Models_DbTable_Progress();			
-		$progs->populateDd($editForm);
+			$progs = new Project_Models_DbTable_Progress();			
+			$progs->populateDd($editForm);
     	$this->view->form = $editForm;
     	$this->view->id = $this->_getParam('id');    	
 
@@ -136,7 +136,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$endDateAct = $editForm->getValue('endDateAct');
     			$periodAct = $editForm->getValue('periodAct');
     			$quality = $editForm->getValue('quality');
-				$remark = $editForm->getValue('remark');
+					$remark = $editForm->getValue('remark');
     			$progs->updateProgress($progressId,$projectId,$stage,$task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);    					
     			$this->_redirect('/project/progress');
     			}

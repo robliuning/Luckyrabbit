@@ -4,8 +4,10 @@
 author:mingtingling
 date:2011-4-17
 vision:2.0
+Modified by MeiMo
+Date: Apr.21.2011
 */
-class Asset_IndexController extends Zend_Controller_Action
+class Asset_DepreController extends Zend_Controller_Action
 {
 
     public function init()
@@ -19,7 +21,7 @@ class Asset_IndexController extends Zend_Controller_Action
     public function indexAction()
     {
 		$errorMsg = null;
-		$depres=new Asset_Models_DepreMapper();
+		$depres = new Asset_Models_DepreMapper();
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
@@ -32,13 +34,13 @@ class Asset_IndexController extends Zend_Controller_Action
 				
 				if(count($arrayDepres) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -55,18 +57,18 @@ class Asset_IndexController extends Zend_Controller_Action
     }
     public function addAction()
     {
-           $addForm=new Asset_Forms_DepreSave();
+       $addForm = new Asset_Forms_DepreSave();
 		   $addForm->submit->setLabel("保存并继续添加");
 		   $addForm->submit2->setLabel("保存并返回");
-		   $depres=new Asset_Models_DepreMapper();
+		   $depres = new Asset_Models_DepreMapper();
 		   $depres->populateDepreDb($addForm);/*下拉条*/
 	       if($this->getRequest()->isPost())
 		     {
-			   $btClicked=$this->getRequest()->getPost('submit');
-			   $formData=$this->getRequest()->getPost();
+			   $btClicked = $this->getRequest()->getPost('submit');
+			   $formData = $this->getRequest()->getPost();
 			   if($addForm->isValid($formData))
 				 {
-				   $depre=new Asset_Models_Depre();
+				   $depre = new Asset_Models_Depre();
 				   $depre->setPurId($addForm->getValue('purId'));
 				   $depre->setProjectId($addForm->getValue('projectId'));
 				   $depre->setQuantity($addForm->getValue('quantity'));
@@ -100,32 +102,32 @@ class Asset_IndexController extends Zend_Controller_Action
 					 $addForm->populate($formData);
 				 }
 		     }
-		$this->view->addForm=$addForm;
+		$this->view->addForm = $addForm;
 	}  
     
     public function editAction()
     {
-     $editForm=	new Asset_Forms_DepreSave();
-	 $editForm->submit->setLabel('保存修改');
-	 $editForm->submit2->setAttrib('class','hide');
-     $depres=new Asset_Models_DepreMapper();
-	 $depres->populateDepreDb($editForm);/*下拉条*/
-     $depId=$this->_getParam('id',0);
+			$editForm = new Asset_Forms_DepreSave();
+			$editForm->submit->setLabel('保存修改');
+			$editForm->submit2->setAttrib('class','hide');
+			$depres = new Asset_Models_DepreMapper();
+			$depres->populateDepreDb($editForm);/*下拉条*/
+			$depId = $this->_getParam('id',0);
 	 if($editForm->getRequest()->isPost())
 		{
-          $formData=$this->getRequest()->getPost();
+      $formData = $this->getRequest()->getPost();
 		  if($addForm->isValid($formData))
 			{
-			  $depre=new Asset_Models_Depre();
+			  $depre = new Asset_Models_Depre();
 			  $depre->setDepId($depId);
-              $depre->setProjectId($editForm->getValue('projectId'));
-              $depre->setQuantity($editForm->getValue('quantity'));
-              $depre->setInDate($editForm->getValue('inDate'));
-              $depre->setOutDate($editForm->getValue('outDate'));
-              $depre->setDepre($editForm->getValue('depre'));
-              $depre->setDepreAmt($editForm->getValue('depreAmt'));
+        $depre->setProjectId($editForm->getValue('projectId'));
+        $depre->setQuantity($editForm->getValue('quantity'));
+        $depre->setInDate($editForm->getValue('inDate'));
+        $depre->setOutDate($editForm->getValue('outDate'));
+        $depre->setDepre($editForm->getValue('depre'));
+        $depre->setDepreAmt($editForm->getValue('depreAmt'));
 			  $depre->setRemark($editForm->getValue('remark'));
-              $depres->save($depre);
+        $depres->save($depre);
 			  $this->_redirect('/asset/depre');
 			}/*end of isValid()*/
 			else
@@ -137,7 +139,7 @@ class Asset_IndexController extends Zend_Controller_Action
 		{
 			  if($depId>0)
 			   {
-				  $arrayDepre=$depres->findArrayDepre($depId);
+				  $arrayDepre = $depres->findArrayDepre($depId);
 				  $editForm->populate($arrayDepre);
 			     }
 				 else
@@ -145,36 +147,36 @@ class Asset_IndexController extends Zend_Controller_Action
 					 $this->redirect('/asset/depre');
 				 }
 		}/*not isPost()*/
-		$this->view->editForm=$editForm;
-		$this->view->depId=$depId;
+		$this->view->editForm = $editForm;
+		$this->view->depId = $depId;
     }
     
     public function ajaxdeleteAction()
     {
      $this->_helper->layout()->disableLayout();
-	 $this->_helper->viewRenderer->setNoRender(true);
-	 $depId=$this->_getParam('id',0);
-	 if($depId>0)
-		{
-		 $depres=new Asset_Models_DepreMapper();
-		 $depres->delete($depId);
- 		  }/*legal*/
-          else
+	   $this->_helper->viewRenderer->setNoRender(true);
+	   $depId = $this->_getParam('id',0);
+	 		if($depId>0)
+				{
+		 			$depres = new Asset_Models_DepreMapper();
+		 			$depres->delete($depId);
+ 		    }/*legal*/
+      else
 		  {
-           $this->_redirect('/asset/depre');
+          $this->_redirect('/asset/depre');
 		  }/*illegal*/
     }
 	public function ajaxdisplayAction()
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$depId=$this->_getParam('id',0);
+		$depId = $this->_getParam('id',0);
 		if($depId>0)
 		{
-			$depres=new Asset_Models_DepreMapper();
-			$depre=new Asset_Models_Depre();
+			$depres = new Asset_Models_DepreMapper();
+			$depre = new Asset_Models_Depre();
 			$depres->find($depId,$depre);
-			$this->view->depre=$depre;
+			$this->view->depre = $depre;
 		}/*legal*/
 		else
 		{

@@ -6,6 +6,8 @@
 author:mingtingling
 date:2011-4-16
 vision:2.0
+Modified by MeiMo
+Date:Apr.21.2011
 */
 
 class Equipment_IndexController extends Zend_Controller_Action
@@ -35,13 +37,13 @@ class Equipment_IndexController extends Zend_Controller_Action
 				
 				if(count($arrayEquipments) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -58,22 +60,22 @@ class Equipment_IndexController extends Zend_Controller_Action
     }
     public function addAction()
     {
-           $addForm=new Equipment_Forms_EquipmentSave();
+       $addForm = new Equipment_Forms_EquipmentSave();
 		   $addForm->submit->setLabel("保存并继续添加");
 		   $addForm->submit2->setLabel("保存并返回");
-		   $equipments=new Equipment_Models_EquipmentMapper();
+		   $equipments = new Equipment_Models_EquipmentMapper();
 		   $equipments->populateEquipmentDb($addForm);/*下拉菜单*/
 	       if($this->getRequest()->isPost())
 		     {
-			   $btClicked=$this->getRequest()->getPost('submit');
-			   $formData=$this->getRequest()->getPost();
+			   $btClicked = $this->getRequest()->getPost('submit');
+			   $formData = $this->getRequest()->getPost();
 			   if($addForm->isValid($formData))
 				 {
-				   $equipment=new Equipment_Models_Equipment();
+				   $equipment = new Equipment_Models_Equipment();
 				   $equipment->setName($addForm->getValue('name'));
 				   /*下面的有可能名称要修改typeId1,typeId2,typeId3*/
 				   $equipment->setTypeId1($addForm->getValue('typeId1'));
-                   $equipment->setTypeId2($addForm->getValue('typeId2'));
+           $equipment->setTypeId2($addForm->getValue('typeId2'));
 				   $equipment->setTypeId3($addForm->getValue('typeId3'));
 				   $equipment->setSpec($addForm->getValue('spec'));
 				   $equipment->setUnit($addForm->getValue('unit'));
@@ -100,26 +102,26 @@ class Equipment_IndexController extends Zend_Controller_Action
 					 $addForm->populate($formData);
 				 }
 		     }
-		$this->view->addForm=$addForm;
+		$this->view->addForm = $addForm;
 	}  
     
     public function editAction()
     {
-     $editForm=	new Equipment_Forms_EquipmentSave();
-	 $editForm->submit->setLabel('保存修改');
-	 $editForm->submit2->setAttrib('class','hide');
-     $equipments=new Equipment_Models_EquipmentMapper();
-	 $equipments->populateEquipmentDb($editForm);/*下拉条*/
-     $eqpId=$this->_getParam('id',0);
+			$editForm =	new Equipment_Forms_EquipmentSave();
+			$editForm->submit->setLabel('保存修改');
+			$editForm->submit2->setAttrib('class','hide');
+			$equipments = new Equipment_Models_EquipmentMapper();
+			$equipments->populateEquipmentDb($editForm);/*下拉条*/
+			$eqpId=$this->_getParam('id',0);
 	 if($editForm->getRequest()->isPost())
 		{
-		  $btClicked=$this->getRequest()->getPost('submit');
-          $formData=$this->getRequest()->getPost();
+		  		$btClicked = $this->getRequest()->getPost('submit');
+          $formData = $this->getRequest()->getPost();
 		  if($addForm->isValid($formData))
 			{
-			  $equipment=new Equipment_Models_Equipment();
+			  $equipment = new Equipment_Models_Equipment();
 			  $equipment->setEqpId($eqpId);
-              $equipment->setName($editForm->getValue('name'));
+        $equipment->setName($editForm->getValue('name'));
 			  /*有可能需要修改typeId1,typeId2,typeId3*/
 			  $equipment->setTypeId1($editForm->getValue('typeId1'));
 			  $equipment->setTypeId2($editForm->getValue('typeId2'));
@@ -139,7 +141,7 @@ class Equipment_IndexController extends Zend_Controller_Action
 		{
 			  if($cqpId>0)
 			   {
-				  $arrayEquipment=$equipments->findArrayEquipment($cqpId);
+				  $arrayEquipment = $equipments->findArrayEquipment($cqpId);
 				  $editForm->populate($arrayEquipment);
 			     }
 				 else
@@ -147,22 +149,22 @@ class Equipment_IndexController extends Zend_Controller_Action
 					 $this->redirect('/equipment');
 				 }
 		}/*not isPost()*/
-		$this->view->editForm=$editForm;
-		$this->view->cqpId=$eqpId;
+		$this->view->editForm = $editForm;
+		$this->view->cqpId = $eqpId;
     }
     
-    public function ajaxdeleteAction()
+  public function ajaxdeleteAction()
     {
      $this->_helper->layout()->disableLayout();
-	 $this->_helper->viewRenderer->setNoRender(true);
-	 $cqpId=$this->_getParam('id',0);
-	 if($cqpId>0)
-		{
-		 $equipments=new Equipment_Models_EquipmentMapper();
-		 $equipments->delete($cqpId);
- 		  }/*legal*/
-          else
-		  {
+		 $this->_helper->viewRenderer->setNoRender(true);
+	 	 $cqpId = $this->_getParam('id',0);
+	 		if($cqpId>0)
+			{
+		 		$equipments = new Equipment_Models_EquipmentMapper();
+		 		$equipments->delete($cqpId);
+ 		  	}/*legal*/
+      else
+		  	{
            $this->_redirect('/equipment');
 		  }/*illegal*/
     }
@@ -170,13 +172,13 @@ class Equipment_IndexController extends Zend_Controller_Action
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$cqpId=$this->_getParam('id',0);
+		$cqpId = $this->_getParam('id',0);
 		if($cqpId>0)
 		{
-			$equipments=new Equipment_Models_EquipmentMapper();
-			$equipment=new Equipment_Models_Equipment();
+			$equipments = new Equipment_Models_EquipmentMapper();
+			$equipment = new Equipment_Models_Equipment();
 			$equipments->find($cqpId,$equipment);
-			$this->view->equipment=$equipment;
+			$this->view->equipment = $equipment;
 		}/*legal*/
 		else
 		{
