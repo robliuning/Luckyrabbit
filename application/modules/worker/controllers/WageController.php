@@ -16,10 +16,10 @@ class Worker_IndexController extends Zend_Controller_Action
 	{
 		$this->view->render('_sidebar.phtml');
 	}
-
-    public function indexAction()
-    {
-        // action body
+	
+	public function indexAction()
+	{
+	// action body
 		$errorMsg = null;
 		$wages = new Worker_Models_WageMapper();
 		$errorMsg = null;
@@ -146,8 +146,6 @@ class Worker_IndexController extends Zend_Controller_Action
 		//
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
-   
-   
    		$wagId = $this->_getParam('id',0);
     	if($wagId > 0)
     	{
@@ -159,10 +157,24 @@ class Worker_IndexController extends Zend_Controller_Action
     		{
     			$this->_redirect('/wage');
     			}
-
 	}
 
-
+	  public function ajaxdisplayAction()              
+   	{
+   		$this->_helper->layout()->disableLayout();
+   		$wageId = $this->_getParam('id',0);
+    	if($wageId >0)
+    	{
+   		    $wages = new Worker_Models_WageMapper();
+   		    $wage = new Worker_Models_Wage();
+   			$wages->find($wageId,$wage);
+   			$this->view->wage = $wage;
+   			}
+    		else
+    		{
+   				$this->_redirect('/employee');
+   				}
+   	}
 }
 
 ?>
