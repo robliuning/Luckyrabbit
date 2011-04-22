@@ -37,7 +37,7 @@ class Material_Models_ExportMapper
 			'destId' => $export->getDestId(),
             'applicId' => $export->getApplicId(),
 			'applicDate' => $export->getApplicDate(),
-			'planType' => $export->getPlanType()
+			'planType' => $export->getPlanType(),
 			'approvId' => $export->getApprovId(),
 			'approvDate' => $export->getApprovDate(),	
 			'total' =>$export->getTotal(),

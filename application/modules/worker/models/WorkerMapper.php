@@ -46,7 +46,31 @@ class Worker_Models_WorkerMapper
             $this->getDbTable()->update($data, array('workerId = ?' => $worker->getWorkerId()));
         }
     }
-     
+    
+    public function find($workerId,　Worker_Models_Worker $worker) //check
+    {
+
+        $result = $this->getDbTable()->find($workerId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $worker  ->setName($row->name)
+                  ->setTeamId($row->teamId)
+                  ->setPhoneNo($row->phoneNo)
+                  ->setAddress($row->address)
+                  ->setSkill($row->skill)
+                  ->setCert($row->cert)
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+                  
+		$teams = new Worker_Models_TeamMapper();
+		$teamName = $teams->findTeamName($worker->getTeamId());
+		$worker->setTeamName($teamName);	 
+    }
+    
     public function findArrayWorker($id) 
     {
 		$id = (int)$id;

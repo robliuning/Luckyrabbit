@@ -77,6 +77,7 @@ class Employee_Models_ContactMapper
         $age = $this->caculateAge($contact->getBirth());
         $contact->setAge($age);  
     }
+    
 	public function findArrayContact($id) //check
 	{
 		$id = (int)$id;
