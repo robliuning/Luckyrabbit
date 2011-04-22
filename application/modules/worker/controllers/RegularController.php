@@ -98,21 +98,21 @@ class Worker_RegularController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
 		$editForm = new Worker_Forms_wageSave();
 		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
-    	$editForm->submit2->setAttrib('class','hide');
+    $editForm->submit2->setAttrib('class','hide');
 
 		$wages = new Worker_Models_WageMapper();
-    	$wagId = $this->_getParam('id',0);
-    	$result = null;
+    $wagId = $this->_getParam('id',0);
+    $result = null;
 
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-    		if($editForm->isValid($formData))
+    	if($editForm->isValid($formData))
 			{
 				$wage = new Worker_Models_Wage();
 				$wage->setRegularId($regId);
@@ -173,8 +173,8 @@ class Worker_RegularController extends Zend_Controller_Action
    		$regId = $this->_getParam('id',0);
     	if($regId >0)
     	{
-   		    $regulars = new Worker_Models_RegularMapper();
-   		    $regular = new Worker_Models_Regular();
+   		  $regulars = new Worker_Models_RegularMapper();
+   		  $regular = new Worker_Models_Regular();
    			$regulars->find($regId,$regular);
    			$this->view->regular = $regular;
    			}
