@@ -52,7 +52,9 @@ class Equipment_IndexController extends Zend_Controller_Action
 		
 		$this->view->arrayEquipments = $arrayEquipments;
 		$this->view->errorMsg = $errorMsg;
-
+		$this->view->module = "equipment";
+		$this->view->controller = "index";
+		$this->view->modelName = "机械设备信息";
     }
     public function addAction()
     {

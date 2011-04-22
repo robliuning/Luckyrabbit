@@ -27,14 +27,14 @@ class Worker_Forms_extraSave extends Zend_Form
 			'text', 'startDate', array(
 			'label' => '开始日期: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text', 'endDate', array(
 			'label' => '结束日期: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(

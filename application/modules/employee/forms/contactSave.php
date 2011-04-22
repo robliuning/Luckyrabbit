@@ -6,9 +6,9 @@
 class Employee_Forms_ContactSave extends Zend_Form
 {
 
-    public function init()
-    {
-    	$this->setMethod('post');
+	public function init()
+	{
+		$this->setMethod('post');
 			
 		$this->addElement(                   //姓名
 			'text', 'name', array(
@@ -23,11 +23,11 @@ class Employee_Forms_ContactSave extends Zend_Form
 			'label' => '性别: ',
 			'multiOptions'=> array('1'=>'男','0'=>'女'),
 			'required' => true,
-			'class'=>'tbShort tbText'
+			'class'=>'tbMedium tbText'
 			)
 		);
-    
-    	 $this->addElement(					//职称
+	
+		 $this->addElement(					//职称
 			'select', 'titleName', array(
 			'label' => '职称: ',
 			'required' => false,
@@ -35,11 +35,11 @@ class Employee_Forms_ContactSave extends Zend_Form
 			)
 		);
 		
-    	$this->addElement(                  //出生日期
+		$this->addElement(                  //出生日期
 			'text', 'birth', array(
 			'label' => '出生日期: ',
 			'required' => false,
-			'class'=>'tbLarge tbText datepicker'
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		
@@ -79,43 +79,43 @@ class Employee_Forms_ContactSave extends Zend_Form
 			'textarea', 'remark', array(
 			'label' => '备注: ',
 			'required' => false,
-			'class'=>'tbLarge tbText',
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 20
 			)
 		);		
-    	$this->addElement(
-    		'submit','submit',array(
-    		'ignore'=>true,
-    		'class'=>'btConfirm radius',
-    		'name'=>'submit'
-    		)
-    	);
-    	
-    	$this->addElement(
-    		'submit','submit2',array(
-    		'ignore'=>true,
-    		'class'=>'btConfirm radius',
-    		'name'=>'submit'
-    		)
-    	);
-    	
-    	$this->setElementDecorators(array(
-            'ViewHelper',
-            'Errors',
-            array(array('data'=>'HtmlTag'),
-            array('tag'=>'td','class'=>'element')),
-            array('Label',array('tag'=>'td')),
-            array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
+		$this->addElement(
+			'submit','submit',array(
+			'ignore'=>true,
+			'class'=>'btConfirm radius',
+			'name'=>'submit'
+			)
+		);
+		
+		$this->addElement(
+			'submit','submit2',array(
+			'ignore'=>true,
+			'class'=>'btConfirm radius',
+			'name'=>'submit'
+			)
+		);
+		
+		$this->setElementDecorators(array(
+			'ViewHelper',
+			'Errors',
+			array(array('data'=>'HtmlTag'),
+			array('tag'=>'td','class'=>'element')),
+			array('Label',array('tag'=>'td')),
+			array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
 
-   		 ));
+		 ));
 
 		$this->setDecorators(array(
-            'FormElements',
-            array('HtmlTag',array('tag'=>'table')),
-            'Form'
-        ));
-    }
+			'FormElements',
+			array('HtmlTag',array('tag'=>'table')),
+			'Form'
+		));
+	}
 }
 ?>
 

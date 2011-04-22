@@ -50,6 +50,9 @@ class Contract_IndexController extends Zend_Controller_Action
 		}
 		$this->view->arrayContractors = $arrayContractors;
 		$this->view->errorMsg = $errorMsg;	
+		$this->view->module = "contractor";
+		$this->view->controller = "index";
+		$this->view->modelName = "承包商信息";
 		}
 		
 	public function editAction()  /*修改*/

@@ -19,7 +19,7 @@ class Project_IndexController extends Zend_Controller_Action
 
     public function indexAction() 
     {
-		$projects = new	 Project_Models_ProjectMapper();
+		$projects = new Project_Models_ProjectMapper();
 		$errorMsg = null;
 		if($this->getRequest()->isPost())
 		{
@@ -47,9 +47,12 @@ class Project_IndexController extends Zend_Controller_Action
 			$arrayProjects = $projects->fetchAllJoin();
 		}
 		$this->view->arrayProjects = $arrayProjects;
-		$this->view->errorMsg = $errorMsg;    
+		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "project";
+		$this->view->controller = "index";
+		$this->view->modelName = "工程信息";
 		}
-    
+		
     public function addAction()                                        
     {
     	$addForm = new Project_Forms_ProjectSave();

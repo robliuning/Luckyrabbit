@@ -50,7 +50,10 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			$arrayEmployees  = $employees->fetchAllJoin();
 		}
 		$this->view->arrayEmployees  = $arrayEmployees;
-		$this->view->errorMsg = $errorMsg;    
+		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "employee";
+		$this->view->controller = "index";
+		$this->view->modelName = "公司员工信息"; 
 		}
     
     public function addAction() //check

@@ -47,6 +47,9 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 		}
 		$this->view->arraySubcontracts = $arraySubcontracts;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "subcontracts";
+		$this->view->controller = "index";
+		$this->view->modelName = "分包单信息";
 
 
 		$addForm=new Contract_Forms_subcontractSave();
@@ -89,6 +92,7 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 				        }
 		   }
 		  $this->view->addForm=$addForm;
+
 	}
 public function editForm()
 	{

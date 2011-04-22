@@ -27,7 +27,7 @@ class Worker_Forms_bonuseSave extends Zend_Form
 			'text', 'bonDate', array(
 			'label' => 'ÈÕÆÚ: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(
@@ -38,10 +38,12 @@ class Worker_Forms_bonuseSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'detail', array(
+			'textarea', 'detail', array(
 			'label' => 'ÏêÇé: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
+			'cols'=> 60,
+			'rows'=> 20
 			)
 		);
 		$this->addElement(

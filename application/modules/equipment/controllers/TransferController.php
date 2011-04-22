@@ -47,7 +47,9 @@ class Equipment_TransferController extends Zend_Controller_Action
 		
 		$this->view->arrayTransfers = $arrayTransfers;
 		$this->view->errorMsg = $errorMsg;
-
+		$this->view->module = "equipment";
+		$this->view->controller = "index";
+		$this->view->modelName = "机械设备调拨单";
 	}
 	public function addAction()
 	{
