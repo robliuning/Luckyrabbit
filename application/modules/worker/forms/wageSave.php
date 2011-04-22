@@ -10,31 +10,32 @@ class Worker_Forms_wageSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'text', 'workerId', array(
-			'label' => '¹¤ÈËÐÕÃû: ',
+			'text', 'workerName', array(
+			'label' => 'å·¥äººå§“å: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText ac_workerName'//ä¿®æ”¹å¤„
 			)
 		);
+		
      	$this->addElement(
 			'text', 'amount', array(
-			'label' => '¹¤×Ê½ð¶î: ',
+			'label' => 'å·¥èµ„é‡‘é¢: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	  	$this->addElement(
 			'text', 'startDate', array(
-			'label' => '¿ªÊ¼ÈÕÆÚ: ',
+			'label' => 'å¼€å§‹æ—¥æœŸ: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker' //ä¿®æ”¹å¤„
 			)
 		);
 		$this->addElement(
 			'text', 'endDate', array(
-			'label' => '½áÊøÈÕÆÚ: ',
+			'label' => 'ç»“æŸæ—¥æœŸ: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker' //ä¿®æ”¹å¤„
 			)
 		);
     	$this->addElement(
@@ -52,6 +53,13 @@ class Worker_Forms_wageSave extends Zend_Form
     		'name'=>'submit'
     		)
     	);
+    	
+    	$this->addElement(
+			'text', 'workerId', array(
+			'required' => true,
+			'class'=>'hide ac_workerId'//ä¿®æ”¹å¤„
+			)
+		);
     	
     	$this->setElementDecorators(array(
             'ViewHelper',

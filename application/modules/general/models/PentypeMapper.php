@@ -48,7 +48,7 @@ class General_Models_PentypeMapper
 
 	public function findPentypeName($id)
 	{
-		$arrayNames = $this->getDbTable()->findPentype($id);
+		$arrayNames = $this->getDbTable()->findPentypeName($id);
 		$name = $arrayNames[0]->name;
 		return $name;
 	}

@@ -47,7 +47,7 @@ class Worker_Models_WorkerMapper
         }
     }
     
-    public function find($workerId,　Worker_Models_Worker $worker) //check
+    public function find($workerId,Worker_Models_Worker $worker) //check
     {
 
         $result = $this->getDbTable()->find($workerId);

@@ -1,21 +1,22 @@
 <?php
-  //creation date 17-04-2011
+  //creation date 22-04-2011
   //creating by lincoy
-  //completion date 17-04-2011
-class Worker_Models_Extra
-{     
-    protected $_extId;
+  //completion date 22-04-2011
+class Worker_Models_Penalty
+{
+	protected $_penId;
 	protected $_projectId;
 	protected $_projectName;
 	protected $_workerId;
 	protected $_workerName;
-	protected $_startDate;
-	protected $_endDate;
-	protected $_period;
-	protected $_cost;
+	protected $_penDate;
+	protected $_typeId;
+	protected $_typeName;
+	protected $_detail;
+	protected $_amount;
 	protected $_remark;
 	protected $_cTime;
-    
+
     public function __construct(array $options = null)
     {
         if (is_array($options)) {
@@ -27,7 +28,7 @@ class Worker_Models_Extra
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid extra property');
+            throw new Exception('Invalid penalty property');
         }
         $this->$method($value);
     }
@@ -36,10 +37,10 @@ class Worker_Models_Extra
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid extra property');
+            throw new Exception('Invalid penalty property');
         }
         return $this->$method();
-    } 
+    }
 
     public function setOptions(array $options)
     {
@@ -53,24 +54,24 @@ class Worker_Models_Extra
         return $this;
     }
 
-	public function setExtId($extId)
+	public function setPenId($penId)
     {
-        $this->_extId = (int)$extId;
+        $this->_penId = (int)$penId;
         return $this;
-    } 
-
-    public function getExtId()
-    {
-        return $this->_extId;
     }
-    
+
+    public function getPenId()
+    {
+        return $this->_penId;
+    }
+
 	/************************************************/
 
 	public function setProjectId($projectId)
     {
         $this->_projectId = (int)$projectId;
         return $this;
-    } 
+    }
 
     public function getProjectId()
     {
@@ -83,7 +84,7 @@ class Worker_Models_Extra
     {
         $this->_projectName = $projectName;
         return $this;
-    } 
+    }
 
     public function getProjectName()
     {
@@ -94,9 +95,9 @@ class Worker_Models_Extra
 
 	public function setWorkerId($workerId)
     {
-        $this->_workId = $workerId;
+        $this->_workerId = $workerId;
         return $this;
-    } 
+    }
 
     public function getWorkerId()
     {
@@ -109,7 +110,7 @@ class Worker_Models_Extra
     {
         $this->_workerName = $workerName;
         return $this;
-    } 
+    }
 
     public function getWorkerName()
     {
@@ -119,58 +120,70 @@ class Worker_Models_Extra
 
 	/************************************************/
 
-	public function setStartDate($startDate)
+	public function setPenDate($penDate)
     {
-        $this->_startDate = $startDate;
+        $this->_penDate = $penDate;
         return $this;
-    } 
-
-    public function getStartDate()
-    {
-        return $this->_startDate;
     }
-    
+
+    public function getPenDate()
+    {
+        return $this->_penDate;
+    }
+
 	/************************************************/
 
-	public function setEndDate($endDate)
+	public function setTypeId($typeId)
     {
-        $this->_endDate = $endDate;
+        $this->_typeId = $typeId;
         return $this;
-    } 
-
-    public function getEndDate()
-    {
-        return $this->_endDate;
     }
-    
+
+    public function getTypeId()
+    {
+        return $this->_typeId;
+    }
+
     /************************************************/
 
-	public function setPeriod($period)
+	public function setTypeName($typeName)
     {
-        $this->_period = $period;
+        $this->_typeName = $typeName;
         return $this;
-    } 
+    }
 
-    public function getPeriod()
+    public function getTypeName()
     {
-        return $this->_period;
+        return $this->_typeName;
     }
 
 	/************************************************/
 
-	public function setCost($cost)
+	public function setDetail($detail)
     {
-        $this->_cost = $cost;
+        $this->_detail = $detail;
         return $this;
-    } 
+    }
 
-    public function getCost()
+    public function getDetail()
     {
-        return $this->_cost;
+        return $this->_detail;
     }
 
 	/************************************************/
-    
+	public function setAmount($amount)
+    {
+        $this->_amount = $amount;
+        return $this;
+    }
+
+    public function getAmount()
+    {
+        return $this->_amount;
+    }
+
+	/************************************************/
+
     public function setRemark($remark)
     {
         $this->_remark = $remark;
@@ -188,7 +201,7 @@ class Worker_Models_Extra
     {
         $this->_cTime = $cTime;
         return $this;
-    } 
+    }
 
     public function getCTime()
     {

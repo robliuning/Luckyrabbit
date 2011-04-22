@@ -48,7 +48,7 @@ class General_Models_BontypeMapper
 
 	public function findBontypeName($id)
 	{
-		$arrayNames = $this->getDbTable()->findBontype($id);
+		$arrayNames = $this->getDbTable()->findBontypeName($id);
 		$name = $arrayNames[0]->name;
 		return $name;
 	}

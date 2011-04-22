@@ -4,7 +4,7 @@ Created Meimo
 Date Apr.17.2011
 */
 
-class Worker_IndexController extends Zend_Controller_Action
+class Worker_WageController extends Zend_Controller_Action
 {
 
     public function init()
@@ -16,10 +16,10 @@ class Worker_IndexController extends Zend_Controller_Action
 	{
 		$this->view->render('_sidebar.phtml');
 	}
-
-    public function indexAction()
-    {
-        // action body
+	
+	public function indexAction()
+	{
+	// action body
 		$errorMsg = null;
 		$wages = new Worker_Models_WageMapper();
 		$errorMsg = null;
@@ -34,12 +34,12 @@ class Worker_IndexController extends Zend_Controller_Action
 				$arrayWages = $wages->fetchAllJoin($key,$condition);
 				if(count($arrayWages) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					}
 		}
 		else
@@ -54,8 +54,8 @@ class Worker_IndexController extends Zend_Controller_Action
 	{
 		//
 		$addForm = new Worker_Forms_wageSave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$wages = new Worker_Models_WageMapper();
 		$result = null;
@@ -72,7 +72,7 @@ class Worker_IndexController extends Zend_Controller_Action
 				$wage->setStartDate($addForm->getValue('startDate'));
 				$wage->setEndDate($addForm->getValue('endDate'));
 				$result = $wages->save($wage);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('name')->setValue('');
 					$addForm->getElement('amount')->setValue('');
@@ -94,11 +94,11 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
 		$editForm = new Worker_Forms_wageSave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
 		$wages = new Worker_Models_WageMapper();
@@ -114,7 +114,7 @@ class Worker_IndexController extends Zend_Controller_Action
 				$wage->setWagId($wagId);
 				$wage->setName($editForm->getValue('name'));
 				$wage->setAmunt($editForm->getValue('amount'));
-				$wage->setStartDate$editForm->getValue('startDate'));
+				$wage->setStartDate($editForm->getValue('startDate'));
 				$wage->setEndDate($editForm->getValue('endDate'));
 				$result = $wages->save($wage);
 
@@ -133,7 +133,7 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
     			else
     			{
-    				$this->_redirect('/wage');
+    				$this->_redirect('/worker/wage');
     				}
     		}		
     	$this->view->editForm = $editForm;
@@ -146,8 +146,6 @@ class Worker_IndexController extends Zend_Controller_Action
 		//
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
-   
-   
    		$wagId = $this->_getParam('id',0);
     	if($wagId > 0)
     	{
@@ -157,12 +155,25 @@ class Worker_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$this->_redirect('/wage');
+    			$this->_redirect('/worker/wage');
     			}
-
 	}
 
-
+	public function ajaxdisplayAction()              
+   	{
+   		$this->_helper->layout()->disableLayout();
+   		$wageId = $this->_getParam('id',0);
+    	if($wageId >0)
+    	{
+   		    $wages = new Worker_Models_WageMapper();
+   		    $wage = new Worker_Models_Wage();
+   			$wages->find($wageId,$wage);
+   			$this->view->wage = $wage;
+   			}
+    		else
+    		{
+   				$this->_redirect('/worker/wage');
+   				}
+   	}
 }
-
 ?>

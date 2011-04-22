@@ -4,7 +4,7 @@ Created Meimo
 Date Apr.17.2011
 */
 
-class Worker_IndexController extends Zend_Controller_Action
+class Worker_RegularController extends Zend_Controller_Action
 {
 
     public function init()
@@ -34,12 +34,12 @@ class Worker_IndexController extends Zend_Controller_Action
 				$arrayRegulars = $wages->fetchAllJoin($key,$condition);
 				if(count($arrayRegulars) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$test_SearchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$test_SearchErrorNi;
 					}
 		}
 		else
@@ -98,21 +98,21 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
 		$editForm = new Worker_Forms_wageSave();
 		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
-    	$editForm->submit2->setAttrib('class','hide');
+    $editForm->submit2->setAttrib('class','hide');
 
 		$wages = new Worker_Models_WageMapper();
-    	$wagId = $this->_getParam('id',0);
-    	$result = null;
+    $wagId = $this->_getParam('id',0);
+    $result = null;
 
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-    		if($editForm->isValid($formData))
+    	if($editForm->isValid($formData))
 			{
 				$wage = new Worker_Models_Wage();
 				$wage->setRegularId($regId);
@@ -167,6 +167,22 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
 
 	}
+	public function ajaxdisplayAction()              
+   	{
+   		$this->_helper->layout()->disableLayout();
+   		$regId = $this->_getParam('id',0);
+    	if($regId >0)
+    	{
+   		  $regulars = new Worker_Models_RegularMapper();
+   		  $regular = new Worker_Models_Regular();
+   			$regulars->find($regId,$regular);
+   			$this->view->regular = $regular;
+   			}
+    		else
+    		{
+   				$this->_redirect('/worker/regular');
+   				}
+   	}
 
 
 }
