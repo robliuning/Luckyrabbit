@@ -1,9 +1,9 @@
 <?php
-  //creation date 17-04-2011
+  //creation date 22-04-2011
   //creating by lincoy
-  //completion date 17-04-2011
+  //completion date 22-04-2011
 
-class Worker_Models_ExtraMapper
+class Worker_Models_PenaltyMapper
 {
 	protected $_dbTable;
 
@@ -22,43 +22,42 @@ class Worker_Models_ExtraMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Worker_Models_DbTable_Extra');
+            $this->setDbTable('Worker_Models_DbTable_Penalty');
         }
         return $this->_dbTable;
     }
 
-    public function save(Worker_Models_Extra $extra)
+    public function save(Worker_Models_Penalty $penalty)
     {
         $data = array(
-            'extId' => $extra->getExtId(),
-            'projectId' => $extra->getProjectId(),
-			'workerId' => $extra->getWorkerId(),
-			'startDate' => $extra->getStartDate(),
-			'endDate' => $extra->getEndDate(),
-			'period' => $extra->getPeriod(),
-			'cost' => $extra->getCost(),
-			'profit' => $extra->getProfit(),
-            'remark' => $extra->getRemark()
+        'penId' => $penalty->getPenId(),
+        'projectId' => $penalty->getProjectId(),
+        'workerId' => $penalty->getWorkerId(),
+			  'penDate' => $penalty->penDate(),
+			  'typeId' => $penalty->getTypeId(),
+			  'detail' => $penalty->getDetail(),
+			  'amount' => $penalty->getAmount(),
+        'remark' => $penalty->getRemark()
         );
-        if (null === ($id = $extra->getExtId())) {
-            unset($data['extId']);
+        if (null === ($id = $penalty->getPenId())) {
+            unset($data['penId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('extId = ?' => $extra->getExtId()));
+            $this->getDbTable()->update($data, array('penId = ?' => $penalty->getPenId()));
         }
     }
 
-    public function findArrayExtra($id)
+    public function findArrayPenalty($id)
     {
 		$id = (int)$id;
-		$entries = $this->getDbTable()->fetchRow('extId = '.$id);
+		$entries = $this->getDbTable()->fetchRow('penId = '.$id);
 		$projectId = $entries->getProjectId();
 		$workerId = $entries->getWorkerId();
 		$entry = $entries->toArray();
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
-        $entry[] = $projectName;
+    $entry[] = $projectName;
 
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($workerId);
@@ -81,32 +80,32 @@ class Worker_Models_ExtraMapper
    		$entries = array();
 
    		foreach($resultSet as $row){
-   			$entry = new Worker_Models_Extra();
-   			$entry->setExtId($row->extId)
+   			$entry = new Worker_Models_Penalty();
+   			$entry->setPenId($row->penId)
 				->setProjectId($row->projectId)
 				->setWorkerId($row->workerId)
-				->setStartDate($row->startDate)
-				->setEndDate($row->endDate)
-				->setPeriod($row->period)
-				->setCost($row->cost)
-   				->setRemark($row->remark)
+				->setPenDate($row->penDate)
+				->setTypeId($row->typeId)
+				->setDetail($row->detail)
+				->setAmount($row->amount)
+   			->setRemark($row->remark)
 				->setCTime($row->cTime);
 
-			$projects = new Project_Models_ProjectMapper();
-			$projectName = $projects->findProjectName($entry->getProjectId());
-            $entry->setProjectName($projectName);
+				$projects = new Project_Models_ProjectMapper();
+				$projectName = $projects->findProjectName($entry->getProjectId());
+        $entry->setProjectName($projectName);
 
-			$workers = new Worker_Models_WorkerMapper();
-		    $workerName = $workers->findWorkerName($entry->getWorkerId());
-			$entry->setWorkerName($workerName);
+				$workers = new Worker_Models_WorkerMapper();
+		  	$workerName = $workers->findWorkerName($entry->getWorkerId());
+				$entry->setWorkerName($workerName);
    			$entries[] = $entry;
    			}
     	return $entries;
     	}
 
-	public function delete($extId)
+	public function delete($penId)
 	{
-		$this->getDbTable()->delete("extId = ".(int)$extId);
+		$this->getDbTable()->delete("penId = ".(int)$penId);
 		}
 }
 ?>
