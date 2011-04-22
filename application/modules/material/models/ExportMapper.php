@@ -30,18 +30,19 @@ class Material_Models_ExportMapper
     public function save(Material_Models_Export $export) 
     {
         $data = array(
-       'expId' => $export->getExpId(),
-       'projectId' => $export->getProjectId(),
-			 'expDate' => $export->getExpDate(),
-       'expType' => $export->getExpType(),
-			 'destId' => $export->getDestId(),
-       'applicId' => $export->getApplicId(),
-			 'applicDate' => $export->getApplicDate(),
-			 'planType' => $export->getPlanType()
-			 'approvId' => $export->getApprovId(),
-			 'approvDate' => $export->getApprovDate(),	
-			 'total' =>$export->getTotal(),
-       'remark' => $export->getRemark()
+
+            'expId' => $export->getExpId(),
+            'projectId' => $export->getProjectId(),
+			'expDate' => $export->getExpDate(),
+            'expType' => $export->getExpType(),
+			'destId' => $export->getDestId(),
+            'applicId' => $export->getApplicId(),
+			'applicDate' => $export->getApplicDate(),
+			'planType' => $export->getPlanType(),
+			'approvId' => $export->getApprovId(),
+			'approvDate' => $export->getApprovDate(),	
+			'total' =>$export->getTotal(),
+            'remark' => $export->getRemark()
         );
         if (null === ($id = $export->getExpId())) {
             unset($data['expId']);
