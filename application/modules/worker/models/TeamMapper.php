@@ -42,6 +42,8 @@ class Worker_Models_TeamMapper
             $this->getDbTable()->update($data, array('teamId = ?' => $team->getTeamId()));
         }
     }
+    
+    public function find($id,)
      
     public function findArrayTeam($id) 
     {

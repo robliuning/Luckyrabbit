@@ -197,14 +197,6 @@ class Employee_IndexController extends Zend_Controller_Action
 		//$key = "赵";
     	$contacts = new Employee_Models_ContactMapper();
     	$arrayNames = $contacts->findContactNames($key);
-    	  
-    	$test = array(0=>array(
-    	"contactId"=>"012345",
-    	"name"=>"赵一"
-    		),1=>array(
-    		"contactId"=>"99999","name"=>"刘宁")
-    	);
-    	
     	$json = Zend_Json::encode($arrayNames);  	
     	echo $json;
    		}

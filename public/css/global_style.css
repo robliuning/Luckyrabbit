@@ -57,6 +57,10 @@ a:link, a:visited
 
 	}
 /*Id*/
+#reset:hover
+{
+	cursor: pointer;
+	}
 #p_id
 {
 	

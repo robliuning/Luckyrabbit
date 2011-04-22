@@ -12,10 +12,10 @@ class Employee_Forms_CppSave extends Zend_Form
 
 		$this->addElement(
 			/*员工姓名*/
-		     'text','contactName',array(
+		     'text','name',array(
 			    'label'=>'员工姓名:',
 			    'required'=>true,
-			    'class'=>'tbLarge tbText'
+			    'class'=>'tbLarge tbText ac_contactName'
 		      )
 		);
 		$this->addElement(
@@ -79,8 +79,7 @@ class Employee_Forms_CppSave extends Zend_Form
 		     /*员工姓名对应的Id,隐藏域*/
 		      'text','contactId',array(
 			    'required'=>false,
-			    'class'=>'hide',
-			    'value'=>'000020'
+			    'class'=>'hide ac_contactId'
 			  )
 		);
 				

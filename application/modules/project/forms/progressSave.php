@@ -45,14 +45,14 @@ class project_Forms_progressSave extends Zend_Form
 			'text', 'startDate', array(
 			'label' => '起始日期: ',
 			'required' => false,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
     $this->addElement(
 			'text', 'endDateExp', array(
 			'label' => '预计结束日期: ',
 			'required' => false,
-			'class'=>'tbMedium tbText'
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);	
 	$this->addElement(                   
@@ -66,7 +66,7 @@ class project_Forms_progressSave extends Zend_Form
 			'text','endDateAct',array(
 			'label'=>'实际完成日期: ',
 		//	'filters'=>array('StringTrim'),
-			'class'=>'tbLarge tbText',
+			'class'=>'tbLarge tbText datepicker',
 			)
 		);
 	$this->addElement(                   
@@ -89,6 +89,8 @@ class project_Forms_progressSave extends Zend_Form
 			'label'=>'备注: ',
 		//	'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
+			'cols' => 60,
+			'rows' => 20
 			)
 		);
 

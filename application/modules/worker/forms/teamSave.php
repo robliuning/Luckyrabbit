@@ -11,23 +11,25 @@ class Worker_Forms_teamSave extends Zend_Form
 			
 		$this->addElement(
 			'text', 'name', array(
-			'label' => '°à×éÃû³Æ: ',
+			'label' => 'ç­ç»„åç§°: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
      	$this->addElement(
-			'text', 'contactId', array(
-			'label' => '¸ºÔðÈË: ',
+			'text', 'contactName', array(
+			'label' => 'è´Ÿè´£äºº: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
-	  	$this->addElement(
-			'text', 'sum', array(
-			'label' => '×ÜÈËÊý: ',
-			'required' => true,
-			'class'=>'tbLarge tbText'
+		$this->addElement(
+			'textarea', 'remark', array(
+			'label' => 'å¤‡æ³¨: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
 			)
 		);
     	$this->addElement(
@@ -45,6 +47,13 @@ class Worker_Forms_teamSave extends Zend_Form
     		'name'=>'submit'
     		)
     	);
+    	$this->addElement(
+			'text', 'contactId', array(
+			'required' => true,
+			'class'=>'hide'
+			)
+		);
+    	
     	
     	$this->setElementDecorators(array(
             'ViewHelper',

@@ -16,7 +16,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 			'label'=>'员工姓名: ',
 			'required' => true,
 			'filters'=>array('StringTrim'),
-			'class'=>'tbLarge tbText',
+			'class'=>'tbLarge tbText ac_contactName',
 			)
 		);
 			
@@ -60,9 +60,9 @@ class Employee_Forms_EmployeeSave extends Zend_Form
     	);
     	
     	$this->addElement(                 
-			'text','empId',array(
+			'text','contactId',array(
 			'required' => true,
-			'class'=>''
+			'class'=>'hide ac_contactId'
 			)
 		);
     	

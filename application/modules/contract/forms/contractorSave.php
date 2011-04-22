@@ -29,28 +29,28 @@ class Contract_Forms_ContractorSave extends Zend_Form
 		  );
        $this->addElement(
 		    /*许可证号*/
-	        'text','licenseNo',array(
-			     'label'=>'许可证号:',
+	       'text','licenseNo',array(
+			   'label'=>'许可证号:',
 				 'class'=>'tbLarge tbText',
 				 'required'=>false
 			  )
 	   );
        $this->addElement(
 		    /*承包商业务范围*/
-	        'textarea','busiField',array(
-			     'label'=>'承包商业务范围:',
+	       'textarea','busiField',array(
+			   'label'=>'承包商业务范围:',
 				 'class'=>'tbLarge tbText',
-				 'required'=>false,
-				 'cols' =>60,
-			     'rows' =>5
+				 'required'=> false,
+				 'cols' => 60,
+			   'rows' => 20
 			  )
 	   );
 	  $this->addElement(
 			  /*联系电话*/
-		   'text','phoneNo',array(
-			    'label'=>'联系电话:' ,
-			    'class'=>'tbLarge tbText',
-			    'required'=>false
+		     'text','phoneNo',array(
+			   'label'=>'联系电话:' ,
+			   'class'=>'tbLarge tbText',
+			   'required'=>false
 		     )
 		  );
 	 $this->addElement(
@@ -73,18 +73,18 @@ class Contract_Forms_ContractorSave extends Zend_Form
         /*备注*/
         'textarea','remark',array(
 		    'label'=>'备注:',
-			'class'=>'tbLarge tbText',
-			'required'=>false,
-			'cols' =>60,
-			'rows' =>5
+			  'class'=>'tbLarge tbText',
+			  'required'=>false,
+			  'cols' => 60,
+			  'rows' => 20
 		 )
    );
   $this->addElement(
        /*按钮一*/
-       'submit','submit',array(
-		   'ignore'=>true,
-		   'class'=>'btConfirm radius',
-           'name'=>'submit'
+        'submit','submit',array(
+		    'ignore'=>true,
+		    'class'=>'btConfirm radius',
+        'name'=>'submit'
 	     )
   );
   $this->addElement(

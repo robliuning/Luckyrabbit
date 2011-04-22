@@ -34,14 +34,14 @@ class Asset_Forms_DepreSave extends Zend_Form
 		$this->addElement(
 		  'text','inDate',array(
 			  'label'=>'进场日期:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
 		  'text','outDate',array(
 			  'label'=>'出场日期:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>true		
 		   )
 		);
@@ -64,8 +64,8 @@ class Asset_Forms_DepreSave extends Zend_Form
 			    'label'=>'备注:',
 			    'class'=>'tbLarge tbText',
 			    'required'=>false,
-			    'rows'=>5,
-			    'cols'=>20
+				'cols' => 60,
+				'rows' => 20
 		   )
 		);
         $this->addElement(

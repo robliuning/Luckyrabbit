@@ -56,7 +56,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 	  'text','startDateExp',array(
 		    'label'=>'预计开始日期:',
 		    'required'=>false,
-		    'class'=>'tbLarge tbText'
+		    'class'=>'tbLarge tbText datepicker'
 	    )
 	 );
 	$this->addElement(
@@ -64,7 +64,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 	   'text','endDateExp',array(
 		     'label'=>'预计结束时间:',
 		     'required'=>false,
-		     'class'=>'tbLarge tbText'
+		     'class'=>'tbLarge tbText datepicker'
 	     )
 	);
 	$this->addElement(
@@ -80,7 +80,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 	     'text','startDateAct',array(
 		       'label'=>'实际开始时间:',
 			   'required'=>false,
-			   'class'=>'tbText tbLarge'
+			   'class'=>'tbText tbLarge datepicker'
 	     )
 	);
 	$this->addElement(
@@ -88,7 +88,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 	      'text','endDateAct',array(
 		       'label'=>'实际结束时间:',
 			   'required'=>false,
-			   'class'=>'tbLarge tbText'
+			   'class'=>'tbLarge tbText datepicker'
 		  )
 	);
 	$this->addElement(
@@ -101,42 +101,52 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 	);
 	$this->addElement(
 	   /*承包人违约情况*/
-	   'text','brConContr',array(
+	   'textarea','brConContr',array(
 		     'label'=>'承包人违约情况:',
 		     'required'=>false,
 		     'class'=>'tbLarge tbText'
+				'cols' => 60,
+				'rows' => 20
 	     )
 	);
 	$this->addElement(
 	   /*承包人违约责任*/
-	   'text','brResContr',array(
+	   'textarea','brResContr',array(
 		    'label'=>'承包人违约责任:',
 		    'required'=>false,
 		    'class'=>'tbLarge tbText'
+				'cols' => 60,
+				'rows' => 20
 	    )
 	);
   $this->addElement(
     /*分包商违约情况*/
-     'text','brConSContr',array(
+     'textarea','brConSContr',array(
 		 'label'=>'分包商违约责任:',
 		 'required'=>false,
 		 'class'=>'tbLarge tbText'
+				'cols' => 60,
+				'rows' => 20
 	   )
   );
  $this->addElement(
     /*分包商违约责任*/
-    'text','brResSContr',array(
+    'textarea','brResSContr',array(
 	     'label'=>'分包商违约责任:',
 		 'required'=>false,
 		 'class'=>'tbLarge tbText'
+				'cols' => 60,
+				'rows' => 20
 	  )
  );
 $this->addElement(
    /*保修信息*/
-   'text','warranty',array(
+   'textarea','warranty',array(
 	      'label'=>'保修信息:',
 	      'required'=>false,
 	      'class'=>'tbLarge tbText'
+				'cols' => 60,
+				'rows' => 20
      )
 );
 $this->addElement(
@@ -177,6 +187,8 @@ $this->addElement(
 	      'label'=>'备注',
 	      'required'=>false,
 	      'class'=>'tbLarge tbText'
+	      'cols' => 60,
+			  'rows' => 20
       )
 );
   $this->addElement(
