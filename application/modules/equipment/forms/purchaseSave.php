@@ -25,16 +25,16 @@ class Equipment_Forms_PurchaseSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		  'select','buyerId',array(
+		  'select','buyerName',array(
 			  'label'=>'采购员:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText ac_buyerName',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
 		  'text','purDate',array(
 			  'label'=>'采购日期:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>false
 		   )
 		);
@@ -47,16 +47,16 @@ class Equipment_Forms_PurchaseSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		  'select','approvId',array(
+		  'select','approvName',array(
 			  'label'=>'审批人:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText ac_contactName',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
 		  'text','approvDate',array(
 			  'label'=>'审批时间:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>false
 		   )
 		);
@@ -93,8 +93,8 @@ class Equipment_Forms_PurchaseSave extends Zend_Form
 			    'label'=>'备注:',
 			    'class'=>'tbLarge tbText',
 			    'required'=>false,
-			    'rows'=>5,
-			    'cols'=>20
+			    'cols' => 60,
+			    'rows' => 20
 		   )
 		);
         $this->addElement(
@@ -114,6 +114,20 @@ class Equipment_Forms_PurchaseSave extends Zend_Form
 	       )
        );
 
+			$this->addElement(
+				'text','buyerId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
+			$this->addElement(
+				'text','approvId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
         $this->setElementDecorators(
            array(
 	         'ViewHelper',

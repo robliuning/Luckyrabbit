@@ -32,23 +32,23 @@ class Equipment_Forms_RentSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		  'select','personId',array(
+		  'select','personName',array(
 			  'label'=>'经办人:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText ac_contactName',
 			  'required'=>true
 		   )
 		);
 		$this->addElement(
 		  'text','startDate',array(
 			  'label'=>'租赁开始时期:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>false,
 		   )
 		);
 		$this->addElement(
 		  'text','endDate',array(
 			  'label'=>'租赁结束时间:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>false
 		   )
 		);
@@ -61,16 +61,16 @@ class Equipment_Forms_RentSave extends Zend_Form
 		   )
 		);
 		$this->addElement(
-		  'select','approvId',array(
+		  'select','approvName',array(
 			  'label'=>'审批人:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText ac_contactName',
 			  'required'=>false
 		   )
 		);
 		$this->addElement(
 		   'text','approvDate',array(
 			  'label'=>'审批时间:',
-			  'class'=>'tbLarge tbText',
+			  'class'=>'tbLarge tbText datepicker',
 			  'required'=>false
 		   )
 		);
@@ -101,8 +101,8 @@ class Equipment_Forms_RentSave extends Zend_Form
 			    'label'=>'备注:',
 			    'class'=>'tbLarge tbText',
 			    'required'=>false,
-			    'rows'=>5,
-			    'cols'=>20
+			    'cols' => 60,
+			    'rows' => 20
 		   )
 		);
         $this->addElement(
@@ -121,6 +121,21 @@ class Equipment_Forms_RentSave extends Zend_Form
 		    'name'=>'submit'
 	       )
        );
+       
+			$this->addElement(
+				'text','personId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
+			$this->addElement(
+				'text','approvId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
         $this->setElementDecorators(
            array(
 	         'ViewHelper',

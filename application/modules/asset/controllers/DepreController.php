@@ -49,6 +49,9 @@ class Asset_IndexController extends Zend_Controller_Action
 		
 		$this->view->arrayDepres = $arrayDepres;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "asset";
+		$this->view->controller = "index";
+		$this->view->modelName = "固定资产折旧信息";
     }
     public function addAction()
     {

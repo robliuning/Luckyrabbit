@@ -49,6 +49,9 @@ class Employee_CppController extends  Zend_Controller_Action
 			
 		$this->view->arrayCpps = $arrayCpps;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "cpp";
+		$this->view->controller = "index";
+		$this->view->modelName = "员工岗位信息";
   	}
 	  
 	public function addAction()//check

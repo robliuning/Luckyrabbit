@@ -14,10 +14,10 @@ class Worker_IndexController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
-	public function preDispatch()
-	{
+		public function preDispatch()
+		{
 		$this->view->render('_sidebar.phtml');
-	}
+		}
 
     public function indexAction()
     {
@@ -94,7 +94,6 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		 $this->view->addForm = $addForm;
 		 $this->view->result = $result;
-
 	}
 
 	public function editAction()
@@ -125,7 +124,7 @@ class Worker_IndexController extends Zend_Controller_Action
 			else
     			{
     				$editForm->populate($formData);
-    				}
+ 					}
 		}
 		else
     	{
@@ -186,5 +185,4 @@ class Worker_IndexController extends Zend_Controller_Action
    				}
 		}
 }
-
 ?>

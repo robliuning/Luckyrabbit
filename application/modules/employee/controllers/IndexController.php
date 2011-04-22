@@ -46,6 +46,9 @@ class Employee_IndexController extends Zend_Controller_Action
 			
 		$this->view->arrayContacts = $arrayContacts;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "contact";
+		$this->view->controller = "index";
+		$this->view->modelName = "通讯录信息";
     }
      
     public function addAction()                       

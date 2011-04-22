@@ -57,8 +57,8 @@ class Equipment_Forms_EquipmentSave extends Zend_Form
 			'label'=>'±¸×¢:',
 			'class'=>'tbLarge tbText',
 			'required'=>false,
-			'rows'=>5,
-			'cols'=>20
+			'cols' => 60,
+			'rows' => 20
 		   )
 		);
         $this->addElement(

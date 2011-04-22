@@ -73,12 +73,13 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 			  'required'=>false
 		   )
 		);
-		$this->addElement(
-		   'select','buyerName',array(
-			   'label'=>'采购员:',
-			   'class'=>'tbLarge tbText ac_contactName',
-			   'required'=>false
-		   )
+		$this->addElement(                   
+			'text','contactName',array(
+			'label'=>'采购员: ',
+			'required' => true,
+			'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText ac_contactName',
+			)
 		);
 		$this->addElement(
 		    'text','purDate',array(
@@ -87,12 +88,13 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 			   'required'=>false
 		   )
 		);
-		$this->addElement(
-		    'select','approvName',array(
-			   'label'=>'审批人:',
-			   'class'=>'tbLarge tbText ac_contactName',
-			   'required'=>false
-		   )
+		$this->addElement(                   
+			'text','approvName',array(
+			'label'=>'审批人: ',
+			'required' => false,
+			'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText ac_contactName',
+			)
 		);
 		$this->addElement(
 		    'text','approvDate',array(
@@ -126,6 +128,21 @@ class Asset_Forms_PurchaseSave extends Zend_Form
 		    'name'=>'submit'
 	       )
        );
+       
+			$this->addElement(
+				'text','contactId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
+			$this->addElement(
+				'text','approvId',array(
+				'required' => true,
+				'class'=>'hide ac_contactId'
+				)
+			);
+			
         $this->setElementDecorators(
            array(
 	         'ViewHelper',

@@ -47,7 +47,9 @@ class Equipment_RentController extends Zend_Controller_Action
 		
 		$this->view->arrayRents = $arrayRents;
 		$this->view->errorMsg = $errorMsg;
-
+		$this->view->module = "equipment";
+		$this->view->controller = "index";
+		$this->view->modelName = "机械设备租赁单";
 	}
 	public function addAction()
 	{

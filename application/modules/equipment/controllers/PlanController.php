@@ -47,7 +47,9 @@ class Equipment_PlanController extends Zend_Controller_Action
 		
 		$this->view->arrayPlans = $arrayPlans;
 		$this->view->errorMsg = $errorMsg;
-
+		$this->view->module = "equipment";
+		$this->view->controller = "index";
+		$this->view->modelName = "机械设备需求计划";
 	}
 	public function addAction()
 	{

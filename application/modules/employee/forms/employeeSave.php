@@ -64,7 +64,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 			'required' => true,
 			'class'=>'hide ac_contactId'
 			)
-		);
+			);
     	
     	$this->setElementDecorators(array(
             'ViewHelper',
