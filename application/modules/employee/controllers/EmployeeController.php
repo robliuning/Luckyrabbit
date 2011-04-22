@@ -5,7 +5,7 @@ date.2011.3.26
 reviewed: rob
 date 2001.4.7
 Modified Meimo
-Date :  Apr.15.2011
+Date :  Apr.15.2011,Apr.21.2011
 */
 
 class Employee_EmployeeController extends Zend_Controller_Action
@@ -136,16 +136,16 @@ class Employee_EmployeeController extends Zend_Controller_Action
 
 	public function editAction()  //check
 	{
-		$editForm = new Employee_Forms_EmployeeSave();
+			$editForm = new Employee_Forms_EmployeeSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
     	$tbName = $editForm->getElement('name');
     	$tbName->setAttrib('disabled','disabled');
 
-        $employees = new Employee_Models_EmployeeMapper();
+      $employees = new Employee_Models_EmployeeMapper();
     	$employees->populateEmployeeDd($editForm);
 
-		$empId = $this->_getParam('id',0);
+			$empId = $this->_getParam('id',0);
 
 		if($this->getRequest()->isPost())
 		{
@@ -158,7 +158,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 				$employee->setDutyName($editForm->getValue('dutyName'));
 				$employee->setStatus($editForm->getValue('status'));
 				$option = 'edit';
-                $employees->save($employee,$option);
+        $employees->save($employee,$option);
 			    $this->_redirect('/employee/employee');
 			}
 		  else
@@ -179,7 +179,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			}
 		}
 		
-		$this->view->editForm = $editForm;
+			$this->view->editForm = $editForm;
     	$this->view->id = $empId;
 	}
  
@@ -187,18 +187,33 @@ class Employee_EmployeeController extends Zend_Controller_Action
   	{
     	$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
-    
     	$id = $this->_getParam('id',0);
 		if($id > 0)
 	  	{
-			$employees=new Employee_Models_EmployeeMapper();
-        	$employees->delete($id);
+			$employees = new Employee_Models_EmployeeMapper();
+      $employees->delete($id);
 			echo "1";
 	  		}
 			else
 	  		{
-				$this->redirect('/employee');
+				$this->redirect('/employee/employee');
 	  			}
   	}
+  	public function ajaxdisplayAction()
+  	{
+  		$this->_helper->layout()->disableLayout();
+   		$id = $this->_getParam('id',0);
+    	if($id >0)
+    	{
+   		  $employees = new Employee_Models_EmployeeMapper();
+   		  $employee = new Employee_Models_Employee();
+   			$employees->find($id,$employee);
+   			$this->view->employee = $employee;
+   			}
+    		else
+    		{
+   				$this->_redirect('/employee/employee');
+   				}
+  		}
 }
 ?>

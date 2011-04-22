@@ -80,9 +80,9 @@ class Vehicle_IndexController extends Zend_Controller_Action
    					$addForm->getElement('color')->setValue('');
    					$addForm->getElement('license')->setValue('');
    					$addForm->getElement('contactId')->setValue('');
-					$addForm->getElement('user')->setValue('');
+						$addForm->getElement('user')->setValue('');
    					$addForm->getElement('fuelCons')->setValue('');
-					$addForm->getElement('remark')->setValue('');
+						$addForm->getElement('remark')->setValue('');
    					}
    					else
     				{
@@ -100,10 +100,10 @@ class Vehicle_IndexController extends Zend_Controller_Action
     public function editAction()                                
     {
         $editForm = new Vehicle_Forms_VehicleSave();
-    	$editForm->submit->setLabel('保存修改');
-    	$editForm->submit2->setAttrib('class','hide');
+    		$editForm->submit->setLabel('保存修改');
+    		$editForm->submit2->setAttrib('class','hide');
 
-		$vehicles = new Vehicle_Models_VehicleMapper();
+				$vehicles = new Vehicle_Models_VehicleMapper();
 		
 		$veId = $this->_getParam('id',0); 
    	
@@ -182,5 +182,22 @@ class Vehicle_IndexController extends Zend_Controller_Action
     			$this->_redirect('/vehicle');
     			}
     	}
+   public function ajaxdisplayAction()
+    	{
+    		$this->_helper->layout()->disableLayout();
+				$this->_helper->viewRenderer->setNoRender(true);
+				$veId = $this->_getParam('id',0);
+					if($veId>0)
+					{
+			$vehicles = new Vehicle_Models_VehicleMapper();
+			$vehicle = new Vehicle_Models_Vehicle();
+			$vehicles->find($veId,$vehicle);
+			$this->view->vehicle = $vehicle;
+					}
+				else
+					{
+            $this->_redirect('/vehicle');
+					}
+    		}
 }
 ?>

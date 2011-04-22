@@ -4,6 +4,8 @@
 author:mingtingling
 date:2011-4-17
 vision:2.0
+Modified by MeiMo
+Date:Apr.21.2011
 */
 class Equipment_TransferController extends Zend_Controller_Action
 {
@@ -30,13 +32,13 @@ class Equipment_TransferController extends Zend_Controller_Action
 				
 				if(count($arrayTransfers) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -80,17 +82,16 @@ class Equipment_TransferController extends Zend_Controller_Action
 				    {
 					   $transfers->save($transfer);
 					   $addForm->getElement('projectId')->setValue('');
-				       $addForm->getElement('trsDate')->setValue('');
+				     $addForm->getElement('trsDate')->setValue('');
 					   $addForm->getElement('origId')->setValue('');
 					   $addForm->getElement('destId')->setValue('');
 					   $addForm->getElement('applicId')->setValue('');
-				    
 					   $addForm->getElement('applicDate')->setValue('');
-                       $addForm->getElement('planType')->setValue('');
+             $addForm->getElement('planType')->setValue('');
 					   $addForm->getElement('approvId')->setValue('');
-				       $addForm->getElement('approvDate')->setValue('');
-				       $addForm->getElement('total')->setValue('');
-				       $addForm->getElement('remark')->setValue('');
+				     $addForm->getElement('approvDate')->setValue('');
+				     $addForm->getElement('total')->setValue('');
+				     $addForm->getElement('remark')->setValue('');
 					   }
 					   else
 				       {
@@ -107,7 +108,7 @@ class Equipment_TransferController extends Zend_Controller_Action
 	}
 	public function editAction()
 	{
-       $editForm=new Equipment_Forms_TransferSave();
+     $editForm=new Equipment_Forms_TransferSave();
 	   $editForm->submit->setLabel("保存修改");
 	   $editForm->submit2->setAttrib('class','hide');
 	   $trsId=$this->_getParam('id',0);
@@ -169,4 +170,21 @@ class Equipment_TransferController extends Zend_Controller_Action
 			$this->_redirect('equipment/transfer');
 		}
 	}
+	public function ajaxdisplayAction()
+	{
+		$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$trsId = $this->_getParam('id',0);
+		if($trsId>0)
+		{
+			$transfers = new Equipment_Models_TransferMapper();
+			$transfer = new Equipment_Models_Transfer();
+			$transfers->find($trsId,$transfer);
+			$this->view->transfer = $transfer;
+		}
+		else
+		{
+            $this->_redirect('/equipment/transfer');
+		}
+		}
 }

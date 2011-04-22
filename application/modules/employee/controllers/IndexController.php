@@ -87,7 +87,7 @@ class Employee_IndexController extends Zend_Controller_Action
    					$addForm->getElement('idCard')->setValue('');
    					$addForm->getElement('phoneNo')->setValue('');
    					$addForm->getElement('otherContact')->setValue('');
-					$addForm->getElement('address')->setValue('');
+						$addForm->getElement('address')->setValue('');
    					$addForm->getElement('remark')->setValue('');
    					}
    					else
@@ -180,8 +180,8 @@ class Employee_IndexController extends Zend_Controller_Action
    		$contactId = $this->_getParam('id',0);
     	if($contactId >0)
     	{
-   		    $contacts = new Employee_Models_ContactMapper();
-   		    $contact = new Employee_Models_Contact();
+   		  $contacts = new Employee_Models_ContactMapper();
+   		  $contact = new Employee_Models_Contact();
    			$contacts->find($contactId,$contact);
    			$this->view->contact = $contact;
    			}
@@ -193,11 +193,9 @@ class Employee_IndexController extends Zend_Controller_Action
    	
    	public function autocompleteAction()
    	{
-   	    $this->_helper->layout()->disableLayout();
+   	  $this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
     	$key = $this->_getParam('key');
-		//$key = iconv('UTF-8','gb2312//IGNORE',$key);    
-		//$key = "赵";
     	$contacts = new Employee_Models_ContactMapper();
     	$arrayNames = $contacts->findContactNames($key);
     	$json = Zend_Json::encode($arrayNames);  	

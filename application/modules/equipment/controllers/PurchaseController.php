@@ -4,6 +4,8 @@
 author:mingtingling
 date:2011-4-16
 vision:2.0
+Modified by MeiMo
+Date:Apr.21.2011
 */
 class Equipment_PurchaseController extends Zend_Controller_Action
 {
@@ -30,13 +32,13 @@ class Equipment_PurchaseController extends Zend_Controller_Action
 				
 				if(count($arrayPurchases) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -54,18 +56,18 @@ class Equipment_PurchaseController extends Zend_Controller_Action
 	public function addAction()
 	{
         $addForm=new Equipment_Forms_PurchaseSave();
-		$addForm->submit->setLabel("保存并继续添加");
-		$addForm->submit2->setLabel("保存并返回");
-		$purchases=new Equipment_Models_PurchaseMapper();
-		$purchases->populatePurchaseDb($addForm);
-		if($this->getRequest()->isPost())
-		{
-          $btClicked=$this->getRequest()->getPost('submit');
-		  $formData=$this->getRequest()->getPost();
-		  if($addForm->isValid($formData))
-			{
-			     $purchase=new Equipment_Models_Purchase();
-                 $purchase->setProjectId($addForm->getValue('projectId'));
+				$addForm->submit->setLabel("保存并继续添加");
+				$addForm->submit2->setLabel("保存并返回");
+				$purchases=new Equipment_Models_PurchaseMapper();
+				$purchases->populatePurchaseDb($addForm);
+					if($this->getRequest()->isPost())
+						{
+          		$btClicked=$this->getRequest()->getPost('submit');
+		  				$formData=$this->getRequest()->getPost();
+		  					if($addForm->isValid($formData))
+										{
+			   $purchases = new Equipment_Models_Purchase();
+				 $purchase->setProjectId($addForm->getValue('projectId'));
 				 $purchase->setVenId($addForm->getValue('venId'));
 				 $purchase->setBuyerId($addForm->getValue('buyerId'));
 				 $purchase->setPurDate($addForm->getValue('purDate'));
@@ -165,10 +167,10 @@ class Equipment_PurchaseController extends Zend_Controller_Action
     {
      $this->_helper->layout()->disableLayout();
 	 $this->_helper->viewRenderer->setNoRender(true);
-	 $purId=$this->_getParam('id',0);
+	 $purId = $this->_getParam('id',0);
 	 if($purId>0)
 		{
-		 $purchases=new Equipment_Models_PurchaseMapper();
+		 $purchases = new Equipment_Models_PurchaseMapper();
 		 $purchases->delete($purId);
  		  }/*legal*/
           else
@@ -180,13 +182,13 @@ class Equipment_PurchaseController extends Zend_Controller_Action
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$purId=$this->_getParam('id',0);
+		$purId = $this->_getParam('id',0);
 		if($purId>0)
 		{
-			$purchases=new Equipment_Models_PurchaseMapper();
-			$purchase=new Equipment_Models_Purchase();
+			$purchases = new Equipment_Models_PurchaseMapper();
+			$purchase = new Equipment_Models_Purchase();
 			$purchases->find($purId,$purchase);
-			$this->view->purchase=$purchase;
+			$this->view->purchase = $purchase;
 		}/*legal*/
 		else
 		{

@@ -4,6 +4,8 @@
 author:mingtingling
 date:2011-4-16
 vision:2.0
+Modified by MeiMo
+Date:Apr.21.2011
 */
 class Equipment_PlanController extends Zend_Controller_Action
 {
@@ -30,13 +32,13 @@ class Equipment_PlanController extends Zend_Controller_Action
 				
 				if(count($arrayPlans) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -53,18 +55,18 @@ class Equipment_PlanController extends Zend_Controller_Action
 	}
 	public function addAction()
 	{
-		$addForm=new Equipment_Forms_PlanSave();
+		$addForm = new Equipment_Forms_PlanSave();
 		$addForm->submit->setLabel("保存并继续添加");
 		$addForm->submit2->setLabel("保存并返回");
-		$plans=new Equipment_Models_PlanMapper();
-        $plans->populatePlanDb($addForm);
+		$plans = new Equipment_Models_PlanMapper();
+    $plans->populatePlanDb($addForm);
 		if($this->getRequest()->isPost())
 		{
-          $btClicked=$this->getRequest()->getPost('submit');
+      $btClicked=$this->getRequest()->getPost('submit');
 		  $formData=$this->getRequest()->getPost();
 		  if($addForm->isValid($formData))
 			{
-			   $plan=new Equipment_Models_Plan();
+			   $plan = new Equipment_Models_Plan();
 			   $plan->setPlanType($addForm->getValue('planType'));
 			   $plan->setProjectId($addForm->getValue('projectId'));
 			   $plan->setDueDate($addForm->getValue('dueDate'));
@@ -79,13 +81,13 @@ class Equipment_PlanController extends Zend_Controller_Action
 					   $plans->save($plan);
 					   $addForm->getElement('planType')->setValue('');
 					   $addForm->getElement('projectId')->setValue('');
-				       $addForm->getElement('dueDate')->setValue('');
-				       $addForm->getElement('applicId')->setValue()
+				     $addForm->getElement('dueDate')->setValue('');
+				     $addForm->getElement('applicId')->setValue()
 					   $addForm->getElement('applicDate')->setValue('');
 					   $addForm->getElement('approvId')->setValue('');
-				       $addForm->getElement('approvDate')->setValue('');
-				       $addForm->getElement('total')->setValue('');
-				       $addForm->getElement('remark')->setValue('');
+				     $addForm->getElement('approvDate')->setValue('');
+				     $addForm->getElement('total')->setValue('');
+				     $addForm->getElement('remark')->setValue('');
                        
 					   }
 					   else
@@ -103,7 +105,7 @@ class Equipment_PlanController extends Zend_Controller_Action
 	}
 	public function editAction()
 	{
-       $editForm=new Equipment_Forms_PlanSave();
+     $editForm=new Equipment_Forms_PlanSave();
 	   $editForm->submit->setLabel("保存修改");
 	   $editForm->submit2->setAttrib('class','hide');
 	   $planId=$this->_getParam('id',0);
@@ -126,8 +128,8 @@ class Equipment_PlanController extends Zend_Controller_Action
 			   $plan->setApprovDate($editForm->getValue('approvDate'));
 			   $plan->setTotal($editForm->getValue('total'));
 			   $plan->setRemark($editForm->getValue('remark'));
-				$plans->save($plan);
-				$this->_redirect('/equipment/plan');
+				 $plans->save($plan);
+				 $this->_redirect('/equipment/plan');
 			}/*end isValid()*/
 			else
 			{
@@ -164,4 +166,21 @@ class Equipment_PlanController extends Zend_Controller_Action
 			$this->_redirect('equipment/plan');
 		}
 	}
+	public function ajaxdisplay()
+	{
+		$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$planId = $this->_getParam('id',0);
+		if($planId>0)
+		{
+			$plans = new Equipment_Models_PlanMapper();
+			$plan = new Equipment_Models_Plan();
+			$plans->find($planId,$plan);
+			$this->view->plan = $plan;
+		}
+		else
+		{
+            $this->_redirect('/equipment/plan');
+		}
+		}
 }

@@ -122,17 +122,17 @@ class Employee_CppController extends  Zend_Controller_Action
 	   	
 	public function editAction() 
 	{
-	 	$editForm=new Employee_Forms_CppSave();
+	 	$editForm = new Employee_Forms_CppSave();
 	 	$editForm->submit->setLabel("保存修改");
      	$editForm->submit2->setAttrib('class','hide');
 
-	 	$cpps=new Employee_Models_CppMapper();
+	 	$cpps = new Employee_Models_CppMapper();
 	 	$cpps->populateCppDd($editForm);
 	 	$cppId = $this->_getParam('id',0);
 
 	 	if($this->getRequest()->isPost())
 		{
-		  $formData=$this->getRequest()->getPost();
+		  $formData = $this->getRequest()->getPost();
 		  if($editForm->isValid($formData))
 			{
 				$cpp = new Employee_Models_Cpp();
@@ -155,7 +155,7 @@ class Employee_CppController extends  Zend_Controller_Action
 			    );
 			    if($validatorRe->isValid($cpp->getPostId(),$cpp->getContactId(),$cpp->getProjectName())) 
 			  	{
-			        $errorMsg="该岗位信息已经存在。";
+			        $errorMsg = "该岗位信息已经存在。";
 			  		}
 			  		else 
 			  		{
@@ -191,13 +191,29 @@ class Employee_CppController extends  Zend_Controller_Action
         $cppId = $this->_getParam('id',0);
 		if($cppId > 0)
 		{
-			$cpps=new Employee_Models_CppMapper();
+			$cpps = new Employee_Models_CppMapper();
 			$result = $cpps->delete($cppId);
 			echo $result;
 		}
 		else
 		{
-         $this->_redirect('/employee');
+         $this->_redirect('/employee/cpp');
 		}
 	}
+	public function ajaxdisplayAction()
+	{
+		$this->_helper->layout()->disableLayout();
+   		$cppId = $this->_getParam('id',0);
+    	if($cppId >0)
+    	{
+   		    $cpps = new Employee_Models_CppMapper();
+   		    $cpp = new Employee_Models_Cpp();
+   			$cpps->find($cppId,$cpp);
+   			$this->view->cpp = $cpp;
+   			}
+    		else
+    		{
+   				$this->_redirect('/employee/cpp');
+   				}
+		}
 }
