@@ -30,6 +30,7 @@ class Material_Models_ExportMapper
     public function save(Material_Models_Export $export) 
     {
         $data = array(
+
             'expId' => $export->getExpId(),
             'projectId' => $export->getProjectId(),
 			'expDate' => $export->getExpDate(),
@@ -37,7 +38,7 @@ class Material_Models_ExportMapper
 			'destId' => $export->getDestId(),
             'applicId' => $export->getApplicId(),
 			'applicDate' => $export->getApplicDate(),
-			'planType' => $export->getPlanType()
+			'planType' => $export->getPlanType(),
 			'approvId' => $export->getApprovId(),
 			'approvDate' => $export->getApprovDate(),	
 			'total' =>$export->getTotal(),
@@ -63,11 +64,11 @@ class Material_Models_ExportMapper
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
-        $entry[] = $projectName;
+    $entry[] = $projectName;
 
 		$sites = new General_Models_SiteMapper();
 		$destName = $vendors->findSiteName($destId);
-	    $entry[] = $destName;
+	  $entry[] = $destName;
 
 		$contacts = new Employee_Models_ContactMapper();
 		$applicName = $contacts->findContactName($applicId);
@@ -97,31 +98,31 @@ class Material_Models_ExportMapper
 				->setProjectId($row->projectId)
 				->setExpDate($row->expDate)
 				->setExpType($row->expType)
-                ->setDestId($row->destId)
+        ->setDestId($row->destId)
 				->setApplicId($row->applicId)
 				->setApplicDate($row->applicDate)
 				->setPlanType($row->planType)
 				->setApprovId($row->approvId)
 				->setApprovDate($row->approvDate)
 				->setTotal($row->total)
-   				->setRemark($row->remark)
+   			->setRemark($row->remark)
 				->setCTime($row->cTime);
 
 			$projects = new Project_Models_ProjectMapper();
 			$projectName = $projects->findProjectName($entry->getProjectId());
-            $entry->setProjectName($projectName);
+      $entry->setProjectName($projectName);
 
-   			$sites = new General_Models_SiteMapper();
+   		$sites = new General_Models_SiteMapper();
 			$destName = $sites->findSiteName($entry->getDestId());
 			$entry->setDestName($destName);
 
 			$contacts = new Employee_Models_ContactMapper();
-		    $applicName = $contacts->findContactName($entry->getApplicId());
+		  $applicName = $contacts->findContactName($entry->getApplicId());
 			$entry->setApplicName($applicName);
-		    $approvName = $contacts->findContactName($entry->getApprovId());
+		  $approvName = $contacts->findContactName($entry->getApprovId());
 			$entry->setApprovName($approvName);
    			 				
-   			$entries[] = $entry;
+   		$entries[] = $entry;
    			}
     	return $entries;
     	}

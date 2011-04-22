@@ -1,0 +1,103 @@
+ <?php 
+ 	$this->headTitle('- 工人管理 - 工人信息');
+ 	$this->headScript()->prependFile('/js/workerjs/p_worker.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工人管理 - 工人信息 - 详情</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+			</div>
+			<div class="overall_tool">
+				<div class="button_group">	
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/worker"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu">工人信息</p>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>					
+					</colgroup>
+					<tr>
+					<tr>
+						<td>班组名称: </td>
+						<td><?php echo $this->team->getName()?></td>
+					</tr>
+					<tr>
+						<td>负责人: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->team->getContactId() ?>"><?php echo $this->team->getContactName() ?></a></td>
+					</tr>
+					<tr>
+						<td>联系电话: </td>
+						<td><?php echo $this->team->getContactPhoneNo() ?></td>
+					</tr>
+					<tr>
+						<td>总人数: </td>
+						<td><?php echo $this->team->getSum()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $this->team->getRemark()?></td>
+					</tr>	
+				</table>
+				<p class="subMenu">日工工资记录</p>
+					<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>						
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>工人姓名</th>
+						<th>联系电话</th>
+						<th>家庭住址</th>
+						<th>岗位证编号</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayWorkers as $worker):?>
+					<?php $workerId = $this->escape($worker->getWorkerId());?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'display','id'=>$workerId))?>"><?php echo $this->escape($worker->getName()) ?></a></td>
+						<td><?php echo $this->escape($worker->getPhoneNo()) ?></td>	
+						<td><?php echo $this->escape($worker->getAddress()) ?></td>
+						<td>
+						<?php echo $this->escape($worker->getCert())?>
+						</td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'edit','id'=>$workerId))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'display','id'=>$workerId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<p class="subMenu">工人奖励</p>
+				<p class="subMenu">工人扣款</p>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

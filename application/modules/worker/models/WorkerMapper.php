@@ -35,7 +35,7 @@ class Worker_Models_WorkerMapper
             'teamId' => $worker->getTeamId(),
 			'phoneNo' => $worker->getPhoneNo(), 
 			'address' => $worker->getAddress(), 
-			'skills' => $worker->getSkills(), 
+			'skill' => $worker->getSkill(), 
 			'cert' => $worker->getCert(),
             'remark' => $worker->getRemark()
         );
@@ -46,7 +46,31 @@ class Worker_Models_WorkerMapper
             $this->getDbTable()->update($data, array('workerId = ?' => $worker->getWorkerId()));
         }
     }
-     
+    
+    public function find($workerId,　Worker_Models_Worker $worker) //check
+    {
+
+        $result = $this->getDbTable()->find($workerId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $worker  ->setName($row->name)
+                  ->setTeamId($row->teamId)
+                  ->setPhoneNo($row->phoneNo)
+                  ->setAddress($row->address)
+                  ->setSkill($row->skill)
+                  ->setCert($row->cert)
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+                  
+		$teams = new Worker_Models_TeamMapper();
+		$teamName = $teams->findTeamName($worker->getTeamId());
+		$worker->setTeamName($teamName);	 
+    }
+    
     public function findArrayWorker($id) 
     {
 		$id = (int)$id;
@@ -75,14 +99,14 @@ class Worker_Models_WorkerMapper
 				->setTeamId($row->teamId)
 				->setPhoneNo($row->phoneNo)
 				->setAddress($row->address)
-				->setSkills($row->skills)
+				->setSkill($row->skill)
 				->setCert($row->cert)
    				->setRemark($row->remark)
 				->setCTime($row->cTime);
 
 			$teams = new Worker_Models_TeamMapper();
 		    $teamName = $teams->findTeamName($entry->getTeamId());
-			$entry->setContactName($teamName);	 				
+			$entry->setTeamName($teamName);	 				
    			$entries[] = $entry;
    			}
     	return $entries;
@@ -100,5 +124,16 @@ class Worker_Models_WorkerMapper
 
 		return $name;
 	}
+	
+	public function populateWorkerDd($form)
+	{
+		$teams = new Worker_Models_TeamMapper();
+		$arrayTeams = $teams->fetchAllNames(); 
+
+		foreach($arrayTeams as $team)
+		{
+			$form->getElement('teamId')->addMultiOption($team->getTeamId(),$team->getName());
+			}
+		}
 }
 ?>

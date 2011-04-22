@@ -1,5 +1,6 @@
 $(document).ready(function()
 {  
+	
 	$('.lightbox').nm();
 	
 		$('#cb_sa').click(function(){

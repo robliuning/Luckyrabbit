@@ -20,13 +20,13 @@
 				$arrayContacts = $contacts->fetchAllJoin($key,$condition);
 				if(count($arrayContacts) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr ;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}

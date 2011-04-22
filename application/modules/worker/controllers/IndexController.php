@@ -171,7 +171,13 @@ class Worker_IndexController extends Zend_Controller_Action
    		    $teams = new Worker_Models_TeamMapper();
    		    $team = new Worker_Models_Team();
    			$teams->find($id,$team);
+   			$workers = new Worker_Models_WorkerMapper();
+   			$condition = "teamId";
+   			$arrayWorkers = $workers->fetchAllJoin($id,$condition);
+   			
    			$this->view->team = $team;
+   			$this->view->arrayWorkers = $arrayWorkers;
+   			
    			}
     		else
     		{

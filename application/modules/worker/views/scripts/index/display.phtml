@@ -1,6 +1,6 @@
  <?php 
  	$this->headTitle('- 工人管理 - 班组信息');
- 	$this->headScript()->prependFile('/js/worker/p_team.js');
+ 	$this->headScript()->prependFile('/js/workerjs/p_team.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -54,6 +54,45 @@
 						<td>备注: </td>
 						<td><?php echo $this->team->getRemark()?></td>
 					</tr>	
+				</table>
+				<p class="subMenu">班组工人</p>
+					<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>						
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>工人姓名</th>
+						<th>联系电话</th>
+						<th>家庭住址</th>
+						<th>岗位证编号</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayWorkers as $worker):?>
+					<?php $workerId = $this->escape($worker->getWorkerId());?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'display','id'=>$workerId))?>"><?php echo $this->escape($worker->getName()) ?></a></td>
+						<td><?php echo $this->escape($worker->getPhoneNo()) ?></td>	
+						<td><?php echo $this->escape($worker->getAddress()) ?></td>
+						<td>
+						<?php echo $this->escape($worker->getCert())?>
+						</td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'edit','id'=>$workerId))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'worker','action'=>'display','id'=>$workerId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

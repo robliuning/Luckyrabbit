@@ -36,7 +36,10 @@ class Worker_Models_DbTable_Wage extends Zend_Db_Table_Abstract
 			        ->where('startDate < ?',$key)
 					->where('endDate > ?',$key);
 				}
-				
+				elseif($condition == "workerId")
+				{
+					$select->where('workerId = ?',$id);
+					}
 		$resultSet = $this->fetchAll($select);
 		
 		return $resultSet;
