@@ -11,32 +11,64 @@ class Worker_Forms_workerSave extends Zend_Form
 			
 		$this->addElement(
 			'text', 'name', array(
-			'label' => '¹¤ÈËÐÕÃû: ',
+			'label' => 'å·¥äººå§“å: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
+		
      	$this->addElement(
 			'select', 'teamId', array(
-			'label' => '°à×éÃû³Æ: ',
+			'label' => 'ç­ç»„åç§°: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
+		
 		$this->addElement(
 			'text', 'phoneNo', array(
-			'label' => 'ÁªÏµµç»°: ',
+			'label' => 'è”ç³»ç”µè¯: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
+		
+		$this->addElement(
+			'text', 'address', array(
+			'label' => 'å®¶åº­ä½å€: ',
+			'required' => false,
+			'class'=>'tbLarge tbText'
+			)
+		);
+		
 		$this->addElement(
 			'text', 'cert', array(
-			'label' => '¸ÚÎ»Ö¤±àºÅ: ',
+			'label' => 'å²—ä½è¯ç¼–å·: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
+		
+		$this->addElement(
+			'textarea', 'skill', array(
+			'label' => 'æŠ€èƒ½: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
+			)
+		);
+		
+		$this->addElement(
+			'textarea', 'remark', array(
+			'label' => 'å¤‡æ³¨: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
+			)
+		);
+		
     	$this->addElement(
     		'submit','submit',array(
     		'ignore'=>true,
@@ -70,5 +102,4 @@ class Worker_Forms_workerSave extends Zend_Form
         ));
     }
 }
-
 ?>

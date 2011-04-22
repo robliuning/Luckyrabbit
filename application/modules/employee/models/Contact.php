@@ -17,6 +17,7 @@ class Employee_Models_Contact
 	protected $_address;
 	protected $_remark;
 	protected $_age;
+	protected $_cTime;
 
     public function __construct(array $options=null)
 	{
@@ -175,6 +176,16 @@ class Employee_Models_Contact
 	{
 		return $this->_age;
 	}
+	
+	public function setCTime($cTime)
+	{
+		$this->_cTime = $cTime;
+        return $this;
+	}
 
+	public function getCTime()
+	{
+		return $this->_cTime;
+	}
 }
 ?>
