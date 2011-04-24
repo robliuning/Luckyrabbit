@@ -101,7 +101,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     
     public function editAction()                                
     {
-        $editForm = new Vehicle_Forms_VerecordSave();
+      $editForm = new Vehicle_Forms_VerecordSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
     	
@@ -117,7 +117,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$verecord = new Vehicle_Models_Verecord();
-				$verecord->setRecordId($verecordId);
+					$verecord->setRecordId($verecordId);
     			$verecord->setVeId($editForm->getValue('veId'));
     			$verecord->setStartDate($editForm->getValue('startDate'));
     			$verecord->setEndDate($editForm->getValue('endDate'));
@@ -139,7 +139,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     		{
     			if($verecordId >0)
     			{
-    			    $arrayVerecord = $verecords->findArrayVerecord($verecordId);
+    			  $arrayVerecord = $verecords->findArrayVerecord($verecordId);
     				$editForm->populate($arrayVerecord);
     				}
     				else
@@ -154,7 +154,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
    public function ajaxdisplayAction()                                                    
     {  
     	$this->_helper->layout()->disableLayout();
-        $verecords = new Vehicle_Models_VerecordMapper();
+      $verecords = new Vehicle_Models_VerecordMapper();
 	    $verecordId = $this->_getParam('id',0);
 	    if($verecordId >0)
         {
@@ -170,7 +170,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
    
     public function ajaxdeleteAction()
     {
-		$this->_helper->layout()->disableLayout();
+			$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
    
    		$verecordId = $this->_getParam('id',0);

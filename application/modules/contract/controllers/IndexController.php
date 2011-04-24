@@ -67,7 +67,7 @@ class Contract_IndexController extends Zend_Controller_Action
 		      $formData = $this->getRequest()->getPost();
                if($editForm->isValid($formData))
 			     { 
-				    $contractors = new Contract_Models_Contractor();
+				    $contractor = new Contract_Models_Contractor();
             $contractor->setContractorId($contractorId);
             $contractor->setArtiPerson($editForm->getValue('artiPerson'));
 					  $contractor->setName($editForm->getValue('name'));
@@ -113,7 +113,7 @@ public function addAction() // 添加
 		   $formData = $this->getRequest()->getPost();
 		   if($addForm->isValid($formData))
 		      {
-			   $contractors = new Contract_Models_Contractor();
+			   $contractor = new Contract_Models_Contractor();
 				 $contractor->setName($addForm->getValue('name'));
 				 $contractor->setArtiPerson($addForm->getValue('artiPerson'));
 				 $contractor->setLicenseNo($addForm->getValue('licenseNo'));

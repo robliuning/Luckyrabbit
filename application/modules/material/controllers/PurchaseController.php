@@ -50,10 +50,10 @@ class Material_PurchaseController extends Zend_Controller_Action
     public function addAction()
     {
        	$addForm = new Material_Forms_purchaseSave();
-		$addForm->submit->setLabel('保存继续新建');
-		$addForm->submit2->setLabel('保存返回上页');
-		$addForm->approvId->setAttrib('class','hide');
-		$addForm->approvDate->setAttrib('class','hide');
+				$addForm->submit->setLabel('保存继续新建');
+				$addForm->submit2->setLabel('保存返回上页');
+				$addForm->approvId->setAttrib('class','hide');
+				$addForm->approvDate->setAttrib('class','hide');
 
 		$purchases = new Material_Models_PurchaseMapper();
 		$purchases->populatePurchaseDd($addForm);
@@ -101,11 +101,11 @@ class Material_PurchaseController extends Zend_Controller_Action
 public function editAction()
     {
         $editForm = new Material_Forms_purchaseSave();
-		$editForm->submit->setLabel('保存修改');
-    	$editForm->submit2->setAttrib('class','hide');
+				$editForm->submit->setLabel('保存修改');
+    		$editForm->submit2->setAttrib('class','hide');
 
-		$purchases = new Material_Models_PurchaseMapper();
-    	$purId = $this->_getParam('id',0);
+				$purchases = new Material_Models_PurchaseMapper();
+    		$purId = $this->_getParam('id',0);
 
 		if($this->getRequest()->isPost())
 		{
@@ -137,8 +137,8 @@ public function editAction()
     	{
     		if($purId >0)
     		{
-    			$arraypurchase = $purchases->findArrayPurchase($purId);
-    			$editForm->populate($arraypurchase);
+    			$arrayPurchase = $purchases->findArrayPurchase($purId);
+    			$editForm->populate($arrayPurchase);
     			}
     			else
     			{

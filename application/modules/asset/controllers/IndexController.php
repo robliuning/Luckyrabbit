@@ -171,12 +171,12 @@ class Asset_IndexController extends Zend_Controller_Action
     
     public function ajaxdeleteAction()
     {
-     $this->_helper->layout()->disableLayout();
-	 $this->_helper->viewRenderer->setNoRender(true);
-	 $purId=$this->_getParam('id',0);
+			$this->_helper->layout()->disableLayout();
+			$this->_helper->viewRenderer->setNoRender(true);
+	 $purId = $this->_getParam('id',0);
 	 if($purId>0)
 		{
-		 $purchases=new Asset_Models_PurchaseMapper();
+		 $purchases = new Asset_Models_PurchaseMapper();
 		 $purchases->delete($purId);
  		  }/*legal*/
           else

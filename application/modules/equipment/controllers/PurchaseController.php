@@ -113,20 +113,20 @@ class Equipment_PurchaseController extends Zend_Controller_Action
     public function editAction()
     {
      $editForm=	new Equipment_Forms_PurchaseSave();
-	 $editForm->submit->setLabel('保存修改');
-	 $editForm->submit2->setAttrib('class','hide');
+		 $editForm->submit->setLabel('保存修改');
+	 	 $editForm->submit2->setAttrib('class','hide');
      $purchases=new Equipment_Models_PurchaseMapper();
-	 $purchases->populatePurchaseDb($editForm);/*下拉条*/
+	 	 $purchases->populatePurchaseDb($editForm);/*下拉条*/
      $purId=$this->_getParam('id',0);
 	 if($editForm->getRequest()->isPost())
 		{
 		  $btClicked=$this->getRequest()->getPost('submit');
-          $formData=$this->getRequest()->getPost();
+      $formData=$this->getRequest()->getPost();
 		  if($addForm->isValid($formData))
 			{
 			  $purchase=new Equipment_Models_Purchase();
 			  $purchase->setPurId($purId);
-              $purchase->setProjectId($editForm->getValue('projectId'));
+        $purchase->setProjectId($editForm->getValue('projectId'));
 			  $purchase->setVenId($editForm->getValue('venId'));
 			  $purchase->setBuyerId($editForm->getValue('buyerId'));
 			  $purchase->setPurDate($editForm->getValue('purDate'));
@@ -138,7 +138,7 @@ class Equipment_PurchaseController extends Zend_Controller_Action
 			  $purchase->setInvoice($editForm->getValue('invoice'));
 			  $purchase->setTotal($editForm->getValue('total'));
 			  $purchase->setRemark($editForm->getValue('remark'));
-              $purchases->save($purchase);
+        $purchases->save($purchase);
 			  $this->_redirect('/equipment/purchase');
 
 			}/*end of isValid()*/

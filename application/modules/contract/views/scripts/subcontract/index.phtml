@@ -1,0 +1,104 @@
+ <?php 
+ 	$this->headTitle('- 分包管理 - 分包单信息');
+ 	$this->headScript()->prependFile('/js/contractjs/p_contractor.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>分包管理 - 分包单信息 - 总览</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+  									<option value="name">工程名称</option>
+									<option value="name">承包商名称</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+				</div>	
+					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:12%"></col>
+						<col style="width:13%"></col>
+						<col style="width:25%"></col>
+						<col style="width:15%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>工程名称</th>
+						<th>分包类型</th>
+						<th>承包商名称</th>
+						<th>预计工期</th>
+						<th>实际工期</th>
+						<th>完成质量</th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php $counter = 1;?>	
+					<?php foreach($this->arraySubontract as $subcontract):?>
+					<?php $scontrId = $this->escape($subcontract->getScontrId()); ?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $scontrId; ?>"></td>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$scontrId))?>" class="lightbox"><?php echo $this->escape($subcontract->getName()) ?></td>
+						<td><?php echo $this->escape($subcontract->getScontrType()) ?></td>
+						<td><?php echo $this->escape($subcontract->getName()) ?></td>
+						<td><?php echo $this->escape($subcontract->getPeriodExp()) ?></td>
+						<td><?php echo $this->escape($subcontract->getPeriodAct()) ?></td>	
+						<td><?php echo $this->escape($subcontract->getQuality())?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$contractorId))?>" class="lightbox">详情</a></td>	
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contractorId))?>">修改</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

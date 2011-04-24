@@ -1,0 +1,108 @@
+ <?php 
+ 	$this->headTitle('- 机械设备管理 - 机械设备采购单信息');
+ 	$this->headScript()->prependFile('/js/equipmentjs/p_purchase.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>机械设备管理 - 机械设备采购单信息 - 总览</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+  								<option value="name">采购日期</option>
+									<option value="projectName">工程名称</option>
+									<option value="venId">供应商名称</option>
+									<option value="buyerId">采购员</option>
+									<option value="approvId">审批人</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+				</div>	
+					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:12%"></col>
+						<col style="width:13%"></col>
+						<col style="width:25%"></col>
+						<col style="width:15%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>采购日期</th>
+						<th>采购员</th>
+						<th>工程名称</th>
+						<th>供应商名称</th>
+						<th>仓库</th>
+						<th>审批人</th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php $counter = 1;?>	
+					<?php foreach($this->arrayPurchases as $purchase):?>
+					<?php $purId = $this->escape($purchase->getPurId()); ?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $purId; ?>"></td>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$purId))?>" class="lightbox"><?php echo $this->escape($purchase->getName()) ?></td>
+						<td><?php echo $this->escape($purchase->getPurDate()) ?></td>
+						<td><?php echo $this->escape($purchase->getName()) ?></td>
+						<td><?php echo $this->escape($purchase->getProjectName()) ?></td>
+						<td><?php echo $this->escape($purchase->getVenId()) ?></td>	
+						<td><?php echo $this->escape($purchase->getDestId())?></td>
+						<td><?php echo $this->escape($purchase->getApprovId())?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$purId))?>" class="lightbox">详情</a></td>	
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$purId))?>">修改</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->
