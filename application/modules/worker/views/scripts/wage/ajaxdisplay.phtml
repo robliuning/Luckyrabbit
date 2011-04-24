@@ -16,41 +16,25 @@
 						<col style="width:70%"></col>						
 					</colgroup>
 					<tr>
-						<td>姓名: </td>
-						<td><?php echo $wage->getName()?></td>
+						<td>:工人姓名 </td>
+						<td><?php echo $wage->getWorkerName()?></td>
 					</tr>
 					</tr>
 					<tr>
-						<td>年龄: </td>
-						<td><?php echo $wage->getAge() ?></td>
+						<td>开始日期: </td>
+						<td><?php echo $wage->getStartDate() ?></td>
 					</tr>
 					<tr>
-						<td>职称: </td>
-						<td><?php echo $wage->getTitleName()?></td>
+						<td>结束日期: </td>
+						<td><?php echo $wage->getEndDate()?></td>
 					</tr>
 					<tr>
-						<td>身份证: </td>
-						<td><?php echo $wage->getIdCard()?></td>
+						<td>工资金额: </td>
+						<td><?php echo $wage->getAmount()?></td>
 					</tr>	
-					<tr>
-						<td>联系方式: </td>
-						<td><?php echo $wage->getPhoneNo()?></td>
-					</tr>
-					<tr>
-						<td>其他联系方式: </td>
-						<td><?php echo $wage->getOtherwage()?></td>
-					</tr>	
-					<tr>
-						<td>现住址: </td>
-						<td><?php echo $wage->getAddress()?></td>
-					</tr>		
 					<tr>
 						<td>备注: </td>
 						<td><?php echo $wage->getRemark()?></td>
-					</tr>	
-					<tr>
-						<td>创建时间: </td>
-						<td><?php echo $wage->getCTime()?></td>
 					</tr>		
 			</table>
 		</div>

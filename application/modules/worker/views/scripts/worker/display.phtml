@@ -133,8 +133,8 @@
 						<td><?php echo $this->escape($bon->getBonDate()) ?></td>	
 						<td><?php echo $this->escape($bon->getTypeName()) ?></td>
 						<td><?php echo $this->escape($bon->getAmount()) ?></td>						
-						<td><a href="<?php echo $this->url(array('controller'=>'bonuse','action'=>'edit','id'=>$bonId))?>">修改</a></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'bonuse','action'=>'ajaxdisplay','id'=>$bonId))?>">详情</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'bonus','action'=>'edit','id'=>$bonId))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'bonus','action'=>'ajaxdisplay','id'=>$bonId))?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

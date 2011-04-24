@@ -4,7 +4,7 @@ Created Meimo
 Date Apr.17.2011
 */
 
-class Worker_IndexController extends Zend_Controller_Action
+class Worker_ExtraController extends Zend_Controller_Action
 {
 
     public function init()
@@ -31,15 +31,15 @@ class Worker_IndexController extends Zend_Controller_Action
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayExtras = $wages->fetchAllJoin($key,$condition);
+				$arrayExtras = $extras->fetchAllJoin($key,$condition);
 				if(count($arrayExtras) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					}
 		}
 		else
@@ -98,7 +98,7 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
 		$editForm = new Worker_Forms_extraSave();
@@ -118,7 +118,7 @@ class Worker_IndexController extends Zend_Controller_Action
 				$extra->setExtId($extId);
 				$extra->setWorkerId($editForm->getValue('workerId'));
 				$extra->setProjectId($editForm->getValue('projectId'));
-				$extra->setStartDate$editForm->getValue('startDate'));
+				$extra->setStartDate($editForm->getValue('startDate'));
 				$extra->setEndDate($editForm->getValue('endDate'));
 				$extra->setPeriod($editForm->getValue('period'));
 				$extra->setCost($editForm->getValue('cost'));
@@ -167,6 +167,23 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
 
 	}
+	
+	public function ajaxdisplayAction()              
+   	{
+   		$this->_helper->layout()->disableLayout();
+   		$extId = $this->_getParam('id',0);
+    	if($extId >0)
+    	{
+   		  $extras = new Worker_Models_ExtraMapper();
+   		  $extra = new Worker_Models_Extra();
+   		  $extras->find($extId,$extra);
+   			$this->view->regular = $extra;
+   			}
+    		else
+    		{
+   				$this->_redirect('/worker/extra');
+   				}
+   	}
 
 
 }

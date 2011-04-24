@@ -128,7 +128,7 @@ class Worker_WageController extends Zend_Controller_Action
     	{
     		if($wagId >0)
     		{
-    			$arrayWages = $wages->findArrayWage($wageId);
+    			$arrayWages = $wages->findArrayWage($wagId);
     			$editForm->populate($arrayWages);
     			}
     			else
@@ -137,7 +137,7 @@ class Worker_WageController extends Zend_Controller_Action
     				}
     		}		
     	$this->view->editForm = $editForm;
-    	$this->view->id = $wagrId; 
+    	$this->view->id = $wagId; 
     	$this->view->result = $result;
 	}
 
@@ -162,12 +162,12 @@ class Worker_WageController extends Zend_Controller_Action
 	public function ajaxdisplayAction()              
    	{
    		$this->_helper->layout()->disableLayout();
-   		$wageId = $this->_getParam('id',0);
-    	if($wageId >0)
+   		$wagId = $this->_getParam('id',0);
+    	if($wagId >0)
     	{
    		    $wages = new Worker_Models_WageMapper();
    		    $wage = new Worker_Models_Wage();
-   			$wages->find($wageId,$wage);
+   			$wages->find($wagId,$wage);
    			$this->view->wage = $wage;
    			}
     		else

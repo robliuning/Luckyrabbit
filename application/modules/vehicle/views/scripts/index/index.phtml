@@ -1,6 +1,6 @@
  <?php 
  	$this->headTitle('- 车辆管理 - 车辆信息');
- 	$this->headScript()->prependFile('/js/vehicle/p_vehicle.js');
+ 	$this->headScript()->prependFile('/js/vehiclejs/p_vehicle.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -37,8 +37,8 @@
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -46,14 +46,14 @@
 					<colgroup>
 						<col style="width:3%"></col>
 						<col style="width:2%"></col>
-						<col style="width:15%"></col>
-						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
 						<col style="width:10%"></col>
 						<col style="width:15%"></col>
 						<col style="width:20%"></col>
 						<col style="width:20%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>						
+						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>

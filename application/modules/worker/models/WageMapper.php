@@ -44,6 +44,27 @@ class Worker_Models_WageMapper
             $this->getDbTable()->update($data, array('wagId = ?' => $wage->getWagId()));
         }
     }
+    
+    public function find($wagId,Worker_Models_Wage $wage) 
+    {
+
+        $result = $this->getDbTable()->find($wagId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $wage  ->setAmount($row->amount)
+                  ->setStartDate($row->startDate)
+                  ->setEndDate($row->endDate)
+                  ->setWorkerId($row->workerId)
+                  ->setRemark($row->remark);
+                  
+		$workers = new Worker_Models_WorkerMapper();
+		$workerName = $workers->findWorkerName($wage->getWorkerId());
+		$wage->setWorkerName($workerName);	 
+    }
      
     public function findArrayWage($id) 
     {

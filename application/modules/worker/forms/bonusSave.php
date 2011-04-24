@@ -3,7 +3,7 @@
 	Created by Meimo
 	Date 2011.4.17
 	*/
-class Worker_Forms_bonuseSave extends Zend_Form
+class Worker_Forms_bonusSave extends Zend_Form
 {
     public function init()
     {
@@ -41,7 +41,7 @@ class Worker_Forms_bonuseSave extends Zend_Form
 			'textarea', 'detail', array(
 			'label' => 'ฯ๊ว้: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 20
 			)
@@ -86,5 +86,4 @@ class Worker_Forms_bonuseSave extends Zend_Form
         ));
     }
 }
-
 ?>

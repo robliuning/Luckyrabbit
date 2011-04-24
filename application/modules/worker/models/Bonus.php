@@ -2,7 +2,7 @@
   //creation date 22-04-2011
   //creating by lincoy
   //completion date 22-04-2011
-class Worker_Models_Bonuse
+class Worker_Models_Bonus
 {
 	protected $_bonId;
 	protected $_projectId;
@@ -28,7 +28,7 @@ class Worker_Models_Bonuse
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid bonuse property');
+            throw new Exception('Invalid bonus property');
         }
         $this->$method($value);
     }
@@ -37,7 +37,7 @@ class Worker_Models_Bonuse
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid bonuse property');
+            throw new Exception('Invalid bonus property');
         }
         return $this->$method();
     }

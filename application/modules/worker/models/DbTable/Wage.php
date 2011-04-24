@@ -6,7 +6,7 @@ class Worker_Models_DbTable_Wage extends Zend_Db_Table_Abstract
 {
     protected $_name = 'wm_wages';
 
-	public function findArrayTeam($id)
+	public function findArrayWage($id)
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
@@ -18,6 +18,8 @@ class Worker_Models_DbTable_Wage extends Zend_Db_Table_Abstract
 		
 		return $entries;
 		}
+		
+		
 	
 	public function search($key,$condition)
 	{

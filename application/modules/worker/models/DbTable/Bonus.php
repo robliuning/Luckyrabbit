@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 22-04-2011
 
-class Worker_Models_DbTable_Bonuse extends Zend_Db_Table_Abstract
+class Worker_Models_DbTable_Bonus extends Zend_Db_Table_Abstract
 {
     protected $_name = 'wm_bonuses';
 

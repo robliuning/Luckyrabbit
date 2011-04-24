@@ -3,7 +3,7 @@
   //creating by lincoy
   //completion date 22-04-2011
 
-class Worker_Models_BonuseMapper
+class Worker_Models_BonusMapper
 {
 	protected $_dbTable;
 
@@ -22,42 +22,42 @@ class Worker_Models_BonuseMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Worker_Models_DbTable_Bonuse');
+            $this->setDbTable('Worker_Models_DbTable_Bonus');
         }
         return $this->_dbTable;
     }
 
-    public function save(Worker_Models_Bonuse $bonuse)
+    public function save(Worker_Models_Bonus $bonus)
     {
         $data = array(
-        'bonId' => $bonuse->getBonId(),
-        'projectId' => $bonuse->getProjectId(),
-        'workerId' => $bonuse->getWorkerId(),
-			  'bonDate' => $bonuse->BonDate(),
-			  'typeId' => $bonuse->getTypeId(),
-			  'detail' => $bonuse->getDetail(),
-			  'amount' => $bonuse->getAmount(),
-        'remark' => $bonuse->getRemark()
+        	'bonId' => $bonus->getBonId(),
+        	'projectId' => $bonus->getProjectId(),
+        	'workerId' => $bonus->getWorkerId(),
+			'bonDate' => $bonus->BonDate(),
+			'typeId' => $bonus->getTypeId(),
+			'detail' => $bonus->getDetail(),
+			'amount' => $bonus->getAmount(),
+        	'remark' => $bonus->getRemark()
         );
-        if (null === ($id = $bonuse->getBonId())) {
+        if (null === ($id = $bonus->getBonId())) {
             unset($data['bonId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('bonId = ?' => $bonuse->getBonId()));
+            $this->getDbTable()->update($data, array('bonId = ?' => $bonus->getBonId()));
         }
     }
 
-    public function findArrayBonuse($id)
+    public function findArrayBonus($id)
     {
 		$id = (int)$id;
 		$entries = $this->getDbTable()->fetchRow('bonId = '.$id);
-		$projectId = $entries->getProjectId();
-		$workerId = $entries->getWorkerId();
+		$projectId = $entries->projectId;
+		$workerId = $entries->workerId;
 		$entry = $entries->toArray();
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
-    $entry[] = $projectName;
+    	$entry[] = $projectName;
 
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($workerId);
@@ -65,6 +65,34 @@ class Worker_Models_BonuseMapper
 
 		return $entry;
 	}
+	
+	public function find($bonId,Worker_Models_Bonus $bonus) 
+    {
+
+        $result = $this->getDbTable()->find($bonId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $bonus  ->setProjectId($row->projectId)
+        		->setWorkerId($row->workerId)
+        		->setBonDate($row->bonDate)
+        		->setTypeId($row->typeId)
+        		->setDetail($row->detail)
+                ->setAmount($row->amount)
+                ->setRemark($row->remark)
+                ->setCTime($row->cTime);
+                
+        $projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($bonus->getProjectId());
+		$bonus->setProjectName($projectName);
+                  
+		$workers = new Worker_Models_WorkerMapper();
+		$workerName = $workers->findWorkerName($bonus->getWorkerId());
+		$bonus->setWorkerName($workerName);	 
+    }
 
     public function fetchAllJoin($key = null,$condition = null)
     {
@@ -80,7 +108,7 @@ class Worker_Models_BonuseMapper
    		$entries = array();
 
    		foreach($resultSet as $row){
-   			$entry = new Worker_Models_Bonuse();
+   			$entry = new Worker_Models_Bonus();
    			$entry->setBonId($row->bonId)
 				->setProjectId($row->projectId)
 				->setWorkerId($row->workerId)
@@ -100,7 +128,7 @@ class Worker_Models_BonuseMapper
 		$bontypes = new General_Models_BontypeMapper();
 		$bonName = $bontypes->findBontypeName($entry->getTypeId());
 		$entry->setTypeName($bonName);
-		
+
    		$entries[] = $entry;
    		}
     	return $entries;

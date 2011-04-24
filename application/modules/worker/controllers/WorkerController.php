@@ -82,7 +82,7 @@ class Worker_WorkerController extends Zend_Controller_Action
 				if($btClicked=='保存继续新建')
 				{
 					$addForm->getElement('name')->setValue('');
-					$addForm->getElement('teamtId')->setValue('');
+					$addForm->getElement('teamId')->setValue('');
 					$addForm->getElement('phoneNo')->setValue('');
 					$addForm->getElement('cert')->setValue('');
 					}
@@ -181,7 +181,7 @@ class Worker_WorkerController extends Zend_Controller_Action
    		    $worker = new Worker_Models_Worker();
    			$workers->find($id,$worker);
    			$wages = new Worker_Models_WageMapper();
-   			$bonuses = new Worker_Models_BonuseMapper();
+   			$bonuses = new Worker_Models_BonusMapper();
    			$penalties = new Worker_Models_PenaltyMapper();
    			$condition = "workerId";
    			$arrayWages = $wages->fetchAllJoin($id,$condition);

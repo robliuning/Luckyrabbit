@@ -33,7 +33,7 @@ class Worker_Models_DbTable_Regular extends Zend_Db_Table_Abstract
 			{
 				$select->setIntegrityCheck(false)
 			        ->where('startDate < ?',$key)
-					->where('endDate > ?'$key);
+					->where('endDate > ?',$key);
 				}
 				
 		$resultSet = $this->fetchAll($select);

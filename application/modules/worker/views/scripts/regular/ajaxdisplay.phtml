@@ -41,8 +41,16 @@
 						<td><?php echo $regular->getPeriod()?></td>
 					</tr>
 					<tr>
-						<td>派工费用: </td>
+						<td>预算费用: </td>
+						<td><?php echo $regular->getBudget()?></td>
+					</tr>
+					<tr>
+						<td>实际派工费用: </td>
 						<td><?php echo $regular->getCost()?></td>
+					</tr>
+					<tr>
+						<td>盈亏费用: </td>
+						<td><?php echo $regular->getProfit()?></td>
 					</tr>
 					<tr>
 						<td>备注: </td>

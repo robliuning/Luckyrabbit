@@ -31,7 +31,7 @@ class Worker_RegularController extends Zend_Controller_Action
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayRegulars = $wages->fetchAllJoin($key,$condition);
+				$arrayRegulars = $regulars->fetchAllJoin($key,$condition);
 				if(count($arrayRegulars) == 0)
 				{
 					$errorMsg = General_Models_Text::$test_SearchErrorNr;
@@ -119,7 +119,7 @@ class Worker_RegularController extends Zend_Controller_Action
 				$wage->setProjectId($editForm->getValue('projectId'));
 				$wage->setItem($editForm->getValue('item'));
 				$wage->setNumber($editForm->getValue('number'));
-				$wage->setStartDate$editForm->getValue('startDate'));
+				$wage->setStartDate($editForm->getValue('startDate'));
 				$wage->setEndDate($editForm->getValue('endDate'));
 				$wage->setPeriod($editForm->getValue('period'));
 				$result = $wages->save($wage);
@@ -173,15 +173,15 @@ class Worker_RegularController extends Zend_Controller_Action
    		$regId = $this->_getParam('id',0);
     	if($regId >0)
     	{
-   		  $regulars = new Worker_Models_RegularMapper();
-   		  $regular = new Worker_Models_Regular();
+   			$regulars = new Worker_Models_RegularMapper();
+   			$regular = new Worker_Models_Regular();
    			$regulars->find($regId,$regular);
    			$this->view->regular = $regular;
-   			}
-    		else
-    		{
-   				$this->_redirect('/worker/regular');
-   				}
+   		}
+    	else
+    	{
+   			$this->_redirect('/worker/regular');
+   		}
    	}
 
 

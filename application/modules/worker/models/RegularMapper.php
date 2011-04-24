@@ -49,6 +49,33 @@ class Worker_Models_RegularMapper
             $this->getDbTable()->update($data, array('regId = ?' => $regular->getRegId()));
         }
     }
+    
+    public function find($regId,Worker_Models_Regular $regular) 
+    {
+
+        $result = $this->getDbTable()->find($regId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $regular  ->setProjectId($row->projectId)
+        		  ->setItem($row->item)
+        		  ->setNumber($row->number)
+                  ->setStartDate($row->startDate)
+                  ->setEndDate($row->endDate)
+				  ->setPeriod($row->period)
+				  ->setBudget($row->budget)
+				  ->setCost($row->cost)
+				  ->setProfit($row->profit)
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+                  
+		$projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($regular->getProjectId());
+		$regular->setProjectName($projectName);	 
+    }
      
     public function findArrayRegular($id) 
     {

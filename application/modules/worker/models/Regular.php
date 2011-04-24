@@ -61,7 +61,7 @@ class Worker_Models_Regular
         return $this;
     } 
 
-    public function getRetId()
+    public function getRegId()
     {
         return $this->_regId;
     }

@@ -66,7 +66,7 @@ class Worker_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			if($addForm->isValid($formData))
 			{
-				$penalty = new Worker_Models_Bonuse();
+				$penalty = new Worker_Models_Bonus();
 				$penalty->setWorkerId($addForm->getValue('workerId'));
 				$penalty->setProjectId($addForm->getValue('projectId'));
 				$penalty->setBonDate($addForm->getValue('penDate'));
