@@ -55,7 +55,7 @@ class Project_IndexController extends Zend_Controller_Action
 		
     public function addAction()                                        
     {
-    	$addForm = new Project_Forms_ProjectSave();
+    		$addForm = new Project_Forms_ProjectSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
         
@@ -89,10 +89,10 @@ class Project_IndexController extends Zend_Controller_Action
    					$addForm->getElement('structype')->setValue('0');
    					$addForm->getElement('level')->setValue('0');
    					$addForm->getElement('amount')->setValue('');
-					$addForm->getElement('purpose')->setValue('');
+						$addForm->getElement('purpose')->setValue('');
    					$addForm->getElement('constrArea')->setValue('');
-					$addForm->getElement('staffNo')->setValue('');
-					$addForm->getElement('remark')->setValue('');
+						$addForm->getElement('staffNo')->setValue('');
+						$addForm->getElement('remark')->setValue('');
    					}
    					else
     				{
@@ -110,14 +110,13 @@ class Project_IndexController extends Zend_Controller_Action
     public function editAction()                                //编辑
     {
         $editForm = new Project_Forms_ProjectSave();
-    	$editForm->submit->setLabel('保存修改');
-    	$editForm->submit2->setAttrib('class','hide');
+    		$editForm->submit->setLabel('保存修改');
+    		$editForm->submit2->setAttrib('class','hide');
 
 		$projects = new Project_Models_ProjectMapper();
 		$projects->populateDd($editForm);
 		
 		$projectId = $this->_getParam('id',0); 
-   	
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
@@ -125,7 +124,7 @@ class Project_IndexController extends Zend_Controller_Action
     		{
     			$project = new Project_Models_Project();
     			$project->setProjectId($projectId);
-       			$project->setName($editForm->getValue('name'));
+       		$project->setName($editForm->getValue('name'));
     			$project->setaddress($editForm->getValue('address'));
     			$project->setStatus($editForm->getValue('status'));
     			$project->setStructype($editForm->getValue('structype'));
@@ -148,7 +147,7 @@ class Project_IndexController extends Zend_Controller_Action
     		{
     			if($projectId >0)
     			{
-    			    $arrayProject = $projects->findArrayProject($projectId);
+    			  $arrayProject = $projects->findArrayProject($projectId);
     				$editForm->populate($arrayProject);
     				}
     				else
@@ -162,8 +161,8 @@ class Project_IndexController extends Zend_Controller_Action
     
    public function displayAction()                                                    
     {  
-       $projects = new Project_Models_ProjectMapper();
-	   $projectId = $this->_getParam('id',0);
+			$projects = new Project_Models_ProjectMapper();
+			$projectId = $this->_getParam('id',0);
 	   if($projectId >0)
        {
        		$project = new Project_Models_Project();

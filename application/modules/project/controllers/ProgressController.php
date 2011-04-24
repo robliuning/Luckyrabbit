@@ -1,8 +1,8 @@
 <?php
 //Creation date: Apr.3rd.2011
 //Author: Meimo
-//Completion date: Apr..2011
-
+//Completion date: Apr.3.2011
+//Rewritten:Apr.22.2011
 class Project_ProgressController extends Zend_Controller_Action
 {
 
@@ -23,58 +23,52 @@ class Project_ProgressController extends Zend_Controller_Action
     	$tbId = $addForm->getElement('projectId');
     	$tbId->setValue('工程进度记录在保存新建后自动生成');
 		//populate dd project
-			$progs = new Project_Models_DbTable_Progress();			
-			$progs->populateDd($addForm);
+			$progresses = new Project_Models_ProgressMapper();			
+			$progresses->populateDd($addForm);
 		//end
     	$this->view->form = $addForm;
     	
     	if($this->getRequest()->isPost())
     	{
+    		$btClicked = $this->getRequest()->getPost('submit');
     		$formData = $this->getRequest()->getPost();
     		if($addForm->isValid($formData))
     		{
-    			$projectId = $addForm->getValue('projectId');
-    			$stage = $addForm->getValue('stage');
-    			$task = $addForm->getValue('task');
-    			$startDateExp = $addForm->getValue('startDate');
-    			$endDateExp = $addForm->getValue('endDateExp');
-    			$periodExp = $addForm->getValue('periodExp');
-    			$endDateAct = $addForm->getValue('endDateAct');
-    			$periodAct = $addForm->getValue('periodAct');
-    			$quality = $addForm->getValue('quality');
-					$remark = $addForm->getValue('remark'); 
-				
-				   /*  $errorMsg=null;
-			            $validatorRe = new Zend_Validate_Db_RecordExists(
-			        	array(
-			  		     'table'=>'pm_progresses',
-			  		     'field'=>'projectId',
-						 'field'=>'stage'
-						 	)
-			              );*/
-			        //  if($validatorRe->isValid($projectId,$stage)) /*已经存在这条记录*/
-			  	      //    {
-			  		    //   $errorMsg="该进度信息信息已经存在。";
-			  		    //  }
-			  		  //else /*不存在这条记录，可以update一条记录*/
-			  		      //{
-						   	$progs->addProgress($projectId,$stage,$task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);   
-			  		      //}
-				 			
+    			$progress = new Project_Models_Progress;
+    			$progress->setProjectId('projectId');
+    			$progress->setStage($addForm->getValue('stage'));
+    			$progress->setTask($addForm->getValue('task'));
+    			$progress->setStartDate($addForm->getValue('startDate'));
+    			$progress->setEndDateExp($addForm->getValue('endDateExp'));
+    			$progress->setPeriodExp($addForm->getValue('periodExp'));
+    			$progress->setEndDateAct($addForm->getValue('endDateAct'));
+    			$progress->setPeriodAct($addForm->getValue('periodAct'));
+    			$progress->setQuality($addForm->getValue('quality'));
+					$progress->setRemark($addForm->getValue('remark'));
+					$result = $progresses->save($progress);
+				 	if($btClicked=='保存继续新建')
+				 	{
    					$addForm->getElement('task')->setValue('');
    					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDateExp')->setValue('');
-   					$addForm->getElement('periodExp')->setValue('0');
+   					$addForm->getElement('periodExp')->setValue('');
 						$addForm->getElement('endDateAct')->setValue('');
    					$addForm->getElement('periodAct')->setValue('');
-   					$addForm->getElement('quality')->setValue('0');
-   					$addForm->getElement('remark')->setValue('');	
+   					$addForm->getElement('quality')->setValue('');
+   					$addForm->getElement('remark')->setValue('');
+   				}	
+   				else
+   				{
+   					$this->_redirect('/project/progress');
+   					}
     			}
-    			else
-    			{
-    				$addForm->populate($formData);
-    				}
+    		else
+    		{
+    			$addForm->populate($formData);
+    			}
     		}
+    	$this->view->addForm = $addForm;
+			$this->view->result = $result;
 	}
 
 	public function ajaxdisplayallAction(){                                                  //显示部分progress信息
@@ -116,28 +110,29 @@ class Project_ProgressController extends Zend_Controller_Action
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 		//populate dd project
-			$progs = new Project_Models_DbTable_Progress();			
-			$progs->populateDd($editForm);
+			$progresses = new Project_Models_ProgressMapper();			
+			$progresses->populateDd($editForm);
     	$this->view->form = $editForm;
-    	$this->view->id = $this->_getParam('id');    	
+    	$this->view->id = $this->_getParam('id',0);    	
 
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
     		{
-    			$progressId = $editForm->getValue('progressId');	
-    			$projectId = $editForm->getValue('projectId');
-    			$stage = $editForm->getValue('stage');
-    			$task = $editForm->getValue('task');
-    			$startDateExp = $editForm->getValue('startDate');
-    			$endDateExp = $editForm->getValue('endDateExp');
-    			$periodExp = $editForm->getValue('periodExp');
-    			$endDateAct = $editForm->getValue('endDateAct');
-    			$periodAct = $editForm->getValue('periodAct');
-    			$quality = $editForm->getValue('quality');
-					$remark = $editForm->getValue('remark');
-    			$progs->updateProgress($progressId,$projectId,$stage,$task,$startDateExp,$endDateExp,$periodExp,$endDateAct,$periodAct,$quality,$remark);    					
+    			$progress = new Project_Models_Progress();
+    			$progress->setProgressId($editForm->getValue('progressId'));	
+    			$progress->setProjectId('projectId');
+    			$progress->setStage($editForm->getValue('stage'));
+    			$progress->setTask($editForm->getValue('task'));
+    			$progress->setStartDate($editForm->getValue('startDate'));
+    			$progress->setEndDateExp($editForm->getValue('endDateExp'));
+    			$progress->setPeriodExp($editForm->getValue('periodExp'));
+    			$progress->setEndDateAct($editForm->getValue('endDateAct'));
+    			$progress->setPeriodAct($editForm->getValue('periodAct'));
+    			$progress->setQuality($editForm->getValue('quality'));
+					$progress->setRemark($editForm->getValue('remark'));
+    			$progresses->save($progress);
     			$this->_redirect('/project/progress');
     			}
     			else
@@ -150,7 +145,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$id=$this->_getParam('id',0);
     			if($id >0)
     			{
-    				$editForm->populate($progs->getProgress($id));
+    				$editForm->populate($progresses->getProgress($id));
     				}
     				else
     				{

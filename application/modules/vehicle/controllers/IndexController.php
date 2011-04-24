@@ -113,7 +113,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$vehicle = new Vehicle_Models_Vehicle();
-				$vehicle->setVeId($veId);
+					$vehicle->setVeId($veId);
     			$vehicle->setPlateNo($editForm->getValue('plateNo'));
     			$vehicle->setName($editForm->getValue('name'));
     			$vehicle->setColor($editForm->getValue('color'));
@@ -136,7 +136,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     			if($veId >0)
     			{
     			    $arrayVehicle = $vehicles->findArrayVehicle($veId);
-    				$editForm->populate($arrayVehicle);
+    					$editForm->populate($arrayVehicle);
     				}
     				else
     				{
@@ -151,7 +151,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     {  
     	$this->_helper->layout()->disableLayout();
        	$vehicles = new Vehicle_Models_VehicleMapper();
-	   	$veId = $this->_getParam('id',0);
+	   		$veId = $this->_getParam('id',0);
 	   	if($veId >0)
        	{
        		$vehicle = new Vehicle_Models_Vehicle();

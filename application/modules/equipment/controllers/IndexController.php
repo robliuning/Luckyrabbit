@@ -24,7 +24,7 @@ class Equipment_IndexController extends Zend_Controller_Action
     public function indexAction()
     {
 		$errorMsg = null;
-		$equipments=new Equipment_Models_EquipmentMapper();
+		$equipments = new Equipment_Models_EquipmentMapper();
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();

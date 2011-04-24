@@ -62,8 +62,8 @@ class Equipment_PlanController extends Zend_Controller_Action
     $plans->populatePlanDb($addForm);
 		if($this->getRequest()->isPost())
 		{
-      $btClicked=$this->getRequest()->getPost('submit');
-		  $formData=$this->getRequest()->getPost();
+      $btClicked = $this->getRequest()->getPost('submit');
+		  $formData = $this->getRequest()->getPost();
 		  if($addForm->isValid($formData))
 			{
 			   $plan = new Equipment_Models_Plan();
@@ -105,19 +105,19 @@ class Equipment_PlanController extends Zend_Controller_Action
 	}
 	public function editAction()
 	{
-     $editForm=new Equipment_Forms_PlanSave();
+     $editForm = new Equipment_Forms_PlanSave();
 	   $editForm->submit->setLabel("±£´æÐÞ¸Ä");
 	   $editForm->submit2->setAttrib('class','hide');
 	   $planId=$this->_getParam('id',0);
-	   $plans=new Equipment_Models_PlanMapper();
+	   $plans = new Equipment_Models_PlanMapper();
 	   $plans->populatePlanDb($editForm);
        if($this->getRequest()->isPost())
 		{
-		   $btClicked=$this->getRequest()->getPost('submit');
-		   $formData=$this->getRequest()->getPost();
+		   $btClicked = $this->getRequest()->getPost('submit');
+		   $formData = $this->getRequest()->getPost();
 		   if($editForm->isValid($formData))
 			{
-			   $plan=new Equipment_Models_Plan();
+			   $plan = new Equipment_Models_Plan();
 			   $plan->setPlanId($planId);
 			   $plan->setPlanType($editForm->getValue('planType'));
 			   $plan->setProjectId($editForm->getValue('projectId'));
@@ -140,7 +140,7 @@ class Equipment_PlanController extends Zend_Controller_Action
 		{
 			if($planId>0)
 			{
-				$arrayPlan=$plans->findArrayPlan($planId);
+				$arrayPlan = $plans->findArrayPlan($planId);
 				$editForm->populate($arrayPlan);
 			}
 			else
@@ -148,18 +148,18 @@ class Equipment_PlanController extends Zend_Controller_Action
 				$this->_redirect('/equipment/plan');
 			}
 		}/*end not isPost()*/
-      $this->view->editForm=$editForm;
-	  $this->view->planId=$planId;
+      $this->view->editForm = $editForm;
+	  $this->view->planId = $planId;
 	}
 	public function ajaxdeleteAction()
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$planId=$this->_getParam('id',0);
+		$planId = $this->_getParam('id',0);
 		if($planId)
 		{
-			$plans=new Equipment_Models_PlanMapper();
-            $plans->delete($planId);
+			$plans = new Equipment_Models_PlanMapper();
+      $plans->delete($planId);
 		}
 		else
 		{

@@ -17,19 +17,19 @@ class Project_LogController extends Zend_Controller_Action
 	public function indexAction()                    //新建
 	{
 	//this is an add action.
-       $addForm = new Project_Forms_LogSave();
-	   $addForm->submit->setLabel('保存新建');
-	   $addForm->submit2->setAttrib('class','hide');
+			$addForm = new Project_Forms_LogSave();
+			$addForm->submit->setLabel('保存新建');
+			$addForm->submit2->setAttrib('class','hide');
 
-	$logs = new Project_Models_LogMapper();
-	$logs->populateLogDd($addForm);
+		$logs = new Project_Models_LogMapper();
+		$logs->populateLogDd($addForm);
 	
 		if($this->getRequest()->isPost())
     	{
 			$formData = $this->getRequest()->getPost();
     		if($addForm->isValid($formData))
     		{
-				$projectlog = new Project_Models_Log();
+					$projectlog = new Project_Models_Log();
     			$projectlog->setProjectId($addForm->getValue('projectId'));
     			$projectlog->setLogDate($addForm->getValue('logDate'));
     			$projectlog->setWeather($addForm->getValue('weather'));
@@ -39,13 +39,13 @@ class Project_LogController extends Zend_Controller_Action
     			$projectlog->setQualityPbl($addForm->getValue('qualityPbl'));
     			$projectlog->setsafetyPbl($addForm->getValue('safetyPbl'));
     			$projectlog->setOtherPbl($addForm->getValue('otherPbl'));
-				$projectlog->setRelatedFile($addForm->getValue('relatedFile')); 
-				$projectlog->setMMinutes($addForm->getValue('mMinutes'));
+					$projectlog->setRelatedFile($addForm->getValue('relatedFile')); 
+					$projectlog->setMMinutes($addForm->getValue('mMinutes'));
     			$projectlog->setChangeSig($addForm->getValue('changeSig'));
     			$projectlog->setMaterial($addForm->getValue('material'));
     			$projectlog->setMachine($addForm->getValue('machine'));
     			$projectlog->setUtility($addForm->getValue('utility'));
-				$projectlog->setRemark($addForm->getValue('remark'));
+					$projectlog->setRemark($addForm->getValue('remark'));
 				
 				//Missing validation: check if log exists
 				$logs->save($projectlog);
@@ -81,10 +81,10 @@ class Project_LogController extends Zend_Controller_Action
 		
 	   $startDate = "2011-4-5";
 	   $endDate = "2011-4-10";
-   	   $pLogId = $this->_getParam('id',0);
+   	 $pLogId = $this->_getParam('id',0);
     	if($pLogId >0)
     	{
-   		    $logs = new Project_Models_LogMapper();
+   		  $logs = new Project_Models_LogMapper();
    			$arrayLogs = $logs->fetchAllDates($startDate,$endDate,$pLogId);
    			$this->view->arrayLogs = $arrayLogs;
    			}
@@ -111,7 +111,7 @@ class Project_LogController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$projectlog = new Project_Models_Log();
-				$projectlog->setPLogId($editForm->$this->_getParam('pLogId'));
+					$projectlog->setPLogId($editForm->$this->_getParam('pLogId'));
     			$projectlog->setProjectId($editForm->getValue('projectId'));
     			$projectlog->setLogDate($editForm->getValue('logDate'));
     			$projectlog->setWeather($editForm->getValue('weather'));
@@ -121,13 +121,13 @@ class Project_LogController extends Zend_Controller_Action
     			$projectlog->setQualityPbl($editForm->getValue('qualityPbl'));
     			$projectlog->setSafetyPbl($editForm->getValue('safetyPbl'));
     			$projectlog->setOtherPbl($editForm->getValue('otherPbl'));
-				$projectlog->setRelatedFile($editForm->getValue('relatedFile')); 
-				$projectlog->setMMiniutes($editForm->getValue('mMinutes'));
+					$projectlog->setRelatedFile($editForm->getValue('relatedFile')); 
+					$projectlog->setMMiniutes($editForm->getValue('mMinutes'));
     			$projectlog->setChangeSig($editForm->getValue('changeSig'));
     			$projectlog->setMaterial($editForm->getValue('material'));
     			$projectlog->setMachine($editForm->getValue('machine'));
     			$projectlog->setUtility($editForm->getValue('utility'));
-				$projectlog->setRemark($editForm->getValue('remark'));
+					$projectlog->setRemark($editForm->getValue('remark'));
     			$logs->save($projectlog); 
     			 
     			$this->_redirect('/project/Log');
@@ -142,7 +142,7 @@ class Project_LogController extends Zend_Controller_Action
     			$id=$this->_getParam('id',0);
     			if($id >0)
     			{
-    			    $arrayLog = $logs->findArrayLog($id);
+    			  $arrayLog = $logs->findArrayLog($id);
     				$editForm->populate($arrayLog);
     				}
     				else
@@ -161,7 +161,7 @@ class Project_LogController extends Zend_Controller_Action
 		$pLogId = $this->_getParam('id',0);
 		if($pLogId >0)
        {
-       		$log = $logs->find($pLogId);   
+       	$log = $logs->find($pLogId);   
 	   		$this ->view->pLog = $pLog;      		
     		}
 
