@@ -4,7 +4,7 @@ Created Meimo
 Date Apr.17.2011
 */
 
-class Worker_IndexController extends Zend_Controller_Action
+class Worker_RegularController extends Zend_Controller_Action
 {
 
     public function init()
@@ -31,15 +31,15 @@ class Worker_IndexController extends Zend_Controller_Action
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayRegulars = $wages->fetchAllJoin($key,$condition);
+				$arrayRegulars = $regulars->fetchAllJoin($key,$condition);
 				if(count($arrayRegulars) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$test_SearchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$test_SearchErrorNi;
 					}
 		}
 		else
@@ -48,16 +48,19 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		$this->view->arrayRegulars = $arrayRegulars;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "worker";
+		$this->view->controller = "regular";
+		$this->view->moduleName = "è®¡åˆ’æ´¾å·¥ä¿¡æ¯";
     }
 
 	public function addAction()
 	{
-		//
 		$addForm = new Worker_Forms_regularSave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$regulars = new Worker_Models_RegularMapper();
+		$regulars->populateRegularDd($addForm);
 		$result = null;
 
 		if($this->getRequest()->isPost())
@@ -72,20 +75,21 @@ class Worker_IndexController extends Zend_Controller_Action
 				$regular->setNumber($addForm->getValue('number'));
 				$regular->setStartDate($addForm->getValue('startDate'));
 				$regular->setEndDate($addForm->getValue('endDate'));
-				$regular->setPeriod($addForm->getValue('period'));
+				$regular->setRemark($addForm->getValue('remark'));
+				
 				$result = $regulars->save($regular);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('projectId')->setValue('');
 					$addForm->getElement('item')->setValue('');
 					$addForm->getElement('number')->setValue('');
 					$addForm->getElement('startDate')->setValue('');
 					$addForm->getElement('endDate')->setValue('');
-					$addForm->getElement('period')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
-						$this->_redirect('/regular');
+						$this->_redirect('worker/regular');
 						}
 			}
 			else
@@ -98,15 +102,16 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
-		$editForm = new Worker_Forms_wageSave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm = new Worker_Forms_regularSave();
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
-		$wages = new Worker_Models_WageMapper();
-    	$wagId = $this->_getParam('id',0);
+		$regulars = new Worker_Models_RegularMapper();
+		$regulars->populateRegularDd($editForm);
+    	$regId = $this->_getParam('id',0);
     	$result = null;
 
 		if($this->getRequest()->isPost())
@@ -114,15 +119,14 @@ class Worker_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
 			{
-				$wage = new Worker_Models_Wage();
-				$wage->setRegularId($regId);
-				$wage->setProjectId($editForm->getValue('projectId'));
-				$wage->setItem($editForm->getValue('item'));
-				$wage->setNumber($editForm->getValue('number'));
-				$wage->setStartDate$editForm->getValue('startDate'));
-				$wage->setEndDate($editForm->getValue('endDate'));
-				$wage->setPeriod($editForm->getValue('period'));
-				$result = $wages->save($wage);
+				$regular = new Worker_Models_Regular();
+				$regular->setRegularId($regId);
+				$regular->setProjectId($editForm->getValue('projectId'));
+				$regular->setItem($editForm->getValue('item'));
+				$regular->setNumber($editForm->getValue('number'));
+				$regular->setStartDate($editForm->getValue('startDate'));
+				$regular->setEndDate($editForm->getValue('endDate'));
+				$result = $regulars->save($regular);
 
 			}
 			else
@@ -132,14 +136,14 @@ class Worker_IndexController extends Zend_Controller_Action
 		}
 		else
     	{
-    		if($wagId >0)
+    		if($regId >0)
     		{
-    			$arrayWage = $wages->findArrayWage($wagId);
-    			$editForm->populate($arrayWage);
+    			$arrayRegular = $regulars->findArrayRegular($regId);
+    			$editForm->populate($arrayRegular);
     			}
     			else
     			{
-    				$this->_redirect('/wage');
+    				$this->_redirect('/worker/regular');
     				}
     		}		
     	$this->view->editForm = $editForm;
@@ -154,19 +158,41 @@ class Worker_IndexController extends Zend_Controller_Action
     	$this->_helper->viewRenderer->setNoRender(true);
    
    
-   		$wagId = $this->_getParam('id',0);
-    	if($wagId > 0)
+   		$regId = $this->_getParam('id',0);
+    	if($regId > 0)
     	{
-    		$wages = new Worker_Models_WageMapper();
-    		$wages->delete($wagId);
-    		echo "1";
+    		$regulars = new Worker_Models_RegularMapper();
+    		try{
+    			$regulars->delete($regId);
+    			echo "s";
+    			}
+    			catch(Exception $e)
+    			{
+    				echo "f";
+    				}
     		}
     		else
     		{
-    			$this->_redirect('/wage');
+    			$this->_redirect('/worker/regular');
     			}
 
 	}
+	public function ajaxdisplayAction()              
+   	{
+   		$this->_helper->layout()->disableLayout();
+   		$regId = $this->_getParam('id',0);
+    	if($regId >0)
+    	{
+   			$regulars = new Worker_Models_RegularMapper();
+   			$regular = new Worker_Models_Regular();
+   			$regulars->find($regId,$regular);
+   			$this->view->regular = $regular;
+   		}
+    	else
+    	{
+   			$this->_redirect('/worker/regular');
+   		}
+   	}
 
 
 }

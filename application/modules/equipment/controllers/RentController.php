@@ -4,6 +4,8 @@
 author:mingtingling
 date:2011-4-17
 vision:2.0
+Modified by MeiMo
+Date:Apr.21.2011
 */
 class Equipment_RentController extends Zend_Controller_Action
 {
@@ -30,13 +32,13 @@ class Equipment_RentController extends Zend_Controller_Action
 			
 				if(count($arrayRents) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -181,11 +183,11 @@ class Equipment_RentController extends Zend_Controller_Action
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$renId=$this->_getParam('id',0);
+		$renId = $this->_getParam('id',0);
 		if($renId>0)
 		{
-			$rents=new Equipment_Models_RentMapper();
-			$rent=new Equipment_Models_Rent();
+			$rents = new Equipment_Models_RentMapper();
+			$rent = new Equipment_Models_Rent();
 			$rents->find($renId,$rent);
 			$this->view->rent=$rent;
 		}/*legal*/

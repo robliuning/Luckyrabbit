@@ -36,7 +36,6 @@ class Worker_Models_RegularMapper
 			'number' => $regular->getNumber(), 
 			'startDate' => $regular->getStartDate(), 
 			'endDate' => $regular->getEndDate(), 
-			'period' => $regular->getPeriod(), 
 			'budget' => $regular->getBudget(), 
 			'cost' => $regular->getCost(), 
 			'profit' => $regular->getProfit(), 
@@ -48,6 +47,32 @@ class Worker_Models_RegularMapper
         } else {
             $this->getDbTable()->update($data, array('regId = ?' => $regular->getRegId()));
         }
+    }
+    
+    public function find($regId,Worker_Models_Regular $regular) 
+    {
+
+        $result = $this->getDbTable()->find($regId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $regular  ->setProjectId($row->projectId)
+        		  ->setItem($row->item)
+        		  ->setNumber($row->number)
+                  ->setStartDate($row->startDate)
+                  ->setEndDate($row->endDate)
+				  ->setBudget($row->budget)
+				  ->setCost($row->cost)
+				  ->setProfit($row->profit)
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+                  
+		$projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($regular->getProjectId());
+		$regular->setProjectName($projectName);	 
     }
      
     public function findArrayRegular($id) 
@@ -79,7 +104,6 @@ class Worker_Models_RegularMapper
 				->setNumber($row->number)
 				->setStartDate($row->startDate)
 				->setEndDate($row->endDate)
-				->setPeriod($row->period)
 				->setBudget($row->budget)
 				->setCost($row->cost)
 				->setProfit($row->profit)
@@ -97,6 +121,17 @@ class Worker_Models_RegularMapper
 	public function delete($regId)
 	{
 		$this->getDbTable()->delete("regId = ".(int)$regId);
+		}
+		
+	public function populateRegularDd($form)
+	{
+		$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames(); 
+		
+		foreach($arrayProjects as $project)
+		{
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
+			}	
 		}
 }
 ?>

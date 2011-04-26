@@ -57,7 +57,7 @@ class Vehicle_Models_VehicleMapper
         }
 
         $row = $resultSet->current();
-        $vehicle  ->setVeId($row->veId)
+        $vehicle->setVeId($row->veId)
 			      ->setPlateNo($row->plateNo)
 			      ->setName($row->name)
 			      ->setColor($row->color)
@@ -67,41 +67,17 @@ class Vehicle_Models_VehicleMapper
 			      ->setFuelCons($row->fuelCons)
 			      ->setRemark($row->remark)
 			      ->setCTime($row->cTime);
+			      
+		$contacts = new Employee_Models_ContactMapper();
+		$contactName = $contacts->findContactName($vehicle->getContactId());
+		$vehicle->setContactName($contactName);
     }
 
 	public function delete($veId)
 	{
-		$this->getDbTable()->delete('veId = '.(int)$veId);
+		$result = $this->getDbTable()->delete('veId = '.(int)$veId);
+		return $result;
 	}
-
-    /*public function fetchAllJoin()  // according to contactId from name  //check
-    {
-    	$resultSet = $this->getDbTable()->fetchAll();	
-        $vehicles   = array();
-        
-        foreach ($resultSet as $row) 
-        {
-			$vehicle = new Vehicle_Models_Vehicle();
-            $vehicle->setVeId($row->veId)
-			      ->setPlateNo($row->plateNo)
-			      ->setName($row->name)
-			      ->setColor($row->color)
-			      ->setLicense($row->license)
-			      ->setContactId($row->contactId)
-			      ->setUser($row->user);
-			      //->setFuelCons($row->fuelCons)
-			      //->setRemark($row->remark);
-				  
-		    $contacts = new Employee_Models_ContactMapper();
-			$contactId = $vehicle->getContactId();
-			$name = $contacts->findContactName($contactId);
-            
-			$vehicle->setContactName($name);
-			
-			$vehicles[] = $vehicle;
-			}
-		return $vehicles;
-	} */
 
 	public function fetchAllJoin($key = null,$condition = null) 
     {
@@ -126,8 +102,6 @@ class Vehicle_Models_VehicleMapper
 			      ->setLicense($row->license)
 			      ->setContactId($row->contactId)
 			      ->setUser($row->user);
-			      //->setFuelCons($row->fuelCons)
-			      //->setRemark($row->remark);
 				  
 		    $contacts = new Employee_Models_ContactMapper();
 			$contactId = $entry->getContactId();

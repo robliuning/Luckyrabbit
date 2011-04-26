@@ -8,21 +8,6 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 {
     protected $_name = 've_vehicles';
 
-	/*public function search($key, $condition)
-	{
-		$select = $this->select()
-			           ->setIntegrityCheck(false)	
-			           ->from(array('e'=>'em_contacts'),array('name'))
-			           ->join(array('v'=>'ve_vehicles'),'e.contactId = v.veId');
-		if($condition == "plateNo")
-		{
-			$select->where("plateNo like ?","%$key%");
-		}
-
-    	$resultSet = $this->fetchAll($select);
-		return $resultSet;
-	} */
-
 	public function fetchAllVeId($key,$condition)
 	{
 		$select = $this->select()

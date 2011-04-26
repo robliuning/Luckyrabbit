@@ -214,6 +214,7 @@ class Project_Models_ProjectMapper
    			}
     	return $projects;
     	}
+    	
 	public function findArrayProject($id) //check
 	{
 		$id = (int)$id;
@@ -228,7 +229,7 @@ class Project_Models_ProjectMapper
 		$this->getDbTable()->delete('projectId = ' . (int)$id);
 		}
 	
-	public function populateDd($form)         //check
+	public function populateProjectDd($form)         //check
 	{
 		$structypes = new General_Models_StructypeMapper();
 		$arrayStructypes = $structypes->fetchAll();

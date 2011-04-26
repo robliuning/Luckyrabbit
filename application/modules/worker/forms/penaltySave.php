@@ -10,12 +10,13 @@ class Worker_Forms_penaltySave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'select', 'workerId', array(
+			'text', 'name', array(
 			'label' => '工人姓名: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText ac_workerName'
 			)
 		);
+		
      	$this->addElement(
 			'select', 'projectId', array(
 			'label' => '工程名称: ',
@@ -50,6 +51,15 @@ class Worker_Forms_penaltySave extends Zend_Form
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
+		);					
+		$this->addElement(
+			'textarea', 'remark', array(
+			'label' => '备注: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
+			)
 		);
     	$this->addElement(
     		'submit','submit',array(
@@ -65,8 +75,15 @@ class Worker_Forms_penaltySave extends Zend_Form
     		'class'=>'btConfirm radius',
     		'name'=>'submit'
     		)
-    	);
+    	);		
     	
+    	$this->addElement(
+			'text', 'workerId', array(
+			'required' => true,
+			'class'=>'hide ac_workerId'
+			)
+		);
+		
     	$this->setElementDecorators(array(
             'ViewHelper',
             'Errors',

@@ -1,0 +1,54 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+				</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+			<p><?php
+			$extra = $this->extra;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>工程名称: </td>
+						<td><?php echo $extra->getProjectName()?></td>
+					</tr>
+					</tr>
+					<tr>
+						<td>工人姓名: </td>
+						<td><?php echo $extra->getWorkerName() ?></td>
+					<tr>
+					<tr>
+						<td>开始日期: </td>
+						<td><?php echo $extra->getStartDate()?></td>
+					</tr>
+					<tr>
+						<td>结束日期: </td>
+						<td><?php echo $extra->getEndDate()?></td>
+					</tr>
+					<tr>
+						<td>工期: </td>
+						<td><?php echo $extra->getPeriod()?></td>
+					</tr>
+					<tr>
+						<td>派工费用: </td>
+						<td><?php echo $extra->getCost()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $extra->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $extra->getCTime()?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>

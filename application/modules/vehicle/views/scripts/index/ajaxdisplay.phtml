@@ -1,8 +1,47 @@
 <div id="ajaxMsgBox">
-	<div id="ajaxMsgBox_vehicle">
-		<?php
-			$vehicle = $this->vehicle;
-			echo $vehicle->getVeId()."<br/>".$vehicle->getPlateNo();		
-		?>
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+			<div class="button_group">
+				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+		<p><?php
+			$vehicle = $this->vehicle;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>车辆号：</td>
+						<td><?php echo $vehicle->getPlateNo()?></td>
+					</tr>
+					<tr>
+						<td>车辆名称：</td>
+						<td><?php echo $vehicle->getName() ?></td>
+					</tr>
+					<tr>
+						<td>车辆颜色： </td>
+						<td><?php echo $vehicle->getColor()?></td>
+					</tr>
+					<tr>
+						<td>车辆行驶证号：</td>
+						<td><?php echo $vehicle->getLicense()?></td>
+					</tr>
+					<tr>
+						<td>车辆负责人：</td>
+						<td><?php echo $vehicle->getContactName()?></td>
+					</tr>
+					<tr>
+						<td>主要使用人员: </td>
+						<td><?php echo $vehicle->getUser()?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>
 	</div>
 </div>

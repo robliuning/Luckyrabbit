@@ -57,6 +57,10 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 						->join(array('e'=>'em_cpp'),'p.postId = e.postId')
 						->where('p.name like ?','%'.$key.'%');				
 				   }
+				   elseif($condition == 'projectId')
+				   {
+				   		$select->where('projectId = ?',$key);
+						}
 					
 		$resultSet = $this->fetchAll($select);
 		

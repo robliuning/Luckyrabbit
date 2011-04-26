@@ -1,0 +1,66 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+				</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+			<p><?php
+			$regular = $this->regular;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>工程名称：</td>
+						<td><?php echo $regular->getProjectName()?></td>
+					</tr>
+					</tr>
+					<tr>
+						<td>派工项目: </td>
+						<td><?php echo $regular->getItem() ?></td>
+					<tr>
+					<tr>
+						<td>派工人数: </td>
+						<td><?php echo $regular->getNumber()?></td>
+					</tr>
+					<tr>
+						<td>开始日期: </td>
+						<td><?php echo $regular->getStartDate()?></td>
+					</tr>
+					<tr>
+						<td>结束日期: </td>
+						<td><?php echo $regular->getEndDate()?></td>
+					</tr>
+					<tr>
+						<td>工期: </td>
+						<td><?php echo $regular->getPeriod()?></td>
+					</tr>
+					<tr>
+						<td>预算费用: </td>
+						<td><?php echo $regular->getBudget()?></td>
+					</tr>
+					<tr>
+						<td>实际派工费用: </td>
+						<td><?php echo $regular->getCost()?></td>
+					</tr>
+					<tr>
+						<td>盈亏费用: </td>
+						<td><?php echo $regular->getProfit()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $regular->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $regular->getCTime()?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>

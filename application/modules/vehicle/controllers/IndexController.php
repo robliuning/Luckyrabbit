@@ -44,7 +44,10 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			$arrayVehicles = $vehicles->fetchAllJoin();
 		}
 		$this->view->arrayVehicles = $arrayVehicles;
-		$this->view->errorMsg = $errorMsg;   
+		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "vehicle";
+		$this->view->controller = "index";
+		$this->view->modelName = "车辆信息";
 		}
     
     public function addAction()                                        
@@ -113,7 +116,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$vehicle = new Vehicle_Models_Vehicle();
-				$vehicle->setVeId($veId);
+					$vehicle->setVeId($veId);
     			$vehicle->setPlateNo($editForm->getValue('plateNo'));
     			$vehicle->setName($editForm->getValue('name'));
     			$vehicle->setColor($editForm->getValue('color'));
@@ -133,16 +136,16 @@ class Vehicle_IndexController extends Zend_Controller_Action
     		}
     		else
     		{
-    			if($veId >0)
+    			if($veId > 0)
     			{
     			    $arrayVehicle = $vehicles->findArrayVehicle($veId);
-    				$editForm->populate($arrayVehicle);
+    					$editForm->populate($arrayVehicle);
     				}
     				else
     				{
     					$this->_redirect('/vehicle');
     					}
-    			}		
+    			}
     	$this->view->editForm = $editForm;
     	$this->view->id = $veId;     	
     }
@@ -168,14 +171,18 @@ class Vehicle_IndexController extends Zend_Controller_Action
     {
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
-   
-   
    		$veId = $this->_getParam('id',0);
     	if($veId > 0)
     	{
     		$vehicles = new Vehicle_Models_VehicleMapper();
-    		$vehicles->delete($veId);
-    		echo "1";
+    		try{
+    			$vehicles->delete($veId);
+    			echo "s";
+    			}
+    			catch(Exception $e)
+    			{
+    				echo "f";
+    				}
     		}
     		else
     		{

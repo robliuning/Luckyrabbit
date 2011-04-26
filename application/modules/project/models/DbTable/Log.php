@@ -22,5 +22,18 @@ class Project_Models_DbTable_Log extends Zend_Db_Table_Abstract
 		
 		return $entries;
 	}
+	
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'projectId')
+		{
+			$select->where('projectId = ?',$key);
+			}
+					   
+		$resultSet = $this->fetchAll($select);
+		return $resultSet;
+	}
 }
 ?>

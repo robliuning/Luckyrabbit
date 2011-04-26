@@ -1,6 +1,6 @@
  <?php 
  	$this->headTitle('- 车辆管理 - 车辆信息');
- 	$this->headScript()->prependFile('/js/vehicle/p_vehicle.js');
+ 	$this->headScript()->prependFile('/js/vehiclejs/p_vehicle.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -15,7 +15,7 @@
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><a id="reset"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>
+					<div><a href="/vehicle/index/edit/id/<?php echo $this->id?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>
 					<div><a href="/vehicle"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->

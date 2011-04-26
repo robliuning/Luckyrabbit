@@ -18,5 +18,15 @@ class General_Models_DbTable_Pentype extends Zend_Db_Table_Abstract
    		
    		return $entries;
 	}
+	
+	public function fetchAllNames() 
+	{
+		$select = $this->select()
+				->setIntegrityCheck(false)
+				->from('ge_pentypes',array('typeId','name'));
+		$entries = $this->fetchAll($select);
+		
+		return $entries;	
+		}
 }
 ?>

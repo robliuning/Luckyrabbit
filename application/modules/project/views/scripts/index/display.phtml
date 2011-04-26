@@ -1,9 +1,7 @@
  <?php 
- 	$this->headTitle('- 项目详情');
+ 	$this->headTitle('- 工程管理 - 工程信息');
  	$this->headScript()->prependFile('/js/projectjs/p_project.js');
  ?>
- 	<div id="p_id" class="hide">nav_generalInfo</div>
-	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -11,27 +9,268 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程信息管理 - 工程详情</h1>
+		<h1>工程管理 - 工程信息 - 详情</h1>
 		<div class="p_msg">
-			<h3>本页显示内容为工程详情</h3>
+			<h3></h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><input class="tbMedium tbtext" type="text" /></div>
-					<div><a href="#"><img src="/images/icons/functions/search.png"/><p>查询</p></a></div>	
-					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
-					<div><a href="#msgBox" class="lightbox" id="btDelete"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
-					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 					<div><a href="/project"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
-					<?php
-						$project = $this->project;
-						echo $project->getName()."<br/>".$project->getAddress();
-					?>
-			
+				<p class="subMenu">工程信息</p>
+				<?php $project = $this->project?>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>					
+					</colgroup>
+					<tr>
+					<tr>
+						<td>工程名称: </td>
+						<td><?php echo $project->getName()?></td>
+					</tr>
+					<tr>
+						<td>地址: </td>
+						<td><?php echo $project->getAddress()?></td>
+					</tr>
+					<tr>
+						<td>工程状态: </td>
+						<td><?php
+							$status = $this->escape($project->getStatus());
+							$stDis = "";
+							if($status == 0)
+							{
+								$stDis = "未开工";
+								}
+								elseif($status ==1)
+								{
+									$stDis = "建设中";
+									}
+									else
+									{
+										$stDis = "已竣工";
+										}
+							echo $stDis;
+
+						?></td>
+					</tr>
+					<tr>
+						<td>结构类型: </td>
+						<td><?php echo $project->getStructype()?></td>
+					</tr>
+					<tr>
+						<td>层数: </td>
+						<td><?php echo $project->getLevel()?></td>
+					</tr>
+					<tr>
+						<td>合同金额: </td>
+						<td><?php echo $project->getAmount()?></td>
+					</tr>
+					<tr>
+						<td>用途: </td>
+						<td><?php echo $project->getPurpose()?></td>
+					</tr>
+					<tr>
+						<td>建筑面积: </td>
+						<td><?php echo $project->getConstrArea()?></td>
+					</tr>
+					<tr>
+						<td>作业总人数: </td>
+						<td><?php echo $project->getStaffNo()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $project->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $project->getCTime()?></td>
+					</tr>
+				</table>
+				<p class="subMenu">项目岗位信息</p>
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>姓名</th>
+						<th>岗位名</th>
+						<th>岗位证类型</th>
+						<th>岗位证编号</th>
+						<th>安全能力考核证</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayCpps as $cpp):?>
+					<?php $cppId = $this->escape($cpp->getCppId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($cpp->getContactId()) ?>"><?php echo $this->escape($cpp->getContactName()) ?></a></td>
+						<td><?php echo $this->escape($cpp->getPostName()) ?></td>	
+						<td><?php echo $this->escape($cpp->getPostType()) ?></td>
+						<td><?php echo $this->escape($cpp->getPostCardId()) ?></td>
+						<td><?php echo $this->escape($cpp->getCertId()) ?></td>
+						<td><a href="/employee/cpp/edit/id/<?php echo $cppId?>">修改</a></td>
+						<td><a href="/employee/cpp/ajaxdisplay/id/<?php echo $cppId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<p class="subMenu">工程进度信息</p>
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>阶段</th>
+						<th>起始时间</th>
+						<th>预计结束日期</th>
+						<th>实际完成日期</th>
+						<th>完成质量</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayProgresses as $progress):?>
+					<?php $progressId = $this->escape($progress->getProgressId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="/project/progress/ajaxdisplay/id/<?php echo $this->escape($progress->getProgressId()) ?>"><?php echo $this->escape($progress->getStage()) ?></a></td>
+						<td><?php echo $this->escape($progress->getStartDate()) ?></td>	
+						<td><?php echo $this->escape($progress->getEndDateExp()) ?></td>
+						<td><?php echo $this->escape($progress->getEndDateAct()) ?></td>
+						<td><?php echo $this->escape($progress->getQuality()) ?></td>
+						<td><a href="/project/progress/edit/id/<?php echo $progressId?>">修改</a></td>
+						<td><a class="lightbox" href="/project/progress/ajaxdisplay/id/<?php echo $progressId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>		
+				<p class="subMenu">分包信息</p>
+				<p class="subMenu">计划派工信息</p>
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>派工人数</th>
+						<th>开始时间</th>
+						<th>结束日期</th>
+						<th>预算费用</th>
+						<th>实际派工费用</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayRegulars as $regular):?>
+					<?php $regId = $this->escape($regular->getRegId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><?php echo $this->escape($regular->getNumber()) ?></td>
+						<td><?php echo $this->escape($regular->getStartDate()) ?></td>	
+						<td><?php echo $this->escape($regular->getEndDate()) ?></td>
+						<td><?php echo $this->escape($regular->getBudget()) ?></td>
+						<td><?php echo $this->escape($regular->getCost()) ?></td>
+						<td><a href="/worker/regular/edit/id/<?php echo $regId?>">修改</a></td>
+						<td><a class="lightbox" href="/worker/regular/ajaxdisplay/id/<?php echo $regId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>	
+				<p class="subMenu">额外派工信息</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>工人姓名</th>
+						<th>开始时间</th>
+						<th>结束日期</th>
+						<th>派工费用</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayExtras as $extra):?>
+					<?php $extId = $this->escape($extra->getExtId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a href="/worker/worker/display/id/<?php echo $this->escape($extra->getWorkerId()) ?>"><?php echo $this->escape($extra->getWorkerName()) ?></a></td> 
+						<td><?php echo $this->escape($extra->getStartDate()) ?></td>	
+						<td><?php echo $this->escape($extra->getEndDate()) ?></td>
+						<td><?php echo $this->escape($extra->getCost()) ?></td>
+						<td><a href="/worker/extra/edit/id/<?php echo $extId?>">修改</a></td>
+						<td><a class="lightbox" href="/worker/extra/ajaxdisplay/id/<?php echo $extId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>	
+				<p class="subMenu">工程日志</p>
+				<table>
+					<colgroup>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+					</colgroup>
+					<?php $counter = 1;?>
+					<tr>
+					<?php foreach($this->arrayLogs as $log):?>
+					<?php $logId = $this->escape($log->getPLogId()) ?>
+						<td><a href="/project/log/ajaxdisplay/id/<?php echo $logId ?>"><?php echo $this->escape($log->getLogDate()) ?></a></td> 
+						<?php 
+							if($counter%5 == 0)
+								echo "</tr><tr>"; 
+							$counter++;
+						?>
+					<?php endforeach ?>
+					</tr>
+				</table>	
 			<div id="msgBox"></div>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->

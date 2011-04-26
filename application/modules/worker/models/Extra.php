@@ -59,7 +59,7 @@ class Worker_Models_Extra
         return $this;
     } 
 
-    public function getExttId()
+    public function getExtId()
     {
         return $this->_extId;
     }
@@ -92,15 +92,15 @@ class Worker_Models_Extra
 
 	/************************************************/
 
-	public function setWorkerId($workId)
+	public function setWorkerId($workerId)
     {
-        $this->_workId = $workId;
+        $this->_workerId = $workerId;
         return $this;
     } 
 
     public function getWorkerId()
     {
-        return $this->_workId;
+        return $this->_workerId;
     }
 
 	/************************************************/

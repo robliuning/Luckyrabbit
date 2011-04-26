@@ -14,6 +14,7 @@ class Vehicle_Models_Vehicle
 	protected $_user;
 	protected $_fuelCons;
 	protected $_remark;
+	protected $_cTime;
 	protected $_contactName; //数据库ve_vehicles中没有，在这里用于存储来自em_contacts中的Name
 
 	public function __construct(array $options = null)
@@ -164,6 +165,19 @@ class Vehicle_Models_Vehicle
 	public function getRemark()
 	{
 		return $this->_remark;
+	}
+
+	/************************************************/
+	
+	public function setCTime($cTime)
+	{
+		$this->_cTime = $cTime;
+		return $this;
+	}
+
+	public function getCTime()
+	{
+		return $this->_cTIme;
 	}
 
 	/************************************************/

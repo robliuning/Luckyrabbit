@@ -5,6 +5,7 @@ create date:2011.4.4
 vision:2.0
 rewrite:mingtingling
 rewrite date:2011.4.9
+Modified by MeiMo,Apr.22.2011
 */
 class Contract_ContrqualifController extends Zend_Controller_Action
 {
@@ -20,8 +21,8 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 	
 	public function indexAction()
 	{
- 		$addForm = new Contract_Forms_ContrqualifSave();
-	  	$addForm->submit->setLabel("保存新建");
+ 			$addForm = new Contract_Forms_ContrqualifSave();
+	  	$addForm->submit->setLabel("保存继续新建");
 	  	$addForm->submit2->setAttrib('class','hide');
 	  	
 	  	$contrqualifs = new Contract_Models_ContrqualifMapper();
@@ -33,14 +34,12 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 		   	$formData = $this->getRequest()->getPost();
 		   	if($addForm->isValid($formData))
 			{
-				$contrqualif = new Contract_Models_Contrqualif();
-                $contrqualif->setContractorId($addForm->getValue('contractorId'));
-				//$contrqualif->setQualifSerie($addForm->getValue('qualifSerie'));
+				$contrqualifs = new Contract_Models_Contrqualif();
+        $contrqualif->setContractorId($addForm->getValue('contractorId'));
 				$contrqualif->setQualifTypeId($addForm->getValue('qualifTypeId'));
 				$contrqualif->setQualifGrade($addForm->getValue('qualifGrade'));             
-              	$contrqualifs->save($contrqualif);
+       	$result = $contrqualifs->save($contrqualif);
 				$addForm->getElement('contractorId')->setValue('');
-				//$addForm->getElement('qualifSerie')->setValue('');
 				$addForm->getElement('qualifTypeId')->setValue('');
 				$addForm->getElement('qualifGrade')->setValue('');
 				}
@@ -54,7 +53,7 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 	
 	public function editAction()  /*修改*/
 	{
-      $editForm = new Contract_Forms_ContrqualifSave();
+    $editForm = new Contract_Forms_ContrqualifSave();
 	  $editForm->submit->setLabel("保存修改");
 	  $editForm->submit2->setAttrib('class','hide');
 
@@ -67,12 +66,12 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 			$formData=$this->getRequest()->getPost();
 		  	if($editForm->isValid($formData))
 			{
-				$contrqualif = new Contract_Models_Contrqualif();
+				$contrqualifs = new Contract_Models_Contrqualif();
 				$contrqualif->setCqId($cqId);				
 				$contrqualif->setContractorId($editForm->getValue('contractorId'));
 				$contrqualif->setQualifTypeId($editForm->getValue('qualifTypeId'));
 				$contrqualif->setQualifGrade($editForm->getValue('qualifGrade'));
-                $contrqualifs->save($contrqualif);
+        $result = $contrqualifs->save($contrqualif);
 				$this->_redirect('/contract/contrqualif');
 				}
 		 		else
@@ -99,32 +98,32 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 
  public function ajaxdeleteAction() /*删除*/
  {
-	 $this->_helper->layout()->disableLayout();
-	 $this->_helper->viewRenderer->setNoRender(true);
-	 $cqId=$this->_getParam('id',0);
-	 if($cqId>0)
-	 {
-		 $contrqualifs=new Contract_Forms_ContrqualifSave();
-		 $result=$contrqualif->delete($cqId);
-	 }
+	$this->_helper->layout()->disableLayout();
+	$this->_helper->viewRenderer->setNoRender(true);
+	$cqId = $this->_getParam('id',0);
+		if($cqId>0)
+		{
+		 $contrqualifs = new Contract_Forms_ContrqualifSave();
+		 $result = $contrqualif->delete($cqId);
+			}
     else
 	 {
 		$this->_redirect('/contract');
-	 }
+			}
  }
- 	public function ajaxdisplayallAction()
+ 	public function ajaxdisplayAction()
  	{
- 		$contractorId = $this->_getParam('id',0);
- 		if($contractorId > 0)
- 		{
- 			$contrqualifs = new Contract_Models_ContrqualifMapper();
- 			$arrayContrqualifs = $contrqualifs->fetchAllContrqualifs($contractorId);
- 			$this->view->arrayContrqualifs=$arrayContrqualifs;
- 			}
- 			else
- 			{
- 				$this->_redirect('/contract');
- 				}
- 		
+ 			$cpId = $this->_getParam('id',0);
+    if($cpId>0)
+		{
+			$contrqualifs = new Contract_Models_ContrqualifMapper();
+			$object = new Contract_Models_Contrqualif();
+			$arrayContrqualifs = $contrqualifs->find($contrqualifs,$object);
+      $this->view->arrayContrqualifs = $arrayContrqualifs;
+			}
+		else
+		{
+			$this->_redirect('/contract/contrqualif');
+		  }
  		}
 }

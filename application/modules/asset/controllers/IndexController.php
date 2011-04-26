@@ -4,6 +4,8 @@
 author:mingtingling
 date:2011-4-17
 vision:2.0
+Modified by MeiMo
+Date: Apr.21.2011
 */
 class Asset_IndexController extends Zend_Controller_Action
 {
@@ -33,13 +35,13 @@ class Asset_IndexController extends Zend_Controller_Action
 				
 				if(count($arrayPurchases) == 0)
 				{
-					$errorMsg = 0;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//warning will be displayed: "没有找到符合条件的结果。"
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					//warning will be displayed: "请输入搜索关键字。"
 					}
 		}
@@ -56,18 +58,18 @@ class Asset_IndexController extends Zend_Controller_Action
     }
     public function addAction()
     {
-           $addForm=new Asset_Forms_PurchaseSave();
+       $addForm = new Asset_Forms_PurchaseSave();
 		   $addForm->submit->setLabel("保存并继续添加");
 		   $addForm->submit2->setLabel("保存并返回");
-		   $purchases=new Asset_Models_PurchaseMapper();
+		   $purchases = new Asset_Models_PurchaseMapper();
 		   $purchases->populatePurchaseDb($addForm);/*下拉条*/
 	       if($this->getRequest()->isPost())
 		     {
-			   $btClicked=$this->getRequest()->getPost('submit');
-			   $formData=$this->getRequest()->getPost();
+			   $btClicked = $this->getRequest()->getPost('submit');
+			   $formData = $this->getRequest()->getPost();
 			   if($addForm->isValid($formData))
 				 {
-				   $purchase=new Asset_Models_Purchase();
+				   $purchase = new Asset_Models_Purchase();
 				   $purchase->setName($addForm->getValue('name'));
 				   $purchase->setVenId($addForm->getValue('venId'));
 				   $purchase->setType($addForm->getValue('type'));
@@ -113,24 +115,24 @@ class Asset_IndexController extends Zend_Controller_Action
 					 $addForm->populate($formData);
 				 }
 		     }
-		$this->view->addForm=$addForm;
+		$this->view->addForm = $addForm;
 	}  
     
     public function editAction()
     {
-     $editForm=	new Asset_Forms_PurchaseSave();
-	 $editForm->submit->setLabel('保存修改');
-	 $editForm->submit2->setAttrib('class','hide');
-     $purchases=new Asset_Models_PurchaseMapper();
-	 $purchases->populatePurchaseDb($editForm);/*下拉条*/
-     $purId=$this->_getParam('id',0);
+			$editForm =	new Asset_Forms_PurchaseSave();
+			$editForm->submit->setLabel('保存修改');
+			$editForm->submit2->setAttrib('class','hide');
+			$purchases=new Asset_Models_PurchaseMapper();
+			$purchases->populatePurchaseDb($editForm);/*下拉条*/
+			$purId = $this->_getParam('id',0);
 	 if($editForm->getRequest()->isPost())
 		{
-          $formData=$this->getRequest()->getPost();
+          $formData = $this->getRequest()->getPost();
 		  if($addForm->isValid($formData))
 			{
-			  $purchase=new Asset_Models_Purchase();
-			  $purchase->setPurId($purId);
+			  			$purchase = new Asset_Models_Purchase();
+			  			$purchase->setPurId($purId);
               $purchase->setName($editForm->getValue('name'));
               $purchase->setType($editForm->getValue('type'));
               $purchase->setSpec($editForm->getValue('spec'));
@@ -141,9 +143,9 @@ class Asset_IndexController extends Zend_Controller_Action
               $purchase->setAmount($editForm->getValue('amount'));
               $purchase->setPurDate($editForm->getValue('purDate'));
               $purchase->setapprovDate($editForm->getValue('approvDate'));
-			  $purchase->setRemark($editForm->getValue('remark'));
+			  			$purchase->setRemark($editForm->getValue('remark'));
               $purchases->save($purchase);
-			  $this->_redirect('/asset');
+			  			$this->_redirect('/asset');
 
 			}/*end of isValid()*/
 			else
@@ -169,12 +171,12 @@ class Asset_IndexController extends Zend_Controller_Action
     
     public function ajaxdeleteAction()
     {
-     $this->_helper->layout()->disableLayout();
-	 $this->_helper->viewRenderer->setNoRender(true);
-	 $purId=$this->_getParam('id',0);
+			$this->_helper->layout()->disableLayout();
+			$this->_helper->viewRenderer->setNoRender(true);
+	 $purId = $this->_getParam('id',0);
 	 if($purId>0)
 		{
-		 $purchases=new Asset_Models_PurchaseMapper();
+		 $purchases = new Asset_Models_PurchaseMapper();
 		 $purchases->delete($purId);
  		  }/*legal*/
           else
@@ -186,13 +188,13 @@ class Asset_IndexController extends Zend_Controller_Action
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$purId=$this->_getParam('id',0);
+		$purId = $this->_getParam('id',0);
 		if($purId>0)
 		{
-			$purchases=new Asset_Models_PurchaseMapper();
-			$purchase=new Asset_Models_Purchase();
+			$purchases = new Asset_Models_PurchaseMapper();
+			$purchase = new Asset_Models_Purchase();
 			$purchases->find($purId,$purchase);
-			$this->view->purchase=$purchase;
+			$this->view->purchase = $purchase;
 		}/*legal*/
 		else
 		{

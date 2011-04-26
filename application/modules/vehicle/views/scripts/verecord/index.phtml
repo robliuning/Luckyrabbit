@@ -1,6 +1,6 @@
  <?php 
  	$this->headTitle('- 车辆管理 - 车辆使用记录信息');
- 	$this->headScript()->prependFile('/js/vehicle/p_verecord.js');
+ 	$this->headScript()->prependFile('/js/vehiclejs/p_verecord.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -24,21 +24,21 @@
 				<div id="searchBox">
 					<form method="post" action="<?php echo $this->url()?>">
 							<div>
-								<select name="condition" class="tbMediumer stStyle">
+								<select name="condition" class="tbMediumer stStyle stSearch">
   									<option value="plateNo">车牌号</option>
 									<option value="date">使用时间</option>
   									<option value="pilot">驾驶员</option>
 								</select>
 							</div>
-							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class="tbMedium tbText tbSearch" name="key" type="text" /></div>
 							<div><input class= "btSearch" type="submit" value=""></input></div>	
 						</form>
 					</div>		
 					<div><a href="<?php echo $this->url(array('controller'=>'verecord','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -46,8 +46,8 @@
 					<colgroup>
 						<col style="width:3%"></col>
 						<col style="width:2%"></col>
-						<col style="width:15%"></col>
-						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
 						<col style="width:10%"></col>
 						<col style="width:15%"></col>
 						<col style="width:20%"></col>
@@ -57,15 +57,15 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th></th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
 						<th>车牌号</th>
 						<th>开始使用日期</th>
 						<th>结束使用日期</th>
 						<th>本次使用公里数</th>
 						<th>驾驶员</th>
 						<th>其他使用人</th>
-						<th></th>
-						<th></th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>

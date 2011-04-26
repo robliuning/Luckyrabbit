@@ -31,9 +31,17 @@ $(document).ready(function()
 		})
 	});
 	
+	$('.stSearch').change(function() {
+  		if($('.stSearch').val() == 'date')
+  		{
+  			$('.tbSearch').addClass('datepicker');
+  			$( ".datepicker" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
+  			}
+		});
+	
 	$( ".datepicker" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
 	
-		//Enable the auto-completing
+		//Enable the auto-completing of contacts
 	$( ".ac_contactName" ).autocomplete({
 			source: function( request, response ) {
 				$.ajax({
@@ -69,6 +77,42 @@ $(document).ready(function()
 		});
 	
 	//---------end
+	//Enable the auto-completing of workers
+		$( ".ac_workerName" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "/worker/worker/autocomplete/key/"+ $(".ac_workerName").val(),
+					//dataType: "jsonp",
+					data: {
+						featureClass: "P",
+						style: "full",
+						maxRows: 12,
+					},
+					success: function(data) {
+							var jsonObj = eval('('+data+')');
+							response( $.map(jsonObj, function(item) {
+							return {
+								label: "姓名: "+item.name +"　电话: "+item.phoneNo,
+								value: item.name,
+								name: item.workerId
+							}
+						}));
+					}
+				});
+			},
+			minLength:1,
+			select: function( event, ui ) {
+				$(".ac_workerId").val(ui.item.name);
+			},
+			open: function() {
+				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+		});
+	//--------end
+	
 	var modelName = $('#modelName').val();
 	var module = $('#module').val();
 	var controller = $('#controller').val();
@@ -82,12 +126,12 @@ $(document).ready(function()
 			}
 			else
 			{
-				htmlDelete = "您选择了"+count+"个"+modelName+"，点击确认后相关资料将被永久删除。<div><p class='ajaxDelete btDelete radius'>确认删除</p></div>";
+				htmlDelete = "您选择了"+count+"个"+modelName+"，点击确认后相关资料将被永久删除。<div><p id='ajaxDelete' class='btDelete radius'>确认删除</p></div>";
 				}
 		htmlDelete+="</div>";
 		$('#msgBox').html(htmlDelete);
 		
-		$('.ajaxDelete').click(function(){
+		$('#ajaxDelete').click(function(){
 			$('[name="cb"]:checked').each(function(){
 				var id = $(this).val();
 				var result = 1;
@@ -95,19 +139,12 @@ $(document).ready(function()
 					type:"post",
 					url:"/"+module+"/"+controller+"/ajaxdelete/id/"+id,
 					success:function(rt){
-						if(rt == "0")
+						if(rt == "f")
 						{
-							result = "0";
+							alert(modelName+" id:"+id+"未能删除，因为其在其他数据表单有关联数据");
 							}
 						}
-					});
-				if(result == "1")
-				{
-					}
-					else
-					{
-						alert(modelName+" id:"+id+"未能删除");
-						}		
+					});	
 			});		
 			alert("删除完成");
 			window.location = "/"+module+"/"+controller;	

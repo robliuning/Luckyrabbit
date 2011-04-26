@@ -53,8 +53,8 @@ class Vehicle_VerecordController extends Zend_Controller_Action
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
         
-		$verecords = new Vehicle_Models_VerecordMapper();
-		$verecords->populateVeDd($addForm);
+				$verecords = new Vehicle_Models_VerecordMapper();
+				$verecords->populateVeDd($addForm);
 	    	
     	if($this->getRequest()->isPost())
     	{
@@ -75,19 +75,16 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			
     			if($btClicked == '保存继续新建')
     			{
-<<<<<<< HEAD
-					$addForm->getElement('plateNo')->setValue('');
+						$addForm->getElement('plateNo')->setValue('');
    					$addForm->getElement('veId')->setValue('');
-=======
-    			   	$addForm->getElement('veId')->setValue('');
->>>>>>> f17bd67d23615ec76accfe0e951456a7b9aecba3
+    				$addForm->getElement('veId')->setValue('');
    					$addForm->getElement('startDate')->setValue('');
    					$addForm->getElement('endDate')->setValue('');
    					$addForm->getElement('purpose')->setValue('');
    					$addForm->getElement('mile')->setValue('');
-					$addForm->getElement('pilot')->setValue('');
+						$addForm->getElement('pilot')->setValue('');
    					$addForm->getElement('otherUser')->setValue('');
-					$addForm->getElement('remark')->setValue('');
+						$addForm->getElement('remark')->setValue('');
    					}
    					else
     				{
@@ -104,7 +101,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     
     public function editAction()                                
     {
-        $editForm = new Vehicle_Forms_VerecordSave();
+      $editForm = new Vehicle_Forms_VerecordSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
     	
@@ -120,7 +117,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$verecord = new Vehicle_Models_Verecord();
-				$verecord->setRecordId($verecordId);
+					$verecord->setRecordId($verecordId);
     			$verecord->setVeId($editForm->getValue('veId'));
     			$verecord->setStartDate($editForm->getValue('startDate'));
     			$verecord->setEndDate($editForm->getValue('endDate'));
@@ -142,7 +139,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     		{
     			if($verecordId >0)
     			{
-    			    $arrayVerecord = $verecords->findArrayVerecord($verecordId);
+    			  $arrayVerecord = $verecords->findArrayVerecord($verecordId);
     				$editForm->populate($arrayVerecord);
     				}
     				else
@@ -157,7 +154,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
    public function ajaxdisplayAction()                                                    
     {  
     	$this->_helper->layout()->disableLayout();
-        $verecords = new Vehicle_Models_VerecordMapper();
+      $verecords = new Vehicle_Models_VerecordMapper();
 	    $verecordId = $this->_getParam('id',0);
 	    if($verecordId >0)
         {
@@ -173,7 +170,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
    
     public function ajaxdeleteAction()
     {
-		$this->_helper->layout()->disableLayout();
+			$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
    
    		$verecordId = $this->_getParam('id',0);
@@ -188,21 +185,6 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			$this->_redirect('/vehicle/verecord');
     			}
     	}
-  /*  public function searchAction()
-    {        
-		$verecords = new Vehicle_Models_VerecordMapper();
-	    	
-    	if($this->getRequest()->isPost())
-    	{	
-    		
-    		$this->view->arrayVerecords = $arrayVerecords;
-    		}
-    		else
-    		{
-    			
-    				}
-    		}
-    	
-    	}*/
+
 }
 ?>

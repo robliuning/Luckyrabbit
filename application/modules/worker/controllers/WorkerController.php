@@ -82,7 +82,7 @@ class Worker_WorkerController extends Zend_Controller_Action
 				if($btClicked=='保存继续新建')
 				{
 					$addForm->getElement('name')->setValue('');
-					$addForm->getElement('teamtId')->setValue('');
+					$addForm->getElement('teamId')->setValue('');
 					$addForm->getElement('phoneNo')->setValue('');
 					$addForm->getElement('cert')->setValue('');
 					}
@@ -181,17 +181,17 @@ class Worker_WorkerController extends Zend_Controller_Action
    		    $worker = new Worker_Models_Worker();
    			$workers->find($id,$worker);
    			$wages = new Worker_Models_WageMapper();
-   			$bonuses = new Worker_Models_BonuseMapper();
+   			$bonuses = new Worker_Models_BonusMapper();
    			$penalties = new Worker_Models_PenaltyMapper();
    			$condition = "workerId";
    			$arrayWages = $wages->fetchAllJoin($id,$condition);
-   			$arrayBonuse = $bonuses->fetchAllJoin($id,$condition);
+   			$arrayBonuses = $bonuses->fetchAllJoin($id,$condition);
    			$arrayPenalties = $penalties->fetchAllJoin($id,$condition);
    			
    			$this->view->worker = $worker;
    			$this->view->arrayWages = $arrayWages;
    			$this->view->arrayBonuses = $arrayBonuses;
-   			$this->view->arrayPenalties = $arrayPenalities;
+   			$this->view->arrayPenalties = $arrayPenalties;
    			
    			}
     		else
@@ -199,6 +199,16 @@ class Worker_WorkerController extends Zend_Controller_Action
    				$this->_redirect('/worker/worker');
    				}
 	}
+	
+	public function autocompleteAction()
+   	{
+   	  	$this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$key = $this->_getParam('key');
+    	$workers = new Worker_Models_WorkerMapper();
+    	$arrayNames = $workers->findWorkerNames($key);
+    	$json = Zend_Json::encode($arrayNames);  	
+    	echo $json;
+   		}
 }
-
 ?>

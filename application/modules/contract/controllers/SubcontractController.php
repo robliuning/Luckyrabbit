@@ -31,13 +31,13 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 				$arraySubcontracts = $subcontracts->fetchAllJoin($key,$condition);
 				if(count($arraySubcontracts)==0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//waring a message  :  no match result
 				}
 			}
 			else
 			{
-				$errorMsg = 1;
+				$errorMsg = General_Models_Text::$text_searchErrorNi;
 				//waring a message  :  please input a key word
 			}
 		}
@@ -52,17 +52,17 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 		$this->view->modelName = "分包单信息";
 
 
-		$addForm=new Contract_Forms_subcontractSave();
+		$addForm = new Contract_Forms_subcontractSave();
 		$addForm->submit->setLabel("保存新建");
 		$addForm->submit2->setAttrib('class','hide');
-		$subcontracts=new Contract_Models_SubcontractMapper();
+		$subcontracts = new Contract_Models_SubcontractMapper();
 		if($this->getRequest()->isPost())
 		   {
-			$formData=$this->getRequest()->getPost();
+			$formData = $this->getRequest()->getPost();
 			if($addForm->isValid($formData))
 			    {
-                $subcontract=new Contract_Models_Subcontract();
-			    $subcontract->setProjectId($addForm->getValue('projectId'));
+        $subcontract = new Contract_Models_Subcontract();
+			  $subcontract->setProjectId($addForm->getValue('projectId'));
 				$subcontract->setScontrType($addForm->getValue('scontrType'));
 				$subcontract->setContractorId($addForm->getValue('contractorId'));
 				$subcontract->setScontrDetail($addForm->getValue('scontrDetail'));
@@ -80,10 +80,10 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 				$subcontract->setWarranty($addForm->getValue('warranty'));
 				$subcontract->setContrAmt($addForm->getValue('contrAmt'));
 				$subcontract->setConsMargin($addForm->getValue('consMargin'));
-                $subcontract->setPrjMargin($addForm->getValue('prjMargin'));
+        $subcontract->setPrjMargin($addForm->getValue('prjMargin'));
 				$subcontract->setPrjWarr($addForm->getValue('prjWarr'));
 				$subcontract->setRemark($addForm->getValue('remark'));
-                $subcontracts->save($subcontract);
+        $subcontracts->save($subcontract);
 				$this->_redirect('/contract');
 			             }
 				       else
@@ -91,24 +91,24 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 						   $addForm->populate($formData);
 				        }
 		   }
-		  $this->view->addForm=$addForm;
+		  $this->view->addForm = $addForm;
 
 	}
 public function editForm()
 	{
-	  $editForm=Contract_Forms_SubcontractSave();
+	  $editForm = Contract_Forms_SubcontractSave();
 	  $editForm->submit->setLabel("保存修改");
 	  $editForm->submit2->setAttrib('class','hide');
-	  $subcontracts=new Contract_Models_SubcontractMapper();
-	  $scontrId=$this->_getParam('id',0);
+	  $subcontracts = new Contract_Models_SubcontractMapper();
+	  $scontrId = $this->_getParam('id',0);
 	  if($editForm->getRequest()->isPost())
 		   {
-		      $formData=$this->getRequest()->getPost();
+		      $formData = $this->getRequest()->getPost();
 			  if($editForm->isValid($formData))
 			      {
-                $subcontract=new Contract_Models_Subcontract();
+        $subcontract = new Contract_Models_Subcontract();
 				$subcontract->setScontrId($editForm->getValue('scontrId'));
-			    $subcontract->setProjectId($editForm->getValue('projectId'));
+			  $subcontract->setProjectId($editForm->getValue('projectId'));
 				$subcontract->setScontrType($editForm->getValue('scontrType'));
 				$subcontract->setContractorId($editForm->getValue('contractorId'));
 				$subcontract->setScontrDetail($editForm->getValue('scontrDetail'));
@@ -126,7 +126,7 @@ public function editForm()
 				$subcontract->setWarranty($editForm->getValue('warranty'));
 				$subcontract->setContrAmt($editForm->getValue('contrAmt'));
 				$subcontract->setConsMargin($editForm->getValue('consMargin'));
-                $subcontract->setPrjMargin($editForm->getValue('prjMargin'));
+        $subcontract->setPrjMargin($editForm->getValue('prjMargin'));
 				$subcontract->setPrjWarr($editForm->getValue('prjWarr'));
 				$subcontract->setRemark($editForm->getValue('remark'));
 				$subcontracts->save($subcontract);
@@ -141,7 +141,7 @@ public function editForm()
 		   {
 			   if($scontrId>0)
 			      {
-				   $arraySubcontract=$subcontracts->findArraySubcontract($scontrId);
+				   $arraySubcontract = $subcontracts->findArraySubcontract($scontrId);
 				   $editForm->populate($arraySubcontract);
 			         }
 					 else
@@ -154,26 +154,29 @@ public function editForm()
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$scontrId=$this->_getParam('id',0);
+		$scontrId = $this->_getParam('id',0);
 		if($scontrId>0)
 		   {
-			 $subcontracts=new Contract_Models_SubcontractMapper();
+			 $subcontracts = new Contract_Models_SubcontractMapper();
 			 $subcontracts->delete($scontrId);
 		      }
               else
 		      {
-				  $this->_redirect('/contract');
+				  $this->_redirect('/contract/subcontract');
 		      }
 	}
 	public function ajaxdisplayAction()
 	{
-		$scontrId=$this->_getParam('id',0);
+		$scontrId = $this->_getParam('id',0);
 		if($scontrId>0)
 		   {
-			  $subcontracts=new Contract_Models_SubcontractMapper();
-			  $arraySubcontracts=$subcontracts->fetchAllSubcontracts();
-			  $this->view->arraySubcontracts=$arraySubcontracts;
+			  $subcontracts = new Contract_Models_SubcontractMapper();
+			  $arraySubcontracts = $subcontracts->fetchAllSubcontracts();
+			  $this->view->arraySubcontracts = $arraySubcontracts;
 		       }
 			   else
 		      {
-				   $this->_redirect('
+				   $this->_redirect('/contract/subcontract');
+				 }
+	}
+}

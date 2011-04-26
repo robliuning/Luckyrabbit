@@ -25,35 +25,7 @@ class Project_Models_LogMapper
         }
         return $this->_dbTable;
     }
-    public function save(Project_Models_Log $log)
-    {
-        $data = array(
-			'pLogId' => $log->getPLogId(),
-			'projectId' => $log->getProjectId(),
-			'logDate' => $log->getLogDate(),
-			'weather' => $log->getWeather(),
-			'tempHi' => $log->getTempHi(),
-			'tempLo' => $log->getTempLo(),
-			'progress' => $log->getProgress(),
-			'qualityPbl' => $log->getQualityPbl(),
-			'safetyPbl' => $log->getSafetyPbl(),
-			'otherPbl' => $log->getOtherPbl(),
-			'relatedFile' => $log->getRelatedFile(),
-			'mMinutes' => $log->getMMinutes(),
-			'changeSig' => $log->getChangeSig(),
-			'material' => $log->getMaterial(),
-			'machine' => $log->getMachine(),
-			'utility' => $log->getUtility(),
-			'remark' => $log->getRemark()
-        );
-        if (null === ($id = $log->getPLogId())) {
-            unset($data['pLogId']);
-            $this->getDbTable()->insert($data);
-        } else {
-            $this->getDbTable()->update($data, array('pLogId = ?' => $log->getPLogId()));
-        }
-    }
-    
+      
     public function findArrayLog($id)
     {
 		$id = (int)$id;
@@ -63,38 +35,6 @@ class Project_Models_LogMapper
 		}
 		return $row->toArray();
     	}
-
-    public function find($pLogId)
-    {
-		$pLog = new Project_Models_Log();
-        $result = $this->getDbTable()->find($pLogId);
-        if (0 == count($result)) {
-
-            return;
-        }
-        $row = $result->current();
-
-        $pLog  ->setPLogId($row->pLogId)
-			  ->setProjectId($row->projectId)
-              ->setLogDate($row->logDate)
-			  ->setWeather($row->weather)
-			  ->setTempHi($row->tempHi)
-			  ->setTempLo($row->tempLo)
-			  ->setProgress($row->progress)
-			  ->setQualityPbl($row->qualityPbl)
-			  ->setSafetyPbl($row->safetyPbl)
-			  ->setOtherPbl($row->otherPbl)
-			  ->setRelatedFile($row->relatedFile)
-			  ->setMMinutes($row->mMinutes)
-			  ->setChangeSig($row->changeSig)
-			  ->setMaterial($row->material)
-			  ->setMachine($row->machine)
-			  ->setUtility($row->utility)
-			  ->setRemark($row->remark)
-			  ->setCTime($row->cTime);
-		
-		return $pLog;
-    }
 
 	public function populateLogDd($form)         //填充projectId and projectName
 	{
@@ -110,6 +50,27 @@ class Project_Models_LogMapper
 	{
 		return $this->getDbTable()->fetchAllDates($startDate,$endDate,$projectId);
 	}
-
+	
+	public function fetchAllJoin($key = null,$condition = null) //check
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+   		
+   		$logs = array();
+   		
+   		foreach($resultSet as $row){
+   			$log = new Project_Models_log();
+        	$log ->setPLogId($row->pLogId)
+                   ->setLogDate($row->logDate);
+            $logs[] = $log;
+				}
+		return $logs;			
+	}
 }
 ?>

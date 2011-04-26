@@ -20,16 +20,6 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
    		return $entries;
 		}
 	
-	public function fetchAllJoin() //check
-	{
-		$select = $this->select()
-			->setIntegrityCheck(false)
-			->from('pm_projects',array('projectId','name','status','structype','staffNo'))
-			->order('cTime DESC');
-		$entries = $this->fetchAll();
-		
-		return $entries;
-		}
 	public function fetchAllNames() //check
 	{
 		$select = $this->select()
@@ -55,14 +45,12 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 				elseif($condition == 'name')
 				{
                    $select->setIntegrityCheck(false)
-						->from(array('e'=> 'em_contacts'),array('name')) //  waiting for check 
-				        ->from(array('c'=>'em_cpp'),array('contactId'))
-						->join(array('p'=>'pm_projects'),'e.contactId = c.contactId' and 'p.projectId = c.projectId')
+						->from(array('e'=> 'em_contacts'),array('name'))
+				        ->join(array('c'=>'em_cpp'),'e.contactId = c.contactId',array('contactId'))
+						->join(array('p'=>'pm_projects'),'p.projectId = c.projectId')
 						->where('e.name like ?','%'.$key.'%');				
-				   }
-				   
+				   }				   
 		$resultSet = $this->fetchAll($select);
-		
 		return $resultSet;
 	}
 }

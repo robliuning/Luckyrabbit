@@ -20,14 +20,14 @@ class Vehicle_Forms_VerecordSave extends Zend_Form
 			'text', 'startDate', array(
 			'label' => '开始使用日期: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 	  	$this->addElement(
 			'text', 'endDate', array(
 			'label' => '结束使用日期: ',
 			'required' => true,
-			'class'=>'tbMedium tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
     	$this->addElement(

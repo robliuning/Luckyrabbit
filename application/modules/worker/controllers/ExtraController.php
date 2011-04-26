@@ -4,7 +4,7 @@ Created Meimo
 Date Apr.17.2011
 */
 
-class Worker_IndexController extends Zend_Controller_Action
+class Worker_ExtraController extends Zend_Controller_Action
 {
 
     public function init()
@@ -31,15 +31,15 @@ class Worker_IndexController extends Zend_Controller_Action
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayExtras = $wages->fetchAllJoin($key,$condition);
+				$arrayExtras = $extras->fetchAllJoin($key,$condition);
 				if(count($arrayExtras) == 0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					}
 				}
 				else
 				{
-					$errorMsg = 1;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					}
 		}
 		else
@@ -54,10 +54,11 @@ class Worker_IndexController extends Zend_Controller_Action
 	{
 		//
 		$addForm = new Worker_Forms_extraSave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$extras = new Worker_Models_ExtraMapper();
+		$extras->populateExtraDd($addForm);
 		$result = null;
 
 		if($this->getRequest()->isPost())
@@ -73,8 +74,9 @@ class Worker_IndexController extends Zend_Controller_Action
 				$extra->setEndDate($addForm->getValue('endDate'));
 				$extra->setPeriod($addForm->getValue('period'));
 				$extra->setCost($addForm->getValue('cost'));
+				$extra->setRemark($addForm->getValue('remark'));
 				$result = $extras->save($extra);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('workerId')->setValue('');
 					$addForm->getElement('projectId')->setValue('');
@@ -82,10 +84,11 @@ class Worker_IndexController extends Zend_Controller_Action
 					$addForm->getElement('endDate')->setValue('');
 					$addForm->getElement('period')->setValue('');
 					$addForm->getElement('cost')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
-						$this->_redirect('/extra');
+						$this->_redirect('worker/extra');
 						}
 			}
 			else
@@ -98,14 +101,15 @@ class Worker_IndexController extends Zend_Controller_Action
 
 	}
 
-	public function editAction(0
+	public function editAction()
 	{
 		//
 		$editForm = new Worker_Forms_extraSave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
 		$extras = new Worker_Models_ExtraMapper();
+		$extras->populateExtraDd($editForm);
     	$extId = $this->_getParam('id',0);
     	$result = null;
 
@@ -114,14 +118,15 @@ class Worker_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
 			{
-				$extra = new Worker_Models_Wage();
+				$extra = new Worker_Models_Extra();
 				$extra->setExtId($extId);
 				$extra->setWorkerId($editForm->getValue('workerId'));
 				$extra->setProjectId($editForm->getValue('projectId'));
-				$extra->setStartDate$editForm->getValue('startDate'));
+				$extra->setStartDate($editForm->getValue('startDate'));
 				$extra->setEndDate($editForm->getValue('endDate'));
 				$extra->setPeriod($editForm->getValue('period'));
 				$extra->setCost($editForm->getValue('cost'));
+				$extra->setRemark($editForm->getValue('remark'));
 				$result = $extras->save($extra);
 
 			}
@@ -167,6 +172,23 @@ class Worker_IndexController extends Zend_Controller_Action
     			}
 
 	}
+	
+	public function ajaxdisplayAction()              
+   	{
+   		$this->_helper->layout()->disableLayout();
+   		$extId = $this->_getParam('id',0);
+    	if($extId >0)
+    	{
+   		  $extras = new Worker_Models_ExtraMapper();
+   		  $extra = new Worker_Models_Extra();
+   		  $extras->find($extId,$extra);
+   			$this->view->extra = $extra;
+   			}
+    		else
+    		{
+   				$this->_redirect('/worker/extra');
+   				}
+   	}
 
 
 }

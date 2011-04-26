@@ -50,6 +50,7 @@ class Worker_Forms_teamSave extends Zend_Form
     		'name'=>'submit'
     		)
     	);
+    	
     	$this->addElement(
 			'text', 'contactId', array(
 			'required' => true,
@@ -64,7 +65,6 @@ class Worker_Forms_teamSave extends Zend_Form
             array('tag'=>'td','class'=>'element')),
             array('Label',array('tag'=>'td')),
             array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
-
    		 ));
 
 		$this->setDecorators(array(

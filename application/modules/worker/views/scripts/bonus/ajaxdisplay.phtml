@@ -1,0 +1,54 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+				</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+			<p><?php
+			$bonus = $this->bonus;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>工程名称: </td>
+						<td><?php echo $bonus->getProjectName()?></td>
+					</tr>
+					</tr>
+					<tr>
+						<td>工人姓名: </td>
+						<td><?php echo $bonus->getWorkerName() ?></td>
+					<tr>
+					<tr>
+						<td>日期: </td>
+						<td><?php echo $bonus->getBonDate()?></td>
+					</tr>
+					<tr>
+						<td>奖励类型: </td>
+						<td><?php echo $bonus->getTypeName()?></td>
+					</tr>
+					<tr>
+						<td>奖励原因: </td>
+						<td><?php echo $bonus->getDetail()?></td>
+					</tr>
+					<tr>
+						<td>金额: </td>
+						<td><?php echo $bonus->getAmount()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $bonus->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $bonus->getCTime()?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>
