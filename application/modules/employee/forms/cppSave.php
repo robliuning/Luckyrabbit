@@ -15,6 +15,7 @@ class Employee_Forms_CppSave extends Zend_Form
 			'text','name',array(
 			'label'=>'员工姓名:',
 			'required'=>true,
+			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText ac_contactName'
 			)
 		);
@@ -23,7 +24,7 @@ class Employee_Forms_CppSave extends Zend_Form
 			'select','postId',array(
 			'label'=>'岗位名称:',
 			'required'=>true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
@@ -39,7 +40,8 @@ class Employee_Forms_CppSave extends Zend_Form
 			'text','postType',array(
 			'label'=>'岗位证类别:',
 			'required'=>false,
-			'class'=>'tbLarge tbText'
+			'filters'=>array('StringTrim'),
+			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
@@ -47,6 +49,7 @@ class Employee_Forms_CppSave extends Zend_Form
 			'text','postCardId',array(
 			'label'=>'岗位证编号:',
 			'required'=>false,
+			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText'
 			)
 		);

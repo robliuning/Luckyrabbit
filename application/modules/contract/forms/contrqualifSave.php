@@ -9,8 +9,8 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 	public function init()
 	{
 		$this->setMethod('post');
+
 		$this->addElement(
-			/*承包商编号*/
 			'select','contractorId',array(
 			'label'=>'承包商:',
 			'class'=>'tbLarge tbText',
@@ -18,7 +18,6 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			/*资质序列*/
 			'select','qualifSerie',array(
 			'label'=>'资质序列:',
 			'multiOptions'=>array('0'=>'施工总承包','1'=>'专业承包','2'=>'劳务分包'),
@@ -27,7 +26,6 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			/*资质类别*/	
 			'select','qualifTypeId',array(
 			'label'=>'资质类别:',
 			'class'=>'tbLarge tbText',
@@ -35,7 +33,6 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			/*资质等级*/
 			'select','qualifGrade',array(
 			'label'=>'资质等级:',
 			'multiOptions'=>array('0'=>'特级','1'=>'一级','2'=>'二级','3'=>'三级'),
@@ -43,6 +40,7 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			'required'=>false
 			)
 		);
+
 		$this->addElement(
 			'submit','submit',array(
 			'ignore'=>true,
@@ -50,7 +48,6 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			'name'=>'submit'
 			)
 		);
-
 		$this->addElement(
 			'submit','submit2',array(
 			'ignore'=>true,
@@ -58,20 +55,22 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			'name'=>'submit'
 			)
 		);
-		$this->setElementDecorators(array(
-			'ViewHelper',
-			'Errors',
-			array(array('data'=>'HtmlTag'),
+
+		$this->setElementDecorators(
+			array(
+				'ViewHelper',
+				'Errors',
+				array(array('data'=>'HtmlTag'),
 				array('tag'=>'td','class'=>'element')),
-			array('Label',array('tag'=>'td')),
-			array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
+				array('Label',array('tag'=>'td')),
+				array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
 			)
 		);
-
-		$this->setDecorators(array(
-			'FormElements',
-			array('HtmlTag',array('tag'=>'table')),
-			'Form'
+		$this->setDecorators(
+			array(
+				'FormElements',
+				array('HtmlTag',array('tag'=>'table')),
+				'Form'
 			)
 		);
 	}
