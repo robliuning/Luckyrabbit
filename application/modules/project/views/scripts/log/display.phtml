@@ -1,0 +1,99 @@
+ <?php 
+ 	$this->headTitle('- 工程管理 - 工程日志信息');
+ 	$this->headScript()->prependFile('/js/logjs/p_log.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 工程日志信息 - 详情</h1>
+		<div class="p_msg">
+			<h3></h3>
+		</div>
+			<div class="overall_tool">
+			<?php $log = $this->log?>
+				<div class="button_group">
+					<div><a href="<?php echo $this->url(array('controller'=>'log','action'=>'edit','id'=>$log->getPLogId()))?>"><img src="/images/icons/functions/export.png"/><p>修改</p></a></div>
+					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/log/index/display/id/<?php echo $log->projectId() ?>"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu">工程日志信息</p>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>					
+					</colgroup>
+					<tr>
+					<tr>
+						<td>日期: </td>
+						<td><?php echo $log->getLogDate()?></td>
+					</tr>
+					<tr>
+						<td>天气: </td>
+						<td><?php echo $log->getAddress()?></td>
+					</tr>
+					<tr>
+						<td>工程状态: </td>
+						<td><?php
+							$status = $this->escape($log->getStatus());
+							$stDis = "";
+							if($status == 0)
+							{
+								$stDis = "未开工";
+								}
+								elseif($status ==1)
+								{
+									$stDis = "建设中";
+									}
+									else
+									{
+										$stDis = "已竣工";
+										}
+							echo $stDis;
+
+						?></td>
+					</tr>
+					<tr>
+						<td>结构类型: </td>
+						<td><?php echo $log->getStructype()?></td>
+					</tr>
+					<tr>
+						<td>层数: </td>
+						<td><?php echo $log->getLevel()?></td>
+					</tr>
+					<tr>
+						<td>合同金额: </td>
+						<td><?php echo $log->getAmount()?></td>
+					</tr>
+					<tr>
+						<td>用途: </td>
+						<td><?php echo $log->getPurpose()?></td>
+					</tr>
+					<tr>
+						<td>建筑面积: </td>
+						<td><?php echo $log->getConstrArea()?></td>
+					</tr>
+					<tr>
+						<td>作业总人数: </td>
+						<td><?php echo $log->getStaffNo()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $log->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $log->getCTime()?></td>
+					</tr>
+				</table>
+				<div id="msgBox"></div>
+				</div><!-- end of overall content -->
+			</div><!-- end of p_content -->
+		</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

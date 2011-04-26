@@ -25,7 +25,36 @@ class Project_Models_LogMapper
         }
         return $this->_dbTable;
     }
-      
+    
+    public function save(Project_Models_Log $log)
+    {
+        $data = array(
+        			'pLogId' => $log->getPLogId(),
+					'projectId' => $log->getProjectId(),
+					'logDate' => $log->getLogDate(),
+					'weather' => $log->getWeather(),
+					'tempHi' => $log->getTempLo(),
+					'tempLo' => $log->getTempHi(),
+					'progress' => $log->getProgress(),
+					'qualityPbl' => $log->getQualityPbl(),
+					'safetyPbl' => $log->getSafetyPbl(),
+					'otherPbl' => $log->getOtherPbl(),
+					'relatedFile' => $log->getRelatedFile(),
+					'mMinutes' => $log->getMMinutes(),
+					'changeSig' => $log->getChangeSig(),
+					'material' => $log->getMaterial(),
+					'machine' => $log->getMachine(),
+					'utility' => $log->getUtility(),
+					'remark' => $log->getRemark()
+        );
+        if (null === ($id = $log->getPLogId())) {
+            unset($data['pLogId']);
+            $this->getDbTable()->insert($data);
+        } else {
+            $this->getDbTable()->update($data, array('pLogId = ?' => $log->getPLogId()));
+        }
+    }
+  
     public function findArrayLog($id)
     {
 		$id = (int)$id;

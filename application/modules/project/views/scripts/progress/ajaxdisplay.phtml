@@ -1,0 +1,63 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+			<div class="button_group">
+				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+		<p><?php
+			$progress = $this->progress;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>阶段：</td>
+						<td><?php echo $progress->getStage()?></td>
+					</tr>
+					<tr>
+						<td>阶段任务：</td>
+						<td><?php echo $progress->getTask() ?></td>
+					</tr>
+					<tr>
+						<td>起始时间： </td>
+						<td><?php echo $progress->getStartDate()?></td>
+					</tr>
+					<tr>
+						<td>预计结束时间：</td>
+						<td><?php echo $progress->getEndDateExp()?></td>
+					</tr>
+					<tr>
+						<td>预计工期：</td>
+						<td><?php echo $progress->getPeriodExp()?></td>
+					</tr>
+					<tr>
+						<td>实际完成日期: </td>
+						<td><?php echo $progress->getEndDateAct()?></td>
+					</tr>
+					<tr>
+						<td>实际工期: </td>
+						<td><?php echo $progress->getPeriodAct()?></td>
+					</tr>
+					<tr>
+						<td>完成质量: </td>
+						<td><?php echo $progress->getQualityCh()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $progress->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $progress->getCTime()?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>
+	</div>
+</div>

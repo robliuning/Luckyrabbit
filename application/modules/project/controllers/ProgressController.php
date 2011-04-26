@@ -16,13 +16,12 @@ class Project_ProgressController extends Zend_Controller_Action
 		$this -> view ->render('_sidebar.phtml');
 	}
 
-	public function indexAction()
+	public function indexAction() //check
 	{
 		//this is an indexAction
     	$addForm = new Project_Forms_ProgressSave();
       	$addForm->submit->setLabel('保存新建');
     	$addForm->submit2->setAttrib('class','hide');
-    	$tbId = $addForm->getElement('projectId');
 		//populate dd project
 		$progresses = new Project_Models_ProgressMapper();			
 		$progresses->populateProgressDd($addForm);
@@ -76,14 +75,15 @@ class Project_ProgressController extends Zend_Controller_Action
    				}
 	}
 
-	public function ajaxdisplayoneAction(){                                               
-		//
+	public function ajaxdisplayAction() //check
+	{                                               
 		$this->_helper->layout()->disableLayout();
-   		$id=$this->_getParam('id',0);
-    	if($id >0)
+   		$id = $this->_getParam('id',0);
+    	if($id > 0)
     	{
    		    $progresses = new Project_Models_ProgressMapper();
-   			$progress = $progresses->getProgressInfo($id);
+   			$progress = new Project_Models_Progress();
+   			$progresses->find($id,$progress);
    			$this->view->progress = $progress;
    			}
     		else
@@ -92,36 +92,36 @@ class Project_ProgressController extends Zend_Controller_Action
    				}
 	}        
 
-	public function editAction(){
-		//to edit a choosen progress
+	public function editAction()
+	{
 	    $editForm = new Project_Forms_ProgressSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
+    	$editForm->getElement('projectId')->setAttrib('class','hide');
+     	$editForm->getElement('projectId')->setLabel('');
+   	
+    	//$editForm->projectId->setAttrib('class','hide');
 		//populate dd project
-			$progresses = new Project_Models_ProgressMapper();			
-			$progresses->populateDd($editForm);
-    	$this->view->form = $editForm;
-    	$this->view->id = $this->_getParam('id',0);    	
-
+		$progresses = new Project_Models_ProgressMapper();			
+		$progresses->populateProgressDd($editForm);
+    	$progressId = $this->_getParam('id',0);
     	if($this->getRequest()->isPost())
     	{
     		$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
     		{
     			$progress = new Project_Models_Progress();
-    			$progress->setProgressId($editForm->getValue('progressId'));	
-    			$progress->setProjectId('projectId');
+    			$progress->setProgressId($progressId);	
+    			$progress->setProjectId($editForm->getValue('projectId'));
     			$progress->setStage($editForm->getValue('stage'));
     			$progress->setTask($editForm->getValue('task'));
     			$progress->setStartDate($editForm->getValue('startDate'));
     			$progress->setEndDateExp($editForm->getValue('endDateExp'));
-    			$progress->setPeriodExp($editForm->getValue('periodExp'));
     			$progress->setEndDateAct($editForm->getValue('endDateAct'));
-    			$progress->setPeriodAct($editForm->getValue('periodAct'));
     			$progress->setQuality($editForm->getValue('quality'));
-					$progress->setRemark($editForm->getValue('remark'));
+				$progress->setRemark($editForm->getValue('remark'));
     			$progresses->save($progress);
-    			$this->_redirect('/project/progress');
+    			$this->_redirect('/project/index/display/id/'.$progress->getProjectId());
     			}
     			else
     			{
@@ -130,17 +130,20 @@ class Project_ProgressController extends Zend_Controller_Action
     		}
     		else
     		{
-    			$id=$this->_getParam('id',0);
-    			if($id >0)
+    			if($progressId >0)
     			{
-    				$editForm->populate($progresses->getProgress($id));
+			  		$arrayProgress = $progresses->findArrayProgress($progressId);
+					$editForm->populate($arrayProgress);
     				}
     				else
     				{
     					$this->_redirect('/project/progress');
     					}
     			}
-		
+    	$projectId = $editForm->getValue('projectId');
+    	$this->view->projectId = $projectId;
+		$this->view->id = $progressId;  	
+		$this->view->editForm = $editForm;
 	}
 }
 ?>

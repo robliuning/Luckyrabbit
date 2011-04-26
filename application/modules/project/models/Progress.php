@@ -15,6 +15,7 @@ class Project_Models_Progress
 	protected $_endDateAct;
 	protected $_periodAct;
 	protected $_quality;
+	protected $_qualityCh;
 	protected $_remark;
 	protected $_cTime;
 
@@ -175,6 +176,17 @@ class Project_Models_Progress
 	}
 	/****************************/
 
+	public function setQualityCh($qualityCh)
+	{
+		$this->_qualityCh = $qualityCh;
+		return $this;
+	}
+
+	public function getQualityCh()
+	{
+		return $this->_qualityCh;
+	}
+	/****************************/
 	public function setRemark($remark)
 	{
 		$this->_remark = $remark;

@@ -165,7 +165,7 @@
 						<td><?php echo $this->escape($progress->getStartDate()) ?></td>	
 						<td><?php echo $this->escape($progress->getEndDateExp()) ?></td>
 						<td><?php echo $this->escape($progress->getEndDateAct()) ?></td>
-						<td><?php echo $this->escape($progress->getQuality()) ?></td>
+						<td><?php echo $this->escape($progress->getQualityCh()) ?></td>
 						<td><a href="/project/progress/edit/id/<?php echo $progressId?>">修改</a></td>
 						<td><a class="lightbox" href="/project/progress/ajaxdisplay/id/<?php echo $progressId?>">详情</a></td>
 					</tr>
@@ -262,7 +262,7 @@
 					<tr>
 					<?php foreach($this->arrayLogs as $log):?>
 					<?php $logId = $this->escape($log->getPLogId()) ?>
-						<td><a href="/project/log/ajaxdisplay/id/<?php echo $logId ?>"><?php echo $this->escape($log->getLogDate()) ?></a></td> 
+						<td><a href="/project/log/display/id/<?php echo $logId ?>"><?php echo $this->escape($log->getLogDate()) ?></a></td> 
 						<?php 
 							if($counter%5 == 0)
 								echo "</tr><tr>"; 

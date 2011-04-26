@@ -25,38 +25,46 @@ class Project_Models_ProgressMapper
         }
         return $this->_dbTable;
     }
+    
     public function save(Project_Models_Progress $progress)
     {
-    	$periodExp = $progress->getEndDateExp() - $progress->getStartDate() + 1; 
+    /*	$endExp = explode("-",$progress->getEndDateExp());
+    	$unix_endExp = mktime(0, 0, 0, $endExp[2], $endExp[1], $endExp[0]);
+    	$start = explode("-",$progress->getStartDate());
+    	$unix_start = mktime(0, 0, 0, $start[2], $start[1], $start[0]);
+
+    	$periodExp = ($unix_endExp - $unix_start)/ 86400; 
     	$periodAct = null;
     	if($progress->getEndDateAct() != null)
     	{
-    		$periodAct = $progress->getEndDateAct() - $progress->getStartDate() + 1;
-    		}
+    		$endAct = explode("-",$progress->getEndDateAct());
+    		$unix_endAct = mktime(0, 0, 0, $endAct[2], $endAct[1], $endAct[0]);
+    		$periodAct = ($unix_endAct - $unix_start)/ 86400;;
+    		}*/
+    		
         $data = array(
 			'projectId' => $progress->getProjectId(),
             'stage' => $progress->getStage() ,
 			'task' => $progress->getTask(),
 			'startDate' => $progress->getStartDate(),
 			'endDateExp' => $progress->getEndDateExp(),
-			'periodExp' => $periodExp,
+			//'periodExp' => $periodExp,
 			'endDateAct' => $progress->getEndDateAct(),
-			'periodAct' => $periodAct,
+			//'periodAct' => $periodAct,
 			'quality' => $progress->getQuality(),
 			'remark' => $progress->getRemark()
         );
-        if (null === ($id = $progress->getProjectId())) {
+        if (null === ($id = $progress->getProgressId())) {
             unset($data['progressId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('progressId = ?' => $progress->getProjectId()));
+            $this->getDbTable()->update($data, array('progressId = ?' => $progress->getProgressId()));
         }
     }
 
-    public function find($projectId)
+    public function find($id,Project_Models_Progress $progress)
     {
-		$progress = new Project_Models_Progress();
-        $result = $this->getDbTable()->find($projectId);
+        $result = $this->getDbTable()->find($id);
 
         if (0 == count($result)) {
 
@@ -72,55 +80,25 @@ class Project_Models_ProgressMapper
 			      ->setEndDateExp($row->endDateExp)
 			      ->setPeriodExp($row->periodExp)
 			      ->setEndDateAct($row->endDateAct)
-			      ->setPeriodAct($row->PeriodAct)
+			      ->setPeriodAct($row->periodAct)
                   ->setQuality($row->quality)
 				  ->setRemark($row->remark)
 				  ->setCTime($row->cTime);
-		return $progress;
+		$qualityCh = $this->assignQualityCh($progress->getQuality());
+		$progress->setQualityCh($qualityCh);
     }
 
-	public function fetchInfo($projectId)  //获得progress 中的stage, task, endDateAct, quality
+	public function findArrayProgress($id)
 	{
-		$select = $this->getDbTable()->select();
-		$select->where('projectId = ?',$projectId);
-		$resultSet = $this->getDbTable()->fetchAll($select);
-		$entries = array();
-		foreach($resultSet as $row){
-			$entry = new Project_Models_Progress();
-			$entry ->setStage($row->stage)
-				   ->setTask($row->task)
-				   ->setEndDateAct($row->endDateAct)
-				   ->setQuality($row->quality);
-
-			$entries[] = $entry;
+		$id = (int)$id;
+		$row = $this->getDbTable()->fetchRow('progressId = ' . $id);
+		if (!$row) {
+			throw new Exception("Could not find row $id");
 		}
-		return $entries;
+		return $row->toArray();
 	}
-	
-	public function getProgressInfo($progressId)
-	{
-		$select = $this->getDbTable()->select();
-		$select->where('progressId = ?',$progressId);
-		$resultSet = $this->getDbTable()->fetchAll($select);
-		$entries = array();
-		foreach($resultSet as $row){
-			$entry = new Project_Models_Progress();
-			$entry ->setStage($row->stage)
-				   ->setTask($row->task)
-				   ->setEndDateExp($row->endDateExp)   
-				   ->setPeriodExp($row->periodExp)
-				   ->setEndDateAct($row->endDateAct)
-				   ->setPeriodAct($row->periodAct)
-				   ->setQuality($row->quality)
-				   ->setRemark($row->remark)
-				   ->setCTime($row->cTime);
-
-			$entries[] = $entry;
-		}
-		return $entries;
-	}
-	
-	public function fetchAllStages($projectId) //check
+		
+	public function fetchAllStages($projectId) 
 	{
 		$entries = $this->getDbTable()->fetchAllStages($projectId);
 		return $entries;
@@ -148,13 +126,15 @@ class Project_Models_ProgressMapper
 				   		->setEndDateExp($row->endDateExp)
 						->setEndDateAct($row->endDateAct)
 						->setQuality($row->quality);
+			$qualityCh = $this->assignQualityCh($progress->getQuality());
+			$progress->setQualityCh($qualityCh);
 				
             $progresses[] = $progress;
    			}
     	return $progresses;
     	}
     
-    public function populateProgressDd($form)
+    public function populateProgressDd($form) //check
     {
     	$projects = new Project_Models_ProjectMapper();
 		$arrayProjects = $projects->fetchAllNames();
@@ -162,6 +142,28 @@ class Project_Models_ProgressMapper
 		{
 			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
 			}
-    	} 
+    	}
+    
+    public function assignQualityCh($quality)
+    {
+    	$qualityCh = null;
+    	if($quality == 0)
+    	{
+    		$qualityCh = "不合格";
+    		}
+    		elseif($quality == 1)
+    		{
+     			$qualityCh = "合格";
+    			}
+    			elseif($quality == 2)
+    			{
+    			    $qualityCh = "良好";
+    				}
+    				elseif($quality == 3)
+    				{
+    					$qualityCh = "优秀";    				
+    					}
+		return $qualityCh;   
+    } 
 }
 ?>

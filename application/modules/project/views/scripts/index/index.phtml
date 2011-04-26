@@ -35,7 +35,7 @@
 						</form>
 					</div>
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
-					<div><a href="#msgBox" class="lightbox" id="btDelete"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
@@ -82,7 +82,7 @@
 					<?php foreach($this->arrayProjects as $project):?>
 					<?php $projectId = $this->escape($project->getProjectId());?>
 					<tr>
-						<td><input type="checkbox" name="cbEmp" value="<?php echo $projectId ?>"></td>
+						<td><input type="checkbox" name="cb" value="<?php echo $projectId ?>"></td>
 						<td><?php
 							echo $counter;
 							$counter++;
@@ -130,7 +130,7 @@
 									}
 									else
 									{
-										echo $this->escape($project->getStage());
+										echo "<a class='lightbox' href='/project/progress/ajaxdisplay/id/".$this->escape($project->getStage())."')>进度: ".$this->escape($project->getStage())."</a>";
 									}
 								?></td>
 						<td><?php echo $this->escape($project->getStaffNo())?></td>
