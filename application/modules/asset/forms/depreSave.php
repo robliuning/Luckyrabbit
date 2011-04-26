@@ -11,62 +11,62 @@ class Asset_Forms_DepreSave extends Zend_Form
 	{
 		$this->setMethod('post');
 		$this->addElement(
-		  'select','purId',array(
-			  'label'=>'固定资产购置名称:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
+			'select','purId',array(
+			'label'=>'固定资产购置名称:',
+			'class'=>'tbLarge tbText',
+			'required'=>true
+			)
 		);
 		$this->addElement(
-		  'select','projectId',array(
-			  'label'=>'工程名称:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
+			'select','projectId',array(
+			'label'=>'工程名称:',
+			'class'=>'tbLarge tbText',
+			'required'=>true
+			)
 		);
 		$this->addElement(
-		  'text','quantity',array(
-			  'label'=>'数量:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>true
-		   )
+			'text','quantity',array(
+			'label'=>'数量:',
+			'class'=>'tb tbTeMediumxt',
+			'required'=>true
+			)
 		);
 		$this->addElement(
-		  'text','inDate',array(
-			  'label'=>'进场日期:',
-			  'class'=>'tbLarge tbText datepicker',
-			  'required'=>true
-		   )
+			'text','inDate',array(
+			'label'=>'进场日期:',
+			'class'=>'tbMedium tbText datepicker',
+			'required'=>true
+			)
 		);
 		$this->addElement(
-		  'text','outDate',array(
-			  'label'=>'出场日期:',
-			  'class'=>'tbLarge tbText datepicker',
-			  'required'=>true		
-		   )
+			'text','outDate',array(
+			'label'=>'出场日期:',
+			'class'=>'tbMedium tbText datepicker',
+			'required'=>true		
+			)
 		);
 		$this->addElement(
-		  'text','depre',array(
-			  'label'=>'折旧系数:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>false
-		   )
+			'text','depre',array(
+			'label'=>'折旧系数:',
+			'class'=>'tbMedium tbText',
+			'required'=>false
+			)
 		);
 		$this->addElement(
-		  'text','depreAmt',array(
-			  'label'=>'折旧金额:',
-			  'class'=>'tbLarge tbText',
-			  'required'=>false
-		   )
+			'text','depreAmt',array(
+			'label'=>'折旧金额:',
+			'class'=>'tbLarge tbText',
+			'required'=>false
+			)
 		);
 		$this->addElement(
-		    'textarea','remark',array(
-			    'label'=>'备注:',
-			    'class'=>'tbLarge tbText',
-			    'required'=>false,
-				'cols' => 60,
-				'rows' => 20
-		   )
+			'textarea','remark',array(
+			'label'=>'备注:',
+			'class'=>'tbLarge tbText',
+			'required'=>false,
+			'cols' => 60,
+			'rows' => 20
+			)
 		);
         $this->addElement(
        /*按钮一*/
