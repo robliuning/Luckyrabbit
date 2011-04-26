@@ -10,45 +10,54 @@ class Worker_Forms_extraSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'text', 'workerId', array(
-			'label' => '¹¤ÈËÐÕÃû: ',
+			'text', 'name', array(
+			'label' => 'å·¥äººå§“å: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText ac_workerName'
 			)
 		);
      	$this->addElement(
 			'select', 'projectId', array(
-			'label' => '¹¤³ÌÃû³Æ: ',
+			'label' => 'å·¥ç¨‹åç§°: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'startDate', array(
-			'label' => '¿ªÊ¼ÈÕÆÚ: ',
+			'label' => 'å¼€å§‹æ—¥æœŸ: ',
 			'required' => true,
 			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text', 'endDate', array(
-			'label' => '½áÊøÈÕÆÚ: ',
+			'label' => 'ç»“æŸæ—¥æœŸ: ',
 			'required' => true,
 			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text', 'period', array(
-			'label' => '¹¤ÆÚ: ',
+			'label' => 'å·¥æœŸ: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'cost', array(
-			'label' => 'ÅÉ¹¤·ÑÓÃ: ',
+			'label' => 'æ´¾å·¥è´¹ç”¨: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
+			)
+		);					
+		$this->addElement(
+			'textarea', 'remark', array(
+			'label' => 'å¤‡æ³¨: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
 			)
 		);
     	$this->addElement(

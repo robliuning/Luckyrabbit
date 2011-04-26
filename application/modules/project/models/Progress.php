@@ -105,7 +105,7 @@ class Project_Models_Progress
 
 	public function setStartDate($startDate)
 	{
-		$this->_startDateExp = $startDateExp;
+		$this->_startDate = $startDate;
 		return $this;
 	}
 

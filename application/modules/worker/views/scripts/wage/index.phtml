@@ -74,9 +74,9 @@
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayWages as $wage):?><!--修改处-->
-					<?php $wageId = $this->escape($wage->getWagId());?><!--修改处-->
+					<?php $wagId = $this->escape($wage->getWagId());?><!--修改处-->
 					<tr>
-						<td><input type="checkbox" name="cb" value="<?php echo $wageId ?>"></td>
+						<td><input type="checkbox" name="cb" value="<?php echo $wagId ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
@@ -87,8 +87,8 @@
 						<td>
 						<?php echo $this->escape($wage->getEndDate())?>
 						</td>
-						<td><a href="<?php echo $this->url(array('controller'=>'wage','action'=>'edit','id'=>$wageId))?>">修改</a></td><!--修改处-->
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'wage','action'=>'ajaxdisplay','id'=>$wageId))?>">详情</a></td><!--修改处-->
+						<td><a href="<?php echo $this->url(array('controller'=>'wage','action'=>'edit','id'=>$wagId))?>">修改</a></td><!--修改处-->
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'wage','action'=>'ajaxdisplay','id'=>$wagId))?>">详情</a></td><!--修改处-->
 					</tr>
 					<?php endforeach ?>
 				</table>

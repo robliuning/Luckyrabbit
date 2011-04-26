@@ -20,6 +20,17 @@ class Worker_Models_DbTable_Worker extends Zend_Db_Table_Abstract
 		return $entries;
 		}
 	
+	public function findWorkerNames($key)
+    {
+    	$select = $this->select()
+    			->from('wm_workers',array('workerId','name','phoneNo','cert'))
+    			->where('name LIKE ?', '%'.$key.'%');
+    	
+    	$entries = $this->fetchAll($select);
+    	
+    	return $entries;
+    	}
+	
 	public function search($key,$condition)
 	{
 		$select = $this->select();

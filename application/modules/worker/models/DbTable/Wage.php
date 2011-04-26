@@ -10,17 +10,15 @@ class Worker_Models_DbTable_Wage extends Zend_Db_Table_Abstract
 	{
 		$select = $this->select()
 			->setIntegrityCheck(false)
-			->from(array('v'=>'vm_workers'),array('name'))
+			->from(array('v'=>'wm_workers'),array('name'))
 			->join(array('w'=>'wm_wages'),'v.workerId = w.workerId')		
-			->where('w.workerId = ?',$id);
+			->where('w.wagId = ?',$id);
 			
 		$entries = $this->fetchAll($select);
 		
 		return $entries;
 		}
 		
-		
-	
 	public function search($key,$condition)
 	{
 		$select = $this->select();

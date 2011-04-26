@@ -52,32 +52,33 @@ class Contract_Models_ContractorMapper
         }
     }
  
+ 	public function find($id,Contract_Models_Contractor $contract) 
+    {
+        $resultSet = $this->getDbTable()->find($id);
+
+        if (0 == count($resultSet)) {
+
+            return;
+        }
+
+        $row = $resultSet->current();
+        $contract->setContractorId($row->contractorId)
+			      ->setName($row->name)
+			      ->setArtiPerson($row->artiPerson)
+			      ->setLicenseNo($row->licenseNo)
+			      ->setBusiField($row->busiField)
+			      ->setPhoneNo($row->phoneNo)
+			      ->setOtherContact($row->otherContact)
+			      ->setAddress($row->address)
+			      ->setRemark($row->remark)
+			      ->setCTime($row->cTime);
+    	}
+ 
 	public function delete($id) //check
     {
     	$result = $this->getDbTable()->delete('contractorId = ' . (int)$id);
     	return $result;	
     	}
- 
-
-    /*public function fetchAllJoin($key=null,$condition=null) //check
-    {
-        $resultSet = $this->getDbTable()->fetchAll();
-        $entries   = array();
-        foreach ($resultSet as $row) {
-            $entry = new Contract_Models_Contractor();
-
-			 $entry ->setContractorId($row->contractorId)
-        				 ->setName($row->name)
-						 ->setArtiPerson($row->artiPerson)
-						 ->setLicenseNo($row->licenseNo)
-				         ->setPhoneNo($row->phoneNo)
-						 ->setOtherContact($row->otherContact)
-						 ->setAddress($row->address);
-                  
-            $entries[] = $entry;
-        }
-        return $entries;
-    } */
 
 	public function fetchAllJoin($key=null,$condition=null) //check
     {

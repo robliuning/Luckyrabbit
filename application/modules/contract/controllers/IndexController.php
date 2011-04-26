@@ -101,17 +101,17 @@ class Contract_IndexController extends Zend_Controller_Action
 		$this->view->contractorId = $contractorId;
 	}
 
-public function addAction() // 添加
- {
-	 $addForm = new Contract_Forms_ContractorSave();
-	 $addForm->submit->setLabel("保存继续新建");
-	 $addForm->submit2->setLabel("保存返回上页");
-	 $contractors = new Contract_Models_ContractorMapper();
-	 if($this->getRequest()->isPost())
-	   {
-		   $btClicked = $this->getRequest()->getPost('submit');
-		   $formData = $this->getRequest()->getPost();
-		   if($addForm->isValid($formData))
+	public function addAction() // 添加
+ 	{
+		$addForm = new Contract_Forms_ContractorSave();
+		$addForm->submit->setLabel("保存继续新建");
+		$addForm->submit2->setLabel("保存返回上页");
+		$contractors = new Contract_Models_ContractorMapper();
+		if($this->getRequest()->isPost())
+		{
+			$btClicked = $this->getRequest()->getPost('submit');
+			$formData = $this->getRequest()->getPost();
+			if($addForm->isValid($formData))
 		      {
 			   $contractor = new Contract_Models_Contractor();
 				 $contractor->setName($addForm->getValue('name'));
@@ -143,13 +143,13 @@ public function addAction() // 添加
 	   			}
 	   }
 	   $this->view->addForm = $addForm;
- }
- public function ajaxdeleteAction() /*删除*/
- {
-	 $this->_helper->layout()->disableLayout();
-	 $this->_helper->viewRenderer->setNoRender(true);
-	 $contractorId = $this->_getParam('id',0);
-	 if($contractorId>0)
+ 	}
+ 	public function ajaxdeleteAction() /*删除*/
+ 	{
+		$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$contractorId = $this->_getParam('id',0);
+		if($contractorId>0)
 	     {
 		   $contractors = new Contract_Models_ContractorMapper();
 		   $result = $contractors->delete($contractorId); 
@@ -158,21 +158,21 @@ public function addAction() // 添加
 	    {
 		 $this->_redirect('/contract');
 	    }
- }
+ 	}
  
-	public function ajaxdisplayAction()
+	public function displayAction()
 	{
-			$contractorId = $this->_getParam('id',0);
-            if($contractorId>0)
-		    {
-				$contractors = new Contract_Models_ContractorMapper();
-				$object = new Contract_Models_Contractor();
-				$arrayContractors = $contractors->find($contractors,$object);
-               $this->view->arrayContractors = $arrayContractors;
-		       }
-			   else
-		        {
-				   $this->_redirect('/contract');
-		        }
+       	$contractors = new Contract_Models_ContractorMapper();
+	   	$id = $this->_getParam('id',0);
+	   	if($id >0)
+       	{
+       		$contract = new Contract_Models_Contractor();
+       		$contractors->find($id,$contract);
+	   		$this->view->contract = $contract;
+    		}
+    		else
+    		{
+    			$this->_redirect('/contract');
+    			}
 		}
 }

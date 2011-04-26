@@ -7,7 +7,7 @@
 				</div><!-- end of button group -->
 	</div><!-- end of overall tool -->
 			<p><?php
-			$bonus = $this->bonus;?>
+			$penalty = $this->penalty;?>
 			 </p>
 			 <div class="overall_content">
 			 <table>
@@ -17,36 +17,36 @@
 					</colgroup>
 					<tr>
 						<td>工程名称: </td>
-						<td><?php echo $bonus->getProjectName()?></td>
+						<td><?php echo $penalty->getProjectName()?></td>
 					</tr>
 					</tr>
 					<tr>
 						<td>工人姓名: </td>
-						<td><?php echo $bonus->getWorkerName() ?></td>
+						<td><?php echo $penalty->getWorkerName() ?></td>
 					<tr>
 					<tr>
 						<td>日期: </td>
-						<td><?php echo $bonus->getBonDate()?></td>
+						<td><?php echo $penalty->getPenDate()?></td>
 					</tr>
 					<tr>
-						<td>奖励类型: </td>
-						<td><?php echo $bonus->getTypeName()?></td>
+						<td>扣款类型: </td>
+						<td><?php echo $penalty->getTypeName()?></td>
 					</tr>
 					<tr>
-						<td>奖励原因: </td>
-						<td><?php echo $bonus->getDetail()?></td>
+						<td>扣款原因: </td>
+						<td><?php echo $penalty->getDetail()?></td>
 					</tr>
 					<tr>
 						<td>金额: </td>
-						<td><?php echo $bonus->getAmount()?></td>
+						<td><?php echo $penalty->getAmount()?></td>
 					</tr>
 					<tr>
 						<td>备注: </td>
-						<td><?php echo $bonus->getRemark()?></td>
+						<td><?php echo $penalty->getRemark()?></td>
 					</tr>
 					<tr>
 						<td>创建时间: </td>
-						<td><?php echo $bonus->getCTime()?></td>
+						<td><?php echo $penalty->getCTime()?></td>
 					</tr>
 			</table>
 		</div>

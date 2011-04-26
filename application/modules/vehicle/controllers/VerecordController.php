@@ -185,38 +185,6 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			$this->_redirect('/vehicle/verecord');
     			}
     	}
-   public function ajaxdisplayAction()
-    	{
-    		$this->_helper->layout()->disableLayout();
-				$this->_helper->viewRenderer->setNoRender(true);
-				$verecordId = $this->_getParam('id',0);
-			if($verecordId>0)
-			{
-				$verecords = new Vehicle_Models_VerecordMapper();
-				$verecord = new Vehicle_Models_Verecord();
-				$verecords->find($verecordId,$verecord);
-				$this->view->transfer = $verecord;
-				}
-			else
-			{
-            $this->_redirect('/vehicle/verecord');
-			}
-    		}
-  /*  public function searchAction()
-    {        
-		$verecords = new Vehicle_Models_VerecordMapper();
-	    	
-    	if($this->getRequest()->isPost())
-    	{	
-    		
-    		$this->view->arrayVerecords = $arrayVerecords;
-    		}
-    		else
-    		{
-    			
-    				}
-    		}
-    	
-    	}*/
+
 }
 ?>

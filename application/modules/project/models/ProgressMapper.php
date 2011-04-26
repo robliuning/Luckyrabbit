@@ -27,24 +27,29 @@ class Project_Models_ProgressMapper
     }
     public function save(Project_Models_Progress $progress)
     {
+    	$periodExp = $progress->getEndDateExp() - $progress->getStartDate() + 1; 
+    	$periodAct = null;
+    	if($progress->getEndDateAct() != null)
+    	{
+    		$periodAct = $progress->getEndDateAct() - $progress->getStartDate() + 1;
+    		}
         $data = array(
 			'projectId' => $progress->getProjectId(),
             'stage' => $progress->getStage() ,
 			'task' => $progress->getTask(),
 			'startDate' => $progress->getStartDate(),
 			'endDateExp' => $progress->getEndDateExp(),
-			'periodExp' => $progress->getPeriodExp(),
+			'periodExp' => $periodExp,
 			'endDateAct' => $progress->getEndDateAct(),
-			'periodAct' => $progress->getPeriodAct(),
+			'periodAct' => $periodAct,
 			'quality' => $progress->getQuality(),
-			'remark' => $progress->getRemark(),
-			'cTime' => $progress->getCTime()
+			'remark' => $progress->getRemark()
         );
-        if (null === ($id = $project->getProjectId())) {
-            unset($data['projectId']);
+        if (null === ($id = $progress->getProjectId())) {
+            unset($data['progressId']);
             $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('projectId = ?' => $projectId));
+            $this->getDbTable()->update($data, array('progressId = ?' => $progress->getProjectId()));
         }
     }
 
@@ -114,10 +119,49 @@ class Project_Models_ProgressMapper
 		}
 		return $entries;
 	}
+	
 	public function fetchAllStages($projectId) //check
 	{
 		$entries = $this->getDbTable()->fetchAllStages($projectId);
 		return $entries;
-		}
+	}
+	
+	public function fetchAllJoin($key = null,$condition = null) //check
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+   		
+   		$progresses = array();
+   		
+   		foreach($resultSet as $row){
+   			$progress = new Project_Models_Progress();
+        	$progress ->setProgressId($row->progressId)
+        				->setProjectId($row->projectId)
+                   		->setStage($row->stage)
+						->setStartDate($row->startDate)
+				   		->setEndDateExp($row->endDateExp)
+						->setEndDateAct($row->endDateAct)
+						->setQuality($row->quality);
+				
+            $progresses[] = $progress;
+   			}
+    	return $progresses;
+    	}
+    
+    public function populateProgressDd($form)
+    {
+    	$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames();
+		foreach($arrayProjects as $project)
+		{
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
+			}
+    	} 
 }
 ?>

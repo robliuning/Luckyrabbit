@@ -12,7 +12,7 @@ class Worker_Models_DbTable_Regular extends Zend_Db_Table_Abstract
 			->setIntegrityCheck(false)
 			->from(array('p'=>'pm_projects'),array('name'))
 			->join(array('w'=>'wm_regulars'),'p.projectId = w.projectId')		
-			->where('w.projectId = ?',$id);
+			->where('w.regId = ?',$id);
 			
 		$entries = $this->fetchAll($select);
 		
@@ -35,6 +35,10 @@ class Worker_Models_DbTable_Regular extends Zend_Db_Table_Abstract
 			        ->where('startDate < ?',$key)
 					->where('endDate > ?',$key);
 				}
+				elseif($condition == 'projectId')
+				{
+					$select->where('projectId = ?',$key);
+					}
 				
 		$resultSet = $this->fetchAll($select);
 		

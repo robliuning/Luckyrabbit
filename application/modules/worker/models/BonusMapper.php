@@ -33,7 +33,7 @@ class Worker_Models_BonusMapper
         	'bonId' => $bonus->getBonId(),
         	'projectId' => $bonus->getProjectId(),
         	'workerId' => $bonus->getWorkerId(),
-			'bonDate' => $bonus->BonDate(),
+			'bonDate' => $bonus->getBonDate(),
 			'typeId' => $bonus->getTypeId(),
 			'detail' => $bonus->getDetail(),
 			'amount' => $bonus->getAmount(),
@@ -138,5 +138,25 @@ class Worker_Models_BonusMapper
 	{
 		$this->getDbTable()->delete("bonId = ".(int)$bonId);
 		}
+		
+	public function populateBonusDd($form)
+	{
+		$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames(); 
+		
+		$bontypes = new General_Models_BontypeMapper();
+		$arrayBontypes = $bontypes->fetchAllNames();
+		
+		foreach($arrayProjects as $project)
+		{
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
+			}
+		foreach($arrayBontypes as $bontype)
+		{
+			$form->getElement('typeId')->addMultiOption($bontype->getTypeId(),$bontype->getName());
+			}
+		
+		}
+		
 }
 ?>

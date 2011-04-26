@@ -1,6 +1,6 @@
  <?php
- 	$this->headTitle('- 工人管理 - 计划派工信息');
- 	$this->headScript()->prependFile('/js/workerjs/p_regular.js');
+ 	$this->headTitle('- 工人管理 - 工人扣款');
+ 	$this->headScript()->prependFile('/js/workerjs/p_penalty.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,14 +9,14 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工人管理 - 计划派工信息 - 修改</h1>
+		<h1>工人管理 - 工人扣款 - 修改</h1>
 		<div class="p_msg">
 			<h3></h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><a href="/worker/regular/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>
-					<div><a href="/worker/regular"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
+					<div><a href="/worker/penalty/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>
+					<div><a href="/worker/penalty"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

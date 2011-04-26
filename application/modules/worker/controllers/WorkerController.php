@@ -199,6 +199,16 @@ class Worker_WorkerController extends Zend_Controller_Action
    				$this->_redirect('/worker/worker');
    				}
 	}
+	
+	public function autocompleteAction()
+   	{
+   	  	$this->_helper->layout()->disableLayout();
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$key = $this->_getParam('key');
+    	$workers = new Worker_Models_WorkerMapper();
+    	$arrayNames = $workers->findWorkerNames($key);
+    	$json = Zend_Json::encode($arrayNames);  	
+    	echo $json;
+   		}
 }
-
 ?>

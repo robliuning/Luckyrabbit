@@ -46,18 +46,46 @@ class Worker_Models_PenaltyMapper
             $this->getDbTable()->update($data, array('penId = ?' => $penalty->getPenId()));
         }
     }
+    
+    public function find($penId,Worker_Models_Penalty $penalty) 
+    {
+
+        $result = $this->getDbTable()->find($penId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $penalty->setProjectId($row->projectId)
+        		->setWorkerId($row->workerId)
+        		->setPenDate($row->penDate)
+        		->setTypeId($row->typeId)
+        		->setDetail($row->detail)
+                ->setAmount($row->amount)
+                ->setRemark($row->remark)
+                ->setCTime($row->cTime);
+                
+        $projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($penalty->getProjectId());
+		$penalty->setProjectName($projectName);
+                  
+		$workers = new Worker_Models_WorkerMapper();
+		$workerName = $workers->findWorkerName($penalty->getWorkerId());
+		$penalty->setWorkerName($workerName);	 
+    }
 
     public function findArrayPenalty($id)
     {
 		$id = (int)$id;
 		$entries = $this->getDbTable()->fetchRow('penId = '.$id);
-		$projectId = $entries->getProjectId();
-		$workerId = $entries->getWorkerId();
+		$projectId = $entries->projectId;
+		$workerId = $entries->workerId;
 		$entry = $entries->toArray();
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
-    $entry[] = $projectName;
+    	$entry[] = $projectName;
 
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($workerId);
@@ -108,6 +136,25 @@ class Worker_Models_PenaltyMapper
 	public function delete($penId)
 	{
 		$this->getDbTable()->delete("penId = ".(int)$penId);
+		}
+		
+	public function populatePenaltyDd($form)
+	{
+		$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames(); 
+		
+		$pentypes = new General_Models_PentypeMapper();
+		$arrayPentypes = $pentypes->fetchAllNames();
+		
+		foreach($arrayProjects as $project)
+		{
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
+			}
+		foreach($arrayPentypes as $pentype)
+		{
+			$form->getElement('typeId')->addMultiOption($pentype->getTypeId(),$pentype->getName());
+			}
+		
 		}
 }
 ?>

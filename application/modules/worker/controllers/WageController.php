@@ -48,6 +48,9 @@ class Worker_WageController extends Zend_Controller_Action
 		}
 		$this->view->arrayWages = $arrayWages;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "worker";
+		$this->view->controller = "wage";
+		$this->view->moduleName = "日工工资信息";
     }
 
 	public function addAction()
@@ -67,10 +70,11 @@ class Worker_WageController extends Zend_Controller_Action
 			if($addForm->isValid($formData))
 			{
 				$wage = new Worker_Models_Wage();
-				$wage->setName($addForm->getValue('name'));
+				$wage->setWorkerId($addForm->getValue('workerId'));
 				$wage->setAmount($addForm->getValue('amount'));
 				$wage->setStartDate($addForm->getValue('startDate'));
 				$wage->setEndDate($addForm->getValue('endDate'));
+				$wage->setRemark($addForm->getValue('remark'));
 				$result = $wages->save($wage);
 				if($btClicked=='保存继续新建')
 				{
@@ -78,10 +82,11 @@ class Worker_WageController extends Zend_Controller_Action
 					$addForm->getElement('amount')->setValue('');
 					$addForm->getElement('startDate')->setValue('');
 					$addForm->getElement('endDate')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
-						$this->_redirect('/wage');
+						$this->_redirect('/worker/wage');
 						}
 			}
 			else
@@ -112,8 +117,8 @@ class Worker_WageController extends Zend_Controller_Action
 			{
 				$wage = new Worker_Models_Wage();
 				$wage->setWagId($wagId);
-				$wage->setName($editForm->getValue('name'));
-				$wage->setAmunt($editForm->getValue('amount'));
+				$wage->setWorkerId($editForm->getValue('workerId'));
+				$wage->setAmount($editForm->getValue('amount'));
 				$wage->setStartDate($editForm->getValue('startDate'));
 				$wage->setEndDate($editForm->getValue('endDate'));
 				$result = $wages->save($wage);
@@ -150,8 +155,14 @@ class Worker_WageController extends Zend_Controller_Action
     	if($wagId > 0)
     	{
     		$wages = new Worker_Models_WageMapper();
-    		$wages->delete($wagId);
-    		echo "1";
+    		try{
+    			$wages->delete($wagId);
+    			echo "s";
+    			}
+    			catch(Exception $e)
+    			{
+    				echo "f";
+    				}
     		}
     		else
     		{

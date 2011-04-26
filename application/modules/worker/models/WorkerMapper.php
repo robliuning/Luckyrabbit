@@ -125,6 +125,31 @@ class Worker_Models_WorkerMapper
 		return $name;
 	}
 	
+	public function findWorkerNames($key)
+	{
+		$arrayNames = $this->getDbTable()->findWorkerNames($key);
+		
+		$entries = array();
+		
+		$i = 0;
+		
+		foreach($arrayNames as $name)
+		{
+			$entries[$i]['name'] = $name->name;
+
+			$entries[$i]['workerId'] = $name->workerId;
+			$entries[$i]['phoneNo'] = $name->phoneNo;
+			$entries[$i]['cert'] = $name->cert;
+			$i++;
+			if($i == 12)
+			{
+				break;
+				}
+			}
+		
+		return $entries;
+	}
+	
 	public function populateWorkerDd($form)
 	{
 		$teams = new Worker_Models_TeamMapper();

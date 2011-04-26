@@ -56,10 +56,10 @@ class Worker_Models_WageMapper
         $row = $result->current();
 
         $wage  ->setAmount($row->amount)
-                  ->setStartDate($row->startDate)
-                  ->setEndDate($row->endDate)
-                  ->setWorkerId($row->workerId)
-                  ->setRemark($row->remark);
+               ->setStartDate($row->startDate)
+               ->setEndDate($row->endDate)
+               ->setWorkerId($row->workerId)
+               ->setRemark($row->remark);
                   
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($wage->getWorkerId());

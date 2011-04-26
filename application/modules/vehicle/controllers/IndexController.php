@@ -44,7 +44,10 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			$arrayVehicles = $vehicles->fetchAllJoin();
 		}
 		$this->view->arrayVehicles = $arrayVehicles;
-		$this->view->errorMsg = $errorMsg;   
+		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "vehicle";
+		$this->view->controller = "index";
+		$this->view->modelName = "车辆信息";
 		}
     
     public function addAction()                                        
@@ -151,7 +154,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     {  
     	$this->_helper->layout()->disableLayout();
        	$vehicles = new Vehicle_Models_VehicleMapper();
-	   		$veId = $this->_getParam('id',0);
+	   	$veId = $this->_getParam('id',0);
 	   	if($veId >0)
        	{
        		$vehicle = new Vehicle_Models_Vehicle();
@@ -168,14 +171,18 @@ class Vehicle_IndexController extends Zend_Controller_Action
     {
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
-   
-   
    		$veId = $this->_getParam('id',0);
     	if($veId > 0)
     	{
     		$vehicles = new Vehicle_Models_VehicleMapper();
-    		$vehicles->delete($veId);
-    		echo "1";
+    		try{
+    			$vehicles->delete($veId);
+    			echo "s";
+    			}
+    			catch(Exception $e)
+    			{
+    				echo "f";
+    				}
     		}
     		else
     		{

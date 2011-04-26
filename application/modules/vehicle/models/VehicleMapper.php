@@ -67,11 +67,16 @@ class Vehicle_Models_VehicleMapper
 			      ->setFuelCons($row->fuelCons)
 			      ->setRemark($row->remark)
 			      ->setCTime($row->cTime);
+			      
+		$contacts = new Employee_Models_ContactMapper();
+		$contactName = $contacts->findContactName($vehicle->getContactId());
+		$vehicle->setContactName($contactName);
     }
 
 	public function delete($veId)
 	{
-		$this->getDbTable()->delete('veId = '.(int)$veId);
+		$result = $this->getDbTable()->delete('veId = '.(int)$veId);
+		return $result;
 	}
 
 	public function fetchAllJoin($key = null,$condition = null) 

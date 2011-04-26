@@ -8,17 +8,17 @@
 
 class Project_IndexController extends Zend_Controller_Action
 {
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-    
+	public function init()
+	{
+		/* Initialize action controller here */
+	}
+	
 	public function preDispatch(){
-	     $this -> view ->render("_sidebar.phtml");
-	 }
+		$this -> view ->render("_sidebar.phtml");
+	}
 
-    public function indexAction() 
-    {
+	public function indexAction() 
+	{
 		$projects = new Project_Models_ProjectMapper();
 		$errorMsg = null;
 		if($this->getRequest()->isPost())
@@ -53,147 +53,166 @@ class Project_IndexController extends Zend_Controller_Action
 		$this->view->modelName = "工程信息";
 		}
 		
-    public function addAction()                                        
-    {
-    		$addForm = new Project_Forms_ProjectSave();
-        $addForm->submit->setLabel('保存继续新建');
-        $addForm->submit2->setLabel('保存返回上页');
-        
+	public function addAction()
+	{
+		$addForm = new Project_Forms_ProjectSave();
+		$addForm->submit->setLabel('保存继续新建');
+		$addForm->submit2->setLabel('保存返回上页');
+	
 		$projects = new Project_Models_ProjectMapper();
-		$projects->populateDd($addForm);
-	    	
-    	if($this->getRequest()->isPost())
-    	{
-    		$btClicked = $this->getRequest()->getPost('submit');
-    		$formData = $this->getRequest()->getPost();
-    		if($addForm->isValid($formData))
-    		{
-    			$project = new Project_Models_Project();
-    			$project->setName($addForm->getValue('name'));
-    			$project->setAddress($addForm->getValue('address'));
-    			$project->setStatus($addForm->getValue('status'));
-    			$project->setStructype($addForm->getValue('structype'));
-    			$project->setLevel($addForm->getValue('level'));
-    			$project->setAmount($addForm->getValue('amount'));
-    			$project->setPurpose($addForm->getValue('purpose'));
-    			$project->setConstrArea($addForm->getValue('constrArea'));
-    			$project->setStaffNo($addForm->getValue('staffNo'));
-     			$project->setRemark($addForm->getValue('remark'));
-    			$projects->save($project);   
-    			
-    			if($btClicked == '保存继续新建')
-    			{
-   					$addForm->getElement('name')->setValue('');
-   					$addForm->getElement('address')->setValue('');
-   					$addForm->getElement('status')->setValue('');
-   					$addForm->getElement('structype')->setValue('0');
-   					$addForm->getElement('level')->setValue('0');
-   					$addForm->getElement('amount')->setValue('');
-						$addForm->getElement('purpose')->setValue('');
-   					$addForm->getElement('constrArea')->setValue('');
-						$addForm->getElement('staffNo')->setValue('');
-						$addForm->getElement('remark')->setValue('');
-   					}
-   					else
-    				{
-    					$this->_redirect('/project');
-    					} 			
-    			}
-    			else
-    			{
-    				$addForm->populate($formData);
-    				}
-    		}
-		    $this->view->addForm = $addForm;
-    	}
-    
-    public function editAction()                                //编辑
-    {
-        $editForm = new Project_Forms_ProjectSave();
-    		$editForm->submit->setLabel('保存修改');
-    		$editForm->submit2->setAttrib('class','hide');
+		$projects->populateProjectDd($addForm);
+			
+		if($this->getRequest()->isPost())
+		{
+			$btClicked = $this->getRequest()->getPost('submit');
+			$formData = $this->getRequest()->getPost();
+			if($addForm->isValid($formData))
+			{
+				$project = new Project_Models_Project();
+				$project->setName($addForm->getValue('name'));
+				$project->setAddress($addForm->getValue('address'));
+				$project->setStatus($addForm->getValue('status'));
+				$project->setStructype($addForm->getValue('structype'));
+				$project->setLevel($addForm->getValue('level'));
+				$project->setAmount($addForm->getValue('amount'));
+				$project->setPurpose($addForm->getValue('purpose'));
+				$project->setConstrArea($addForm->getValue('constrArea'));
+				$project->setStaffNo($addForm->getValue('staffNo'));
+				$project->setRemark($addForm->getValue('remark'));
+				$projects->save($project);
+				
+				if($btClicked == '保存继续新建')
+				{
+					$addForm->getElement('name')->setValue('');
+					$addForm->getElement('address')->setValue('');
+					$addForm->getElement('status')->setValue('');
+					$addForm->getElement('structype')->setValue('0');
+					$addForm->getElement('level')->setValue('0');
+					$addForm->getElement('amount')->setValue('');
+					$addForm->getElement('purpose')->setValue('');
+					$addForm->getElement('constrArea')->setValue('');
+					$addForm->getElement('staffNo')->setValue('');
+					$addForm->getElement('remark')->setValue('');
+					}
+					else
+					{
+						$this->_redirect('/project');
+						} 			
+			}
+			else
+			{
+				$addForm->populate($formData);
+				}
+		}
+		$this->view->addForm = $addForm;
+	}
+
+	public function editAction()//编辑
+	{
+		$editForm = new Project_Forms_ProjectSave();
+		$editForm->submit->setLabel('保存修改');
+		$editForm->submit2->setAttrib('class','hide');
 
 		$projects = new Project_Models_ProjectMapper();
-		$projects->populateDd($editForm);
+		$projects->populateProjectDd($editForm);
 		
 		$projectId = $this->_getParam('id',0); 
-    	if($this->getRequest()->isPost())
-    	{
-    		$formData = $this->getRequest()->getPost();
-    		if($editForm->isValid($formData))
-    		{
-    			$project = new Project_Models_Project();
-    			$project->setProjectId($projectId);
-       		$project->setName($editForm->getValue('name'));
-    			$project->setaddress($editForm->getValue('address'));
-    			$project->setStatus($editForm->getValue('status'));
-    			$project->setStructype($editForm->getValue('structype'));
-    			$project->setLevel($editForm->getValue('level'));
-    			$project->setAmount($editForm->getValue('amount'));
-    			$project->setPurpose($editForm->getValue('purpose'));
-    			$project->setConstrArea($editForm->getValue('constrArea'));
-    			$project->setStaffNo($editForm->getValue('staffNo'));
-     			$project->setRemark($editForm->getValue('remark'));
-    			$projects->save($project); 
-    			 
-    			$this->_redirect('/project');
-    			}
-    			else
-    			{
-    				$editForm->populate($formData);
-    				}
-    		}
-    		else
-    		{
-    			if($projectId >0)
-    			{
-    			  $arrayProject = $projects->findArrayProject($projectId);
-    				$editForm->populate($arrayProject);
-    				}
-    				else
-    				{
-    					$this->_redirect('/project');
-    					}
-    			}		
-    	$this->view->editForm = $editForm;
-    	$this->view->id = $projectId;     	
-    }
-    
-   public function displayAction()                                                    
-    {  
-			$projects = new Project_Models_ProjectMapper();
-			$projectId = $this->_getParam('id',0);
-	   if($projectId >0)
-       {
-       		$project = new Project_Models_Project();
-       		$projects->find($projectId,$project);   
-	   		$this ->view->project = $project;      		
-    		}
-    		else
-    		{
-    			$this->_redirect('/project');
-    			}
-	    //显示该project下的岗位及人员（display employees related to this project?   
-    	//display relevant project progress
-    	//display relevant log
-    	}
-   
-    public function ajaxdeleteAction()
-    {
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			if($editForm->isValid($formData))
+			{
+				$project = new Project_Models_Project();
+				$project->setProjectId($projectId);
+				$project->setName($editForm->getValue('name'));
+				$project->setaddress($editForm->getValue('address'));
+				$project->setStatus($editForm->getValue('status'));
+				$project->setStructype($editForm->getValue('structype'));
+				$project->setLevel($editForm->getValue('level'));
+				$project->setAmount($editForm->getValue('amount'));
+				$project->setPurpose($editForm->getValue('purpose'));
+				$project->setConstrArea($editForm->getValue('constrArea'));
+				$project->setStaffNo($editForm->getValue('staffNo'));
+ 				$project->setRemark($editForm->getValue('remark'));
+				$projects->save($project); 
+			 
+				$this->_redirect('/project');
+				}
+				else
+				{
+					$editForm->populate($formData);
+					}
+			}
+			else
+			{
+				if($projectId >0)
+				{
+			  		$arrayProject = $projects->findArrayProject($projectId);
+					$editForm->populate($arrayProject);
+					}
+					else
+					{
+						$this->_redirect('/project');
+						}
+				}		
+		$this->view->editForm = $editForm;
+		$this->view->id = $projectId; 	
+	}
+
+	public function displayAction()
+	{  
+		$projects = new Project_Models_ProjectMapper();
+		$projectId = $this->_getParam('id',0);
+		if($projectId >0)
+		{
+			$project = new Project_Models_Project();
+			$projects->find($projectId,$project);
+			
+			$cpps = new Employee_Models_CppMapper();
+			$progresses = new Project_Models_ProgressMapper();
+			//$subcontracts = new Contract_Models_SubcontractMapper();
+			$regulars = new Worker_Models_RegularMapper();
+			$extras = new Worker_Models_ExtraMapper();
+			$logs = new Project_Models_LogMapper();
+			
+			$condition = 'projectId';
+			$arrayCpps = $cpps->fetchAllJoin($projectId,$condition);
+			$arrayProgresses = $progresses->fetchAllJoin($projectId,$condition);
+			//$arraySubcontracts = $subcontracts->fetchAllJoin($projectId,$condition);
+			$arrayRegulars = $regulars->fetchAllJoin($projectId,$condition);
+			$arrayExtras = $extras->fetchAllJoin($projectId,$condition);
+			$arrayLogs = $logs->fetchAllJoin($projectId,$condition);
+			
+			$this->view->arrayCpps = $arrayCpps;
+			$this->view->project = $project;  	
+			$this->view->arrayProgresses = $arrayProgresses;  		
+			//$this->view->arraySubcontracts = $arraySubcontracts;  		
+			$this->view->arrayRegulars = $arrayRegulars;  		
+			$this->view->arrayExtras = $arrayExtras;  		
+			$this->view->arrayLogs = $arrayLogs;  		
+			}
+			else
+			{
+				$this->_redirect('/project');
+				}
+	}
+
+	public function ajaxdeleteAction()
+	{
 		$this->_helper->layout()->disableLayout();
-    	$this->_helper->viewRenderer->setNoRender(true);
-   
-   		$projectId = $this->_getParam('id',0);
-    	if($projectId > 0)
-    	{
-    		$projects = new Project_Models_ProjectMapper();
-    		$projects->delete($projectId);
-    		echo "1";
-    		}
-    		else
-    		{
-    			$this->_redirect('/project');
-    			}
-    	}
+		$this->_helper->viewRenderer->setNoRender(true);
+
+		$projectId = $this->_getParam('id',0);
+		if($projectId > 0)
+		{
+			$projects = new Project_Models_ProjectMapper();
+			$projects->delete($projectId);
+			echo "1";
+			}
+			else
+			{
+				$this->_redirect('/project');
+				}
+	}
 }
 ?>

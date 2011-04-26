@@ -10,7 +10,7 @@ class Worker_Forms_wageSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'text', 'workerName', array(
+			'text', 'name', array(
 			'label' => '工人姓名: ',
 			'required' => true,
 			'class'=>'tbLarge tbText ac_workerName'//修改处
@@ -36,6 +36,17 @@ class Worker_Forms_wageSave extends Zend_Form
 			'label' => '结束日期: ',
 			'required' => true,
 			'class'=>'tbLarge tbText datepicker' //修改处
+			)
+		);
+		
+				
+		$this->addElement(
+			'textarea', 'remark', array(
+			'label' => '备注: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
 			)
 		);
     	$this->addElement(

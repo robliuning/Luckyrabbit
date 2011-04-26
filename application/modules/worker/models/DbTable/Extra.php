@@ -31,6 +31,10 @@ class Worker_Models_DbTable_Extra extends Zend_Db_Table_Abstract
 						->where('startDate < ?',$key)
 						->where('endDate > ?',$key);
 					}
+					elseif($condition == 'projectId')
+					{
+						$select->where('projectId = ?',$key);
+						}
 
 		$resultSet = $this->fetchAll($select);
 

@@ -52,5 +52,19 @@ class General_Models_PentypeMapper
 		$name = $arrayNames[0]->name;
 		return $name;
 	}
+	
+	public function fetchAllNames() 
+	{
+		$resultSet = $this->getDbTable()->fetchAllNames();
+		$entries = array();
+		foreach($resultSet as $row){
+			$entry = new General_Models_Pentype();
+			$entry ->setTypeId($row->typeId)
+				   ->setName($row->name);
+
+			$entries[] = $entry;
+		}
+		return $entries; 
+	}
 }
 ?>

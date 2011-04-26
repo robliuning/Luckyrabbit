@@ -37,7 +37,6 @@ class Worker_Models_ExtraMapper
 			'endDate' => $extra->getEndDate(),
 			'period' => $extra->getPeriod(),
 			'cost' => $extra->getCost(),
-			'profit' => $extra->getProfit(),
             'remark' => $extra->getRemark()
         );
         if (null === ($id = $extra->getExtId())) {
@@ -47,13 +46,41 @@ class Worker_Models_ExtraMapper
             $this->getDbTable()->update($data, array('extId = ?' => $extra->getExtId()));
         }
     }
+    
+    public function find($extId,Worker_Models_Extra $extra) 
+    {
+
+        $result = $this->getDbTable()->find($extId);
+
+        if (0 == count($result)) {
+            return;
+        }
+        $row = $result->current();
+
+        $extra  ->setProjectId($row->projectId)
+        		->setWorkerId($row->workerId)
+        		->setStartDate($row->startDate)
+        		->setEndDate($row->endDate)
+        		->setPeriod($row->period)
+        		->setCost($row->cost)
+                ->setRemark($row->remark)
+                ->setCTime($row->cTime);
+                
+        $projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($extra->getProjectId());
+		$extra->setProjectName($projectName);
+                  
+		$workers = new Worker_Models_WorkerMapper();
+		$workerName = $workers->findWorkerName($extra->getWorkerId());
+		$extra->setWorkerName($workerName);	 
+    }
 
     public function findArrayExtra($id)
     {
 		$id = (int)$id;
 		$entries = $this->getDbTable()->fetchRow('extId = '.$id);
-		$projectId = $entries->getProjectId();
-		$workerId = $entries->getWorkerId();
+		$projectId = $entries->projectId;
+		$workerId = $entries->workerId;
 		$entry = $entries->toArray();
 
 		$projects = new Project_Models_ProjectMapper();
@@ -107,6 +134,17 @@ class Worker_Models_ExtraMapper
 	public function delete($extId)
 	{
 		$this->getDbTable()->delete("extId = ".(int)$extId);
+		}
+		
+	public function populateExtraDd($form)
+	{
+		$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames(); 
+		
+		foreach($arrayProjects as $project)
+		{
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
+			}	
 		}
 }
 ?>

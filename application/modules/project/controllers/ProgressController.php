@@ -11,23 +11,22 @@ class Project_ProgressController extends Zend_Controller_Action
 		/*Initilze action controller here*/
 	}
 
-	public function preDispatch(){
+	public function preDispatch()
+	{
 		$this -> view ->render('_sidebar.phtml');
 	}
 
-	public function indexAction(){                                          //新建
+	public function indexAction()
+	{
 		//this is an indexAction
     	$addForm = new Project_Forms_ProgressSave();
-      $addForm->submit->setLabel('保存新建');
+      	$addForm->submit->setLabel('保存新建');
     	$addForm->submit2->setAttrib('class','hide');
     	$tbId = $addForm->getElement('projectId');
-    	$tbId->setValue('工程进度记录在保存新建后自动生成');
 		//populate dd project
-			$progresses = new Project_Models_ProgressMapper();			
-			$progresses->populateDd($addForm);
-		//end
-    	$this->view->form = $addForm;
-    	
+		$progresses = new Project_Models_ProgressMapper();			
+		$progresses->populateProgressDd($addForm);
+		//end    	
     	if($this->getRequest()->isPost())
     	{
     		$btClicked = $this->getRequest()->getPost('submit');
@@ -35,40 +34,29 @@ class Project_ProgressController extends Zend_Controller_Action
     		if($addForm->isValid($formData))
     		{
     			$progress = new Project_Models_Progress;
-    			$progress->setProjectId('projectId');
+    			$progress->setProjectId($addForm->getValue('projectId'));
     			$progress->setStage($addForm->getValue('stage'));
     			$progress->setTask($addForm->getValue('task'));
     			$progress->setStartDate($addForm->getValue('startDate'));
     			$progress->setEndDateExp($addForm->getValue('endDateExp'));
-    			$progress->setPeriodExp($addForm->getValue('periodExp'));
     			$progress->setEndDateAct($addForm->getValue('endDateAct'));
-    			$progress->setPeriodAct($addForm->getValue('periodAct'));
     			$progress->setQuality($addForm->getValue('quality'));
-					$progress->setRemark($addForm->getValue('remark'));
-					$result = $progresses->save($progress);
-				 	if($btClicked=='保存继续新建')
-				 	{
-   					$addForm->getElement('task')->setValue('');
-   					$addForm->getElement('startDate')->setValue('');
-   					$addForm->getElement('endDateExp')->setValue('');
-   					$addForm->getElement('periodExp')->setValue('');
-						$addForm->getElement('endDateAct')->setValue('');
-   					$addForm->getElement('periodAct')->setValue('');
-   					$addForm->getElement('quality')->setValue('');
-   					$addForm->getElement('remark')->setValue('');
+				$progress->setRemark($addForm->getValue('remark'));
+				$result = $progresses->save($progress);
+   				$addForm->getElement('task')->setValue('');
+   				$addForm->getElement('startDate')->setValue('');
+   				$addForm->getElement('endDateExp')->setValue('');
+				$addForm->getElement('endDateAct')->setValue('');
+   				$addForm->getElement('quality')->setValue('');
+   				$addForm->getElement('remark')->setValue('');
+   				$this->view->result = $result;
    				}	
-   				else
-   				{
-   					$this->_redirect('/project/progress');
-   					}
-    			}
-    		else
-    		{
-    			$addForm->populate($formData);
-    			}
+    			else
+    			{
+    				$addForm->populate($formData);
+    				}
     		}
-    	$this->view->addForm = $addForm;
-			$this->view->result = $result;
+    		$this->view->addForm = $addForm;
 	}
 
 	public function ajaxdisplayallAction(){                                                  //显示部分progress信息

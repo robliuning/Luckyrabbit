@@ -11,44 +11,47 @@ class Worker_Forms_regularSave extends Zend_Form
 			
 		$this->addElement(
 			'select', 'projectId', array(
-			'label' => '¹¤³Ì±àºÅ: ',
+			'label' => 'å·¥ç¨‹åç§°: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
      	$this->addElement(
 			'text', 'item', array(
-			'label' => 'ÅÉ¹¤ÏîÄ¿: ',
+			'label' => 'æ´¾å·¥é¡¹ç›®: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	  	$this->addElement(
 			'text', 'number', array(
-			'label' => 'ÅÉ¹¤ÈËÊý: ',
+			'label' => 'æ´¾å·¥äººæ•°: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'startDate', array(
-			'label' => '¿ªÊ¼ÈÕÆÚ: ',
+			'label' => 'å¼€å§‹æ—¥æœŸ: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text', 'endDate', array(
-			'label' => '½áÊøÈÕÆÚ: ',
+			'label' => 'ç»“æŸæ—¥æœŸ: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText datepicker'
 			)
 		);
+				
 		$this->addElement(
-			'text', 'period', array(
-			'label' => '¹¤ÆÚ: ',
-			'required' => true,
-			'class'=>'tbLarge tbText'
+			'textarea', 'remark', array(
+			'label' => 'å¤‡æ³¨: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
 			)
 		);
     	$this->addElement(

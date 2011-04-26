@@ -10,47 +10,58 @@ class Worker_Forms_bonusSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'select', 'workerId', array(
-			'label' => '工人姓名: ',
+			'text', 'name', array(
+			'label' => '宸ヤ汉濮撳悕: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText ac_workerName'
 			)
 		);
      	$this->addElement(
 			'select', 'projectId', array(
-			'label' => '工程名称: ',
+			'label' => '宸ョ▼鍚嶇О: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	  	$this->addElement(
 			'text', 'bonDate', array(
-			'label' => '日期: ',
+			'label' => '鏃ユ湡: ',
 			'required' => true,
 			'class'=>'tbLarge tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'select', 'typeId', array(
-			'label' => '奖励类型: ',
+			'label' => '濂栧姳绫诲瀷: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'textarea', 'detail', array(
-			'label' => '详情: ',
+			'label' => '璇︽儏: ',
 			'required' => true,
 			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 20
 			)
 		);
+		
 		$this->addElement(
 			'text', 'amount', array(
-			'label' => '金额: ',
+			'label' => '閲戦: ',
 			'required' => true,
 			'class'=>'tbLarge tbText'
+			)
+		);
+						
+		$this->addElement(
+			'textarea', 'remark', array(
+			'label' => '澶囨敞: ',
+			'required' => false,
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>20
 			)
 		);
     	$this->addElement(
@@ -68,6 +79,13 @@ class Worker_Forms_bonusSave extends Zend_Form
     		'name'=>'submit'
     		)
     	);
+    	
+   		$this->addElement(
+			'text', 'workerId', array(
+			'required' => true,
+			'class'=>'hide ac_workerId'
+			)
+		); 	
     	
     	$this->setElementDecorators(array(
             'ViewHelper',

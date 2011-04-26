@@ -48,16 +48,19 @@ class Worker_BonusController extends Zend_Controller_Action
 		}
 		$this->view->arrayBonuses = $arrayBonuses;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "worker";
+		$this->view->controller = "bonus";
+		$this->view->moduleName = "工人奖励";
     }
 
 	public function addAction()
 	{
-		//
 		$addForm = new Worker_Forms_bonusSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 
 		$bonuses = new Worker_Models_BonusMapper();
+		$bonuses->populateBonusDd($addForm);
 		$result = null;
 
 		if($this->getRequest()->isPost())
@@ -82,10 +85,11 @@ class Worker_BonusController extends Zend_Controller_Action
 					$addForm->getElement('amount')->setValue('');
 					$addForm->getElement('typeId')->setValue('');
 					$addForm->getElement('detail')->setValue('');
+					$addForm->getElement('remark')->setValue('');
 					}
 					else
 					{
-						$this->_redirect('/bonus');
+						$this->_redirect('worker/bonus');
 						}
 			}
 			else
@@ -106,6 +110,7 @@ class Worker_BonusController extends Zend_Controller_Action
     	$editForm->submit2->setAttrib('class','hide');
 
 		$bonuses = new Worker_Models_BonusMapper();
+		$bonuses->populateBonusDd($editForm);
     	$bonId = $this->_getParam('id',0);
     	$result = null;
 
@@ -114,7 +119,7 @@ class Worker_BonusController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
     		if($editForm->isValid($formData))
 			{
-				$bonus = new Worker_Models_Wage();
+				$bonus = new Worker_Models_Bonus();
 				$bonus->setBonId($bonId);
 				$bonus->setWorkerId($editForm->getValue('workerId'));
 				$bonus->setProjectId($editForm->getValue('projectId'));
@@ -122,6 +127,7 @@ class Worker_BonusController extends Zend_Controller_Action
 				$bonus->setAmount($editForm->getValue('amount'));
 				$bonus->setTypeId($editForm->getValue('typeId'));
 				$bonus->setDetail($editForm->getValue('detail'));
+				$bonus->setRemark($editForm->getValue('remark'));
 				$result = $bonuses->save($bonus);
 
 			}
@@ -139,7 +145,7 @@ class Worker_BonusController extends Zend_Controller_Action
     			}
     			else
     			{
-    				$this->_redirect('/bonus');
+    				$this->_redirect('worker/bonus');
     				}
     		}		
     	$this->view->editForm = $editForm;
@@ -158,12 +164,18 @@ class Worker_BonusController extends Zend_Controller_Action
     	if($bonId > 0)
     	{
     		$bonuses = new Worker_Models_BonusMapper();
-    		$bonuses->delete($bonId);
-    		echo "1";
+    		try{
+    			$bonuses->delete($bonId);
+    			echo "s";
+    			}
+    			catch(Exception $e)
+    			{
+    				echo "f";
+    				}
     		}
     		else
     		{
-    			$this->_redirect('/bonus');
+    			$this->_redirect('worker/bonus');
     			}
 
 	}
