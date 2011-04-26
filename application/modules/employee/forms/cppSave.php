@@ -12,93 +12,95 @@ class Employee_Forms_CppSave extends Zend_Form
 
 		$this->addElement(
 			/*员工姓名*/
-		     'text','name',array(
-			    'label'=>'员工姓名:',
-			    'required'=>true,
-			    'class'=>'tbLarge tbText ac_contactName'
-		      )
+			'text','name',array(
+			'label'=>'员工姓名:',
+			'required'=>true,
+			'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText ac_contactName'
+			)
 		);
 		$this->addElement(
 			/*岗位名称*/
-	         'select','postId',array(
-			    'label'=>'岗位名称:',
-			    'required'=>true,
-			    'class'=>'tbLarge tbText'
-		      )
+			'select','postId',array(
+			'label'=>'岗位名称:',
+			'required'=>true,
+			'class'=>'tbMedium tbText'
+			)
 		);
 		$this->addElement(
 			/*所属工程*/
-		     'select','projectId',array(
-			    'label'=>'所属工程:',
-			    'required'=>true,
-			    'class'=>'tbLarge tbText'
-		      )
+			'select','projectId',array(
+			'label'=>'所属工程:',
+			'required'=>true,
+			'class'=>'tbLarge tbText'
+			)
 		);
-	    $this->addElement(
+		$this->addElment(
 			/*岗位证类别*/
-		     'text','postType',array(
-			    'label'=>'岗位证类别:',
-			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
+			'text','postType',array(
+			'label'=>'岗位证类别:',
+			'required'=>false,
+			'filters'=>array('StringTrim'),
+			'class'=>'tbMedium tbText'
+			)
 		);
 		$this->addElement(
 			/*岗位证编号*/
-		     'text','postCardId',array(
-			    'label'=>'岗位证编号:',
-			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
+			'text','postCardId',array(
+			'label'=>'岗位证编号:',
+			'required'=>false,
+			'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText'
+			)
 		);
 		$this->addElement(
 			/*安全能力考核证编号*/
-		      'text','certId',array(
-			    'label'=>'安全能力考核证编号:',
-			    'required'=>false,
-			    'class'=>'tbLarge tbText'
-		      )
+			'text','certId',array(
+			'label'=>'安全能力考核证编号:',
+			'required'=>false,
+			'class'=>'tbLarge tbText'
+			)
 		);
 
-	   $this->addElement(
-		   /*按钮一*/
-		      'submit','submit',array(
-		         'ignore'=>true,
-		         'class'=>'btConfirm radius',
-		         'name'=>'submit'
-	          )
-	   );
-	  $this->addElement(
-		  /*按钮二*/
-		      'submit','submit2',array(
-		          'ignore'=>true,
-		          'class'=>'btConfirm radius',
-		          'name'=>'submit'
-	          )
-	  );
-	  		$this->addElement(
-		     /*员工姓名对应的Id,隐藏域*/
-		      'text','contactId',array(
-			    'required'=>false,
-			    'class'=>'hide ac_contactId'
-			  )
+		$this->addElement(
+			/*按钮一*/
+			'submit','submit',array(
+			'ignore'=>true,
+			'class'=>'btConfirm radius',
+			'name'=>'submit'
+			)
 		);
-				
-      $this->setElementDecorators(array(
-              'ViewHelper','Errors',
-                  array(array('data'=>'HtmlTag'),
-                  array('tag'=>'td','class'=>'element')),
-                  array('Label',array('tag'=>'td')),
-                  array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
-   	    	 )
-	);
+		$this->addElement(
+			/*按钮二*/
+			'submit','submit2',array(
+			'ignore'=>true,
+			'class'=>'btConfirm radius',
+			'name'=>'submit'
+			)
+		);
+		$this->addElement(
+			 /*员工姓名对应的Id,隐藏域*/
+			'text','contactId',array(
+			'required'=>false,
+			'class'=>'hide ac_contactId'
+			)
+		);
+
+		$this->setElementDecorators(array(
+			'ViewHelper','Errors',
+			array(array('data'=>'HtmlTag'),
+			array('tag'=>'td','class'=>'element')),
+			array('Label',array('tag'=>'td')),
+			array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
+			)
+		);
 
 		$this->setDecorators(array(
-            'FormElements',
-            array('HtmlTag',array('tag'=>'table')),
-            'Form'
-            )
-	);
-
+			'FormElements',
+			array('HtmlTag',array('tag'=>'table')),
+			'Form'
+			)
+		);
 	}
 }
 ?>
