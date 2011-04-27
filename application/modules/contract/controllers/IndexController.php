@@ -57,33 +57,33 @@ class Contract_IndexController extends Zend_Controller_Action
 		
 	public function editAction()  /*修改*/
 	{
-      $editForm = new Contract_Forms_ContractorSave();
+		$editForm = new Contract_Forms_ContractorSave();
 	  	$editForm->submit->setLabel("保存修改");
 	  	$editForm->submit2->setAttrib('class','hide');
 	  	$contractors = new Contract_Models_ContractorMapper();
-      $contractorId = $this->_getParam('id',0);
-	  if($this->getRequest()->isPost())
+      	$contractorId = $this->_getParam('id',0);
+	  	if($this->getRequest()->isPost())
 		{
 		      $formData = $this->getRequest()->getPost();
                if($editForm->isValid($formData))
-			     { 
+			   { 
 				    $contractor = new Contract_Models_Contractor();
-            $contractor->setContractorId($contractorId);
-            $contractor->setArtiPerson($editForm->getValue('artiPerson'));
-					  $contractor->setName($editForm->getValue('name'));
-					  $contractor->setLicenseNo($editForm->getValue('licenseNo'));
-					  $contractor->setBusiField($editForm->getValue('busiField'));
-					  $contractor->setPhoneNo($editForm->getValue('phoneNo'));
-            $contractor->setOtherContact($editForm->getValue('otherContact'));
-					  $contractor->setAddress($editForm->getValue('address'));
-					  $contractor->setRemark($editForm->getValue('remark'));
-					  $contractors->save($contractor);
-					  $this->_redirect('/contract');
-			     }
-			   else
-			    {
-				   $editForm->populate($formData);
-			    }
+            		$contractor->setContractorId($contractorId);
+           			$contractor->setArtiPerson($editForm->getValue('artiPerson'));
+					$contractor->setName($editForm->getValue('name'));
+					$contractor->setLicenseNo($editForm->getValue('licenseNo'));
+					$contractor->setBusiField($editForm->getValue('busiField'));
+					$contractor->setPhoneNo($editForm->getValue('phoneNo'));
+            		$contractor->setOtherContact($editForm->getValue('otherContact'));
+					$contractor->setAddress($editForm->getValue('address'));
+					$contractor->setRemark($editForm->getValue('remark'));
+					$contractors->save($contractor);
+					$this->_redirect('/contract');
+					}
+			   		else
+			    	{
+				   		$editForm->populate($formData);
+			    		}
 		}
      	else
 		{
@@ -112,34 +112,34 @@ class Contract_IndexController extends Zend_Controller_Action
 			$btClicked = $this->getRequest()->getPost('submit');
 			$formData = $this->getRequest()->getPost();
 			if($addForm->isValid($formData))
-		      {
-			   $contractor = new Contract_Models_Contractor();
-				 $contractor->setName($addForm->getValue('name'));
-				 $contractor->setArtiPerson($addForm->getValue('artiPerson'));
-				 $contractor->setLicenseNo($addForm->getValue('licenseNo'));
-				 $contractor->setBusiField($addForm->getValue('busiField'));
-				 $contractor->setPhoneNo($addForm->getValue('phoneNo'));
-				 $contractor->setOtherContact($addForm->getValue('otherContact'));
-				 $contractor->setAddress($addForm->getValue('address'));
-				 $contractor->setRemark($addForm->getValue('remark'));
-         $result = $contractors->save($contractor);
-				 $addForm->getElement('name')->setValue('');
-				 $addForm->getElement('artiPerson')->setValue(' ');
-				 $addForm->getElement('licenseNo')->setValue(' ');
-         $addForm->getElement('busiField')->setValue(' ');
-				 $addForm->getElement('phoneNo')->setValue(' ');
-				 $addForm->getElement('otherContact')->setValue(' ');
-				 $addForm->getElement('address')->setValue(' ');
-				 $addForm->getElement('remark')->setValue(' ');
-				 if($btClicked=="保存返回上页")
-				     {
-					   $this->_redirect('/contract');
-				     }
+		    {
+			   	$contractor = new Contract_Models_Contractor();
+				$contractor->setName($addForm->getValue('name'));
+				$contractor->setArtiPerson($addForm->getValue('artiPerson'));
+				$contractor->setLicenseNo($addForm->getValue('licenseNo'));
+				$contractor->setBusiField($addForm->getValue('busiField'));
+				$contractor->setPhoneNo($addForm->getValue('phoneNo'));
+				$contractor->setOtherContact($addForm->getValue('otherContact'));
+				$contractor->setAddress($addForm->getValue('address'));
+				$contractor->setRemark($addForm->getValue('remark'));
+				$result = $contractors->save($contractor);
+				$addForm->getElement('name')->setValue('');
+				$addForm->getElement('artiPerson')->setValue(' ');
+				$addForm->getElement('licenseNo')->setValue(' ');
+				$addForm->getElement('busiField')->setValue(' ');
+				$addForm->getElement('phoneNo')->setValue(' ');
+				$addForm->getElement('otherContact')->setValue(' ');
+				$addForm->getElement('address')->setValue(' ');
+				$addForm->getElement('remark')->setValue(' ');
+				if($btClicked=="保存返回上页")
+				{
+					$this->_redirect('/contract');
+				    }
 				     
-		      }
-		      else
-	   			{
-		    		$addForm->populate($formData);
+			}
+		    else
+	   		{
+		   		$addForm->populate($formData);
 	   			}
 	   }
 	   $this->view->addForm = $addForm;
@@ -168,6 +168,10 @@ class Contract_IndexController extends Zend_Controller_Action
        	{
        		$contract = new Contract_Models_Contractor();
        		$contractors->find($id,$contract);
+       		$contrqualifs = new Contract_Models_ContrqualifMapper();
+       		$condition = 'contractorId';
+       		$arrayContrqualifs = $contrqualifs->fetchAllJoin($id,$condition);
+       		$this->view->arrayContrqualifs = $arrayContrqualifs;
 	   		$this->view->contract = $contract;
     		}
     		else

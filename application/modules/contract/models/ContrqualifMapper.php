@@ -46,6 +46,38 @@ class Contract_Models_ContrqualifMapper
             $this->getDbTable()->update($data, array('cqId = ?' => $contrqualif->getCqId()));
         }
     }
+    
+    public function fetchAllJoin($key,$condition)
+    {
+    	if($condition == null)
+    	{
+    		$resultSet = $this->getDbTable()->fetchAll();
+    		}
+    		else
+    		{
+    			$resultSet = $this->getDbTable()->search($key,$condition);
+    			}
+   		
+   		$contrqualifs = array();
+   		
+   		foreach($resultSet as $row){
+   			$contrqualif = new Project_Models_Contrqualif();
+        	$contrqualif ->setProjectId($row->projectId)
+                   ->setName($row->name)
+			       //->setAddress($row->address)
+				   ->setStatus($row->status)
+				   ->setStructype($row->structype)
+				   /*->setLevel($row->level)
+				   ->setAmount($row->amount)
+				   ->setPurpose($row->purpose)
+				   ->setConstrArea($row->constrArea)*/
+				   ->setStaffNo($row->staffNo);
+				   /*->setRemark($row->remark)
+				   ->setCTime($row->cTime);*/
+			$contrqualifs[] = $contrqualif;
+   		}
+    	return $contrqualifs;
+    }
  
     public function fetchAllQualifTypes($key)
     {

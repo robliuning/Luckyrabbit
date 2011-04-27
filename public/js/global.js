@@ -1,6 +1,5 @@
 $(document).ready(function()
 {  
-	
 	$('.lightbox').nm();
 	
 		$('#cb_sa').click(function(){
@@ -122,11 +121,13 @@ $(document).ready(function()
 		var htmlDelete = "<div id='msgBox_delete'>";
 		if(count == 0)
 		{
-			htmlDelete += "请先选择您要删除的"+modelName+"。";
+			htmlDelete +="<div class='overall_tool'><div class='pos_center'><a ><img src='/images/icons/functions/warning_large.png'/></a></div></div>";
+			htmlDelete += "<div class='overall_content'><p class='ajaxMsgBox_text'>请先选择您要删除的"+modelName+"。</p></div>";
 			}
 			else
 			{
-				htmlDelete = "您选择了"+count+"个"+modelName+"，点击确认后相关资料将被永久删除。<div><p id='ajaxDelete' class='btDelete radius'>确认删除</p></div>";
+				htmlDelete +="<div class='overall_tool'><div class='button_group'><div><a href='#' id='ajaxDelete' class='radius'><img src='/images/icons/functions/delete.png'/><p>删除</p></a></div></div></div>";
+				htmlDelete += "<div class='overall_content'><p class='ajaxMsgBox_text'>您选择了<span class='fontLarge red'>"+count+"</span>个"+modelName+"，点击<span class='red'>删除</span>后相关资料将被永久删除。</p></div>";
 				}
 		htmlDelete+="</div>";
 		$('#msgBox').html(htmlDelete);
@@ -150,5 +151,4 @@ $(document).ready(function()
 			window.location = "/"+module+"/"+controller;	
 		});
 	});
-	
 });

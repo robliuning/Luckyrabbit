@@ -59,8 +59,48 @@
 						<td><?php echo $contract->getAddress()?></td>
 					</tr> 
 			</table>
-		</div>
-	</div>
-</div>
-	</div>
-</div>
+			<p class="subMenu">承包商资质信息</p>
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>姓名</th>
+						<th>岗位名</th>
+						<th>岗位证类型</th>
+						<th>岗位证编号</th>
+						<th>安全能力考核证</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayContrqualifs as $contrqualif):?>
+					<?php $cqId = $this->escape($contrqualif->getCqId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($cpp->getContactId()) ?>"><?php echo $this->escape($cpp->getContactName()) ?></a></td>
+						<td><?php echo $this->escape($cpp->getPostName()) ?></td>	
+						<td><?php echo $this->escape($cpp->getPostType()) ?></td>
+						<td><?php echo $this->escape($cpp->getPostCardId()) ?></td>
+						<td><?php echo $this->escape($cpp->getCertId()) ?></td>
+						<td><a href="/employee/cpp/edit/id/<?php echo $cppId?>">修改</a></td>
+						<td><a href="/employee/cpp/ajaxdisplay/id/<?php echo $cppId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

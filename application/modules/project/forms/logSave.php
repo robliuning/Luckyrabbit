@@ -55,7 +55,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                        //
@@ -64,7 +64,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                           //
@@ -73,7 +73,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                        //
@@ -82,7 +82,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                           //
@@ -91,7 +91,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                          //
@@ -100,7 +100,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                        //
@@ -109,7 +109,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                        //
@@ -118,7 +118,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                      //
@@ -127,7 +127,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 		
@@ -137,7 +137,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 	$this->addElement(                           //
@@ -146,7 +146,7 @@
 			'required' => false,
 			'class'=>'tbText',
 			'cols' => 60,
-			'rows' => 20
+			'rows' => 4
 			)
 		);
 

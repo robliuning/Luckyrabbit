@@ -80,6 +80,8 @@ class Project_LogController extends Zend_Controller_Action
 		$editForm = new Project_Forms_LogSave();
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
+		$editForm->getElement('projectId')->setAttrib('class','hide');
+     	$editForm->getElement('projectId')->setLabel('');
     
 		$logs = new Project_Models_LogMapper();
 		$logs->populateLogDd($editForm);
@@ -92,7 +94,7 @@ class Project_LogController extends Zend_Controller_Action
     		if($editForm->isValid($formData))
     		{
     			$projectlog = new Project_Models_Log();
-				$projectlog->setPLogId($editForm->$this->_getParam('pLogId'));
+				$projectlog->setPLogId($plogId);
     			$projectlog->setProjectId($editForm->getValue('projectId'));
     			$projectlog->setLogDate($editForm->getValue('logDate'));
     			$projectlog->setWeather($editForm->getValue('weather'));
@@ -103,7 +105,7 @@ class Project_LogController extends Zend_Controller_Action
     			$projectlog->setSafetyPbl($editForm->getValue('safetyPbl'));
     			$projectlog->setOtherPbl($editForm->getValue('otherPbl'));
 				$projectlog->setRelatedFile($editForm->getValue('relatedFile')); 
-				$projectlog->setMMiniutes($editForm->getValue('mMinutes'));
+				$projectlog->setMMinutes($editForm->getValue('mMinutes'));
     			$projectlog->setChangeSig($editForm->getValue('changeSig'));
     			$projectlog->setMaterial($editForm->getValue('material'));
     			$projectlog->setMachine($editForm->getValue('machine'));
@@ -111,7 +113,7 @@ class Project_LogController extends Zend_Controller_Action
 				$projectlog->setRemark($editForm->getValue('remark'));
     			$logs->save($projectlog); 
     			 
-    			$this->_redirect('/project/Log');
+    			$this->_redirect('/project/log/display/id/'.$plogId);
     			}
     			else
     			{
@@ -138,12 +140,12 @@ class Project_LogController extends Zend_Controller_Action
 	public function displayAction()
 	{
 		$logs = new Project_Models_LogMapper();
-		$pLog = new Project_Models_Log();
+		$log = new Project_Models_Log();
 		$pLogId = $this->_getParam('id',0);
 		if($pLogId >0)
-       {
-       	$log = $logs->find($pLogId);   
-	   		$this ->view->pLog = $pLog;      		
+		{
+       		$logs->find($pLogId,$log);   
+	   		$this->view->plog = $log;      		
     		}
 
     		else

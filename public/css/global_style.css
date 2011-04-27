@@ -271,6 +271,14 @@ a:link, a:visited
 	height: 3px;
 	}
 /*tool kit*/
+.fontLarge
+{
+	font-size: x-large;
+}
+.red
+{
+	color: red;
+	}
 .button
 {
 	-moz-border-radius: 4px 4px 4px 4px;
@@ -286,6 +294,10 @@ a:link, a:visited
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	}
+.pos_center
+{
+	text-align: center;
 	}
 .hide
 {
@@ -526,6 +538,13 @@ label
 {
 
 	}
+.ajaxMsgBox_text
+{
+	padding: 50px;
+	font-size: medium;
+	line-height: 15px;
+	}
+
 #ajaxMsgBox_Emp
 {
 	width:500px;

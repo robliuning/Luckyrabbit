@@ -28,6 +28,20 @@ class Contract_Models_DbTable_Contrqualif extends Zend_Db_Table_Abstract
 		
 		return $resultSet;
 	}
+	
+	public function search($key,$condition)
+	{
+		$select = $this->select();
+		
+		if($condition == 'contractorId')
+		{
+			$select->where('contractorId =  ?',$key);
+			}
+					   
+		$resultSet = $this->fetchAll($select);
+		return $resultSet;
+	}
+
 }
 
 ?>

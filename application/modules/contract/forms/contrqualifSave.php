@@ -20,7 +20,7 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 		$this->addElement(
 			'select','qualifSerie',array(
 			'label'=>'资质序列:',
-			'multiOptions'=>array('0'=>'施工总承包','1'=>'专业承包','2'=>'劳务分包'),
+			'multiOptions'=>array('施工总承包'=>'施工总承包','专业承包'=>'专业承包','劳务分包'=>'劳务分包'),
 			'class'=>'tbMedium tbText',
 			'required'=>true
 			)
@@ -35,7 +35,7 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 		$this->addElement(
 			'select','qualifGrade',array(
 			'label'=>'资质等级:',
-			'multiOptions'=>array('0'=>'特级','1'=>'一级','2'=>'二级','3'=>'三级'),
+			'multiOptions'=>array('特级'=>'特级','一级'=>'一级','二级'=>'二级','三级'=>'三级'),
 			'class'=>'tbMedium tbText',
 			'required'=>false
 			)

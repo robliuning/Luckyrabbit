@@ -54,6 +54,37 @@ class Project_Models_LogMapper
             $this->getDbTable()->update($data, array('pLogId = ?' => $log->getPLogId()));
         }
     }
+    
+	public function find($id,Project_Models_Log $log)
+    {
+        $result = $this->getDbTable()->find($id);
+
+        if (0 == count($result)) {
+
+            return;
+        }
+
+        $row = $result->current();
+
+        $log->setPLogId($row->pLogId)
+			->setProjectId($row->projectId)
+			->setLogDate($row->logDate)
+			->setWeather($row->weather)
+			->setTempHi($row->tempHi)
+			->setTempLo($row->tempLo)
+			->setProgress($row->progress)
+			->setQualityPbl($row->qualityPbl)
+			->setSafetyPbl($row->safetyPbl)
+			->setOtherPbl($row->otherPbl)
+			->setRelatedFile($row->relatedFile)
+			->setMMinutes($row->mMinutes)
+			->setChangeSig($row->changeSig)
+			->setMaterial($row->material)
+			->setMachine($row->machine)
+			->setUtility($row->utility)
+			->setRemark($row->remark)
+			->setCTime($row->cTime);
+		    }
   
     public function findArrayLog($id)
     {
