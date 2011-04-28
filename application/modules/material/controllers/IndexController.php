@@ -53,7 +53,7 @@ class Material_IndexController extends Zend_Controller_Action
 		$addForm->submit2->setLabel('保存返回上页');
 		$addForm->approvId->setAttrib('class','hide');
 		$addForm->approvDate->setAttrib('class','hide');
-
+		$errorMsg = null;
 		$materials = new Material_Models_MaterialMapper();
 		$result = null;
 
@@ -70,6 +70,7 @@ class Material_IndexController extends Zend_Controller_Action
 				$material->setUnit($addForm->getValue('unit'));
 				$material->setRemark($addForm->getValue('remark'));
 				$result = $materials->save($material);
+				$errorMsg = General_Models_Text::$text_save_success;
 				if($btClicked=='保存继续新建')
 				{
 					$addForm->getElement('name')->setValue('');
@@ -88,8 +89,9 @@ class Material_IndexController extends Zend_Controller_Action
 				$this->populate($formData);
 			}
 		}
-		 $this->view->addForm = $addForm;
-		 $this->view->result = $result;
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
+		$this->view->result = $result;
 	}
     
     public function editAction()
@@ -150,13 +152,19 @@ class Material_IndexController extends Zend_Controller_Action
     	if($mtrId > 0)
     	{
     		$materials = new Material_Models_MaterialMapper();
-    		$materials->delete($mtrId);
-    		echo "1";
+			try{
+				$materials->delete($mtrId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
     		}
-    		else
-    		{
-    			$this->_redirect('/material');
-    			}
+    	else
+    	{
+    		$this->_redirect('/material');
+    	}
     }
 }
 ?>

@@ -108,7 +108,7 @@ class Employee_Models_ContactMapper
 		{
 			$entries[$i]['name'] = $name->name;
 			$entries[$i]['contactId'] = $name->contactId;
-			$entries[$i]['phoneNo'] = $name->phoneNo;
+			$entries[$i]['gender'] = $name->gender;
 			$entries[$i]['titleName'] = $name->titleName;
 			$i++;
 			if($i == 12)

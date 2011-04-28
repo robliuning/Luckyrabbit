@@ -61,7 +61,7 @@ class Worker_Models_BonusMapper
 
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($workerId);
-		$entry[] = $workerName;
+		$entry['workerName'] = $workerName;
 
 		return $entry;
 	}

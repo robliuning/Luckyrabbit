@@ -10,10 +10,10 @@ class Worker_Forms_bonusSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'text', 'name', array(
+			'text', 'workerName', array(
 			'label' => '工人姓名: ',
 			'required' => true,
-			'class'=>'tbLarge tbText ac_workerName'
+			'class'=>'tbMedium tbText ac_workerName'
 			)
 		);
      	$this->addElement(
@@ -27,14 +27,14 @@ class Worker_Forms_bonusSave extends Zend_Form
 			'text', 'bonDate', array(
 			'label' => '日期: ',
 			'required' => true,
-			'class'=>'tbLarge tbText datepicker'
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'select', 'typeId', array(
 			'label' => '奖励类型: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
@@ -43,7 +43,7 @@ class Worker_Forms_bonusSave extends Zend_Form
 			'required' => true,
 			'class'=>'tbText',
 			'cols'=> 60,
-			'rows'=> 20
+			'rows'=> 4
 			)
 		);
 		
@@ -51,7 +51,7 @@ class Worker_Forms_bonusSave extends Zend_Form
 			'text', 'amount', array(
 			'label' => '金额: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'Medium tbText'
 			)
 		);
 						
@@ -61,7 +61,7 @@ class Worker_Forms_bonusSave extends Zend_Form
 			'required' => false,
 			'class'=>'tbText',
 			'cols'=>60,
-			'rows'=>20
+			'rows'=>4
 			)
 		);
     	$this->addElement(

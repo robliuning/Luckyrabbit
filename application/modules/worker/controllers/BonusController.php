@@ -50,14 +50,14 @@ class Worker_BonusController extends Zend_Controller_Action
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "worker";
 		$this->view->controller = "bonus";
-		$this->view->moduleName = "¹¤ÈË½±Àø";
+		$this->view->modelName = "å·¥äººå¥–åŠ±";
     }
 
 	public function addAction()
 	{
 		$addForm = new Worker_Forms_bonusSave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$bonuses = new Worker_Models_BonusMapper();
 		$bonuses->populateBonusDd($addForm);
@@ -77,7 +77,7 @@ class Worker_BonusController extends Zend_Controller_Action
 				$bonus->setTypeId($addForm->getValue('typeId'));
 				$bonus->setDetail($addForm->getValue('detail'));
 				$result = $bonuses->save($bonus);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('workerId')->setValue('');
 					$addForm->getElement('projectId')->setValue('');
@@ -106,7 +106,7 @@ class Worker_BonusController extends Zend_Controller_Action
 	{
 		//
 		$editForm = new Worker_Forms_bonusSave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
 		$bonuses = new Worker_Models_BonusMapper();

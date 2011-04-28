@@ -26,18 +26,6 @@ class Employee_Models_DbTable_Employee extends Zend_Db_Table_Abstract
 		}
 		return $row->toArray();
 	}
-		
-	public function displayOne($id)
-	{   		
-		$select = $this->select()
-			->setIntegrityCheck(false)
-			->from(array('e'=>'em_employees'),array('empId','deptName','dutyName','status'))
-			->join(array('c'=>'em_contacts'),'e.empId = c.contactId')
-			->where('e.empId = ?',$id);
-	
-   		$entry = $this->fetchAll($select);
-   		return $entry;
-		}
 
 	public function search($key,$condition)
 	{

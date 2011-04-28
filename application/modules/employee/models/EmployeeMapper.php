@@ -36,8 +36,8 @@ class Employee_Models_EmployeeMapper
             $this->getDbTable()->update($data, array('empId = ?' => $employee->getEmpId()));
         }
     }
+    
     public function find($empId, Employee_Models_Employee $employee)
-
     {
 
         $result = $this->getDbTable()->find($empId);
@@ -54,32 +54,17 @@ class Employee_Models_EmployeeMapper
         		  ->setDeptName($row->deptName)
                   ->setDutyName($row->dutyName)
                   ->setStatus($row->status);
-    }
- 
-
-    public function fetchAll()
-    {
-
-        $resultSet = $this->getDbTable()->fetchAll();
-
-        $entries   = array();
-
-        foreach ($resultSet as $row) {
-
-            $entry = new Employee_Models_Employee();
-
-			$entry->setEmpId($row->empId)
-				  ->setDeptName($row->deptName)
-                  ->setDutyName($row->dutyName)
-                  ->setStatus($row->status);
-                  
-            $entries[] = $entry;
-
-        }
-
-        return $entries;
+    
+    	$contacts = new Employee_Models_ContactMapper();
+    	$empName = $contacts->findContactName($employee->getEmpId());
+    	$employee->setEmpName($empName);
     }
     
+    public function delete($id) //check
+    { 	
+    	$this->getDbTable()->delete('empId = ' . (int)$id);
+    	}
+ 
     public function findArrayEmployee($id) //check
     {
 		$id = (int)$id;

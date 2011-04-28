@@ -50,7 +50,7 @@ class Employee_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 						->join(array('e'=>'em_cpp'),'p.projectId = e.projectId')
 						->where('p.name like ?','%'.$key.'%');
 				}
-				elseif($condition == 'dutyName')
+				elseif($condition == 'postName')
 				{
                    $select->setIntegrityCheck(false)
 						->from(array('p'=> 'ge_posts'),array('name'))

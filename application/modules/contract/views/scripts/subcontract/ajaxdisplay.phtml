@@ -1,0 +1,111 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+			<div class="button_group">
+				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+		<p><?php
+			$subcontract = $this->subcontract;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>工程名称：</td>
+						<td><?php echo $subcontract->getProjectName()?></td>
+					</tr>
+					<tr>
+						<td>分包类型：</td>
+						<td><?php echo $subcontract->getScontrType()?></td>
+					</tr>
+					<tr>
+						<td>承包商名称：</td>
+						<td><?php echo $subcontract->getContractorName()?></td>
+					</tr>
+					<tr>
+						<td>分包项目及描述：</td>
+						<td><?php echo $subcontract->getscontrDetail()?></td>
+					</tr>
+					<tr>
+						<td>质量等级：</td>
+						<td><?php echo $subcontract->getQuality()?></td>
+					</tr>
+					<tr>
+						<td>预计开始时间：</td>
+						<td><?php echo $subcontract->getStartDateExp()?></td>
+					</tr>
+					<tr>
+						<td>预计结束时间：</td>
+						<td><?php echo $subcontract->getEndDateExp()?></td>
+					</tr>
+					<tr>
+						<td>预计工期：</td>
+						<td><?php echo $subcontract->getPeriodExp()?></td>
+					</tr>
+					<tr>
+						<td>实际开始时间：</td>
+						<td><?php echo $subcontract->getStartDateAct()?></td>
+					</tr>
+					<tr>
+						<td>实际结束时间：</td>
+						<td><?php echo $subcontract->getEndDateAct()?></td>
+					</tr>
+					<tr>
+						<td>实际工期：</td>
+						<td><?php echo $subcontract->getPeriodAct()?></td>
+					</tr>
+					<tr>
+						<td>承包人违约情况：</td>
+						<td><?php echo $subcontract->getBrConContr()?></td>
+					</tr>
+					<tr>
+						<td>承包商违约责任：</td>
+						<td><?php echo $subcontract->getBrResContr()?></td>
+					</tr>
+					<tr>
+						<td>分包人违约情况：</td>
+						<td><?php echo $subcontract->getBrConSContr()?></td>
+					</tr>
+					<tr>
+						<td>分包人违约责任：</td>
+						<td><?php echo $subcontract->getBrResScontr()?></td>
+					</tr>
+					<tr>
+						<td>保修信息：</td>
+						<td><?php echo $subcontract->getWarranty()?></td>
+					</tr>
+					<tr>
+						<td>合同造价：</td>
+						<td><?php echo $subcontract->getContrAmt()?></td>
+					</tr>
+					<tr>
+						<td>施工保证金：</td>
+						<td><?php echo $subcontract->getConsMargin()?></td>
+					</tr>
+					<tr>
+						<td>工程保证金：</td>
+						<td><?php echo $subcontract->getPrjMargin()?></td>
+					</tr>
+					<tr>
+						<td>工程保修金：</td>
+						<td><?php echo $subcontract->getPrjWarr()?></td>
+					</tr>
+					<tr>
+						<td>备注：</td>
+						<td><?php echo $subcontract->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>上次修改时间：</td>
+						<td><?php echo $subcontract->getCTime()?></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>

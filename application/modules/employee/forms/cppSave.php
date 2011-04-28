@@ -16,7 +16,7 @@ class Employee_Forms_CppSave extends Zend_Form
 			'label'=>'员工姓名:',
 			'required'=>true,
 			'filters'=>array('StringTrim'),
-			'class'=>'tbLarge tbText ac_contactName'
+			'class'=>'tbMedium tbText ac_contactName'
 			)
 		);
 		$this->addElement(
@@ -35,7 +35,7 @@ class Employee_Forms_CppSave extends Zend_Form
 			'class'=>'tbLarge tbText'
 			)
 		);
-		$this->addElment(
+		$this->addElement(
 			/*岗位证类别*/
 			'text','postType',array(
 			'label'=>'岗位证类别:',

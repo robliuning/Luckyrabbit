@@ -39,13 +39,13 @@ class Employee_Models_CppMapper
             'projectId' => $cpp->getProjectId(),
             'postType' => $cpp->getPostType(),
 			'postCardId' => $cpp->getPostCardId(),
-			'CertId' => $cpp->getCertId()
+			'certId' => $cpp->getCertId()
         );
         if (null === ($id = $cpp->getCppId())) {
             unset($data['cppId']);
-            $this->getDbTable()->insert($data);
+            return $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('cppId = ?' => $cpp->getCppId()));
+            return $this->getDbTable()->update($data, array('cppId = ?' => $cpp->getCppId()));
         }
     }
     
@@ -128,7 +128,7 @@ class Employee_Models_CppMapper
 		
 		$contactId = $row['contactId'];
 		$contacts = new Employee_Models_ContactMapper();
-    	$row['contactName'] = $contacts->FindContactName($contactId);
+    	$row['name'] = $contacts->FindContactName($contactId);
 
 		return $row;	
     	}

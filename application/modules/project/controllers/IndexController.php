@@ -58,7 +58,7 @@ class Project_IndexController extends Zend_Controller_Action
 		$addForm = new Project_Forms_ProjectSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
-	
+		$errorMsg = null;
 		$projects = new Project_Models_ProjectMapper();
 		$projects->populateProjectDd($addForm);
 			
@@ -80,7 +80,7 @@ class Project_IndexController extends Zend_Controller_Action
 				$project->setStaffNo($addForm->getValue('staffNo'));
 				$project->setRemark($addForm->getValue('remark'));
 				$projects->save($project);
-				
+				$errorMsg = General_Models_Text::$text_save_success;
 				if($btClicked == '保存继续新建')
 				{
 					$addForm->getElement('name')->setValue('');
@@ -104,6 +104,7 @@ class Project_IndexController extends Zend_Controller_Action
 				$addForm->populate($formData);
 				}
 		}
+		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
 	}
 
@@ -170,7 +171,7 @@ class Project_IndexController extends Zend_Controller_Action
 			
 			$cpps = new Employee_Models_CppMapper();
 			$progresses = new Project_Models_ProgressMapper();
-			//$subcontracts = new Contract_Models_SubcontractMapper();
+			$subcontracts = new Contract_Models_SubcontractMapper();
 			$regulars = new Worker_Models_RegularMapper();
 			$extras = new Worker_Models_ExtraMapper();
 			$logs = new Project_Models_LogMapper();
@@ -178,7 +179,7 @@ class Project_IndexController extends Zend_Controller_Action
 			$condition = 'projectId';
 			$arrayCpps = $cpps->fetchAllJoin($projectId,$condition);
 			$arrayProgresses = $progresses->fetchAllJoin($projectId,$condition);
-			//$arraySubcontracts = $subcontracts->fetchAllJoin($projectId,$condition);
+			$arraySubcontracts = $subcontracts->fetchAllJoin($projectId,$condition);
 			$arrayRegulars = $regulars->fetchAllJoin($projectId,$condition);
 			$arrayExtras = $extras->fetchAllJoin($projectId,$condition);
 			$arrayLogs = $logs->fetchAllJoin($projectId,$condition);
@@ -186,7 +187,7 @@ class Project_IndexController extends Zend_Controller_Action
 			$this->view->arrayCpps = $arrayCpps;
 			$this->view->project = $project;  	
 			$this->view->arrayProgresses = $arrayProgresses;  		
-			//$this->view->arraySubcontracts = $arraySubcontracts;  		
+			$this->view->arraySubcontracts = $arraySubcontracts;  		
 			$this->view->arrayRegulars = $arrayRegulars;  		
 			$this->view->arrayExtras = $arrayExtras;  		
 			$this->view->arrayLogs = $arrayLogs;  		
@@ -206,13 +207,19 @@ class Project_IndexController extends Zend_Controller_Action
 		if($projectId > 0)
 		{
 			$projects = new Project_Models_ProjectMapper();
-			$projects->delete($projectId);
-			echo "1";
+			try{
+				$projects->delete($projectId);
+				echo "s";
 			}
-			else
+			catch(Exception $e)
 			{
-				$this->_redirect('/project');
-				}
+				echo "f";
+			}
+		}
+		else
+		{
+			$this->_redirect('/project');
+		}
 	}
 }
 ?>

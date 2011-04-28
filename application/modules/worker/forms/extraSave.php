@@ -10,10 +10,10 @@ class Worker_Forms_extraSave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'text', 'name', array(
+			'text', 'workerName', array(
 			'label' => '工人姓名: ',
 			'required' => true,
-			'class'=>'tbLarge tbText ac_workerName'
+			'class'=>'tbMedium tbText ac_workerName'
 			)
 		);
      	$this->addElement(
@@ -27,28 +27,21 @@ class Worker_Forms_extraSave extends Zend_Form
 			'text', 'startDate', array(
 			'label' => '开始日期: ',
 			'required' => true,
-			'class'=>'tbLarge tbText datepicker'
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text', 'endDate', array(
 			'label' => '结束日期: ',
 			'required' => true,
-			'class'=>'tbLarge tbText datepicker'
-			)
-		);
-		$this->addElement(
-			'text', 'period', array(
-			'label' => '工期: ',
-			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text', 'cost', array(
 			'label' => '派工费用: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText'
 			)
 		);					
 		$this->addElement(
@@ -57,7 +50,13 @@ class Worker_Forms_extraSave extends Zend_Form
 			'required' => false,
 			'class'=>'tbText',
 			'cols'=>60,
-			'rows'=>20
+			'rows'=>4
+			)
+		);
+		$this->addElement(
+			'text', 'workerId', array(
+			'required' => true,
+			'class'=>'hide ac_workerId'
 			)
 		);
     	$this->addElement(

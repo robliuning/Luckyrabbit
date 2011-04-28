@@ -25,7 +25,7 @@ class Worker_Models_DbTable_Penalty extends Zend_Db_Table_Abstract
 			    ->join(array('w'=>'wm_penalties'),'m.workerId = w.workerId')
 			    ->where('m.name like ?','%'.$key.'%');
 				}
-				elseif($condition == 'penDate')
+				elseif($condition == 'date')
 				{
 					$select->where('penDate = ?',$key);
 					}

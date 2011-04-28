@@ -36,6 +36,18 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
     	$resultSet = $this->fetchAll($select);
 		return $resultSet;
 	}
+	
+	public function findContractorName($id)
+    {
+    	$select = $this->select()
+    		->setIntegrityCheck(false)
+			->from('sc_contractors',array('name'))
+			->where('contractorId = ?',$id);
+			
+   		$entries = $this->fetchAll($select);
+   		
+   		return $entries;
+    	}
 
 }
 

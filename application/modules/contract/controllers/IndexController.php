@@ -50,7 +50,7 @@ class Contract_IndexController extends Zend_Controller_Action
 		}
 		$this->view->arrayContractors = $arrayContractors;
 		$this->view->errorMsg = $errorMsg;	
-		$this->view->module = "contractor";
+		$this->view->module = "contract";
 		$this->view->controller = "index";
 		$this->view->modelName = "承包商信息";
 		}
@@ -98,7 +98,7 @@ class Contract_IndexController extends Zend_Controller_Action
 			     	}
 		}
 		$this->view->editForm = $editForm;
-		$this->view->contractorId = $contractorId;
+		$this->view->id = $contractorId;
 	}
 
 	public function addAction() // 添加
@@ -106,6 +106,7 @@ class Contract_IndexController extends Zend_Controller_Action
 		$addForm = new Contract_Forms_ContractorSave();
 		$addForm->submit->setLabel("保存继续新建");
 		$addForm->submit2->setLabel("保存返回上页");
+		$errorMsg = null;
 		$contractors = new Contract_Models_ContractorMapper();
 		if($this->getRequest()->isPost())
 		{
@@ -123,6 +124,7 @@ class Contract_IndexController extends Zend_Controller_Action
 				$contractor->setAddress($addForm->getValue('address'));
 				$contractor->setRemark($addForm->getValue('remark'));
 				$result = $contractors->save($contractor);
+				$errorMsg = General_Models_Text::$text_save_success;
 				$addForm->getElement('name')->setValue('');
 				$addForm->getElement('artiPerson')->setValue(' ');
 				$addForm->getElement('licenseNo')->setValue(' ');
@@ -134,15 +136,15 @@ class Contract_IndexController extends Zend_Controller_Action
 				if($btClicked=="保存返回上页")
 				{
 					$this->_redirect('/contract');
-				    }
-				     
+				}
 			}
 		    else
 	   		{
 		   		$addForm->populate($formData);
-	   			}
-	   }
-	   $this->view->addForm = $addForm;
+			}
+		}
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
  	}
  	public function ajaxdeleteAction() /*删除*/
  	{
@@ -150,14 +152,21 @@ class Contract_IndexController extends Zend_Controller_Action
 		$this->_helper->viewRenderer->setNoRender(true);
 		$contractorId = $this->_getParam('id',0);
 		if($contractorId>0)
-	     {
-		   $contractors = new Contract_Models_ContractorMapper();
-		   $result = $contractors->delete($contractorId); 
-	     }
-	 else
-	    {
+		{
+			$contractors = new Contract_Models_ContractorMapper();
+			try{
+				$contractors->delete($contractorId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
+		}
+		else
+		{
 		 $this->_redirect('/contract');
-	    }
+		}
  	}
  
 	public function displayAction()

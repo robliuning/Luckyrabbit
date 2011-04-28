@@ -20,7 +20,7 @@ class Worker_Forms_regularSave extends Zend_Form
 			'text', 'item', array(
 			'label' => '派工项目: ',
 			'required' => false,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText'
 			)
 		);
 	  	$this->addElement(
@@ -44,7 +44,20 @@ class Worker_Forms_regularSave extends Zend_Form
 			'class'=>'tbLarge tbText datepicker'
 			)
 		);
-				
+		$this->addElement(
+			'text', 'budget', array(
+			'label' => '预算费用: ',
+			'required' => true,
+			'class'=>'tbMedium tbText'
+			)
+		);	
+		$this->addElement(
+			'text', 'cost', array(
+			'label' => '实际费用: ',
+			'required' => true,
+			'class'=>'tbMedium tbText'
+			)
+		);	
 		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注: ',

@@ -50,7 +50,7 @@ class Worker_WageController extends Zend_Controller_Action
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "worker";
 		$this->view->controller = "wage";
-		$this->view->moduleName = "日工工资信息";
+		$this->view->modelName = "日工工资信息";
     }
 
 	public function addAction()
@@ -101,7 +101,6 @@ class Worker_WageController extends Zend_Controller_Action
 
 	public function editAction()
 	{
-		//
 		$editForm = new Worker_Forms_wageSave();
 		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
@@ -121,8 +120,9 @@ class Worker_WageController extends Zend_Controller_Action
 				$wage->setAmount($editForm->getValue('amount'));
 				$wage->setStartDate($editForm->getValue('startDate'));
 				$wage->setEndDate($editForm->getValue('endDate'));
+				$wage->setRemark($editForm->getValue('remark'));
 				$result = $wages->save($wage);
-
+    			$this->_redirect('/worker/wage');
 			}
 			else
     			{
@@ -148,7 +148,6 @@ class Worker_WageController extends Zend_Controller_Action
 
 	public function ajaxdeleteAction()
 	{
-		//
 		$this->_helper->layout()->disableLayout();
     	$this->_helper->viewRenderer->setNoRender(true);
    		$wagId = $this->_getParam('id',0);

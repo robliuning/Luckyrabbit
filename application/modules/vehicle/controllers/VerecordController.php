@@ -52,7 +52,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     	$addForm = new Vehicle_Forms_VerecordSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
-        
+        $errorMsg = null;
 				$verecords = new Vehicle_Models_VerecordMapper();
 				$verecords->populateVeDd($addForm);
 	    	
@@ -72,7 +72,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     			$verecord->setOtherUser($addForm->getValue('otherUser'));
     			$verecord->setRemark($addForm->getValue('remark'));
     			$verecords->save($verecord);   
-    			
+    			$errorMsg = General_Models_Text::$text_save_success;
     			if($btClicked == '保存继续新建')
     			{
 						$addForm->getElement('plateNo')->setValue('');
@@ -96,6 +96,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     				$addForm->populate($formData);
     				}
     		}
+    		$this->view->errorMsg = $errorMsg;
 		    $this->view->addForm = $addForm;
     	}
     
@@ -177,8 +178,14 @@ class Vehicle_VerecordController extends Zend_Controller_Action
     	if($verecordId > 0)
     	{
     		$verecords = new verecord_Models_verecordMapper();
-    		$verecords->delete($verecordId);
-    		echo "1";
+			try{
+				$verecords->delete($verecordId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
     		}
     		else
     		{

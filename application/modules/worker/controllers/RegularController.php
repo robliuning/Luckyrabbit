@@ -50,7 +50,7 @@ class Worker_RegularController extends Zend_Controller_Action
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "worker";
 		$this->view->controller = "regular";
-		$this->view->moduleName = "计划派工信息";
+		$this->view->modelName = "计划派工信息";
     }
 
 	public function addAction()
@@ -75,8 +75,9 @@ class Worker_RegularController extends Zend_Controller_Action
 				$regular->setNumber($addForm->getValue('number'));
 				$regular->setStartDate($addForm->getValue('startDate'));
 				$regular->setEndDate($addForm->getValue('endDate'));
-				$regular->setRemark($addForm->getValue('remark'));
-				
+				$regular->setBudget($addForm->getValue('budget'));
+				$regular->setCost($addForm->getValue('cost'));
+				$regular->setRemark($addForm->getValue('remark'));			
 				$result = $regulars->save($regular);
 				if($btClicked=='保存继续新建')
 				{
@@ -86,6 +87,8 @@ class Worker_RegularController extends Zend_Controller_Action
 					$addForm->getElement('startDate')->setValue('');
 					$addForm->getElement('endDate')->setValue('');
 					$addForm->getElement('remark')->setValue('');
+					$addForm->getElement('budget')->setValue('');
+					$addForm->getElement('cost')->setValue('');
 					}
 					else
 					{
@@ -126,8 +129,9 @@ class Worker_RegularController extends Zend_Controller_Action
 				$regular->setNumber($editForm->getValue('number'));
 				$regular->setStartDate($editForm->getValue('startDate'));
 				$regular->setEndDate($editForm->getValue('endDate'));
+				$regular->setBudget($editForm->getValue('budget'));
+				$regular->setCost($editForm->getValue('cost'));
 				$result = $regulars->save($regular);
-
 			}
 			else
     			{

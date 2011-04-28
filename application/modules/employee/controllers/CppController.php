@@ -49,21 +49,20 @@ class Employee_CppController extends  Zend_Controller_Action
 			
 		$this->view->arrayCpps = $arrayCpps;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "cpp";
-		$this->view->controller = "index";
+		$this->view->module = "employee";
+		$this->view->controller = "cpp";
 		$this->view->modelName = "员工岗位信息";
   	}
 	  
-	public function addAction()//check
+	public function addAction()
     {
      	$addForm=new Employee_Forms_CppSave();
 	 	$addForm->submit->setLabel("保存继续新建");
 	 	$addForm->submit2->setLabel("保存返回上页");
-	 	
+	 	$errorMsg = null;
 	 	$cpps=new Employee_Models_CppMapper();
      	$cpps->populateCppDd($addForm);
 		
-     	$this->view->addForm = $addForm;
 	 	if($this->getRequest()->isPost())
 		{
 		   	$btClicked = $this->getRequest()->getPost('submit');
@@ -78,8 +77,7 @@ class Employee_CppController extends  Zend_Controller_Action
 				$cpp->setPostCardId($addForm->getValue('postCardId'));
 				$cpp->setCertId($addForm->getValue('certId'));
 				
-				$errorMsg = null;
-			    $validatorRe = new Zend_Validate_Db_RecordExists(
+			/*    $validatorRe = new Zend_Validate_Db_RecordExists(
 			    array(
 			  		 'table'=>'em_cpp',
 			  		 'field'=>'postId',
@@ -90,41 +88,44 @@ class Employee_CppController extends  Zend_Controller_Action
 			        
 			   	if($validatorRe->isValid($cpp->getPostId(),$cpp->getContactId(),$cpp->getProjectId())) 
 			  	{
-			  		$errorMsg = "该岗位信息已经存在。";
+			  		$errorMsg = General_Models_Text::$text_cpp_exist;
 			  		$addForm->populate($formData);
 			  		}
 			  		else
-			  		{
+			  		{*/
 			  			$result = $cpps->save($cpp); 
-			  			$addForm->getElement('contactName')->setValue('');	
-			  			$addForm->getElement('postId')->setValue('');	
-			  			$addForm->getElement('projectId')->setValue('');	
-			  			$addForm->getElement('postType')->setValue('');			    	
-			  			$addForm->getElement('postCardId')->setValue('');	
-			  			$addForm->getElement('certId')->setValue('');	
-			  			}
-
+			  			$errorMsg = General_Models_Text::$text_save_success;	
+			  			
 				if($btClicked=="保存继续新建")
 			    {
-			    	$this->view->errorMsg = $errorMsg;
+			    	$addForm->getElement('name')->setValue('');	
+			  		$addForm->getElement('postId')->setValue('');	
+			  		$addForm->getElement('projectId')->setValue('');	
+		 			$addForm->getElement('postType')->setValue('');			    	
+		  			$addForm->getElement('postCardId')->setValue('');	
+		 			$addForm->getElement('certId')->setValue('');	
 			    }
 				else
 			   	{
 					$this->_redirect('/employee/cpp');
 			   		}
-				}
+			}
 		    else
 		    {
 				$addForm->populate($formData);
 		    	}
-		   	}
-		} 
+		}
+		
+		$this->view->errorMsg = $errorMsg;		   	
+		$this->view->addForm = $addForm;
+	} 
 	   	
 	public function editAction() 
 	{
 	 	$editForm = new Employee_Forms_CppSave();
 	 	$editForm->submit->setLabel("保存修改");
      	$editForm->submit2->setAttrib('class','hide');
+		$errorMsg = null;
 
 	 	$cpps = new Employee_Models_CppMapper();
 	 	$cpps->populateCppDd($editForm);
@@ -132,8 +133,8 @@ class Employee_CppController extends  Zend_Controller_Action
 
 	 	if($this->getRequest()->isPost())
 		{
-		  $formData = $this->getRequest()->getPost();
-		  if($editForm->isValid($formData))
+		  	$formData = $this->getRequest()->getPost();
+		  	if($editForm->isValid($formData))
 			{
 				$cpp = new Employee_Models_Cpp();
 				$cpp->setCppId($cppId);
@@ -144,8 +145,7 @@ class Employee_CppController extends  Zend_Controller_Action
 				$cpp->setPostCardId($editForm->getValue('postCardId'));
 				$cpp->setCertId($editForm->getValue('certId'));
 				
-				$errorMsg = null;
-			    $validatorRe = new Zend_Validate_Db_RecordExists(
+			   /* $validatorRe = new Zend_Validate_Db_RecordExists(
 			    array(
 			  	 	'table'=>'em_cpp',
 			  		'field'=>'postId',
@@ -158,10 +158,9 @@ class Employee_CppController extends  Zend_Controller_Action
 			        $errorMsg = "该岗位信息已经存在。";
 			  		}
 			  		else 
-			  		{
+			  		{*/
 			  			$cpps->save($cpp);
 						$this->_redirect('/employee/cpp');
-			  		      }
 			  		 }			    					 
 			else
 		   	{
@@ -181,7 +180,7 @@ class Employee_CppController extends  Zend_Controller_Action
 		   		}
 	   		}
 	   $this->view->editForm = $editForm;
-	   $this->view->cppId = $cppId;
+	   $this->view->id = $cppId;
 	 }
  	
  	public function ajaxdeleteAction()/*删除*/
@@ -192,8 +191,14 @@ class Employee_CppController extends  Zend_Controller_Action
 		if($cppId > 0)
 		{
 			$cpps = new Employee_Models_CppMapper();
-			$result = $cpps->delete($cppId);
-			echo $result;
+			try{
+				$cpps->delete($cppId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
 		}
 		else
 		{

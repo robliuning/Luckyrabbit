@@ -48,6 +48,9 @@ class Worker_ExtraController extends Zend_Controller_Action
 		}
 		$this->view->arrayExtras = $arrayExtras;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "worker";
+		$this->view->controller = "extra";
+		$this->view->modelName = "额外派工信息";
     }
 
 	public function addAction()
@@ -72,7 +75,6 @@ class Worker_ExtraController extends Zend_Controller_Action
 				$extra->setProjectId($addForm->getValue('projectId'));
 				$extra->setStartDate($addForm->getValue('startDate'));
 				$extra->setEndDate($addForm->getValue('endDate'));
-				$extra->setPeriod($addForm->getValue('period'));
 				$extra->setCost($addForm->getValue('cost'));
 				$extra->setRemark($addForm->getValue('remark'));
 				$result = $extras->save($extra);
@@ -82,7 +84,6 @@ class Worker_ExtraController extends Zend_Controller_Action
 					$addForm->getElement('projectId')->setValue('');
 					$addForm->getElement('startDate')->setValue('');
 					$addForm->getElement('endDate')->setValue('');
-					$addForm->getElement('period')->setValue('');
 					$addForm->getElement('cost')->setValue('');
 					$addForm->getElement('remark')->setValue('');
 					}
@@ -124,7 +125,6 @@ class Worker_ExtraController extends Zend_Controller_Action
 				$extra->setProjectId($editForm->getValue('projectId'));
 				$extra->setStartDate($editForm->getValue('startDate'));
 				$extra->setEndDate($editForm->getValue('endDate'));
-				$extra->setPeriod($editForm->getValue('period'));
 				$extra->setCost($editForm->getValue('cost'));
 				$extra->setRemark($editForm->getValue('remark'));
 				$result = $extras->save($extra);

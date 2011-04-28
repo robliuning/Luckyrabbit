@@ -37,8 +37,8 @@
 					<div><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/help.png"/><p>帮助</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -47,11 +47,12 @@
 						<col style="width:3%"></col>
 						<col style="width:2%"></col>
 						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
 						<col style="width:15%"></col>
 						<col style="width:10%"></col>
-						<col style="width:15%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
+						<col style="width:10%"></col>
+						<col style="width:5%"></col>
 						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
@@ -75,6 +76,7 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayCpps as $cpp):?>
@@ -91,6 +93,7 @@
 						<td><?php echo $this->escape($cpp->postCardId) ?></td>
 						<td><?php echo $this->escape($cpp->certId) ?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'edit','id'=>$this->escape($cpp->cppId)))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'ajaxdisplay','id'=>$this->escape($cpp->cppId)))?>" class="lightbox">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

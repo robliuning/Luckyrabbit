@@ -10,55 +10,57 @@ class Worker_Forms_penaltySave extends Zend_Form
     	$this->setMethod('post');
 			
 		$this->addElement(
-			'text', 'name', array(
-			'label' => '工人姓名: ',
+			'text', 'workerName', array(
+			'label' => '宸ヤ汉濮撳悕: ',
 			'required' => true,
-			'class'=>'tbLarge tbText ac_workerName'
+			'class'=>'tbMedium tbText ac_workerName'
 			)
 		);
 		
      	$this->addElement(
 			'select', 'projectId', array(
-			'label' => '工程名称: ',
+			'label' => '宸ョ▼鍚嶇О: ',
 			'required' => false,
 			'class'=>'tbLarge tbText'
 			)
 		);
 	  	$this->addElement(
 			'text', 'penDate', array(
-			'label' => '日期: ',
+			'label' => '鏃ユ湡: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'select', 'typeId', array(
-			'label' => '扣款类型: ',
+			'label' => '鎵ｆ绫诲瀷: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbText tbMedium'
 			)
 		);
 		$this->addElement(
-			'text', 'detail', array(
-			'label' => '详情: ',
+			'textarea', 'detail', array(
+			'label' => '璇︽儏: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbText',
+			'cols'=>60,
+			'rows'=>4
 			)
 		);
 		$this->addElement(
 			'text', 'amount', array(
-			'label' => '金额: ',
+			'label' => '閲戦: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbMedium tbText'
 			)
 		);					
 		$this->addElement(
 			'textarea', 'remark', array(
-			'label' => '备注: ',
+			'label' => '澶囨敞: ',
 			'required' => false,
 			'class'=>'tbText',
 			'cols'=>60,
-			'rows'=>20
+			'rows'=>4
 			)
 		);
     	$this->addElement(

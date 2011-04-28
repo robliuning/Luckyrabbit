@@ -89,7 +89,7 @@ class Worker_Models_PenaltyMapper
 
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($workerId);
-		$entry[] = $workerName;
+		$entry['workerName'] = $workerName;
 
 		return $entry;
 	}

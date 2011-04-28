@@ -57,7 +57,7 @@ class Material_ExportController extends Zend_Controller_Action
 		$addForm->submit2->setLabel('保存返回上页');
 		$addForm->approvId->setAttrib('class','hide');
 		$addForm->approvDate->setAttrib('class','hide');
-
+		$errorMsg = null;
 		$exports = new Material_Models_ExportMapper();
 		$exports->populateExportDd($addForm);
 
@@ -78,6 +78,7 @@ class Material_ExportController extends Zend_Controller_Action
 				$export->setTotal($addForm->getValue('total'));
 				$export->setRemark($addForm->getValue('remark'));
 				$exports->save($export);
+				$errorMsg = General_Models_Text::$text_save_success;
 				if($btClicked=='保存继续新建')
 				{
 					$addForm->getElement('projectId')->setValue('');
@@ -100,7 +101,8 @@ class Material_ExportController extends Zend_Controller_Action
 				$this->populate($formData);
 			}
 		}
-		 $this->view->addForm = $addForm;
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
 	}
 
 	public function editAction()
@@ -168,14 +170,19 @@ class Material_ExportController extends Zend_Controller_Action
     	if($expId > 0)
     	{
     		$exports = new Material_Models_ExportMapper();
-    		$exports->delete($expId);
-    		echo "1";
-    		}
-    		else
-    		{
-    			$this->_redirect('/material/export');
-    			}
-
+			try{
+				$exports->delete($expId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
+		}
+		else
+		{
+			$this->_redirect('/material/export');
+		}
 	}
 }
 ?>

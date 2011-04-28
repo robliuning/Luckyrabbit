@@ -1,5 +1,4 @@
 <?php
-
 /* create by lxj
    2011-04-08   v 0.2
    rewrite by lxj
@@ -45,6 +44,32 @@ class Contract_Models_ContrqualifMapper
         }
     }
     
+    public function find($id,Contract_Models_Contrqualif $contrqualif)
+    {
+    	$resultSet = $this->getDbTable()->find($id);
+
+        if (0 == count($resultSet)) {
+
+            return;
+        }
+
+        $row = $resultSet->current();
+
+        $contrqualif->setCqId($row->cqId)
+                  ->setContractorId($row->contractorId)
+			      ->setQualifTypeId($row->qualifTypeId)
+			      ->setQualifGrade($row->qualifGrade);	
+		$qualiftypes = new General_Models_QualiftypeMapper();
+		$qualiftype = new General_Models_Qualiftype();
+		$qualiftypes->find($contrqualif->getQualifTypeId(),$qualiftype); 
+		$contrqualif->setQualifSerie($qualiftype->getSerie());
+		$contrqualif->setQualifType($qualiftype->getName());
+		$contractors = new Contract_Models_ContractorMapper();
+		$contractorName = $contractors->findContractorName($contrqualif->getContractorId());
+		$contrqualif->setContractorName($contractorName);
+
+    }
+    
     public function fetchAllJoin($key,$condition)
     {
     	if($condition == null)
@@ -86,20 +111,21 @@ class Contract_Models_ContrqualifMapper
 		return $arrayQualifTypes;
     }
     
-    public function populateContrqualifDd($form) //check
+    public function populateContrqualifDd($form,$condition,$serie) //check
   	{
-  		$contractors = new Contract_Models_ContractorMapper();
-		$arrayContractors = $contractors->fetchAllJoin();  //contractor name and id
-		$qualifTypes = new General_Models_QualifTypeMapper();
-		
-		$serie = '施工总承包';
-		
-		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie); 
-
-		foreach($arrayContractors as $contr)
-		{
-			$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getName());
+  		if($condition == 0)
+  		{
+  			$contractors = new Contract_Models_ContractorMapper();
+			$arrayContractors = $contractors->fetchAllJoin();  //contractor name and id
+			
+			foreach($arrayContractors as $contr)
+			{
+				$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getName());
+				}
 			}
+			
+		$qualifTypes = new General_Models_QualifTypeMapper();		
+		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie); 
 		foreach($arrayQualifTypes as $qualif)
 		{
 			$form->getElement('qualifTypeId')->addMultiOption($qualif->getTypeId(),$qualif->getName());
@@ -137,6 +163,11 @@ class Contract_Models_ContrqualifMapper
 	public function findArrayContrqualif($id)
 	{
 		$resultSet = $this->getDbTable()->findArrayContrqualif($id);
+		$qualifTypeId = $resultSet['qualifTypeId'];
+		$qualiftypes = new General_Models_QualiftypeMapper();
+		$qualifSerie = $qualiftypes->findQualifSerie($qualifTypeId);
+		$resultSet['qualifSerie'] = $qualifSerie;
+		
 		return $resultSet;
 	}
 	

@@ -52,7 +52,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		$this->view->arrayEmployees  = $arrayEmployees;
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "employee";
-		$this->view->controller = "index";
+		$this->view->controller = "employee";
 		$this->view->modelName = "公司员工信息"; 
 		}
     
@@ -61,7 +61,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
     	$addForm = new Employee_Forms_EmployeeSave();
 	 	$addForm->submit->setLabel('保存继续新建');
 	 	$addForm->submit2->setLabel('保存返回上页');
-	 
+		$errorMsg = null;
 	 	$employees = new Employee_Models_EmployeeMapper();
 	 	$employees->populateEmployeeDd($addForm);
 	 
@@ -79,7 +79,6 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			 	$empId = $employee->getEmpId();
 				
 				//varify if this empId is exists in contacts but not recorded in employees since one contact can only be assigned to one position in the company.				
-			  	$errorMsg = "";
 			  	$validatorRe = new Zend_Validate_Db_RecordExists(
 			  		array(
 			  			'table'=>'em_contacts',
@@ -98,6 +97,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  		{
 			  			$option = 'add';
 						$employees->save($employee,$option);
+						$errorMsg = General_Models_Text::$text_save_sucess;
 			  			}
 			  			else
 			  			{
@@ -114,12 +114,12 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  			{
 			  				$errorMsg.=$message."\n";
 			  				}*/
-			  			$errorMsg = "输入的员工名无效，您可在通讯录管理页面录入其个人信息或点击上方工具栏’快速新建通讯录‘录入";
+			  			$errorMsg = "输入的员工名无效。";
 			  			}
 			  			
 			   if($btClicked == '保存继续新建')
 			   {
-					$this->view->errorMsg = $errorMsg;
+			   	
 					}
 			   else
 			{
@@ -131,39 +131,40 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  $addForm->populate($formData);
 			}
 		}
+		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
     }
 
 	public function editAction()  //check
 	{
-			$editForm = new Employee_Forms_EmployeeSave();
+		$editForm = new Employee_Forms_EmployeeSave();
     	$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
     	$tbName = $editForm->getElement('name');
     	$tbName->setAttrib('disabled','disabled');
 
-      $employees = new Employee_Models_EmployeeMapper();
+      	$employees = new Employee_Models_EmployeeMapper();
     	$employees->populateEmployeeDd($editForm);
 
-			$empId = $this->_getParam('id',0);
+		$empId = $this->_getParam('id',0);
 
 		if($this->getRequest()->isPost())
 		{
-          $formData=$this->getRequest()->getPost();
-		  if($editForm->isValid($formData))
-			 {
+          	$formData=$this->getRequest()->getPost();
+		  	if($editForm->isValid($formData))
+			{
 				$employee = new Employee_Models_Employee();
 				$employee->setEmpId($empId);
 				$employee->setDeptName($editForm->getValue('deptName'));
 				$employee->setDutyName($editForm->getValue('dutyName'));
 				$employee->setStatus($editForm->getValue('status'));
 				$option = 'edit';
-        $employees->save($employee,$option);
+        		$employees->save($employee,$option);
 			    $this->_redirect('/employee/employee');
 			}
-		  else
+		  	else
 			{
-			  $editForm->populate($formData);
+				$editForm->populate($formData);
 			}
 		}
 		else
@@ -191,17 +192,23 @@ class Employee_EmployeeController extends Zend_Controller_Action
 		if($id > 0)
 	  	{
 			$employees = new Employee_Models_EmployeeMapper();
-      $employees->delete($id);
-			echo "1";
-	  		}
-			else
-	  		{
-				$this->redirect('/employee/employee');
-	  			}
+			try{
+				$employees->delete($id);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
+	  	}
+		else
+  		{
+			$this->redirect('/employee/employee');
+		}
   	}
   	public function ajaxdisplayAction()
   	{
-  		$this->_helper->layout()->disableLayout();
+  	   	$this->_helper->layout()->disableLayout();
    		$id = $this->_getParam('id',0);
     	if($id >0)
     	{

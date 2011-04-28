@@ -54,7 +54,7 @@ class Material_PurchaseController extends Zend_Controller_Action
 				$addForm->submit2->setLabel('保存返回上页');
 				$addForm->approvId->setAttrib('class','hide');
 				$addForm->approvDate->setAttrib('class','hide');
-
+		$errorMsg = null;
 		$purchases = new Material_Models_PurchaseMapper();
 		$purchases->populatePurchaseDd($addForm);
 
@@ -74,6 +74,7 @@ class Material_PurchaseController extends Zend_Controller_Action
 				$purchase->setInvoice($addForm->getValue('invoice'));
 				$purchase->setRemark($addForm->getValue('remark'));
 				$purchases->save($purchase);
+				$errorMsg = General_Models_Text::$text_save_success;
 				if($btClicked=='保存继续新建')
 				{
 					$addForm->getElement('projectId')->setValue('');
@@ -95,7 +96,8 @@ class Material_PurchaseController extends Zend_Controller_Action
 				$this->populate($formData);
 			}
 		}
-		 $this->view->addForm = $addForm;
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
    	}
     
 public function editAction()
@@ -160,13 +162,19 @@ public function editAction()
     	{
     		$purchases = new Material_Models_PurchaseMapper();
     		$purchases->delete($purId);
-    		echo "1";
-    		}
-    		else
-    		{
-    			$this->_redirect('/material/purchase');
-    			}
+			try{
+				$purchases->delete($purId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
+    	}
+    	else
+    	{
+    		$this->_redirect('/material/purchase');
+    	}
     }
 }
-
 ?>

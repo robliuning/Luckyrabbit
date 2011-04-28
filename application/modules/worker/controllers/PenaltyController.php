@@ -50,15 +50,15 @@ class Worker_PenaltyController extends Zend_Controller_Action
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "worker";
 		$this->view->controller = "penalty";
-		$this->view->moduleName = "¹¤ÈË¿Û¿î";
+		$this->view->modelName = "å·¥äººæ‰£æ¬¾";
     }
 
 	public function addAction()
 	{
 		//
 		$addForm = new Worker_Forms_penaltySave();
-		$addForm->submit->setLabel('±£´æ¼ÌÐøÐÂ½¨');
-		$addForm->submit2->setLabel('±£´æ·µ»ØÉÏÒ³');
+		$addForm->submit->setLabel('ä¿å­˜ç»§ç»­æ–°å»º');
+		$addForm->submit2->setLabel('ä¿å­˜è¿”å›žä¸Šé¡µ');
 
 		$penaltys = new Worker_Models_PenaltyMapper();
 		$penaltys->populatePenaltyDd($addForm);
@@ -79,7 +79,7 @@ class Worker_PenaltyController extends Zend_Controller_Action
 				$penalty->setDetail($addForm->getValue('detail'));
 				$penalty->setRemark($addForm->getValue('remark'));
 				$result = $penaltys->save($penalty);
-				if($btClicked=='±£´æ¼ÌÐøÐÂ½¨')
+				if($btClicked=='ä¿å­˜ç»§ç»­æ–°å»º')
 				{
 					$addForm->getElement('workerId')->setValue('');
 					$addForm->getElement('projectId')->setValue('');
@@ -108,7 +108,7 @@ class Worker_PenaltyController extends Zend_Controller_Action
 	{
 		//
 		$editForm = new Worker_Forms_penaltySave();
-		$editForm->submit->setLabel('±£´æÐÞ¸Ä');
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹');
     	$editForm->submit2->setAttrib('class','hide');
 
 		$penaltys = new Worker_Models_PenaltyMapper();

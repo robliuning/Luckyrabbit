@@ -12,46 +12,46 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 
 		$this->addElement(
 			'select','projectId',array(
-			'label'=>'¹¤³ÌÃû³Æ:',
+			'label'=>'å·¥ç¨‹åç§°:',
 			'required'=>true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'select','scontrType',array(
-			'label'=>'·Ö°üÀàÐÍ:',
+			'label'=>'åˆ†åŒ…ç±»åž‹:',
 			'required'=>true,
-			'multiOptions'=>array('1'=>'×¨Òµ³Ð°ü', '2'=>'ÀÍÎñ·Ö°ü'),
+			'multiOptions'=>array('ä¸“ä¸šåˆ†åŒ…'=>'ä¸“ä¸šæ‰¿åŒ…', 'åŠ³åŠ¡åˆ†åŒ…'=>'åŠ³åŠ¡åˆ†åŒ…'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'select','contractorId',array(
-			'label'=>'·Ö°üÉÌÃû³Æ:',
+			'label'=>'åˆ†åŒ…å•†åç§°:',
 			'required'=>true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'textarea','scontrDetail',array(
-			'label'=>'·Ö°üÏîÄ¿¼°ÃèÊö:',
+			'label'=>'åˆ†åŒ…é¡¹ç›®åŠæè¿°:',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 4
 			)
 		);
 		$this->addElement(
 			'select','quality',array(
-			'label'=>'ÖÊÁ¿µÈ¼¶:',
+			'label'=>'è´¨é‡ç­‰çº§:',
 			'required'=>false,
-			'multiOptions'=>array('0'=>'»ù±¾ºÏ¸ñ', '1'=>'ºÏ¸ñ', '2'=>'ÓÅÁ¼'),
+			'multiOptions'=>array('åŸºæœ¬åˆæ ¼'=>'åŸºæœ¬åˆæ ¼', 'åˆæ ¼'=>'åˆæ ¼', 'ä¼˜è‰¯'=>'ä¼˜è‰¯'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text','startDateExp',array(
-			'label'=>'Ô¤¼Æ¿ªÊ¼ÈÕÆÚ:',
+			'label'=>'é¢„è®¡å¼€å§‹æ—¥æœŸ:',
 			'required'=>false,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
@@ -59,7 +59,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','endDateExp',array(
-			'label'=>'Ô¤¼Æ½áÊøÊ±¼ä:',
+			'label'=>'é¢„è®¡ç»“æŸæ—¶é—´:',
 			'required'=>false,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
@@ -67,7 +67,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','startDateAct',array(
-			'label'=>'Êµ¼Ê¿ªÊ¼Ê±¼ä:',
+			'label'=>'å®žé™…å¼€å§‹æ—¶é—´:',
 			'required'=>false,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
@@ -75,7 +75,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','endDateAct',array(
-			'label'=>'Êµ¼Ê½áÊøÊ±¼ä:',
+			'label'=>'å®žé™…ç»“æŸæ—¶é—´:',
 			'required'=>false,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
@@ -83,52 +83,52 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'textarea','brConContr',array(
-			'label'=>'³Ð°üÈËÎ¥Ô¼Çé¿ö:',
+			'label'=>'æ‰¿åŒ…äººè¿çº¦æƒ…å†µ:',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
 			)
 		);
 		$this->addElement(
 			'textarea','brResContr',array(
-			'label'=>'³Ð°üÈËÎ¥Ô¼ÔðÈÎ:',
+			'label'=>'æ‰¿åŒ…äººè¿çº¦è´£ä»»:',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
 			)
 		);
 		$this->addElement(
 			'textarea','brConSContr',array(
-			'label'=>'·Ö°üÉÌÎ¥Ô¼ÔðÈÎ:',
+			'label'=>'åˆ†åŒ…å•†è¿çº¦è´£ä»»:',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
 			)
 		);
 		$this->addElement(
 			'textarea','brResSContr',array(
-			'label'=>'·Ö°üÉÌÎ¥Ô¼ÔðÈÎ:',
+			'label'=>'åˆ†åŒ…å•†è¿çº¦è´£ä»»:',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
 			)
 		);
 		$this->addElement(
 			'textarea','warranty',array(
-			'label'=>'±£ÐÞÐÅÏ¢:',
+			'label'=>'ä¿ä¿®ä¿¡æ¯:',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
 			)
 		);
 		$this->addElement(
 			'text','contrAmt',array(
-			'label'=>'ºÏÍ¬Ôì¼Û:',
+			'label'=>'åˆåŒé€ ä»·:',
 			'filters'=>array('StringTrim'),
 			'required'=>false,
 			'class'=>'tbMedium tbText'
@@ -136,7 +136,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','consMargin',array(
-			'label'=>'Ê©¹¤±£Ö¤½ð:',
+			'label'=>'æ–½å·¥ä¿è¯é‡‘:',
 			'filters'=>array('StringTrim'),
 			'required'=>false,
 			'class'=>'tbMedium tbText'
@@ -144,7 +144,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','prjMargin',array(
-			'label'=>'¹¤³Ì±£Ö¤½ð:',
+			'label'=>'å·¥ç¨‹ä¿è¯é‡‘:',
 			'filters'=>array('StringTrim'),
 			'required'=>false,
 			'class'=>'tbMedium tbText'
@@ -152,7 +152,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','prjWarr',array(
-			'label'=>'¹¤³Ì±£ÐÞ½ð:',
+			'label'=>'å·¥ç¨‹ä¿ä¿®é‡‘:',
 			'filters'=>array('StringTrim'),
 			'required'=>false,
 			'class'=>'tbMedium tbText'
@@ -160,9 +160,9 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'textarea','remark',array(
-			'label'=>'±¸×¢',
+			'label'=>'å¤‡æ³¨',
 			'required'=>false,
-			'class'=>'tbText'
+			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
 			)

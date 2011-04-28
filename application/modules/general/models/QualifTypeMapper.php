@@ -60,5 +60,16 @@ class General_Models_QualiftypeMapper
                   ->setSerie($row->serie)
 			      ->setName($row->name);	
     }
+    
+    public function findQualifSerie($id)
+    {
+    	$row = $this->getDbTable()->fetchRow('typeId ='. $id);
+		if (!$row) {
+			throw new Exception("Could not find row $id");
+		}
+		$row = $row->toArray();
+		$serie = $row['serie'];
+		return $serie;
+    }
 }
 ?>

@@ -55,7 +55,7 @@ $(document).ready(function()
 							var jsonObj = eval('('+data+')');
 							response( $.map(jsonObj, function(item) {
 							return {
-								label: "姓名: "+item.name +"　电话: "+item.phoneNo+"　职称: "+item.titleName,
+								label: item.name +"　性别: "+item.gender+"　职称:　"+item.titleName,
 								value: item.name,
 								name: item.contactId
 							}
@@ -91,7 +91,7 @@ $(document).ready(function()
 							var jsonObj = eval('('+data+')');
 							response( $.map(jsonObj, function(item) {
 							return {
-								label: "姓名: "+item.name +"　电话: "+item.phoneNo,
+								label: item.name +"　电话: "+item.phoneNo,
 								value: item.name,
 								name: item.workerId
 							}

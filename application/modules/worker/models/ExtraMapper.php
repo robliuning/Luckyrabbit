@@ -35,7 +35,6 @@ class Worker_Models_ExtraMapper
 			'workerId' => $extra->getWorkerId(),
 			'startDate' => $extra->getStartDate(),
 			'endDate' => $extra->getEndDate(),
-			'period' => $extra->getPeriod(),
 			'cost' => $extra->getCost(),
             'remark' => $extra->getRemark()
         );
@@ -85,11 +84,11 @@ class Worker_Models_ExtraMapper
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
-        $entry[] = $projectName;
+        $entry['projectName'] = $projectName;
 
 		$workers = new Worker_Models_WorkerMapper();
 		$workerName = $workers->findWorkerName($workerId);
-		$entry[] = $workerName;
+		$entry['workerName'] = $workerName;
 
 		return $entry;
 	}

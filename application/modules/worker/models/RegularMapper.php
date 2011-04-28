@@ -29,6 +29,15 @@ class Worker_Models_RegularMapper
     
     public function save(Worker_Models_Regular $regular) 
     {
+    	$profit = null;
+    	if($regular->getBudget()!=null && $regular->getCost()!=null)
+    	{
+    		$profit = $regular->getCost() - $regular->getBudget();
+    		}
+    		else
+    		{
+    			$profit = 0;
+    			}
         $data = array(
             'regId' => $regular->getRegId(),
             'projectId' => $regular->getProjectId(),
@@ -38,7 +47,7 @@ class Worker_Models_RegularMapper
 			'endDate' => $regular->getEndDate(), 
 			'budget' => $regular->getBudget(), 
 			'cost' => $regular->getCost(), 
-			'profit' => $regular->getProfit(), 
+			'profit' => $profit, 
             'remark' => $regular->getRemark()
         );
         if (null === ($id = $regular->getRegId())) {
@@ -66,6 +75,7 @@ class Worker_Models_RegularMapper
                   ->setEndDate($row->endDate)
 				  ->setBudget($row->budget)
 				  ->setCost($row->cost)
+				  ->setPeriod($row->period)
 				  ->setProfit($row->profit)
                   ->setRemark($row->remark)
                   ->setCTime($row->cTime);
@@ -104,6 +114,7 @@ class Worker_Models_RegularMapper
 				->setNumber($row->number)
 				->setStartDate($row->startDate)
 				->setEndDate($row->endDate)
+				->setPeriod($row->period)
 				->setBudget($row->budget)
 				->setCost($row->cost)
 				->setProfit($row->profit)

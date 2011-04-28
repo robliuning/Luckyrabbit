@@ -14,7 +14,7 @@ class Employee_Forms_EmployeeSave extends Zend_Form
 		$this->addElement(
 			'text','name',array(
 			'label'=>'员工姓名:',
-			'required' => true,
+			'required' => false,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText ac_contactName',
 			)

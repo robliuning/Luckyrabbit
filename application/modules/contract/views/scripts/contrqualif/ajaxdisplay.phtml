@@ -7,7 +7,7 @@
 			</div><!-- end of button group -->
 	</div><!-- end of overall tool -->
 		<p><?php
-			$employee = $this->employee;?>
+			$contrqualif = $this->contrqualif;?>
 			 </p>
 			 <div class="overall_content">
 			 <table>
@@ -16,24 +16,24 @@
 						<col style="width:70%"></col>
 					</colgroup>
 					<tr>
-						<td>姓名：</td>
-						<td><?php echo $employee->getEmpName()?></td>
+						<td>承包商：</td>
+						<td><?php echo $contrqualif->getContractorName()?></td>
 					</tr>
 					<tr>
-						<td>部门：</td>
-						<td><?php echo $employee->getDeptName()?></td>
+						<td>资质序列：</td>
+						<td><?php echo $contrqualif->getQualifSerie() ?></td>
 					</tr>
 					<tr>
-						<td>职务：</td>
-						<td><?php echo $employee->getDutyName() ?></td>
+						<td>资质类别： </td>
+						<td><?php echo $contrqualif->getContractorName()?></td>
 					</tr>
 					<tr>
-						<td>状态：</td>
-						<td><?php echo $employee->getStatus()?"离职":"在职"?></td>
-					</tr>				
-			</table>
+						<td>资质等级：</td>
+						<td><?php echo $contrqualif->getQualifGrade()?></td>
+					</tr>
+				</table>
+			</div>
 		</div>
-	</div>
 	</div>
 	</div>
 </div>

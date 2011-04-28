@@ -41,7 +41,7 @@ class Worker_IndexController extends Zend_Controller_Action
 				}
 				else
 				{
-					$errorMsg = General_Models_Text::$tex_searchErrorNi;
+					$errorMsg = General_Models_Text::$text_searchErrorNi;
 					}
 		}
 		else

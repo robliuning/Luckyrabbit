@@ -21,7 +21,7 @@ class Worker_Forms_teamSave extends Zend_Form
 			'text', 'contactName', array(
 			'label' => '负责人: ',
 			'required' => true,
-			'class'=>'tbLarge tbText'
+			'class'=>'tbLarge tbText ac_contactName'
 			)
 		);
 		
@@ -54,7 +54,7 @@ class Worker_Forms_teamSave extends Zend_Form
     	$this->addElement(
 			'text', 'contactId', array(
 			'required' => true,
-			'class'=>'hide'
+			'class'=>'hide ac_contactId'
 			)
 		);
     	    	

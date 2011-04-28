@@ -4,8 +4,10 @@ class Contract_Models_Subcontract
 {     
     protected $_scontrId;
     protected $_projectId;
+    protected $_projectName;
 	protected $_scontrType;
 	protected $_contractorId;
+	protected $_contractorName;
 	protected $_scontrDetail;
 	protected $_quality;
 	protected $_startDateExp;
@@ -24,6 +26,7 @@ class Contract_Models_Subcontract
 	protected $_prjMargin;
 	protected $_prjWarr;
 	protected $_remark;
+	protected $_cTime;
 
     
     public function __construct(array $options = null)
@@ -84,6 +87,17 @@ class Contract_Models_Subcontract
     {
         return $this->_projectId;
     }
+    
+    public function setProjectName($projectName)
+    {
+        $this->_projectName = $projectName;
+        return $this;
+    } 
+
+    public function getProjectName()
+    {
+        return $this->_projectName;
+    }
 
     public function setScontrType($scontrType)
     {
@@ -106,6 +120,17 @@ class Contract_Models_Subcontract
     public function getContractorId()
     {
         return $this->_contractorId;
+    }
+    
+    public function setContractorName($contractorName)
+    {
+        $this->_contractorName = $contractorName;
+        return $this;
+    } 
+
+    public function getContractorName()
+    {
+        return $this->_contractorName;
     }
     
     public function setScontrDetail($scontrDetail)
@@ -230,7 +255,7 @@ class Contract_Models_Subcontract
         return $this->_brConSContr;
 	}
 
-		public function setBrResSContr($brResSContr)
+	public function setBrResSContr($brResSContr)
     {
         $this->_brResSContr = $brResSContr;
         return $this;
@@ -297,7 +322,7 @@ class Contract_Models_Subcontract
         return $this->_prjWarr;
     }
  
-     public function setRemark($remark)
+    public function setRemark($remark)
     {
         $this->_remark= $remark;
         return $this;
@@ -306,6 +331,17 @@ class Contract_Models_Subcontract
     public function getRemark()
     {
         return $this->_remark;
+	}
+	
+	public function setCTime($cTime)
+    {
+        $this->_cTime = $cTime;
+        return $this;
+    }
+
+    public function getCTime()
+    {
+        return $this->_cTime;
 	}
 }
 ?>

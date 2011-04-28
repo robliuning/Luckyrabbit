@@ -11,6 +11,7 @@ class Worker_Models_Regular
 	protected $_number;
 	protected $_startDate;
 	protected $_endDate;
+	protected $_period;
 	protected $_budget;
 	protected $_cost;
 	protected $_profit;
@@ -142,6 +143,18 @@ class Worker_Models_Regular
     public function getEndDate()
     {
         return $this->_endDate;
+    }
+    /************************************************/
+
+	public function setPeriod($period)
+    {
+        $this->_period = $period;
+        return $this;
+    } 
+
+    public function getPeriod()
+    {
+        return $this->_period;
     }
     
 	/************************************************/

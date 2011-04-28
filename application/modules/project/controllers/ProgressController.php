@@ -22,6 +22,7 @@ class Project_ProgressController extends Zend_Controller_Action
     	$addForm = new Project_Forms_ProgressSave();
       	$addForm->submit->setLabel('保存新建');
     	$addForm->submit2->setAttrib('class','hide');
+    	$errorMsg = null;
 		//populate dd project
 		$progresses = new Project_Models_ProgressMapper();			
 		$progresses->populateProgressDd($addForm);
@@ -42,6 +43,7 @@ class Project_ProgressController extends Zend_Controller_Action
     			$progress->setQuality($addForm->getValue('quality'));
 				$progress->setRemark($addForm->getValue('remark'));
 				$result = $progresses->save($progress);
+				$errorMsg = General_Models_Text::$text_save_success;
    				$addForm->getElement('task')->setValue('');
    				$addForm->getElement('startDate')->setValue('');
    				$addForm->getElement('endDateExp')->setValue('');
@@ -55,6 +57,7 @@ class Project_ProgressController extends Zend_Controller_Action
     				$addForm->populate($formData);
     				}
     		}
+    		$this->view->errorMsg = $errorMsg;
     		$this->view->addForm = $addForm;
 	}
 

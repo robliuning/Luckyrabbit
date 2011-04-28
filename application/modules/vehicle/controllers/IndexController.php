@@ -55,7 +55,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     	$addForm = new Vehicle_Forms_vehicleSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
-        
+        $errorMsg = null;
 		$vehicles = new Vehicle_Models_VehicleMapper();
 	    	
     	if($this->getRequest()->isPost())
@@ -74,7 +74,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     			$vehicle->setFuelCons($addForm->getValue('fuelCons'));
     			$vehicle->setRemark($addForm->getValue('remark'));
     			$vehicles->save($vehicle);   
-    			
+    			$errorMsg = General_Models_Text::$text_save_success;
     			if($btClicked == '保存继续新建')
     			{
    					$addForm->getElement('name')->setValue('');
@@ -97,6 +97,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
     				$addForm->populate($formData);
     				}
     		}
+    		$this->view->errorMsg = $errorMsg;
 		    $this->view->addForm = $addForm;
     	}
     

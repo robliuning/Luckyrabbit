@@ -21,5 +21,30 @@ class Contract_Models_DbTable_Subcontract extends Zend_Db_Table_Abstract
 		}
 		return $row->toArray();
 	}
+	
+	public function Search($key, $condition)
+	{
+		$select = $this->select();
+		if($condition == "projectName")
+		{
+				$select->setIntegrityCheck(false)
+						->from(array('p'=>'pm_projects'),array('name'))
+						->join(array('s'=>'sc_subcontracts'),'p.projectId = s.projectId')
+						->where('p.name like ?','%'.$key.'%');
+			}
+			elseif($condition == "contractorName")
+			{
+				$select->setIntegrityCheck(false)
+						->from(array('c'=>'sc_contractors'),array('name'))
+						->join(array('s'=>'sc_subcontracts'),'c.contractorId = s.contractorId')
+						->where('c.name like ?','%'.$key.'%');
+				}
+				elseif($condition == "projectId")
+				{
+					$select->where("projectId = ?",$key);
+					}
+    		$resultSet = $this->fetchAll($select);
+			return $resultSet;
+	}
 }
 ?>

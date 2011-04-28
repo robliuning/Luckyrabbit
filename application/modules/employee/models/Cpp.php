@@ -158,7 +158,7 @@ class Employee_Models_Cpp
 
      public function setCertId($certId)
     {
-        $this->_certId= (int) $certId;
+        $this->_certId= $certId;
         return $this;
     }
 

@@ -46,7 +46,7 @@ class Employee_IndexController extends Zend_Controller_Action
 			
 		$this->view->arrayContacts = $arrayContacts;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "contact";
+		$this->view->module = "employee";
 		$this->view->controller = "index";
 		$this->view->modelName = "通讯录信息";
     }
@@ -56,7 +56,7 @@ class Employee_IndexController extends Zend_Controller_Action
         $addForm = new Employee_Forms_ContactSave();
         $addForm->submit->setLabel('保存继续新建');
         $addForm->submit2->setLabel('保存返回上页');
-        
+        $errorMsg = null;
     	$contacts=new Employee_Models_ContactMapper();
     	$contacts->populateContactDd($addForm);
     	    	
@@ -76,7 +76,8 @@ class Employee_IndexController extends Zend_Controller_Action
     			$contact->setOtherContact($addForm->getValue('otherContact'));
     			$contact->setAddress($addForm->getValue('adress'));
     			$contact->setRemark($addForm->getValue('remark'));
-    			$contacts->save($contact);   
+    			$contacts->save($contact);
+    			$errorMsg = General_Models_Text::$text_save_success;   
     			
     			if($btClicked == '保存继续新建')
     			{
@@ -87,7 +88,7 @@ class Employee_IndexController extends Zend_Controller_Action
    					$addForm->getElement('idCard')->setValue('');
    					$addForm->getElement('phoneNo')->setValue('');
    					$addForm->getElement('otherContact')->setValue('');
-						$addForm->getElement('address')->setValue('');
+					$addForm->getElement('address')->setValue('');
    					$addForm->getElement('remark')->setValue('');
    					}
    					else
@@ -100,7 +101,7 @@ class Employee_IndexController extends Zend_Controller_Action
     				$editForm->populate($formData);
     				}
     		}
-        	
+        $this->view->errorMsg = $errorMsg;
         $this->view->addForm = $addForm;
     }
          
@@ -165,8 +166,14 @@ class Employee_IndexController extends Zend_Controller_Action
     	if($contactId >0)
     	{
     		$contacts = new Employee_Models_ContactMapper();
-    		$contacts->delete($contactId);
-    		echo "1";//Missing validate if deletion succeed.
+    		try{
+    			$contacts->delete($contactId);
+    			echo "s";
+    			}
+    			catch(Exception $e)
+    			{
+    				echo "f";
+    				}
     		}
     		else
     		{

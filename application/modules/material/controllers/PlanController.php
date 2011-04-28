@@ -56,7 +56,7 @@ class Material_PlanController extends Zend_Controller_Action
 		$addForm->submit2->setLabel('保存返回上页');
 		$addForm->approvId->setAttrib('class','hide');
 		$addForm->approvDate->setAttrib('class','hide');
-
+		$errorMsg = null;
 		$plans = new Material_Models_PlanMapper();
 		$plans->populatePlanDd($addForm);
 
@@ -75,6 +75,7 @@ class Material_PlanController extends Zend_Controller_Action
 				$plan->setTotal($addForm->getValue('total'));
 				$plan->setRemark($addForm->getValue('remark'));
 				$plans->save($plan);
+				$errorMsg = General_Models_Text::$text_save_success;
 				if($btClicked=='保存继续新建')
 				{
 					$addForm->getElement('planType')->setValue('');
@@ -95,7 +96,8 @@ class Material_PlanController extends Zend_Controller_Action
 				$this->populate($formData);
 			}
 		}
-		 $this->view->addForm = $addForm;
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
 	}
     
     public function editAction()
@@ -158,13 +160,19 @@ class Material_PlanController extends Zend_Controller_Action
     	if($planId > 0)
     	{
     		$plans = new Material_Models_PlanMapper();
-    		$plans->delete($planId);
-    		echo "1";
-    		}
-    		else
-    		{
-    			$this->_redirect('/material/plan');
-    			}
+			try{
+				$plans->delete($planId);
+				echo "s";
+			}
+			catch(Exception $e)
+			{
+				echo "f";
+			}
+    	}
+    	else
+    	{
+    		$this->_redirect('/material/plan');
+    	}
     }
 }
 

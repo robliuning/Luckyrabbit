@@ -25,7 +25,7 @@ class Worker_Models_DbTable_Bonus extends Zend_Db_Table_Abstract
 			    ->join(array('w'=>'wm_bonuses'),'m.workerId = w.workerId')
 			    ->where('m.name like ?','%'.$key.'%');
 				}
-				elseif($condition == 'bonDate')
+				elseif($condition == 'date')
 				{
 					$select->where('bonDate = ?',$key);
 					}

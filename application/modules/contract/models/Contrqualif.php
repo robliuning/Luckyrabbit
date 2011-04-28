@@ -8,6 +8,7 @@ class Contract_Models_Contrqualif
 {    
 	protected $_cqId;
     protected $_contractorId;
+    protected $_contractorName;
 	protected $_qualifTypeId;
 	protected $_qualifGrade;
 	protected $_qualifSerie;
@@ -70,6 +71,17 @@ class Contract_Models_Contrqualif
     public function getContractorId()
     {
         return $this->_contractorId;
+    }
+    
+   	public function setContractorName($contractorName)
+    {
+        $this->_contractorName = $contractorName;
+        return $this;
+    } 
+
+    public function getContractorName()
+    {
+        return $this->_contractorName;
     }
     
 	public function setQualifTypeId($qualifTypeId)

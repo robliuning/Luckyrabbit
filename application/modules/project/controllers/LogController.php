@@ -20,7 +20,7 @@ class Project_LogController extends Zend_Controller_Action
 		$addForm = new Project_Forms_LogSave();
 		$addForm->submit->setLabel('保存新建');
 		$addForm->submit2->setAttrib('class','hide');
-
+		$errorMsg = null;
 		$logs = new Project_Models_LogMapper();
 		$logs->populateLogDd($addForm);
 	
@@ -49,7 +49,7 @@ class Project_LogController extends Zend_Controller_Action
 				
 				//Missing validation: check if log exists
 				$logs->save($projectlog);
-				
+				$errorMsg = General_Models_Text::$text_save_success;
 				$addForm->getElement('projectId')->setValue('');				
 				$addForm->getElement('logDate')->setValue('');
 				$addForm->getElement('weather')->setValue('');
@@ -72,6 +72,7 @@ class Project_LogController extends Zend_Controller_Action
 			   $addForm->populate($formData);
 		   }
 		}
+		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
 	}
 

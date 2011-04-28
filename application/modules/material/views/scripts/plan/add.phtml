@@ -12,6 +12,12 @@
 		<h1>材料管理 - 材料需求计划信息 - 新建</h1>
 		<div class="p_msg">
 			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 	}?>
+			</p>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
