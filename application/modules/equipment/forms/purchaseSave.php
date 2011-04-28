@@ -31,7 +31,7 @@ class Equipment_Forms_PurchaseSave extends Zend_Form
 			'text','buyerName',array(
 			'label'=>'²É¹ºÔ±:',
 			'filters'=>array('StringTrim'),
-			'class'=>'tbMedium tbText ac_buyerName',
+			'class'=>'tbMedium tbText ac_contactName',
 			'required'=>true
 			)
 		);
