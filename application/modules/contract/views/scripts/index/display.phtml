@@ -23,7 +23,7 @@
 				<div class="button_group">	
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="/worker"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
+					<div><a href="/contract"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -63,21 +63,17 @@
 				<table>
 					<colgroup>
 						<col style="width:5%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
 						<col style="width:10%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
-						<col style="width:15%"></col>
-						<col style="width:20%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:10%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th>姓名</th>
-						<th>岗位名</th>
-						<th>岗位证类型</th>
-						<th>岗位证编号</th>
-						<th>安全能力考核证</th>
+						<th>资质序列</th>
+						<th>资质类别</th>
+						<th>资质等级</th>
 						<th></th>
 						<th></th>
 					</thead>
@@ -89,13 +85,11 @@
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($cpp->getContactId()) ?>"><?php echo $this->escape($cpp->getContactName()) ?></a></td>
-						<td><?php echo $this->escape($cpp->getPostName()) ?></td>	
-						<td><?php echo $this->escape($cpp->getPostType()) ?></td>
-						<td><?php echo $this->escape($cpp->getPostCardId()) ?></td>
-						<td><?php echo $this->escape($cpp->getCertId()) ?></td>
-						<td><a href="/employee/cpp/edit/id/<?php echo $cppId?>">修改</a></td>
-						<td><a href="/employee/cpp/ajaxdisplay/id/<?php echo $cppId?>">详情</a></td>
+						<td><?php echo $this->escape($contrqualif->getQualifSerie()) ?></td>
+						<td><?php echo $this->escape($contrqualif->getQualifType()) ?></td>	
+						<td><?php echo $this->escape($contrqualif->getQualifGrade()) ?></td>
+						<td><a href="/contract/contrqualif/edit/id/<?php echo $cqId?>">修改</a></td>
+						<td><a href="/contract/contrqualif/ajaxdisplay/id/<?php echo $cqId?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

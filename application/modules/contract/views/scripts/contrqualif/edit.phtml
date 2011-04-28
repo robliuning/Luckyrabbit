@@ -9,7 +9,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1> - 分包管理 - 承包商资质信息 - 修改</h1>
+		<h1>分包管理 - 承包商资质信息 - 修改</h1>
 		<div class="p_msg">
 			<h3></h3>
 		</div>
@@ -21,6 +21,7 @@
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
+					<p class="subMenu">承包商: <?php echo $this->contractorName; ?></p>		
 					<?php
 						$this->editForm->setAction($this->url());
 						echo $this->editForm;

@@ -44,5 +44,21 @@ class General_Models_QualiftypeMapper
         }
         return $entries;
     }
+    
+    public function find($id,General_Models_Qualiftype $qualiftype)
+    {
+        $resultSet = $this->getDbTable()->find($id);
+
+        if (0 == count($resultSet)) {
+
+            return;
+        }
+
+        $row = $resultSet->current();
+
+        $qualiftype  ->setTypeId($row->typeId)
+                  ->setSerie($row->serie)
+			      ->setName($row->name);	
+    }
 }
 ?>
