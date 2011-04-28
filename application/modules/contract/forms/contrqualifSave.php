@@ -1,8 +1,7 @@
 <?php
 /*
-author:mingtingling
-create date:2011.4.9
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Contract_Forms_ContrqualifSave extends Zend_Form
 {

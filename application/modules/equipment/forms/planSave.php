@@ -1,9 +1,7 @@
 <?php
 /*
-机械设备需求计划表单
-author:mingtingling
-date:2011-4-16
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Equipment_Forms_PlanSave extends Zend_Form
 {

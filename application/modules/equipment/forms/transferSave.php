@@ -1,9 +1,7 @@
 <?php
 /*
-机械设备调拨单表表单
-author:mingtingling
-date:2011-4-17
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Equipment_Forms_TransferSave extends Zend_Form
 {

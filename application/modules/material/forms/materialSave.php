@@ -1,8 +1,8 @@
 <?php
-	/*
-	Created by Meimo
-	Date 2011.4.14
-	*/
+/*
+	Richard Song
+	2011.4.27
+*/
 class Material_Forms_MaterialSave extends Zend_Form
 {
 	public function init()

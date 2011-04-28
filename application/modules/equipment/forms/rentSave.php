@@ -1,9 +1,7 @@
 <?php
 /*
-机械设备租赁单表表单
-author:mingtingling
-date:2011-4-17
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Equipment_Forms_RentSave extends Zend_Form
 {

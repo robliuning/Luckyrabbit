@@ -1,10 +1,8 @@
 <?php
-	/*
-	Created by Meimo
-	Date 2011.4.1
-	review: rob
-	Date 2011.4.3
-	*/
+/*
+	Richard Song
+	2011.4.27
+*/
 class Project_Forms_ProjectSave extends Zend_Form
 {
     public function init()
@@ -13,21 +11,22 @@ class Project_Forms_ProjectSave extends Zend_Form
 
 		$this->addElement(
 			'text', 'name', array(
-			'label' => '工程名称: ',
+			'label' => '工程名称:',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
      	$this->addElement(
 			'text', 'address', array(
-			'label' => '地址: ',
+			'label' => '地址:',
 			'required' => false,
+			'filters' => array('StringTrim'),
 			'class'=>'tbLarge tbText'
 			)
 		);
 	  $this->addElement(
 			'select', 'status', array(
-			'label' => '工程状况: ',
+			'label' => '工程状况:',
 			'multiOptions'=>array('0'=>'未开工', '1'=>'建设中', '2'=>'已竣工'),
 			'required' => false,
 			'class'=>'tbMedium tbText'
@@ -35,22 +34,24 @@ class Project_Forms_ProjectSave extends Zend_Form
 		);
     $this->addElement(
 			'select', 'structype', array(
-			'label' => '结构类型: ',
+			'label' => '结构类型:',
 			'required' => false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'level', array(
-			'label' => '层数: ',
+			'label' => '层数:',
 			'required' => false,
+			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'amount', array(
-			'label' => '合同金额: ',
+			'label' => '合同金额:',
 			'required' => false,
+			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
@@ -60,32 +61,35 @@ class Project_Forms_ProjectSave extends Zend_Form
 			'required' => false,
 			'class'=>'tbText',
 			'cols'=> 60,
-			'rows'=> 20
+			'rows'=> 4
 			)
 		);
 		$this->addElement(
 			'text', 'constrArea', array(
-			'label' => '建筑面积: ',
+			'label' => '建筑面积:',
 			'required' => false,
+			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'staffNo', array(
-			'label' => '作业总人数: ',
+			'label' => '作业总人数:',
 			'required' => false,
+			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'textarea', 'remark', array(
-			'label' => '备注: ',
+			'label' => '备注:',
 			'required' => false,
 			'class'=>'tbText',
 			'cols'=> 60,
-			'rows'=> 20
+			'rows'=> 4
 			)
 		);
+
 		$this->addElement(
 			'submit','submit',array(
 			'ignore'=>true,
@@ -101,20 +105,23 @@ class Project_Forms_ProjectSave extends Zend_Form
 			)
 		);
 
-		$this->setElementDecorators(array(
-			'ViewHelper',
-			'Errors',
-			array(array('data'=>'HtmlTag'),
-			array('tag'=>'td','class'=>'element')),
-			array('Label',array('tag'=>'td')),
-			array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
-		));
-
-		$this->setDecorators(array(
-			'FormElements',
-			array('HtmlTag',array('tag'=>'table')),
-			'Form'
-		));
-		}
+		$this->setElementDecorators(
+			array(
+				'ViewHelper',
+				'Errors',
+				array(array('data'=>'HtmlTag'),
+				array('tag'=>'td','class'=>'element')),
+				array('Label',array('tag'=>'td')),
+				array(array('row'=>'HtmlTag'),array('tag'=>'tr'))
+		 	)
+		 );
+		$this->setDecorators(
+			array(
+				'FormElements',
+				array('HtmlTag',array('tag'=>'table')),
+				'Form'
+			)
+		);
+	}
 }
 ?>
