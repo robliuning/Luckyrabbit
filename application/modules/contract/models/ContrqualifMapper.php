@@ -5,8 +5,6 @@
    rewrite by lxj
    2011-04-09   v 0.2
    */
-
-
 class Contract_Models_ContrqualifMapper
 {
 	protected $_dbTable;
@@ -61,19 +59,19 @@ class Contract_Models_ContrqualifMapper
    		$contrqualifs = array();
    		
    		foreach($resultSet as $row){
-   			$contrqualif = new Project_Models_Contrqualif();
-        	$contrqualif ->setProjectId($row->projectId)
-                   ->setName($row->name)
-			       //->setAddress($row->address)
-				   ->setStatus($row->status)
-				   ->setStructype($row->structype)
-				   /*->setLevel($row->level)
-				   ->setAmount($row->amount)
-				   ->setPurpose($row->purpose)
-				   ->setConstrArea($row->constrArea)*/
-				   ->setStaffNo($row->staffNo);
-				   /*->setRemark($row->remark)
-				   ->setCTime($row->cTime);*/
+   			$contrqualif = new Contract_Models_Contrqualif();
+        	$contrqualif ->setCqId($row->cqId)
+						->setContractorId($row->contractorId)
+						->setQualifTypeId($row->qualifTypeId)
+						->setQualifGrade($row->qualifGrade);
+						
+			$qualiftypes = new General_Models_QualifTypeMapper();
+			$qualiftype = new General_Models_QualifType();
+			$qualiftypes->find($contrqualif->getQualifTypeId(),$qualiftype);
+			
+			$contrqualif->setQualifSerie($qualiftype->getSerie());
+			$contrqualif->setQualifType($qualiftype->getName());
+			
 			$contrqualifs[] = $contrqualif;
    		}
     	return $contrqualifs;
@@ -88,14 +86,13 @@ class Contract_Models_ContrqualifMapper
 		return $arrayQualifTypes;
     }
     
-    public function populateAllDd($form) //check
+    public function populateContrqualifDd($form) //check
   	{
   		$contractors = new Contract_Models_ContractorMapper();
 		$arrayContractors = $contractors->fetchAllJoin();  //contractor name and id
 		$qualifTypes = new General_Models_QualifTypeMapper();
 		
-		//$serie = $form->getValue("qualifSerie");
-		$serie = '0';
+		$serie = '施工总承包';
 		
 		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie); 
 
@@ -108,6 +105,27 @@ class Contract_Models_ContrqualifMapper
 			$form->getElement('qualifTypeId')->addMultiOption($qualif->getTypeId(),$qualif->getName());
 			}
   	}
+  	
+  	public function findQualiftypes($key) //check
+	{
+		$qualiftypes = new General_Models_QualiftypeMapper();
+		
+		$arrayQualiftypes = $qualiftypes->fetchAllBySerie($key);
+		
+		$entries = array();
+		
+		$i = 0;
+		
+		foreach($arrayQualiftypes as $qualiftype)
+		{
+			$entries[$i]['typeId'] = $qualiftype->typeId;
+			$entries[$i]['name'] = $qualiftype->name;
+			$entries[$i]['serie'] = $qualiftype->serie;
+			$i++;
+			}
+		
+		return $entries;
+		}
 
 	public function populateQualifDd($key)
 	{
