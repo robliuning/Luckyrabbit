@@ -1,8 +1,7 @@
 <?php
-/*created: 2011.3.27
-  author: mingtingling
-  review:mingtingling rob
-  review time:2011.4.3
+/*
+	Richard Song
+	2011.4.27
 */
 class Employee_Forms_CppSave extends Zend_Form
 {

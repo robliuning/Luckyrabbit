@@ -9,6 +9,7 @@ class Equipment_Models_Equipment
     protected $_eqpId;
     protected $_name;
 	protected $_typeId;
+	protected $_typeName;
 	protected $_spec;
 	protected $_unit;
 	protected $_remark;
@@ -82,6 +83,17 @@ class Equipment_Models_Equipment
     public function getTypeId()
     {
         return $this->_typeId;
+    }
+    
+    public function setTypeName($typeName)
+    {
+        $this->_typeName = $typeName;
+        return $this;
+    } 
+
+    public function getTypeName()
+    {
+        return $this->_typeName;
     }
     
     public function setSpec($spec)

@@ -97,7 +97,7 @@ class Worker_RegularController extends Zend_Controller_Action
 			}
 			else
 			{
-				$this->populate($formData);
+				$addForm->populate($formData);
 			}
 		}
 		 $this->view->addForm = $addForm;

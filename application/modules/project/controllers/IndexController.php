@@ -1,10 +1,4 @@
 <?php
-//Author: Meimo
-//Date: 2011.4.1
-//Reviewed: Rob
-//Date: 2011.4.6
-//Modified : Meimo
-//Date :  Apr.15.2011
 
 class Project_IndexController extends Zend_Controller_Action
 {

@@ -24,20 +24,20 @@ class Material_PlanController extends Zend_Controller_Action
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayPlans = array();
-			$key = $formData['key'];
-			if($key!==null)
+			$key = trim($formData['key']);
+			if($key!= null)
 			{
 				$condition = $formData['condition'];
 				$arrayPlans = $plans->fetchAllJoin($key,$condition);
 				if(count($arrayPlans)==0)
 				{
-					$errorMsg = 2;
+					$errorMsg = General_Models_Text::$text_searchErrorNr;
 					//waring a message  :  no match result
 				}
 			}
 			else
 			{
-				$errorMsg = 1;
+				$errorMsg = General_Models_Text::$text_searchErrorNi;
 				//waring a message  :  please input a key word
 			}
 		}
@@ -47,24 +47,24 @@ class Material_PlanController extends Zend_Controller_Action
 		}
 		$this->view->arrayPlans = $arrayPlans;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "material";
+		$this->view->controller = "plan";
+		$this->view->modelName = "材料需求计划"; 
     }
     
     public function addAction()
     {
-    	$addForm = new Material_Forms_PlanSave();
-		$addForm->submit->setLabel('保存继续新建');
-		$addForm->submit2->setLabel('保存返回上页');
-		$addForm->approvId->setAttrib('class','hide');
-		$addForm->approvDate->setAttrib('class','hide');
+    	$addForm = new Material_Forms_planSave();
+		$addForm->submit->setLabel('下一步: 添加材料');
+		$addForm->submit2->setAttrib('class','hide');
 		$errorMsg = null;
 		$plans = new Material_Models_PlanMapper();
 		$plans->populatePlanDd($addForm);
-
+		
 		if($this->getRequest()->isPost())
 		{
-			$btClicked = $this->getRequest()->getPost('submit');
 			$formData = $this->getRequest()->getPost();
-			if($addForm->isValid($formData))
+    		if($addForm->isValid($formData))
 			{
 				$plan = new Material_Models_Plan();
 				$plan->setPlanType($addForm->getValue('planType'));
@@ -72,29 +72,14 @@ class Material_PlanController extends Zend_Controller_Action
 				$plan->setProjectId($addForm->getValue('projectId'));
 				$plan->setApplicId($addForm->getValue('applicId'));
 				$plan->setApplicDate($addForm->getValue('applicDate'));
-				$plan->setTotal($addForm->getValue('total'));
 				$plan->setRemark($addForm->getValue('remark'));
-				$plans->save($plan);
-				$errorMsg = General_Models_Text::$text_save_success;
-				if($btClicked=='保存继续新建')
-				{
-					$addForm->getElement('planType')->setValue('');
-					$addForm->getElement('dueDate')->setValue('');
-					$addForm->getElement('projectId')->setValue('');
-					$addForm->getElement('applicId')->setValue('');
-					$addForm->getElement('applicDate')->setValue('');
-					$addForm->getElement('total')->setValue('');
-					$addForm->getElement('remark')->setValue('');
-					}
-					else
-					{
-						$this->_redirect('/material/plan');
-						}
+				$id = $plans->save($plan);
+				$this->_redirect('/material/mtrplan/index/id/'.$id);
 			}
 			else
-			{
-				$this->populate($formData);
-			}
+    			{
+    				$addForm->populate($formData);
+    				}
 		}
 		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
@@ -103,15 +88,17 @@ class Material_PlanController extends Zend_Controller_Action
     public function editAction()
     {
     	$editForm = new Material_Forms_planSave();
-		$editForm->submit->setLabel('保存修改');
-    	$editForm->submit2->setAttrib('class','hide');
+		$editForm->submit->setLabel('保存修改返回');
+    	$editForm->submit2->setLabel('继续修改材料');
 
 		$plans = new Material_Models_PlanMapper();
+		$plans->populatePlanDd($editForm);
     	$planId = $this->_getParam('id',0);
 
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
+			$btClicked = $this->getRequest()->getPost('submit');
     		if($editForm->isValid($formData))
 			{
 				$plan = new Material_Models_Plan();
@@ -121,13 +108,18 @@ class Material_PlanController extends Zend_Controller_Action
 				$plan->setProjectId($editForm->getValue('projectId'));
 				$plan->setApplicId($editForm->getValue('applicId'));
 				$plan->setApplicDate($editForm->getValue('applicDate'));
-				$plan->setTotal($editForm->getValue('total'));
 				$plan->setApprovId($editForm->getValue('approvId'));
 				$plan->setApprovDate($editForm->getValue('approvDate'));
 				$plan->setRemark($editForm->getValue('remark'));
 				$plans->save($plan);
-
-				$this->_redirect('/material/plan');
+				if($btClicked == '保存修改返回')
+				{
+					$this->_redirect('/material/plan');
+					}
+					else
+					{
+						$this->_redirect('/material/mtrplan/index/id/'.$planId);
+						} 	
 			}
 			else
     			{
@@ -174,6 +166,32 @@ class Material_PlanController extends Zend_Controller_Action
     		$this->_redirect('/material/plan');
     	}
     }
+    
+    public function displayAction()
+    {
+   		$id = $this->_getParam('id',0);
+   		
+   		if($id > 0)
+   		{
+   			//display plan info
+   			$plans = new Material_Models_PlanMapper();
+   		  	$plan = new Material_Models_Plan();
+   			$plans->find($id,$plan);
+   			$this->view->plan = $plan;
+   			$this->view->id = $id;		
+   			$this->view->module = "material";
+			$this->view->controller = "plan";
+			$this->view->modelName = "材料需求计划"; 
+   			//display material info
+   			$mtrplans = new Material_Models_MtrplanMapper();
+   			$condition = "planId";
+   			$arrayMtrplans = $mtrplans->fetchAllJoin($id,$condition);
+    		$this->view->arrayMtrplans = $arrayMtrplans;	
+    		}
+   			else
+   			{
+   			    $this->_redirect('/material/plan');
+   				}
+    }
 }
-
 ?>

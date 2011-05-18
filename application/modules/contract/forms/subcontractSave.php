@@ -1,8 +1,7 @@
 <?php
 /*
-author:mingtingling
-date:2011.4.10
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Contract_Forms_SubcontractSave  extends Zend_Form
 {

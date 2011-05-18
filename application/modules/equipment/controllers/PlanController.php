@@ -1,12 +1,4 @@
 <?php
-/*
-¹¤³ÌÉè±¸ÐèÇó¼Æ»®
-author:mingtingling
-date:2011-4-16
-vision:2.0
-Modified by MeiMo
-Date:Apr.21.2011
-*/
 class Equipment_PlanController extends Zend_Controller_Action
 {
 	public function init()
@@ -19,27 +11,27 @@ class Equipment_PlanController extends Zend_Controller_Action
 	public function indexAction()
 	{
 		$errorMsg = null;
-		$plans=new Equipment_Models_PlanMapper();
+		$plans = new Equipment_Models_PlanMapper();
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayPlans = array();
-			$key = $formData['key'];
+			$key = trim($formData['key']);
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$plans->fetchAllJoin($key,$condition);
+				$arryPlans = $plans->fetchAllJoin($key,$condition);
 				
 				if(count($arrayPlans) == 0)
 				{
 					$errorMsg = General_Models_Text::$text_searchErrorNr;
-					//warning will be displayed: "Ã»ÓÐÕÒµ½·ûºÏÌõ¼þµÄ½á¹û¡£"
+					//warning will be displayed: "æ²¡æœ‰æ‰¾åˆ°ç¬¦åˆæ¡ä»¶çš„ç»“æžœã€‚"
 					}
 				}
 				else
 				{
 					$errorMsg = General_Models_Text::$text_searchErrorNi;
-					//warning will be displayed: "ÇëÊäÈëËÑË÷¹Ø¼ü×Ö¡£"
+					//warning will be displayed: "è¯·è¾“å…¥æœç´¢å…³é”®å­—ã€‚"
 					}
 		}
 		else
@@ -50,87 +42,74 @@ class Equipment_PlanController extends Zend_Controller_Action
 		$this->view->arrayPlans = $arrayPlans;
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "equipment";
-		$this->view->controller = "index";
-		$this->view->modelName = "»úÐµÉè±¸ÐèÇó¼Æ»®";
+		$this->view->controller = "plan";
+		$this->view->modelName = "æœºæ¢°è®¾å¤‡éœ€æ±‚è®¡åˆ’";
 	}
+	
 	public function addAction()
 	{
-		$addForm = new Equipment_Forms_PlanSave();
-		$addForm->submit->setLabel("±£´æ²¢¼ÌÐøÌí¼Ó");
-		$addForm->submit2->setLabel("±£´æ²¢·µ»Ø");
+		$addForm = new Equipment_Forms_planSave();
+		$addForm->submit->setLabel("ä¸‹ä¸€æ­¥: æ·»åŠ è®¾å¤‡");
+		$addForm->submit2->setAttrib('class','hide');
+		$errorMsg = null;
+		
 		$plans = new Equipment_Models_PlanMapper();
-    $plans->populatePlanDb($addForm);
+    	$plans->populatePlanDd($addForm);
 		if($this->getRequest()->isPost())
 		{
-      $btClicked = $this->getRequest()->getPost('submit');
-		  $formData = $this->getRequest()->getPost();
-		  if($addForm->isValid($formData))
+			$formData = $this->getRequest()->getPost();
+			if($addForm->isValid($formData))
 			{
-			   $plan = new Equipment_Models_Plan();
-			   $plan->setPlanType($addForm->getValue('planType'));
-			   $plan->setProjectId($addForm->getValue('projectId'));
-			   $plan->setDueDate($addForm->getValue('dueDate'));
-			   $plan->setApplicId($addForm->getValue('applicId'));
-			   $plan->setApplicDate($addForm->getValue('applicDate'));
-			   $plan->setApprovId($addForm->getValue('approvId'));
-			   $plan->setApprovDate($addForm->getValue('approvDate'));
-			   $plan->setTotal($addForm->getValue('total'));
-			   $plan->setRemark($addForm->getValue('remark'));
-				if($btClicked=="±£´æ²¢¼ÌÐøÌí¼Ó")
-				    {
-					   $plans->save($plan);
-					   $addForm->getElement('planType')->setValue('');
-					   $addForm->getElement('projectId')->setValue('');
-				     $addForm->getElement('dueDate')->setValue('');
-				     $addForm->getElement('applicId')->setValue()
-					   $addForm->getElement('applicDate')->setValue('');
-					   $addForm->getElement('approvId')->setValue('');
-				     $addForm->getElement('approvDate')->setValue('');
-				     $addForm->getElement('total')->setValue('');
-				     $addForm->getElement('remark')->setValue('');
-                       
-					   }
-					   else
-				       {
-						   $plans->save($plan);
-						   $this->_redirect('/equipment/plan');
-					      }
-			}/*end isValid()*/
-            else
-			{
-				$addForm->populate($formData);
-			}/*end not valid()*/
-		}/*end isPost()*/
-		$this->view->addForm=$addForm;
+				$plan = new Equipment_Models_Plan();
+				$plan->setPlanType($addForm->getValue('planType'));
+				$plan->setProjectId($addForm->getValue('projectId'));
+			    $plan->setDueDate($addForm->getValue('dueDate'));
+			    $plan->setApplicId($addForm->getValue('applicId'));
+			    $plan->setApplicDate($addForm->getValue('applicDate'));
+			    $plan->setRemark($addForm->getValue('remark'));
+				$id = $plans->save($plan);
+				$this->_redirect('/equipment/eqpplan/index/id/'.$id);
+				}
+            	else
+				{
+					$addForm->populate($formData);
+					}
+			}
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
 	}
+	
 	public function editAction()
 	{
-     $editForm = new Equipment_Forms_PlanSave();
-	   $editForm->submit->setLabel("±£´æÐÞ¸Ä");
-	   $editForm->submit2->setAttrib('class','hide');
-	   $planId=$this->_getParam('id',0);
-	   $plans = new Equipment_Models_PlanMapper();
-	   $plans->populatePlanDb($editForm);
-       if($this->getRequest()->isPost())
+		$editForm = new Equipment_Forms_PlanSave();
+		$editForm->submit->setLabel('ä¿å­˜ä¿®æ”¹è¿”å›ž');
+    	$editForm->submit2->setLabel('ç»§ç»­ä¿®æ”¹ææ–™');
+	   	$planId=$this->_getParam('id',0);
+	   	$plans = new Equipment_Models_PlanMapper();
+	  	$plans->populatePlanDd($editForm);
+      	if($this->getRequest()->isPost())
 		{
 		   $btClicked = $this->getRequest()->getPost('submit');
 		   $formData = $this->getRequest()->getPost();
 		   if($editForm->isValid($formData))
 			{
-			   $plan = new Equipment_Models_Plan();
-			   $plan->setPlanId($planId);
-			   $plan->setPlanType($editForm->getValue('planType'));
-			   $plan->setProjectId($editForm->getValue('projectId'));
-			   $plan->setDueDate($editForm->getValue('dueDate'));
-			   $plan->setApplicId($editForm->getValue('applicId'));
-			   $plan->setApplicDate($editForm->getValue('applicDate'));
-			   $plan->setApprovId($editForm->getValue('approvId'));
-			   $plan->setApprovDate($editForm->getValue('approvDate'));
-			   $plan->setTotal($editForm->getValue('total'));
-			   $plan->setRemark($editForm->getValue('remark'));
-				 $plans->save($plan);
-				 $this->_redirect('/equipment/plan');
-			}/*end isValid()*/
+			   	$plan = new Equipment_Models_Plan();
+			   	$plan->setPlanId($planId);
+			   	$plan->setPlanType($editForm->getValue('planType'));
+			   	$plan->setProjectId($editForm->getValue('projectId'));
+			   	$plan->setDueDate($editForm->getValue('dueDate'));
+			   	$plan->setApplicId($editForm->getValue('applicId'));
+			   	$plan->setApplicDate($editForm->getValue('applicDate'));
+			   	$plan->setRemark($editForm->getValue('remark'));
+				$plans->save($plan);
+				if($btClicked == 'ä¿å­˜ä¿®æ”¹è¿”å›ž')
+				{
+					$this->_redirect('/equipment/plan');
+					}
+					else
+					{
+						$this->_redirect('/equipment/eqpplan/index/id/'.$planId);
+						} 				}/*end isValid()*/
 			else
 			{
 				$editForm->populate($formData);

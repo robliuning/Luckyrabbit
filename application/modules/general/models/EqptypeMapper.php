@@ -36,5 +36,19 @@ class General_Models_EqptypeMapper
 		
 		return $name;
 		}
+		
+	public function fetchAll()
+	{
+		$resultSet = $this->getDbTable()->fetchAll();
+        $entries   = array();
+        foreach ($resultSet as $row) {
+            $entry = new General_Models_Eqptype();
+			$entry->setTypeId($row->typeId)
+				  ->setName($row->name);
+                  
+            $entries[] = $entry;
+        }
+        return $entries;
+		} 
 }
 ?>

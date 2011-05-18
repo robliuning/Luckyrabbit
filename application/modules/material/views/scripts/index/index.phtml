@@ -2,8 +2,6 @@
  	$this->headTitle('- 材料管理 - 材料信息');
  	$this->headScript()->prependFile('/js/materialjs/p_material.js');
  ?>
- 	<div id="p_id" class="hide">nav_generalInfo</div>
-	<div id="s_id" class="hide">none</div>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -39,8 +37,8 @@
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -48,28 +46,26 @@
 					<colgroup>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
 						<col style="width:20%"></col>
-						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th></th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
 						<th>材料名</th>
 						<th>类型</th>
 						<th>规格型号</th>
 						<th>单位</th>
-						<th>备注</th>
-						<th></th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
 						<td colspan="2">全选/取消</td>
-						<td></td>
-						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -92,8 +88,8 @@
 						?>
 						</td>
 						<td><?php echo $this->escape($material->getUnit()) ?></td>
-						<td><?php echo $this->escape($material->getRemark()) ?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$mtrId))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$mtrId))?>" class="lightbox">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

@@ -1,0 +1,51 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $mtnc = $this->mtnc;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>车牌号：</td>
+				<td><?php echo $mtnc->getPlateNo()?></td>
+			</tr>
+			<tr>
+				<td>保养日期：</td>
+				<td><?php echo $mtnc->getRDate() ?></td>
+			</tr>
+			<tr>
+				<td>保养项目： </td>
+				<td><?php echo $mtnc->getDetail()?></td>
+			</tr>
+			<tr>
+				<td>责任人：</td>
+				<td><?php echo $mtnc->getContactName()?></td>
+			</tr>
+			<tr>
+				<td>保养公里数：</td>
+				<td><?php echo $mtnc->getMile()?></td>
+			</tr>
+			<tr>
+				<td>保养金额：</td>
+				<td><?php echo $mtnc->getAmount()?></td>
+			</tr>
+			<tr>
+				<td>备注: </td>
+				<td><?php echo $mtnc->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $mtnc->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

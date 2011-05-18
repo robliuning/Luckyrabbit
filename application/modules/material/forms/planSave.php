@@ -1,8 +1,8 @@
 <?php
-	/*
-	Created by Meimo
-	Date 2011.4.1
-	*/
+/*
+	Richard Song
+	2011.4.27
+*/
 class Material_Forms_planSave extends Zend_Form
 {
 	public function init()
@@ -10,16 +10,16 @@ class Material_Forms_planSave extends Zend_Form
 		$this->setMethod('post');
 			
 		$this->addElement(
-			'select', 'type', array(
-			'label' => '¼Æ»®ÀàÐÍ:',
-			'multiOptions'=>array('ÈÕ¼Æ»®','ÖÜ¼Æ»®','ÔÂ¼Æ»®','Äê¼Æ»®','ÏîÄ¿¼Æ»®','ÆäËû'),
+			'select', 'planType', array(
+			'label' => 'è®¡åˆ’ç±»åž‹:',
+			'multiOptions'=>array('æ—¥è®¡åˆ’'=>'æ—¥è®¡åˆ’','å‘¨è®¡åˆ’'=>'å‘¨è®¡åˆ’','æœˆè®¡åˆ’'=>'æœˆè®¡åˆ’','å¹´è®¡åˆ’'=>'å¹´è®¡åˆ’','é¡¹ç›®è®¡åˆ’'=>'é¡¹ç›®è®¡åˆ’','å…¶ä»–'=>'å…¶ä»–'),
 			'required' => true,
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'dueDate', array(
-			'label' => '¼Æ»®µ½Î»Ê±¼ä:',
+			'label' => 'è®¡åˆ’åˆ°ä½æ—¶é—´:',
 			'filters'=>array('StringTrim'),
 			'required' => true,
 			'class'=>'tbMedium tbText datepicker'
@@ -27,14 +27,14 @@ class Material_Forms_planSave extends Zend_Form
 		);
 		$this->addElement(
 			'select', 'projectId', array(
-			'label' => '¹¤³ÌÃû³Æ:',
+			'label' => 'å·¥ç¨‹åç§°:',
 			'required' => true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'applicName', array(
-			'label' => 'Éê±¨ÈË:',
+			'label' => 'ç”³æŠ¥äºº:',
 			'required' => true,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText ac_contactName'
@@ -42,7 +42,7 @@ class Material_Forms_planSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'applicDate', array(
-			'label' => 'Éê±¨ÈÕÆÚ:',
+			'label' => 'ç”³æŠ¥æ—¥æœŸ:',
 			'required' => false,
 			'filters'=> array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
@@ -50,30 +50,25 @@ class Material_Forms_planSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'approvName', array(
-			'label' => 'ÉóÅúÈË:',
+			'label' => 'å®¡æ‰¹äºº:',
 			'required' => false,
 			'filters' => array('StringTrim'),
-			'class'=>'tbMedium tbText ac_contactName'
+			'disabled' => 'disabled',
+			'value'=> "å…·æœ‰æƒé™çš„ç®¡ç†äººå‘˜",
+			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'approvDate', array(
-			'label' => 'ÉóÅúÊ±¼ä:',
+			'label' => 'å®¡æ‰¹æ—¶é—´:',
 			'required' => false,
 			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
-			'text', 'total', array(
-			'label' => '×Ü½ð¶î:',
-			'required' => false,
-			'class'=>'tbMedium tbText'
-			)
-		);
-		$this->addElement(
 			'textarea', 'remark', array(
-			'label' => '±¸×¢:',
+			'label' => 'å¤‡æ³¨:',
 			'required' => false,
 			'class' => 'tbText',
 			'cols' => 60,
@@ -98,14 +93,13 @@ class Material_Forms_planSave extends Zend_Form
 
 		$this->addElement(
 			'text','applicId',array(
-			'required' => true,
 			'class'=>'hide ac_contactId'
 			)
 		);
 		$this->addElement(
 			'text','approvId',array(
-			'required' => true,
-			'class'=>'hide ac_contactId'
+			'class'=>'hide',
+			'value'=> 000011
 			)
 		);
 

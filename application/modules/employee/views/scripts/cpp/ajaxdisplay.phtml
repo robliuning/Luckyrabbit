@@ -1,0 +1,51 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+			<div class="button_group">
+				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+		<p><?php
+			$cpp = $this->cpp;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>姓名：</td>
+						<td><?php echo $cpp->getContactName()?></td>
+					</tr>
+					<tr>
+						<td>项目名称：</td>
+						<td><?php echo $cpp->getProjectName()?></td>
+					</tr>
+					<tr>
+						<td>岗位名称：</td>
+						<td><?php echo $cpp->getPostName() ?></td>
+					</tr>
+					<tr>
+						<td>岗位证类型：</td>
+						<td><?php echo $cpp->getPostType() ?></td>
+					</tr>
+					<tr>
+						<td>岗位证编号：</td>
+						<td><?php echo $cpp->getPostCardId() ?></td>
+					</tr>
+					<tr>
+						<td>安全能力考核证：</td>
+						<td><?php echo $cpp->getCertId() ?></td>
+					</tr>	
+					<tr>
+						<td>上次修改：</td>
+						<td><?php echo $cpp->getCTime() ?></td>
+					</tr>				
+			</table>
+		</div>
+	</div>
+	</div>
+	</div>
+</div>

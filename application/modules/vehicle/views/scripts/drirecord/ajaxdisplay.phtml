@@ -1,0 +1,51 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $drirecord = $this->drirecord;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>车牌号：</td>
+				<td><?php echo $drirecord->getPlateNo()?></td>
+			</tr>
+			<tr>
+				<td>年份：</td>
+				<td><?php echo $drirecord->getRYear() ?></td>
+			</tr>
+			<tr>
+				<td>月份： </td>
+				<td><?php echo $drirecord->getRMonth()?></td>
+			</tr>
+			<tr>
+				<td>月初公里数：</td>
+				<td><?php echo $drirecord->getMileEarly()?></td>
+			</tr>
+			<tr>
+				<td>月末公里数：</td>
+				<td><?php echo $drirecord->getMileEnd()?></td>
+			</tr>
+			<tr>
+				<td>当月行驶公里数：</td>
+				<td><?php echo $drirecord->getMile()?></td>
+			</tr>
+			<tr>
+				<td>备注: </td>
+				<td><?php echo $drirecord->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $drirecord->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

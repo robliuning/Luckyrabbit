@@ -1,0 +1,67 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $repair = $this->repair;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>车牌号：</td>
+				<td><?php echo $repair->getPlateNo()?></td>
+			</tr>
+			<tr>
+				<td>维修日期：</td>
+				<td><?php echo $repair->getRDate() ?></td>
+			</tr>
+			<tr>
+				<td>损坏原因： </td>
+				<td><?php echo $repair->getReason()?></td>
+			</tr>
+			<tr>
+				<td>维修项目：</td>
+				<td><?php echo $repair->getDetail()?></td>
+			</tr>
+			<tr>
+				<td>责任人：</td>
+				<td><?php echo $repair->getContactName()?></td>
+			</tr>
+			<tr>
+				<td>事故地点：</td>
+				<td><?php echo $repair->getSpot()?></td>
+			</tr>
+			<tr>
+				<td>事故描述：</td>
+				<td><?php echo $repair->getDescr()?></td>
+			</tr>
+			<tr>
+				<td>维修金额：</td>
+				<td><?php echo $repair->getAmount()?></td>
+			</tr>
+			<tr>
+				<td>是否出险：</td>
+				<td><?php echo $repair->getInsFlag()?></td>
+			</tr>
+			<tr>
+				<td>赔付金额：</td>
+				<td><?php echo $repair->getIndem()?></td>
+			</tr>
+			<tr>
+				<td>备注: </td>
+				<td><?php echo $repair->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $repair->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

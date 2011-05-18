@@ -19,6 +19,7 @@ class Employee_Models_Cpp
 	protected $_postType;
 	protected $_postCardId;
 	protected $_certId;
+	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -165,6 +166,17 @@ class Employee_Models_Cpp
     public function getCertId()
     {
         return $this->_certId;
+	}
+	
+	public function setCTime($cTime)
+    {
+        $this->_cTime = $cTime;
+        return $this;
+    }
+
+    public function getCTime()
+    {
+        return $this->_cTime;
 	}
 }
 ?>

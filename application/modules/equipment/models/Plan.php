@@ -3,7 +3,7 @@
 /*write by lxj
   2011-04-16   v0.2*/
 
-class Material_Models_Plan
+class Equipment_Models_Plan
 {     
     protected $_planId;
     protected $_planType;

@@ -1,35 +1,35 @@
 <?php
-  //creation date 01-4-2011
-  //creating by lincoy
-  //completion date 03-04-2011
+	//creation date 01-4-2011
+	//creating by lincoy
+	//completion date 03-04-2011
 
 class Project_Models_ProjectMapper
 {
 	protected $_dbTable;
 	
-    public function setDbTable($dbTable)
-    {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
-        }
-        $this->_dbTable = $dbTable;
-        return $this;
-    }
-    public function getDbTable()
-    {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Project_Models_DbTable_Project');
-        }
-        return $this->_dbTable;
-    }
-    public function save(Project_Models_Project $project) //check
-    {
-        $data = array(
+	public function setDbTable($dbTable)
+	{
+		if (is_string($dbTable)) {
+			$dbTable = new $dbTable();
+		}
+		if (!$dbTable instanceof Zend_Db_Table_Abstract) {
+			throw new Exception('Invalid table data gateway provided');
+		}
+		$this->_dbTable = $dbTable;
+		return $this;
+	}
+	public function getDbTable()
+	{
+		if (null === $this->_dbTable) {
+			$this->setDbTable('Project_Models_DbTable_Project');
+		}
+		return $this->_dbTable;
+	}
+	public function save(Project_Models_Project $project) //check
+	{
+		$data = array(
 			'projectId' => $project->getProjectId(),
-            'name' => $project->getName() ,
+			'name' => $project->getName() ,
 			'address' => $project->getAddress(),
 			'status' => $project->getStatus(),
 			'structype' => $project->getStructype(),
@@ -39,29 +39,29 @@ class Project_Models_ProjectMapper
 			'constrArea' => $project->getConstrArea(),
 			'staffNo' => $project->getStaffNo(),
 			'remark' => $project->getRemark()
-        );
-        if (null === ($id = $project->getProjectId())) {
-            unset($data['projectId']);
-            $this->getDbTable()->insert($data);
-        } else {
-            $this->getDbTable()->update($data, array('projectId = ?' => $project->getProjectId()));
-        }
-    }
+		);
+		if (null === ($id = $project->getProjectId())) {
+			unset($data['projectId']);
+			$this->getDbTable()->insert($data);
+		} else {
+			$this->getDbTable()->update($data, array('projectId = ?' => $project->getProjectId()));
+		}
+	}
 
-    public function find($projectId,$project) //check
-    {
-        $resultSet = $this->getDbTable()->find($projectId);
+	public function find($projectId,$project) //check
+	{
+		$resultSet = $this->getDbTable()->find($projectId);
 
-        if (0 == count($resultSet)) {
+		if (0 == count($resultSet)) {
 
-            return;
-        }
+			return;
+		}
 
-        $row = $resultSet->current();
+		$row = $resultSet->current();
 
-        $project  ->setProjectId($row->projectId)
-                  ->setName($row->name)
-			      ->setAddress($row->address)
+		$project  ->setProjectId($row->projectId)
+				->setName($row->name)
+			  	->setAddress($row->address)
 				  ->setStatus($row->status)
 				  ->setStructype($row->structype)
 				  ->setLevel($row->level)
@@ -71,7 +71,7 @@ class Project_Models_ProjectMapper
 				  ->setStaffNo($row->staffNo)
 				  ->setRemark($row->remark)
 				  ->setCTime($row->cTime);
-    }
+	}
 
 	public function fetchAllNames() //check
 	{
@@ -80,7 +80,7 @@ class Project_Models_ProjectMapper
 		foreach($resultSet as $row){
 			$entry = new Project_Models_Project();
 			$entry ->setProjectId($row->projectId)
-				   ->setName($row->name);
+				->setName($row->name);
 
 			$entries[] = $entry;
 		}
@@ -96,28 +96,28 @@ class Project_Models_ProjectMapper
 		return $name;
 		}
 
-    /*public function fetchAllJoin() //check
-    {
-    	//1.get particular project info from projects
-    	$resultSet = $this->getDbTable()->fetchAll();	
-        $projects   = array();
-        
-        foreach ($resultSet as $row) 
-        {
+	/*public function fetchAllJoin() //check
+	{
+		//1.get particular project info from projects
+		$resultSet = $this->getDbTable()->fetchAll();	
+		$projects= array();
+		
+		foreach ($resultSet as $row) 
+		{
 			$project = new Project_Models_Project();
-        	$project ->setProjectId($row->projectId)
-                   ->setName($row->name)
-			       //->setAddress($row->address)
-				   ->setStatus($row->status)
-				   ->setStructype($row->structype)
-				   /*->setLevel($row->level)
-				   ->setAmount($row->amount)
-				   ->setPurpose($row->purpose)
-				   ->setConstrArea($row->constrArea)*/
-				   /*->setStaffNo($row->staffNo);
-				   /*->setRemark($row->remark)
-				   ->setCTime($row->cTime);*/
-				   
+			$project ->setProjectId($row->projectId)
+				->setName($row->name)
+				//->setAddress($row->address)
+				->setStatus($row->status)
+				->setStructype($row->structype)
+				/*->setLevel($row->level)
+				->setAmount($row->amount)
+				->setPurpose($row->purpose)
+				->setConstrArea($row->constrArea)*/
+				/*->setStaffNo($row->staffNo);
+				/*->setRemark($row->remark)
+				->setCTime($row->cTime);*/
+				
 			/*$projectId = $project->getProjectId();
 			$postId = 000001;
 			//2. find postId of Project Manager
@@ -147,40 +147,33 @@ class Project_Models_ProjectMapper
 					$project->setStage(0);
 					}
 			
-            $projects[] = $project;
-        }
-        return $projects;
+			$projects[] = $project;
+		}
+		return $projects;
 	}  */
 	
 
 	public function fetchAllJoin($key = null,$condition = null) //check
-    {
-    	if($condition == null)
-    	{
-    		$resultSet = $this->getDbTable()->fetchAll();
-    		}
-    		else
-    		{
-    			$resultSet = $this->getDbTable()->search($key,$condition);
-    			}
-   		
-   		$projects = array();
-   		
-   		foreach($resultSet as $row){
-   			$project = new Project_Models_Project();
-        	$project ->setProjectId($row->projectId)
-                   ->setName($row->name)
-			       //->setAddress($row->address)
-				   ->setStatus($row->status)
-				   ->setStructype($row->structype)
-				   /*->setLevel($row->level)
-				   ->setAmount($row->amount)
-				   ->setPurpose($row->purpose)
-				   ->setConstrArea($row->constrArea)*/
-				   ->setStaffNo($row->staffNo);
-				   /*->setRemark($row->remark)
-				   ->setCTime($row->cTime);*/
-				   
+	{
+		if($condition == null)
+		{
+			$resultSet = $this->getDbTable()->fetchAll();
+			}
+			else
+			{
+				$resultSet = $this->getDbTable()->search($key,$condition);
+				}
+		
+		$projects = array();
+		
+		foreach($resultSet as $row){
+			$project = new Project_Models_Project();
+			$project ->setProjectId($row->projectId)
+				->setName($row->name)
+				->setStatus($row->status)
+				->setStructype($row->structype)
+				->setStaffNo($row->staffNo);
+				
 			$projectId = $project->getProjectId();
 			$postId = 000001;
 			//2. find postId of Project Manager
@@ -210,11 +203,11 @@ class Project_Models_ProjectMapper
 					$project->setStage(0);
 					}
 			
-            $projects[] = $project;
-   			}
-    	return $projects;
-    	}
-    	
+			$projects[] = $project;
+			}
+		return $projects;
+		}
+		
 	public function findArrayProject($id) //check
 	{
 		$id = (int)$id;
@@ -229,7 +222,7 @@ class Project_Models_ProjectMapper
 		$this->getDbTable()->delete('projectId = ' . (int)$id);
 		}
 	
-	public function populateProjectDd($form)         //check
+	public function populateProjectDd($form) 		//check
 	{
 		$structypes = new General_Models_StructypeMapper();
 		$arrayStructypes = $structypes->fetchAll();
@@ -237,6 +230,6 @@ class Project_Models_ProjectMapper
 		{
 			$form->getElement('structype')->addMultiOption($structype->getName(),$structype->getName());
 			}
-	}  
+	}
 }
 ?>

@@ -106,9 +106,20 @@ class Employee_Models_ContactMapper
 		
 		foreach($arrayNames as $name)
 		{
+			$genderCh = null;
+			$gender = $name->gender;
+			if($gender == 0)
+			{
+				$genderCh = "男";
+				}
+				else
+				{
+					$genderCh = "女";
+					}
+					
 			$entries[$i]['name'] = $name->name;
 			$entries[$i]['contactId'] = $name->contactId;
-			$entries[$i]['gender'] = $name->gender;
+			$entries[$i]['gender'] = $genderCh;
 			$entries[$i]['titleName'] = $name->titleName;
 			$i++;
 			if($i == 12)

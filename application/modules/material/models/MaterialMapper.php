@@ -43,6 +43,31 @@ class Material_Models_MaterialMapper
         }
        return $id;
     }
+    
+    public function find($id, Material_Models_Material $material)
+    { 
+       $result = $this->getDbTable()->find($id);
+
+        if (0 == count($result)) {
+
+            return;
+
+        }
+
+        $row = $result->current();
+
+        $material  ->setMtrId($row->mtrId)
+        		  ->setName($row->name)
+                  ->setTypeId($row->typeId)
+                  ->setSpec($row->spec)
+                  ->setUnit($row->unit)
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+                  
+        $mtrtypes = new General_Models_MtrtypeMapper();
+        $typeName = $mtrtypes->findTypeName($material->getTypeId());
+        $material->setTypeName($typeName);  
+	}
      
     public function findArrayMaterial($id) //check
     {
@@ -89,5 +114,143 @@ class Material_Models_MaterialMapper
 	{
 		$this->getDbTable()->delete("mtrId = ".(int)$mtrId);
 		}
+		
+	public function findMaterialNames($id)
+	{
+		$condition = "typeId";		
+    	$resultSets = $this->getDbTable()->search($id,$condition);
+		
+		$entries = array();
+		
+		$i = 0;
+		
+		foreach($resultSets as $entry)
+		{
+			$entries[$i]['mtrId'] = $entry->mtrId;
+			$entries[$i]['name'] = $entry->name;
+			$i++;
+			}
+		
+		return $entries;
+		}
+		
+	public function findMaterialName($id)
+	{
+		$arrayNames = $this->getDbTable()->findMaterialName($id);
+		
+		$name = $arrayNames[0]->name;
+		
+		return $name;
+	}
+	
+	public function findMaterialTypes()
+	{
+		$mtrtypes = new General_Models_MtrtypeMapper();
+		$arrayMtrtypes = $mtrtypes->fetchAll();
+		$mtrxrefs = new General_Models_MtrxrefMapper();
+		$arrayMtrxrefs = $mtrxrefs->fetchAll();
+		$entries = array();
+		
+		foreach($arrayMtrtypes as $mtrtype)
+		{
+			foreach($arrayMtrxrefs as $mtrxref)
+			{
+				if($mtrxref->getParent() == 0)
+				{
+					$typeId = $mtrxref->getChild();
+					if($mtrtype->getTypeId() == $typeId)
+					{
+						$name = "|- ".$mtrtype->getName();
+						$entries[] = array('typeId'=>$mtrtype->getTypeId(),'name'=>$name);
+						foreach($arrayMtrtypes as $mtype)
+						{
+							foreach($arrayMtrxrefs as $mref)
+							{
+								if($mref->getParent() == $typeId )
+								{
+									$tId = $mref->getChild();
+									if($mtype->getTypeId() == $tId)
+									{
+										$name = "|　|-- ".$mtype->getName();
+										$entries[] = array('typeId'=>$mtype->getTypeId(),'name'=>$name);
+										foreach($arrayMtrtypes as $mt)
+										{
+											foreach($arrayMtrxrefs as $mf)
+											{
+												if($mf->getParent() == $tId)
+												{
+													$td = $mf->getChild();
+													if($mt->getTypeId() == $td)
+													{
+														$name = "|　| 　|--- ".$mt->getName();
+														$entries[] = array('typeId'=>$mt->getTypeId(),'name'=>$name);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $entries;	
+	}
+	
+	public function populateMtrtypeDd($form)
+	{
+		$mtrtypes = new General_Models_MtrtypeMapper();
+		$arrayMtrtypes = $mtrtypes->fetchAll();
+		$mtrxrefs = new General_Models_MtrxrefMapper();
+		$arrayMtrxrefs = $mtrxrefs->fetchAll();
+		
+		foreach($arrayMtrtypes as $mtrtype)
+		{
+			foreach($arrayMtrxrefs as $mtrxref)
+			{
+				if($mtrxref->getParent() == 0)
+				{
+					$typeId = $mtrxref->getChild();
+					if($mtrtype->getTypeId() == $typeId)
+					{
+						$name = "|- ".$mtrtype->getName();
+						$form->getElement('typeId')->addMultiOption($mtrtype->getTypeId(),$name);//一级
+						foreach($arrayMtrtypes as $mtype)
+						{
+							foreach($arrayMtrxrefs as $mref)
+							{
+								if($mref->getParent() == $typeId )
+								{
+									$tId = $mref->getChild();
+									if($mtype->getTypeId() == $tId)
+									{
+										$name = "|　|-- ".$mtype->getName();
+										$form->getElement('typeId')->addMultiOption($mtype->getTypeId(),$name);//二级
+										foreach($arrayMtrtypes as $mt)
+										{
+											foreach($arrayMtrxrefs as $mf)
+											{
+												if($mf->getParent() == $tId)
+												{
+													$td = $mf->getChild();
+													if($mt->getTypeId() == $td)
+													{
+														$name = "|　| 　|--- ".$mt->getName();
+														$form->getElement('typeId')->addMultiOption($mt->getTypeId(),$name);//三级
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}	
+	}
 }
 ?>

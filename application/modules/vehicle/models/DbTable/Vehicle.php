@@ -1,21 +1,19 @@
 <?php
-  //creation date 09-04-2011
-  //creating by lincoy
-  //completion date 10-04-2011
+//updated on 14th May By Rob
 
-  
+
 class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 {
-    protected $_name = 've_vehicles';
+	protected $_name = 've_vehicles';
 
 	public function fetchAllVeId($key,$condition)
 	{
 		$select = $this->select()
-			           ->setIntegrityCheck(false)	
-			           ->from(array('ve_vehicles'),array('veId'));
+						->setIntegrityCheck(false)	
+						->from(array('ve_vehicles'),array('veId'));
 		if($condition == "plateNo")
 		{
-			           $select->where("plateNo like ?","%$key%");
+			$select->where("plateNo like ?","%$key%");
 		}
 		return $this->fetchAll($select);
 	}
@@ -23,17 +21,17 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 	public function fetchAllPalteNo()
 	{
 		$select = $this->select()
-			           ->setIntegrityCheck(false)	
-			           ->from(array('ve_vehicles'),array('plateNo','veId'));
+					->setIntegrityCheck(false)	
+					->from(array('ve_vehicles'),array('plateNo','veId','name'));
 		return $this->fetchAll($select);
 	}
 	
 	public function findPlateNo($id)
 	{		
 		$select = $this->select()
-			           ->setIntegrityCheck(false)	
-			           ->from(array('ve_vehicles'),array('plateNo'))
-			           ->where('veId = ?',$id);
+						->setIntegrityCheck(false)	
+						->from(array('ve_vehicles'),array('plateNo'))
+						->where('veId = ?',$id);
 		return $this->fetchAll($select);
 		
 		}
@@ -41,9 +39,9 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 	public function findContactId($id)
 	{
 		$select = $this->select()
-			           ->setIntegrityCheck(false)	
-			           ->from(array('ve_vehicles'),array('contactId'))
-			           ->where('veId = ?',$id);
+						->setIntegrityCheck(false)	
+						->from(array('ve_vehicles'),array('contactId'))
+						->where('veId = ?',$id);
 		return $this->fetchAll($select);
 		}
 
@@ -61,12 +59,11 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 				}
 				elseif($condition == 'contactName')
 				{
-                   $select->setIntegrityCheck(false)
+					$select->setIntegrityCheck(false)
 						->from(array('e'=> 'em_contacts'),array('name'))
 						->join(array('v'=>'ve_vehicles'),'e.contactId = v.contactId')
-						->where('e.name like ?','%'.$key.'%');				
-				   }
-					
+						->where('e.name like ?','%'.$key.'%');
+					}
 		$resultSet = $this->fetchAll($select);
 		
 		return $resultSet;

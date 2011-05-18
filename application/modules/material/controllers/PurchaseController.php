@@ -67,7 +67,7 @@ class Material_PurchaseController extends Zend_Controller_Action
 				$purchase = new Material_Models_Purchase();
 				$purchase->setProjectId($addForm->getValue('projectId'));
 				$purchase->setVenId($addForm->getValue('venId'));
-				$purchase->set	BuyerId($addForm->getValue('buyerId'));
+				$purchase->setBuyerId($addForm->getValue('buyerId'));
 				$purchase->setPurDate($addForm->getValue('purDate'));
 				$purchase->setDestId($addForm->getValue('destId'));
 				$purchase->setFreight($addForm->getValue('freight'));
@@ -118,7 +118,7 @@ public function editAction()
 				$purchase->setPurId($purId);
 				$purchase->setProjectId($editForm->getValue('projectId'));
 				$purchase->setVenId($editForm->getValue('venId'));
-				$purchase->set	BuyerId($editForm->getValue('buyerId'));
+				$purchase->setBuyerId($editForm->getValue('buyerId'));
 				$purchase->setPurDate($editForm->getValue('purDate'));
 				$purchase->setDestId($editForm->getValue('destId'));
 				$purchase->setFreight($editForm->getValue('freight'));

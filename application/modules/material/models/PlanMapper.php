@@ -36,38 +36,76 @@ class Material_Models_PlanMapper
             'dueDate' => $plan->getDueDate(),
             'applicId' => $plan->getApplicId(),
 			'applicDate' => $plan->getApplicDate(),
-			'approvId' => $plan->getApprovId(),
 			'approvDate' => $plan->getApprovDate(),	
 			'total' =>$plan->getTotal(),
             'remark' => $plan->getRemark()
         );
         if (null === ($id = $plan->getPlanId())) {
             unset($data['planId']);
-            $this->getDbTable()->insert($data);
+            return $this->getDbTable()->insert($data);
         } else {
-            $this->getDbTable()->update($data, array('planId = ?' => $plan->getPlanId()));
+            return $this->getDbTable()->update($data, array('planId = ?' => $plan->getPlanId()));
         }
+    }
+    
+    public function find($id,Material_Models_Plan $plan)
+    {
+    	$result = $this->getDbTable()->find($id);
+
+        if (0 == count($result)) {
+
+            return;
+
+        }
+
+        $row = $result->current();
+
+        $plan  ->setPlanId($row->planId)
+        		  ->setPlanType($row->planType)
+                  ->setProjectId($row->projectId)
+                  ->setDueDate($row->dueDate)
+                  ->setApplicId($row->applicId)
+                  ->setApplicDate($row->applicDate)
+                  ->setApprovId($row->approvId)
+     			  ->setApprovDate($row->approvDate)
+                  ->setTotal($row->total)
+                  ->setRemark($row->remark)
+                  ->setCTime($row->cTime);
+        $projects = new Project_Models_ProjectMapper();
+		$projectName = $projects->findProjectName($plan->getProjectId());
+        $plan->setProjectName($projectName);
+
+		$contacts = new Employee_Models_ContactMapper();
+		$applicName = $contacts->findContactName($plan->getApplicId());
+		if($plan->getApprovId()!= null)
+		{
+			$approvName = $contacts->findContactName($plan->getApprovId());
+			$plan->setApprovName($approvName);
+			}
+        $plan->setApplicName($applicName);
     }
      
     public function findArrayPlan($id) 
     {
 		$id = (int)$id;
 		$plan = $this->getDbTable()->fetchRow('planId = '.$id);
-		$projectId = $plan->getProjectId();
-		$applicId = $plan->getApplicId();
-		$approvId = $plan->getApprovId();
 		$entry = $plan->toArray();
+		$projectId = $entry['projectId'];
+		$applicId = $entry['applicId'];
+		$approvId = $entry['approvId'];
 
 		$projects = new Project_Models_ProjectMapper();
 		$projectName = $projects->findProjectName($projectId);
-        $entry[] = $projectName;
+        $entry['projectName'] = $projectName;
 
 		$contacts = new Employee_Models_ContactMapper();
 		$applicName = $contacts->findContactName($applicId);
-		$approvName = $contacts->findContactName($approvId);
-		
-		$entry[] = $applicName;
-		$entry[] = $approName;
+		if($approvId != null)
+		{
+			$approvName = $contacts->findContactName($approvId);
+			$entry['approvName'] = $approvName;
+		}
+		$entry['applicName'] = $applicName;
 		
 		return $entry;
 	}
@@ -84,31 +122,25 @@ class Material_Models_PlanMapper
     			}
    		
    		$entries = array();
-   		
+   		$i = 291;
    		foreach($resultSet as $row){
+   			$i = $i + 87;
    			$entry = new Material_Models_Plan();
    			$entry->setPlanId($row->planId)
 				->setPlanType($row->planType)
 				->setProjectId($row->projectId)
 				->setDueDate($row->dueDate)
 				->setApplicId($row->applicId)
-				->setApplicDate($row->applicDate)
-				->setApprovId($row->approvId)
-				->setApprovDate($row->approvDate)
-				->setTotal($row->total)
-   				->setRemark($row->remark)
-				->setCTime($row->cTime);
+				->setTotal($i);//
 
 			$projects = new Project_Models_ProjectMapper();
 			$projectName = $projects->findProjectName($entry->getProjectId());
             $entry->setProjectName($projectName);
-   				
+
 			$contacts = new Employee_Models_ContactMapper();
 		    $applicName = $contacts->findContactName($entry->getApplicId());
 			$entry->setApplicName($applicName);
-		    $approvName = $contacts->findContactName($entry->getApprovId());
-			$entry->setApprovName($approvName);
-   			 				
+			
    			$entries[] = $entry;
    			}
     	return $entries;
@@ -117,6 +149,16 @@ class Material_Models_PlanMapper
 	public function delete($planId)
 	{
 		$this->getDbTable()->delete("planId = ".(int)$planId);
-		}
+	}
+	
+	public function populatePlanDd($form)
+	{
+		$projects = new Project_Models_ProjectMapper();
+		$arrayProjects = $projects->fetchAllNames();
+		foreach($arrayProjects as $project)
+		{
+			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
+			}
+	}
 }
 ?>

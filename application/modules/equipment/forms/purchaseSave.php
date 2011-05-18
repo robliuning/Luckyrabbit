@@ -1,9 +1,7 @@
 <?php
 /*
-机械设备采购单表表单
-author:mingtingling
-date:2011-4-16
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Equipment_Forms_PurchaseSave extends Zend_Form
 {

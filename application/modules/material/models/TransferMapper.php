@@ -37,10 +37,10 @@ class Material_Models_TransferMapper
 			'destId' => $transfer->getDestId(),
             'applicId' => $transfer->getApplicId(),
 			'applicDate' => $transfer->getApplicDate(),
-			'planType' => $transfer->getPlanType()
+			'planType' => $transfer->getPlanType(),
 			'approvId' => $transfer->getApprovId(),
-			'approvDate' => $transfer->getApprovDate(),	
-			'total' =>$transfer->getTotal(),
+			'approvDate' => $transfer->getApprovDate(),
+			'total' => $transfer->getTotal(),
             'remark' => $transfer->getRemark()
         );
         if (null === ($id = $transfer->getTrsId())) {

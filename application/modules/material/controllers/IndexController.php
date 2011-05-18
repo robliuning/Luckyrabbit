@@ -16,15 +16,14 @@ class Material_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$errorMsg = null;
 		$materials = new Material_Models_MaterialMapper();
 		$errorMsg = null;
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			$arrayMaterials = array();
-			$key = $formData['key'];
-			if($key != null)
+			$key = trim($formData['key']);
+			if($key!=null)
 			{
 				$condition = $formData['condition'];
 				$arrayMaterials = $materials->fetchAllJoin($key,$condition);
@@ -44,18 +43,19 @@ class Material_IndexController extends Zend_Controller_Action
 		}
 		$this->view->arrayMaterials = $arrayMaterials;
 		$this->view->errorMsg = $errorMsg;
+		$this->view->module = "material";
+		$this->view->controller = "index";
+		$this->view->modelName = "材料信息"; 
     }
     
     public function addAction()
     {
-		$addForm = new Material_Forms_MaterialSave();
+		$addForm = new Material_Forms_materialSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
-		$addForm->approvId->setAttrib('class','hide');
-		$addForm->approvDate->setAttrib('class','hide');
 		$errorMsg = null;
 		$materials = new Material_Models_MaterialMapper();
-		$result = null;
+		$materials->populateMtrtypeDd($addForm);
 
 		if($this->getRequest()->isPost())
 		{
@@ -91,16 +91,16 @@ class Material_IndexController extends Zend_Controller_Action
 		}
 		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
-		$this->view->result = $result;
 	}
     
     public function editAction()
     {
     	$editForm = new Material_Forms_MaterialSave();
-			$editForm->submit->setLabel('保存修改');
+		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 
-			$materials = new Material_Models_MaterialMapper();
+		$materials = new Material_Models_MaterialMapper();
+		$materials->populateMtrtypeDd($editForm);
     	$mtrId = $this->_getParam('id',0);
     	$result = null;
 
@@ -117,8 +117,7 @@ class Material_IndexController extends Zend_Controller_Action
 				$material->setUnit($editForm->getValue('unit'));
 				$material->setRemark($editForm->getValue('remark'));
 				$result = $materials->save($material);
-
-				//$this->_redirect('/material');
+				$this->_redirect('/material');
 			}
 			else
     			{
@@ -166,5 +165,52 @@ class Material_IndexController extends Zend_Controller_Action
     		$this->_redirect('/material');
     	}
     }
+    
+    public function ajaxdisplayAction()
+    {
+    	$this->_helper->layout()->disableLayout();
+   		$id = $this->_getParam('id',0);
+    	if($id >0)
+    	{
+   		  	$materials = new Material_Models_MaterialMapper();
+   		  	$material = new Material_Models_Material();
+   			$materials->find($id,$material);
+   			$this->view->material = $material;
+   			}
+    		else
+    		{
+   				$this->_redirect('/material');
+   				}
+    }
+    
+    public function ajaxpopulatemiddAction()
+    {
+   		$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$id = $this->_getParam('id',0);
+    	if($id >0)
+    	{ 			
+    		$materials = new Material_Models_MaterialMapper();
+ 			
+ 			$arrayMaterials = $materials->findMaterialNames($id);
+ 			$json = Zend_Json::encode($arrayMaterials);
+ 			echo $json;  		
+   			}
+    		else
+    		{
+   				$this->_redirect('/material');
+   				}
+    }
+    
+    public function ajaxpopulatemtddAction()
+    {
+   		$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);		
+    	$materials = new Material_Models_MaterialMapper();
+ 			
+ 		$arrayMaterials = $materials->findMaterialTypes();
+ 		$json = Zend_Json::encode($arrayMaterials);
+ 		echo $json;  		
+    } 
 }
 ?>

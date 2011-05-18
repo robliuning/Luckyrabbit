@@ -1,8 +1,8 @@
 <?php
-	/*
-	Created by Meimo
-	Date 2011.4.14
-	*/
+/*
+	Richard Song
+	2011.4.27
+*/
 class Material_Forms_MaterialSave extends Zend_Form
 {
 	public function init()
@@ -18,11 +18,10 @@ class Material_Forms_MaterialSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'typeName', array(
+			'select', 'typeId', array(
 			'label' => '类型:',
 			'required' => true,
-			'filters'=>array('StringTrim'),
-			'class'=>'tbMedium tbText'
+			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
@@ -37,14 +36,6 @@ class Material_Forms_MaterialSave extends Zend_Form
 			'text', 'unit', array(
 			'label' => '单位:',
 			'required' => true,
-			'filters'=>array('StringTrim'),
-			'class'=>'tbMedium tbText'
-			)
-		);
-		$this->addElement(
-			'text', 'total', array(
-			'label' => '总金额:',
-			'required' => false,
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
@@ -71,13 +62,6 @@ class Material_Forms_MaterialSave extends Zend_Form
 			'ignore'=>true,
 			'class'=>'btConfirm radius',
 			'name'=>'submit'
-			)
-		);
-
-		$this->addElement(
-			'text','typeId',array(
-			'required' => true,
-			'class'=>'hide'
 			)
 		);
 

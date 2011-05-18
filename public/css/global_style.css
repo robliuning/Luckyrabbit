@@ -195,7 +195,7 @@ a:link, a:visited
 	}
 #panel_uinfo li.c_user
 {
-	color: #13a000;
+	color: #808084;
 	font-style: oblique;
 	}
 #nav_main
@@ -271,6 +271,14 @@ a:link, a:visited
 	height: 3px;
 	}
 /*tool kit*/
+.floatl
+{
+	float: left;
+	}
+.floatr
+{
+	float: right;
+	}
 .fontLarge
 {
 	font-size: x-large;
@@ -374,6 +382,21 @@ h3
 	border: 1px solid #e1e1e1;
 	padding: 1px;
 	color: #333333;
+	overflow: auto;
+	}
+.overall_content_left
+{
+	float: left;
+	padding: 2px;
+	width: 34%;
+	border: 1px solid #e1e1e1;
+	}
+.overall_content_right
+{
+	border: 1px solid #e1e1e1;
+	padding: 2px;
+	float: right;
+	width: 64%;
 	}
 .overall_content table
 {
@@ -419,6 +442,9 @@ h3
 	padding: 10px;
 	}
 /* controls*/
+.tbDot
+{
+	}
 input
 {
 	margin: 0;
@@ -433,14 +459,15 @@ label
 	}
 .tbText
 {
-	background: none repeat scroll 0 0 #FFFCEE;
+	background-color: #fffcee;
+	/*background:url("/images/bg_ta.gif") repeat scroll 0 0 #FFFCEE;*/
 	border-radius:4px 4px 4px 4px;
 	border: 1px solid #EEEEEE;
 	box-shadow:1px 1px 1px #BBBBBB inset, 0 0 1px #CCCCCC inset;
 	font-size: 14px;
-	line-height: 20px;
+	line-height: 21px;
 	margin: 0;
-	padding: 5px 8px;
+	padding: 5px 5px;
 	color: #777777;
 	outline:medium none;
 	}
@@ -496,7 +523,7 @@ label
 	padding: 5px 30px 5px 30px;
 	border: 1px solid #D7D7D7;
 	display: block;
-	background-color: #13a000;
+	background-color: #808084;
 	color: white;
 	margin: 0 9px 0 0;
 	line-height: 30px;
@@ -504,9 +531,27 @@ label
 	text-align: center;
 	float: right;
 	}
+.btConfirmVar
+{
+	padding: 3px 15px 3px 15px;
+	border: 1px solid #D7D7D7;
+	display: block;
+	background-color: #808084;
+	color: white;
+	margin: 0 9px 0 0;
+	line-height: 18px;
+	font-size: 13px;
+	text-align: center;
+	width: 100px;
+	}
+.btConfirmVar:hover
+{
+	background-color: #CCCCD0;
+	cursor: pointer;
+	}
 .btConfirm:hover
 {
-	background-color: #15af00;
+	background-color: #CCCCD0;
 	cursor: pointer;
 	}
 .btDelete
@@ -514,7 +559,7 @@ label
 	padding: 5px 30px 5px 30px;
 	border: 1px solid #D7D7D7;
 	display: block;
-	background-color: #13a000;
+	background-color: #808084;
 	color: white;
 	margin: 0 9px 0 0;
 	line-height: 30px;
@@ -549,4 +594,8 @@ label
 {
 	width:500px;
 	margin: 10px;
+	}
+.errors
+{
+	color: red;
 	}

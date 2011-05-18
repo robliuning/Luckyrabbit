@@ -8,6 +8,18 @@ class Equipment_Models_DbTable_Equipment extends Zend_Db_Table_Abstract
 {
     protected $_name = 'eq_equipments';
 
+	public function findEquipmentName($id)
+	{    	
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from('eq_equipments',array('name'))
+			->where('eqpId = ?',$id);
+			
+   		$entries = $this->fetchAll($select);
+   		
+   		return $entries;
+		}
+	
 	public function findArrayEquipment($id)
 	{
 		$select = $this->select()
@@ -40,6 +52,10 @@ class Equipment_Models_DbTable_Equipment extends Zend_Db_Table_Abstract
 				{
 					$select->where('spec like ?','%'.$key.'%');
 					}
+					elseif($condition == 'typeId')
+					{
+						$select->where('typeId = ?',$key);
+						}
 					
 		$resultSet = $this->fetchAll($select);
 		

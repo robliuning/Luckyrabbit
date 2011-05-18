@@ -1,0 +1,165 @@
+ <?php 
+ 	$this->headTitle('- 车辆管理 - 车辆信息');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>车辆管理 - 车辆信息 - 详情</h1>
+		<div class="p_msg">
+			<h3></h3>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/vehicle"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu">车辆信息</p>
+				<?php $vehicle = $this->vehicle ?>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>					
+					</colgroup>
+					<tr>
+						<td>车牌号：</td>
+						<td><?php echo $vehicle->getPlateNo()?></td>
+					</tr>
+					<tr>
+						<td>车辆名称：</td>
+						<td><?php echo $vehicle->getName() ?></td>
+					</tr>
+					<tr>
+						<td>车辆颜色： </td>
+						<td><?php echo $vehicle->getColor()?></td>
+					</tr>
+					<tr>
+						<td>行驶证号：</td>
+						<td><?php echo $vehicle->getLicense()?></td>
+					</tr>
+					<tr>
+						<td>车辆负责人：</td>
+						<td><?php echo $vehicle->getContactName()?></td>
+					</tr>
+					<tr>
+						<td>司机：</td>
+						<td><?php echo $vehicle->getPilotName()?></td>
+					</tr>
+					<tr>
+						<td>主要使用人员: </td>
+						<td><?php echo $vehicle->getUser()?></td>
+					</tr>
+					<tr>
+						<td>标准油耗：</td>
+						<td><?php echo $vehicle->getFuelCons()?></td>
+					</tr>
+					<tr>
+						<td>购买时间：</td>
+						<td><?php echo $vehicle->getPDate()?></td>
+					</tr>
+					<tr>
+						<td>购买品牌：</td>
+						<td><?php echo $vehicle->getBrand()?></td>
+					</tr>
+					<tr>
+						<td>购买金额：</td>
+						<td><?php echo $vehicle->getPrice()?></td>
+					</tr>
+					<tr>
+						<td>备注：</td>
+						<td><?php echo $vehicle->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>上次修改时间：</td>
+						<td><?php echo $vehicle->getCTime()?></td>
+					</tr>
+				</table>
+				<p class="subMenu">车辆行驶记录</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>年份</th>
+						<th>月份</th>
+						<th>当月行驶公里数</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayDrirecords as $drirecord):?>
+					<?php $recordId = $this->escape($drirecord->getRecordId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><?php echo $this->escape($drirecord->getRYear()) ?></td>
+						<td><?php echo $this->escape($drirecord->getRMonth()) ?></td>
+						<td><?php echo $this->escape($drirecord->getMile()) ?></td>
+						<td><a href="/vehicle/drirecord/edit/id/<?php echo $recordId?>/from/1">修改</a></td>
+						<td><a class="lightbox" href="/vehicle/drirecord/ajaxdisplay/id/<?php echo $recordId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<p class="subMenu">车辆维修记录</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>维修日期</th>
+						<th>责任人</th>
+						<th>事故地点</th>
+						<th>维修金额</th>
+						<th>是否出险</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayRepairs as $repair):?>
+					<?php $repId = $this->escape($repair->getRepId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><?php echo $this->escape($repair->getRDate()) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($repair->getContactId()) ?>"><?php echo $this->escape($repair->getContactName()) ?></a></td>
+						<td><?php echo $this->escape($repair->getSpot()) ?></td>
+						<td>
+						<?php echo $this->escape($repair->getAmount())?>
+						</td>
+						<td>
+						<?php echo $this->escape($repair->getInsFlag())?>
+						</td>
+						<td><a href="/vehicle/repair/edit/id/<?php echo $repId?>/from/1">修改</a></td>
+						<td><a class="lightbox" href="/vehicle/repair/ajaxdisplay/id/<?php echo $repId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

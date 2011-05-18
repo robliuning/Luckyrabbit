@@ -1,9 +1,7 @@
 <?php
 /*
-机械设备信息表单
-author:mingtingling
-date:2011-4-16
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Equipment_Forms_EquipmentSave extends Zend_Form
 {
@@ -13,36 +11,22 @@ class Equipment_Forms_EquipmentSave extends Zend_Form
 
 		$this->addElement(
 			'text','name',array(
-			'label'=>'机械设备名称:',
+			'label'=>'鏈烘璁惧鍚嶇О:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			'required'=>true
 			)
 		);
 		$this->addElement(
-			'select','typeId1',array(  /*可能需要改*/
-			'label'=>'一级类型:',
+			'select','typeId',array(  
+			'label'=>'绫诲瀷:',
 			'class'=>'tbMedium tbText',
 			'required'=>true
 			)
-		);
-		$this->addElement(
-			'select','typeId2',array(  /*可能需要改*/
-			'label'=>'二级类型:',
-			'class'=>'tbMedium tbText',
-			'required'=>true
-			)
-		);
-		$this->addElement(
-			'select','typeId3',array(  /*可能需要改*/
-			'label'=>'三级类型:',
-			'class'=>'tbMedium tbText',
-			'required'=>true
-			)
-		);		
+		);	
 		$this->addElement(
 			'text','spec',array(
-			'label'=>'规格型号:',
+			'label'=>'瑙勬牸鍨嬪彿:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			'required'=>false
@@ -50,7 +34,7 @@ class Equipment_Forms_EquipmentSave extends Zend_Form
 		);
 		$this->addElement(
 			'text','unit',array(
-			'label'=>'单位:',
+			'label'=>'鍗曚綅:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText',
 			'required'=>true
@@ -58,7 +42,7 @@ class Equipment_Forms_EquipmentSave extends Zend_Form
 		);
 		$this->addElement(
 			'textarea','remark',array(
-			'label'=>'备注:',
+			'label'=>'澶囨敞:',
 			'class'=>'tbLarge tbText',
 			'required'=>false,
 			'cols' => 60,

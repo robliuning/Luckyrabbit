@@ -1,9 +1,7 @@
 <?php
 /*
-»úÐµÉè±¸ÐèÇó¼Æ»®±íµ¥
-author:mingtingling
-date:2011-4-16
-vision:2.0
+	Richard Song
+	2011.4.27
 */
 class Equipment_Forms_PlanSave extends Zend_Form
 {
@@ -13,15 +11,15 @@ class Equipment_Forms_PlanSave extends Zend_Form
 
 		$this->addElement(
 			'select','planType',array(
-			'label'=>'¼Æ»®ÀàÐÍ:',
+			'label'=>'è®¡åˆ’ç±»åž‹:',
 			'class'=>'tbMedium tbText',
 			'required'=>true,
-			'multiOptions'=> array('0'=>'ÈÕ¼Æ»®','1'=>'ÖÜ¼Æ»®','2'=>'ÔÂ¼Æ»®','3'=>'Äê¼Æ»®','4'=>'ÏîÄ¿¼Æ»®','5'=>'ÆäËû')
+			'multiOptions'=> array('æ—¥è®¡åˆ’'=>'æ—¥è®¡åˆ’','å‘¨è®¡åˆ’'=>'å‘¨è®¡åˆ’','æœˆè®¡åˆ’'=>'æœˆè®¡åˆ’','å¹´è®¡åˆ’'=>'å¹´è®¡åˆ’','é¡¹ç›®è®¡åˆ’'=>'é¡¹ç›®è®¡åˆ’','å…¶ä»–'=>'å…¶ä»–')
 			)
 		);
 		$this->addElement(
 			'text','dueDate',array(
-			'label'=>'¼Æ»®µ½Î»ÈÕÆÚ:',
+			'label'=>'è®¡åˆ’åˆ°ä½æ—¥æœŸ:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker',
 			'required'=>true
@@ -29,22 +27,22 @@ class Equipment_Forms_PlanSave extends Zend_Form
 		);
 		$this->addElement(
 			'select','projectId',array(
-			'label'=>'¹¤³ÌÃû³Æ:',
+			'label'=>'å·¥ç¨‹åç§°:',
 			'class'=>'tbLarge tbText',
 			'required'=>true
 			)
 		);
 		$this->addElement(
 			'text','applicName',array(
-			'label'=>'Éê±¨ÈË:',
+			'label'=>'ç”³æŠ¥äºº:',
 			'filters'=>array('StringTrim'),
-			'class'=>'tbMedium tbText ac_contactId',
+			'class'=>'tbMedium tbText ac_contactName',
 			'required'=>true
 			)
 		);
 		$this->addElement(
 			'text','applicDate',array(
-			'label'=>'Éê±¨Ê±¼ä:',
+			'label'=>'ç”³æŠ¥æ—¶é—´:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker',
 			'required'=>false
@@ -52,31 +50,26 @@ class Equipment_Forms_PlanSave extends Zend_Form
 		);
 		$this->addElement(
 			'text','approvName',array(
-			'label'=>'ÉóÅúÈË:',
+			'label'=>'å®¡æ‰¹äºº:',
+			'disabled' => 'disabled',
 			'filters'=>array('StringTrim'),
-			'class'=>'tbMedium tbText ac_contactName',
-			'required'=>true
+			'class'=>'tbMedium tbText',
+			'value'=>'æŽˆæƒå®¡æ‰¹äºº',
+			'required'=>false
 			)
 		);
 		$this->addElement(
 			'text','approvDate',array(
-			'label'=>'ÉóÅúÊ±¼ä:',
+			'label'=>'å®¡æ‰¹æ—¶é—´:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker',
 			'required'=>false
 			)
 		);
-		$this->addElement(
-			'text','total',array(
-			'label'=>'×Ü½ð¶î:',
-			'filters'=>array('StringTrim'),
-			'class'=>'tbMedium tbText',
-			'required'=>false
-			)
-		);
+
 		$this->addElement(
 			'textarea','remark',array(
-			'label'=>'±¸×¢:',
+			'label'=>'å¤‡æ³¨:',
 			'class'=>'tbText',
 			'required'=>false,
 			'cols' => 60,
@@ -101,15 +94,13 @@ class Equipment_Forms_PlanSave extends Zend_Form
 
 		$this->addElement(
 			'text','applicId',array(
-			'required' => true,
 			'class'=>'hide ac_contactId'
 			)
 		);
 
 		$this->addElement(
 			'text','approvId',array(
-			'required' => true,
-			'class'=>'hide ac_contactId'
+			'class'=>'hide'
 			)
 		);
 		$this->setElementDecorators(

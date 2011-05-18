@@ -49,7 +49,7 @@ class Employee_Models_CppMapper
         }
     }
     
-    public function find($cppId, Employee_Model_Cpp $cpp)
+    public function find($cppId, Employee_Models_Cpp $cpp)
 
     {
 
@@ -63,13 +63,26 @@ class Employee_Models_CppMapper
 
         $row = $result->current();
 
-        $cpp->setCId($row->cId)
+        $cpp->setCppId($row->cppId)
 				  ->setContactId($row->contactId)
 				  ->setPostId($row->postId)
 				  ->setProjectId($row->projectId)
                   ->setPostType($row->postType)
                   ->setPostCardId($row->postCardId)
-                  ->setCertId($row->certId);
+                  ->setCertId($row->certId)
+                  ->setCTime($row->cTime);
+		$contactId = $cpp->getContactId();    		
+    	$projectId = $cpp->getProjectId();
+    	$postId = $cpp->getPostId();
+    
+    	$contacts = new Employee_Models_ContactMapper();
+    	$cpp->setContactName($contacts->findContactName($contactId));
+   	    
+   		$projects = new Project_Models_ProjectMapper();
+   		$cpp->setProjectName($projects->findProjectName($projectId));
+   	    	    
+   		$posts = new General_Models_PostMapper();
+   		$cpp->setPostName($posts->findPostName($postId));
     }
     
     public function delete($id) //check

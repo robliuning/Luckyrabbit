@@ -1,5 +1,5 @@
 $(document).ready(function()
-{  
+{
 	$('.lightbox').nm();
 	
 		$('#cb_sa').click(function(){
@@ -23,24 +23,22 @@ $(document).ready(function()
 			});
 			}
 	});
-	
-	$("#reset").click(function() {   
-  		$("form").each(function() {   
-   		this.reset();  
-		})
-	});
-	
+
 	$('.stSearch').change(function() {
-  		if($('.stSearch').val() == 'date')
-  		{
-  			$('.tbSearch').addClass('datepicker');
-  			$( ".datepicker" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
-  			}
+		if($('.stSearch').val() == 'date')
+		{
+			$('.tbSearch').addClass('datepicker');
+			$( ".datepicker" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
+			}
+			else
+			{
+				$('.tbSearch').datepicker('destroy');
+				}
 		});
 	
 	$( ".datepicker" ).datepicker({changeMonth: true,changeYear: true, yearRange: "-70:+10"},$.datepicker.regional[ "zh-CN" ],("option", "dateFormat","YY-MM-DD"));
 	
-		//Enable the auto-completing of contacts
+	//Enable the auto-completing of contacts
 	$( ".ac_contactName" ).autocomplete({
 			source: function( request, response ) {
 				$.ajax({
@@ -66,6 +64,40 @@ $(document).ready(function()
 			minLength:1,
 			select: function( event, ui ) {
 				$(".ac_contactId").val(ui.item.name);
+			},
+			open: function() {
+				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+		});
+	//Enable the auto-completing of pilots
+	$( ".ac_pilotName" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "/employee/index/autocomplete/key/"+ $(".ac_pilotName").val(),
+					//dataType: "jsonp",
+					data: {
+						featureClass: "P",
+						style: "full",
+						maxRows: 12,
+					},
+					success: function(data) {
+							var jsonObj = eval('('+data+')');
+							response( $.map(jsonObj, function(item) {
+							return {
+								label: item.name +"　性别: "+item.gender+"　职称:　"+item.titleName,
+								value: item.name,
+								name: item.contactId
+							}
+						}));
+					}
+				});
+			},
+			minLength:1,
+			select: function( event, ui ) {
+				$(".ac_pilot").val(ui.item.name);
 			},
 			open: function() {
 				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
@@ -115,6 +147,7 @@ $(document).ready(function()
 	var modelName = $('#modelName').val();
 	var module = $('#module').val();
 	var controller = $('#controller').val();
+	var ajax_id = $("#ajax_id").text();
 		
 	$('#btDel').hover(function(){
 		var count = $('[name="cb"]:checked').length;
@@ -148,7 +181,14 @@ $(document).ready(function()
 					});	
 			});		
 			alert("删除完成");
-			window.location = "/"+module+"/"+controller;	
+			if(ajax_id == null)
+			{
+				window.location = "/"+module+"/"+controller;	
+				}
+				else
+				{
+					window.location = "/"+module+"/"+controller+"/index/id/"+ajax_id;	
+					}
 		});
 	});
 });

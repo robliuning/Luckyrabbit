@@ -97,7 +97,7 @@ class Employee_EmployeeController extends Zend_Controller_Action
 			  		{
 			  			$option = 'add';
 						$employees->save($employee,$option);
-						$errorMsg = General_Models_Text::$text_save_sucess;
+						$errorMsg = General_Models_Text::$text_save_success;
 			  			}
 			  			else
 			  			{

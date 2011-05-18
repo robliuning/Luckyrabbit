@@ -1,8 +1,8 @@
 <?php
-/* Created by Tony
-   Date of creation 
-   Completion date
- */
+/*
+	Richard Song
+	2011.4.27
+*/
 class Employee_Forms_ContactSave extends Zend_Form
 {
 

@@ -1,105 +1,149 @@
 <?php
-	/*
-	Author: rob
-	Date 2011.4.9
-	*/
+//updated on 14th May By Rob
+
 class Vehicle_Forms_VerecordSave extends Zend_Form
 {
-    public function init()
-    {
-    	$this->setMethod('post');
-			
+	public function init()
+	{
+		$this->setMethod('post');
+
 		$this->addElement(
 			'select', 'veId', array(
-			'label' => '车牌号: ',
-			'required' => true,
-			'class'=>'tbMedium tbText'
+			'label' => '车牌号:',
+			'class'=>'tbLarge tbText pfocus'
 			)
 		);
-     	$this->addElement(
+		$this->addElement(
+			'select', 'prjFlag', array(
+			'label' => '是否为项目用车:',
+			'class'=>'tbMedium tbText',
+			'multiOptions'=> array('0'=>'非项目用车', '1'=>'项目用车')
+			)
+		);
+		$this->addElement(
+			'select', 'projectId', array(
+			'label' => '项目名:',
+			'class' => 'tbMedium tbText',
+			'disabled' => 'disabled',
+			'multiOptions'=> array('0'=>'非项目用车')
+			)
+		);
+		$this->addElement(
 			'text', 'startDate', array(
-			'label' => '开始使用日期: ',
-			'required' => true,
-			'class'=>'tbLarge tbText datepicker'
+			'label' => '*出车日期:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
-	  	$this->addElement(
+		$this->addElement(
 			'text', 'endDate', array(
-			'label' => '结束使用日期: ',
-			'required' => true,
-			'class'=>'tbLarge tbText datepicker'
+			'label' => '*还车日期:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbMedium tbText datepicker'
 			)
 		);
-    	$this->addElement(
-			'text', 'mile', array(
-			'label' => '本次使用公里数: ',
-			'required' => true,
+		$this->addElement(
+			'textarea', 'route', array(
+			'label' => '行程: ',
+			'class'=>'tbText',
+			'cols' => 60,
+			'rows' => 4
+			)
+		);
+		$this->addElement(
+			'text', 'mileBf', array(
+			'label' => '*出车公里数:',
+			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
-			'text', 'pilot', array(
-			'label' => '驾驶员: ',
-			'required' => true,
+			'text', 'mileAf', array(
+			'label' => '*还车公里数:',
+			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText'
-			)
-		);
-		$this->addElement(
-			'text', 'otherUser', array(
-			'label' => '其他使用人: ',
-			'required' => false,
-			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
 			'textarea', 'purpose', array(
-			'label' => '使用目的: ',
-			'required' => false,
+			'label' => '事由: ',
 			'class'=>'tbText',
-			'cols'=>60,
-			'rows'=>5
+			'cols' => 60,
+			'rows' => 4
+			)
+		);
+		$this->addElement(
+			'text', 'contactName', array(
+			'label' => '*用(派)车人:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbLarge tbText ac_contactName'
+			)
+		);
+		$this->addElement(
+			'text', 'user', array(
+			'label' => '随车人员:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbLarge tbText'
+			)
+		);
+		$this->addElement(
+			'text', 'mileRef', array(
+			'label' => '加油登记公里数:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbMedium tbText'
+			)
+		);
+		$this->addElement(
+			'text', 'amount', array(
+			'label' => '加油金额:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注: ',
-			'required' => false,
 			'class'=>'tbText',
-			'cols'=>60,
-			'rows'=>5
+			'cols' => 60,
+			'rows' => 4
 			)
 		);
-    	$this->addElement(
-    		'submit','submit',array(
-    		'ignore'=>true,
-    		'class'=>'btConfirm radius',
-    		'name'=>'submit'
-    		)
-    	);
-    	
-    	$this->addElement(
-    		'submit','submit2',array(
-    		'ignore'=>true,
-    		'class'=>'btConfirm radius',
-    		'name'=>'submit'
-    		)
-    	);
-    	
-    	$this->setElementDecorators(array(
-            'ViewHelper',
-            'Errors',
-            array(array('data'=>'HtmlTag'),
-            array('tag'=>'td','class'=>'element')),
-            array('Label',array('tag'=>'td')),
-            array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
-
-   		 ));
-
-		$this->setDecorators(array(
-            'FormElements',
-            array('HtmlTag',array('tag'=>'table')),
-            'Form'
-        ));
-    }
+		$this->addElement(
+			'submit','submit',array(
+			'ignore'=>true,
+			'class'=>'btConfirm radius',
+			'name'=>'submit'
+			)
+		);
+		$this->addElement(
+			'submit','submit2',array(
+			'ignore'=>true,
+			'class'=>'btConfirm radius',
+			'name'=>'submit'
+			)
+		);
+		$this->addElement(
+			'text', 'contactId', array(
+			'class'=>'hide ac_contactId',
+			)
+		);
+		$this->setElementDecorators(
+			array(
+				'ViewHelper',
+				'Errors',
+				array(array('data'=>'HtmlTag'),
+				array('tag'=>'td','class'=>'element')),
+				array('Label',array('tag'=>'td')),
+				array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
+			)
+		);
+		$this->setDecorators(
+			array(
+				'FormElements',
+				array('HtmlTag',array('tag'=>'table')),
+				'Form'
+			)
+		);
+	}
 }
 ?>

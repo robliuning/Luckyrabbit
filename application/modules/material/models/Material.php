@@ -9,6 +9,7 @@ class Material_Models_Material
 	protected $_spec;
 	protected $_unit;
 	protected $_remark;
+	protected $_cTime;
     
     public function __construct(array $options = null)
     {
@@ -83,7 +84,7 @@ class Material_Models_Material
 	
     public function setTypeName($typeName)
     {
-        $this->_typeName= (string) $typeName;
+        $this->_typeName = (string) $typeName;
         return $this;
     } 
 
@@ -94,7 +95,7 @@ class Material_Models_Material
     
     public function setSpec($spec)
     {
-        $this->_spec= (string) $spec;
+        $this->_spec = (string) $spec;
         return $this;
     } 
 
@@ -114,15 +115,26 @@ class Material_Models_Material
         return $this->_unit;
     }
  
-     public function setRemark($remark)
+    public function setRemark($remark)
     {
-        $this->_remark= $remark;
+        $this->_remark = $remark;
         return $this;
     }
 
     public function getRemark()
     {
         return $this->_remark;
+	}
+	
+	public function setCTime($cTime)
+    {
+        $this->_cTime = $cTime;
+        return $this;
+    }
+
+    public function getCTime()
+    {
+        return $this->_cTime;
 	}
 }
 ?>

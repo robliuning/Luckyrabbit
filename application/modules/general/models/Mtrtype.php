@@ -46,7 +46,7 @@ class General_Models_Mtrtype
         return $this;
     }
 
-	public function setTypeId($typetId)
+	public function setTypeId($typeId)
     {
         $this->_typeId = (int)$typeId;
         return $this;

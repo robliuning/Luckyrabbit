@@ -4,6 +4,18 @@ class Material_Models_DbTable_Material extends Zend_Db_Table_Abstract
 {
     protected $_name = 'mm_materials';
 
+	public function findMaterialName($id)
+	{    	
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from('mm_materials',array('name'))
+			->where('mtrId = ?',$id);
+			
+   		$entries = $this->fetchAll($select);
+   		
+   		return $entries;
+		}
+
 	public function findArrayMaterial($id)
 	{
 		$select = $this->select()
@@ -29,13 +41,17 @@ class Material_Models_DbTable_Material extends Zend_Db_Table_Abstract
 			{
 				$select->setIntegrityCheck(false)
 						->from(array('m'=> 'mm_materials'))
-						->join(array('t'=>'ge_mtrtypes'),'m.typeId = t.typeId')
-						->where('t.Name like ?','%'.$key.'%');
+						->join(array('t'=>'ge_mtrtypes'),'m.typeId = t.typeId',array())
+						->where('t.name like ?','%'.$key.'%');
 				}
 				elseif($condition == 'spec')
 				{
 					$select->where('spec like ?','%'.$key.'%');
 					}
+					elseif($condition == 'typeId')
+					{
+						$select->where('typeId = ?',$key);
+						}
 					
 		$resultSet = $this->fetchAll($select);
 		

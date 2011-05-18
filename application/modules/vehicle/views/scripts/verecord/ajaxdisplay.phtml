@@ -1,8 +1,91 @@
 <div id="ajaxMsgBox">
-	<div id="ajaxMsgBox_vehicle">
-		<?php
-			$verecord = $this->verecord;
-			echo $verecord->getStartDate()."<br/>".$verecord->getPlateNo();		
-		?>
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+			<div class="button_group">
+				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+		<p><?php
+			$verecord = $this->verecord;?>
+			 </p>
+			 <div class="overall_content">
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>车牌号：</td>
+						<td><?php echo $verecord->getPlateNo()?></td>
+					</tr>
+					<tr>
+						<td>是否为项目用车：</td>
+						<td><?php echo $verecord->getPrjFlag()?></td>
+					</tr>
+					<tr>
+						<td>项目名：</td>
+						<td><?php echo $verecord->getProjectName()?></td>
+					</tr>
+					<tr>
+						<td>出车日期：</td>
+						<td><?php echo $verecord->getStartDate() ?></td>
+					</tr>
+					<tr>
+						<td>还车日期： </td>
+						<td><?php echo $verecord->getEndDate()?></td>
+					</tr>
+					<tr>
+						<td>使用天数： </td>
+						<td><?php echo $verecord->getPeriod()?></td>
+					</tr>
+					<tr>
+						<td>行程： </td>
+						<td><?php echo $verecord->getRoute()?></td>
+					</tr>
+					<tr>
+						<td>出车公里数：</td>
+						<td><?php echo $verecord->getMileBf()?></td>
+					</tr>
+					<tr>
+						<td>还车公里数: </td>
+						<td><?php echo $verecord->getMileAf()?></td>
+					</tr>
+					<tr>
+						<td>行程公里数: </td>
+						<td><?php echo $verecord->getMile()?></td>
+					</tr>
+					<tr>
+						<td>事由：</td>
+						<td><?php echo $verecord->getPurpose()?></td>
+					</tr>
+					<tr>
+						<td>用(派)车人: </td>
+						<td><?php echo $verecord->getContactName()?></td>
+					</tr>
+					<tr>
+						<td>随车人员: </td>
+						<td><?php echo $verecord->getUser()?></td>
+					</tr>
+					<tr>
+						<td>加油登记公里数：</td>
+						<td><?php echo $verecord->getMileRef()?></td>
+					</tr>
+					<tr>
+						<td>加油金额：</td>
+						<td><?php echo $verecord->getAmount()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $verecord->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>上次修改时间: </td>
+						<td><?php echo $verecord->getCTime()?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>
 	</div>
 </div>

@@ -1,7 +1,6 @@
 <?php
-//creation date 09-04-2011
-  //creating by lincoy
-  //completion date 09-04-2011
+//update on 14th May by Rob
+
 
 class Vehicle_Models_Vehicle
 {
@@ -16,43 +15,48 @@ class Vehicle_Models_Vehicle
 	protected $_remark;
 	protected $_cTime;
 	protected $_contactName; //数据库ve_vehicles中没有，在这里用于存储来自em_contacts中的Name
-
+	protected $_pilot; // 二阶段新增变量
+	protected $_pDate;
+	protected $_brand;
+	protected $_price;
+	protected $_pilotName;
+	
 	public function __construct(array $options = null)
-    {
-        if (is_array($options)) {
-            $this->setOptions($options);
-        }
-    }
+	{
+		if (is_array($options)) {
+			$this->setOptions($options);
+		}
+	}
 
-    public function __set($name, $value)
-    {
-        $method = 'set' . $name;
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid vehicle property');
-        }
-        $this->$method($value);
-    }
+	public function __set($name, $value)
+	{
+		$method = 'set' . $name;
+		if (('mapper' == $name) || !method_exists($this, $method)) {
+			throw new Exception('Invalid vehicle property');
+		}
+		$this->$method($value);
+	}
 
-    public function __get($name)
-    {
-        $method = 'get' . $name;
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid vehicle property');
-        }
-        return $this->$method();
-    } 
+	public function __get($name)
+	{
+		$method = 'get' . $name;
+		if (('mapper' == $name) || !method_exists($this, $method)) {
+			throw new Exception('Invalid vehicle property');
+		}
+		return $this->$method();
+	} 
 
-    public function setOptions(array $options)
-    {
-        $methods = get_class_methods($this);
-        foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
-                $this->$method($value);
-            }
-        }
-        return $this;
-    }
+	public function setOptions(array $options)
+	{
+		$methods = get_class_methods($this);
+		foreach ($options as $key => $value) {
+			$method = 'set' . ucfirst($key);
+			if (in_array($method, $methods)) {
+				$this->$method($value);
+			}
+		}
+		return $this;
+	}
 
 	public function setVeId($veId)
 	{
@@ -177,7 +181,7 @@ class Vehicle_Models_Vehicle
 
 	public function getCTime()
 	{
-		return $this->_cTIme;
+		return $this->_cTime;
 	}
 
 	/************************************************/
@@ -191,6 +195,71 @@ class Vehicle_Models_Vehicle
 	public function getContactName()
 	{
 		return $this->_contactName;
+	}
+
+	/************************************************/
+
+	public function setPilot($pilot)
+	{
+		$this->_pilot = (int)$pilot;
+		return $this;
+	}
+
+	public function getPilot()
+	{
+		return $this->_pilot;
+	}
+
+	/************************************************/
+
+	public function setPDate($pDate)
+	{
+		$this->_pDate = $pDate;
+		return $this;
+	}
+
+	public function getPDate()
+	{
+		return $this->_pDate;
+	}
+
+	/************************************************/
+
+	public function setBrand($brand)
+	{
+		$this->_brand = $brand;
+		return $this;
+	}
+
+	public function getBrand()
+	{
+		return $this->_brand;
+	}
+
+	/************************************************/
+
+	public function   setPrice($price)
+	{
+		$this->_price = $price;
+		return $this;
+	}
+
+	public function getPrice()
+	{
+		return $this->_price;
+	}
+
+	/************************************************/
+
+	public function setPilotName($pilotName)
+	{
+		$this->_pilotName = $pilotName;
+		return $this;
+	}
+
+	public function getPilotName()
+	{
+		return $this->_pilotName;
 	}
 }
 ?>
