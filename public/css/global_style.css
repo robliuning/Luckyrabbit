@@ -67,7 +67,7 @@ a:link, a:visited
 	}
 #p_header
 {
-	background: url("/../images/bg-sprite.png") repeat-x scroll 0 0 #08080A;
+	background: url("/images/bg-sprite.png") repeat-x scroll 0 0 #08080A;
 	height: 103px;
 	min-width: 1200px;
 	position: relative;
@@ -76,7 +76,7 @@ a:link, a:visited
 {
 	background: url("/images/logo.png") no-repeat scroll 0 0 transparent;
 	display: block;
-	height: 35px;
+	height: 40px;
 	width: 330px;
 	position: absolute;
 	left: 38px;
@@ -88,7 +88,7 @@ a:link, a:visited
 	}
 #p_stage,#p_stage_sidebar
 {
-	background:transparent url("../images/bggray.png") repeat scroll 0 0;
+	background:transparent url("/images/bggray.png") repeat scroll 0 0;
 	min-height: 800px;
 	width: 100%;
 	overflow: hidden;
@@ -96,7 +96,7 @@ a:link, a:visited
 	}
 #p_stage_sidebar
 {
-	background: url("../images/bg-side-bar.png") repeat-y scroll 0 0 #FFFFFF;
+	background: url("/images/bg-side-bar.png") repeat-y scroll 0 0 #FFFFFF;
 	}
 #p_sidebar
 {
@@ -109,7 +109,7 @@ a:link, a:visited
 	}
 .p_sidebar_general li a
 {
-	background-image: url("../images/sprites-side-nav.png");
+	background-image: url("/images/sprites-side-nav.png");
 	background-repeat: no-repeat;
 	border-bottom: 1px solid #CCCCCC;
 	border-top: 1px solid #FFFFFF;
@@ -122,7 +122,7 @@ a:link, a:visited
 	overflow: hidden;
 	padding: 0 0 0 15px;
 	text-indent: 19px;
-	background-position: 10px -45px;	
+	background-position: 10px 6px;	
 	}
 .p_sidebar_general li a:hover
 {
@@ -178,9 +178,14 @@ a:link, a:visited
 	padding: 0 10px;
 	color: white;
 	}
+#panel_Msg
+{
+	padding: 0 0 0 169px;
+	width: 128px;
+	}
 #panel_uinfo
 {
-	background: url("../images/bg-sprite.png") repeat-x scroll 0 -195px #303031;
+	background: url("/images/bg-sprite.png") repeat-x scroll 0 -195px #303031;
 	height: 30px;
 	padding: 0 9px;
 	position: absolute;
@@ -237,7 +242,7 @@ a:link, a:visited
 	padding: 0 10px;
 	-moz-border-radius-topleft:3px;
 	-moz-border-radius-topright:3px;
-	background: url("../images/bg-sprite.png") repeat-x scroll 0 -114px #070709;
+	background: url("/images/bg-sprite.png") repeat-x scroll 0 -114px #070709;
 	border-top: 1px solid #333333;
 	color: #bcbcbc;
 	}
@@ -259,7 +264,7 @@ a:link, a:visited
 	}
 #nav_sub a
 {
-	background: url("../images/bg-sprite.png") repeat-x scroll 0 -256px #7E081B;
+	background: url("/images/bg-sprite.png") repeat-x scroll 0 -256px #7E081B;
 	border-top: 1px solid #333333;
 	color: #bcbcbc;
 	}
@@ -326,7 +331,7 @@ h2
 {
 	-moz-border-radius-topleft:3px;
 	-moz-border-radius-topright:3px;
-	background:url("../images/bg-header.png") repeat scroll 100% -27px transparent;
+	background:url("/images/bg-header.png") repeat scroll 100% -27px transparent;
 	border-bottom: 1px solid #d7d7d7;
 	color: #000000;
 	font-size: 12px;
@@ -388,6 +393,13 @@ h3
 	padding: 1px;
 	color: #333333;
 	overflow: auto;
+	}
+.overall_content_half
+{
+	min-height: 250px;
+	padding: 2px;
+	width: 49%;
+	border: 1px solid #e1e1e1;
 	}
 .overall_content_left
 {
@@ -510,18 +522,35 @@ label
 {
 	width: 100px;
 	}
+.tbMediumst
+{
+	width: 150px;
+	}
 .tbShort
 {
 	width:50px;
 	}
 .btSearch
 {
-	background: url("../images/icons/functions/search2.png") no-repeat scroll 0 0;
+	background: url("/images/icons/functions/search2.png") no-repeat scroll 0 0;
 	cursor: pointer;
 	height: 34px;
 	line-height: 34px;
 	width: 34px;
 	border: none;
+	}
+.wg_bt
+{
+	padding: 3px 5px 3px 5px;
+	border: 1px solid #D7D7D7;
+	display: block;
+	background-color: #808084;
+	color: white;
+	margin: 5px 0 0 5px;
+	line-height: 14px;
+	font-size: 12px;
+	text-align: center;
+	width: 50px;
 	}
 .btConfirm
 {
@@ -603,4 +632,63 @@ label
 .errors
 {
 	color: red;
+	}
+.allignCenter
+{
+	text-align: center;
+	}
+.underline
+{
+	text-decoration: underline;
+	}
+.warning
+{
+	font-size: xx-large;
+	}
+.ui-datepicker
+{
+	width: auto;
+	}
+.sb_wg
+{
+	padding: 3px 0 3px 20px;
+	font-size: small;
+	font-weight: bold;
+	background-color: #d7d7d7;
+	border-bottom:1px solid #CCCCCC;
+	border-top: 1px solid #FFFFFF;
+	color: black;
+	margin: 0 0 5px 0;
+	}
+.wg_wrapper
+{
+	padding:0 0 10px 0;
+	}
+#quicklink
+{
+	margin: 0 10px;
+	padding:2px 5px;
+	font-size: small;
+	}
+.home_icon
+{
+	float: left;
+	margin: 10px;
+	border: 1px solid #d7d7d7;
+	}
+.home_icon:hover
+{
+	background-color: #ededed;
+	}
+.home_icon a
+{
+	text-align: center;
+	}
+.exampleDiv
+{
+	padding: 5px 10px;
+	}
+.wg_form
+{
+	padding: 5px;
 	}

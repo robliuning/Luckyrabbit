@@ -10,7 +10,6 @@ class Admin_Form_Login extends Zend_Form
 		$this->addElement(
 			'text','username',array(
 			'label'=>'用户名: ',
-			'required'=>true,
 			'filters'=>array('StringTrim','StringToLower'),
 			'class'=>'tbLarge tbText pfocus'
 			)
@@ -19,7 +18,6 @@ class Admin_Form_Login extends Zend_Form
 		$this->addElement(
 			'password', 'password', array(
 			'label' => '登陆密码: ',
-			'required' => true,
 			'filters' => array('StringTrim'),
 			'class'=>'tbLarge tbText'
 			)

@@ -55,7 +55,7 @@ class Worker_BonusController extends Zend_Controller_Action
 
 	public function addAction()
 	{
-		$addForm = new Worker_Forms_bonusSave();
+		$addForm = new Worker_Forms_BonusSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 
@@ -105,7 +105,7 @@ class Worker_BonusController extends Zend_Controller_Action
 	public function editAction()
 	{
 		//
-		$editForm = new Worker_Forms_bonusSave();
+		$editForm = new Worker_Forms_BonusSave();
 		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 

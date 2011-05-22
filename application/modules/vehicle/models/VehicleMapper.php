@@ -214,7 +214,7 @@ class Vehicle_Models_VehicleMapper
 	public function dataValidator($formData,$formType)
 	{
 		$errorMsg = null;
-		$trigger = 1;
+		$trigger = 0;
 		if($formType == 0 )
 		{
 			$validatorPlateNo = new Zend_Validate_Db_RecordExists(

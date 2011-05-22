@@ -10,7 +10,10 @@ class admin_LoginController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
+		$errorMsg = null;
 		$loginForm = new Admin_Form_Login();
+		$logins = new Admin_Models_LoginMapper();
+		$loginForm = $logins->formValidator($loginForm);
 		$request = $this->getRequest();
 		if ($request->isPost()) {
 			if ($loginForm->isValid($request->getPost())) {
@@ -18,8 +21,13 @@ class admin_LoginController extends Zend_Controller_Action
 					// We're authenticated! Redirect to the home page
 					$this->_redirect('/');
 				}
+				else
+				{
+					$errorMsg = General_Models_Text::$text_loginFailed;
+					}
 			}
 		}
+		$this->view->errorMsg = $errorMsg;
 		$this->view->loginForm = $loginForm;
 	}
 

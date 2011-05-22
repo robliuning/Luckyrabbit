@@ -1,5 +1,66 @@
 $(document).ready(function()
 {
+	//wiget
+	$('.tb_sc').click(function(){
+		$(this).val('');
+	});
+	
+	
+	$('#wg_sc').hover(function(){
+		var id = $('.ac_contactId').val();
+		if(id == '')
+		{
+			$(this).attr('href','/system/emsg');
+			}
+			else
+			{
+				$(this).attr('href','/employee/index/ajaxdisplay/id/'+id);
+				$(this).addClass('lightbox');	
+				$('.lightbox').nm();
+		}
+	});
+	
+	$('#wg_sc').click(function(){
+		$('.ac_contactName').val('..请输入名字');
+		$('.ac_contactId').val('');
+		$(this).attr('href','/system/emsg');
+	});
+	
+	$('#datepickerInline').datepicker({
+			showButtonPanel: true
+		});
+	
+	$('#quicklink').change(function(){
+		if($(this).val() != 'select')
+		{
+			if($(this).val() == 'contact')
+			{
+				document.location.href='/employee/index/add';
+				}
+				else if($(this).val() == 'project')
+				{
+					document.location.href='/project/index/add';
+					}
+			}
+	});
+	//form element login
+	if($('#p_id').text() == 'admin')
+	{
+		$('#nav_main').addClass('hide');
+		$('#nav_sub').addClass('hide');
+		}
+
+	if($('#e_id').text() != 'emsg')
+	{
+		if($.browser.msie)
+		{
+			document.location.href='/system/emsg/browser';
+			}
+		}
+	$('.errorMsg').fadeOut(20000, function() {
+	// Animation complete.
+	});
+
 	$('.lightbox').nm();
 	
 		$('#cb_sa').click(function(){
@@ -53,7 +114,7 @@ $(document).ready(function()
 							var jsonObj = eval('('+data+')');
 							response( $.map(jsonObj, function(item) {
 							return {
-								label: item.name +"　性别: "+item.gender+"　职称:　"+item.titleName,
+								label: item.name +"　性别: "+item.gender,
 								value: item.name,
 								name: item.contactId
 							}
@@ -87,7 +148,7 @@ $(document).ready(function()
 							var jsonObj = eval('('+data+')');
 							response( $.map(jsonObj, function(item) {
 							return {
-								label: item.name +"　性别: "+item.gender+"　职称:　"+item.titleName,
+								label: item.name +"　性别: "+item.gender,
 								value: item.name,
 								name: item.contactId
 							}

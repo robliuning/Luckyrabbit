@@ -50,22 +50,7 @@ class Project_LogController extends Zend_Controller_Action
 				//Missing validation: check if log exists
 				$logs->save($projectlog);
 				$errorMsg = General_Models_Text::$text_save_success;
-				$addForm->getElement('projectId')->setValue('');				
-				$addForm->getElement('logDate')->setValue('');
-				$addForm->getElement('weather')->setValue('');
-				$addForm->getElement('tempHi')->setValue('');
-				$addForm->getElement('tempLo')->setValue('');
-				$addForm->getElement('progress')->setValue('');
-				$addForm->getElement('qualityPbl')->setValue('');
-				$addForm->getElement('safetyPbl')->setValue('');
-				$addForm->getElement('otherPbl')->setValue('');
-				$addForm->getElement('relatedFile')->setValue('');
-				$addForm->getElement('mMinutes')->setValue('');
-				$addForm->getElement('changeSig')->setValue('');
-				$addForm->getElement('material')->setValue('');
-				$addForm->getElement('machine')->setValue('');
-				$addForm->getElement('utility')->setValue('');
-				$addForm->getElement('remark')->setValue('');
+				$addForm->reset();
 				}
 		   else
 			{

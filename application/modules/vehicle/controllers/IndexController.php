@@ -47,6 +47,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
 		{
 			$arrayVehicles = $vehicles->fetchAllJoin();
 		}
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayVehicles = $arrayVehicles;
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "vehicle";
@@ -154,6 +155,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
 					$vehicle->setPDate($editForm->getValue('pDate'));
 					$vehicle->setRemark($editForm->getValue('remark'));
 					$vehicles->save($vehicle); 
+					$this->_helper->flashMessenger->addMessage('对'.$plateNo.'的修改成功。');
 					$this->_redirect('/vehicle');
 					}
 					else

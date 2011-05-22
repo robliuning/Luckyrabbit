@@ -10,6 +10,9 @@
 		public static $text_notInt = "数字不正确";
 		public static $text_notDate = "日期不正确";
 		public static $text_notEmpty = "本项不能为空";
+		//admin login
+		public static $text_loginFailed = "登录失败，用户名或登录密码错误。";
+
 		//vehicle drirecord
 		public static $text_vehicle_pilot_notFound = "错误: 请检查司机输入是否正确。";
 		public static $text_vehicle_contact_notFound = "错误: 请检查车辆负责人输入是否正确。";

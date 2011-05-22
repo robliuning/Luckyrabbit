@@ -1,26 +1,131 @@
-	<link href="css/p_mainpage.css" rel="stylesheet" type="text/css" />
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">
-		<div id="p_sidebar" class="p_sidebar_general"></div>
+		<div id="p_sidebar" class="p_sidebar_general">
+		<?php echo $this->checkContact() ?>
+		<?php echo $this->showQuicklink()?>
+		<?php echo $this->showCalendar() ?>
+		</div>
 		<div id="p_content">
 		<h1>首页</h1>
 		<div class="p_msg">
 			<h3>欢迎登录工程管理系统 Demo</h3>
 		</div>
+		<div class="overall_content">
+		<p class="subMenu">模块总览</p>
 		<div id="p_home_icons">
 			<div class="home_icon"><a href="/project"><h2>工程管理</h2><img src="images/icons/1.png"/></a></div>
 			<div class="home_icon"><a href="/employee"><h2>员工及岗位管理</h2><img src="images/icons/3.png"/></a></div>
 			<div class="home_icon"><a href="/contract"><h2>分包管理</h2><img src="images/icons/4.png"/></a></div>
 			<div class="home_icon"><a href="/worker"><h2>工人管理</h2><img src="images/icons/2.png"/></a></div>
-			<div class="home_icon"><a href="/finance"><h2>固定资产管理</h2><img src="images/icons/5.png"/></a></div>
+			<div class="home_icon"><a href="/system/emsg/construction"><h2>固定资产管理</h2><img src="images/icons/5.png"/></a></div>
 			<div class="home_icon"><a href="/equipment"><h2>机械设备管理</h2><img src="images/icons/6.png"/></a></div>
 			<div class="home_icon"><a href="/material"><h2>材料管理</h2><img src="images/icons/7.png"/></a></div>
 			<div class="home_icon"><a href="/vehicle"><h2>车辆管理</h2><img src="images/icons/12.png"/></a></div>
-			<div class="home_icon"><a href="/finance"><h2>财务管理</h2><img src="images/icons/8.png"/></a></div>
-			<div class="home_icon"><a href="/finance"><h2>工程文件管理</h2><img src="images/icons/10.png"/></a></div>
-			<div class="home_icon"><a href="/finance"><h2>统计报表</h2><img src="images/icons/11.png"/></a></div>
+			<div class="home_icon"><a href="/system/emsg/construction"><h2>财务管理</h2><img src="images/icons/8.png"/></a></div>
+			<div class="home_icon"><a href="/system/emsg/construction"><h2>工程文件管理</h2><img src="images/icons/10.png"/></a></div>
+			<!-- <div class="home_icon"><a href="/"><h2>统计报表</h2><img src="images/icons/11.png"/></a></div> -->
 			</div><!-- end of home icons  -->
+		</div><!-- end of overall content -->
+		<div class="overall_content">
+			<div class="overall_content_half floatl">
+				<p class="subMenu">项目总览</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:20%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>项目名</th>
+						<th>结构类型</th>
+						<th>工程总负责人</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayProjects as $project):?>
+					<?php $projectId = $this->escape($project->getProjectId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a href="/project/index/display/id/<?php echo $projectId ?>"><?php echo $this->escape($project->getName()) ?></a></td>
+						<td><?php echo $this->escape($project->getStructype()) ?></td>
+						<td>
+						<?php
+							$cId = $this->escape($project->getCId());
+							$display = "";
+							if($cId == 0)
+							{
+								$display = $this->escape($project->getCName());
+								}
+								else
+								{
+									$display = "<a class='lightbox' href='/employee/index/ajaxdisplay/id/".$cId."')>".$this->escape($project->getCName())."</a>";
+									}
+								echo $display;
+						?>
+						</td>
+						<td><a href="/project/index/edit/id/<?php echo $projectId ?>">修改</a></td>
+						<td><a href="/project/index/display/id/<?php echo $projectId ?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+			</div>
+				<div class="overall_content_half floatr">
+				<p class="subMenu">车辆总览</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:20%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>车牌号</th>
+						<th>行驶证号</th>
+						<th>车辆负责人</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayVehicles as $vehicle):?>
+					<?php $veId = $this->escape($vehicle->getVeId());?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="/vehicle/index/ajaxdisplay/id/<?php echo $veId ?>"><?php echo $this->escape($vehicle->getPlateNo()) ?></a></td>
+						<td>
+						<?php echo $this->escape($vehicle->getLicense())?>
+						</td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($vehicle->getContactId()) ?>"><?php echo $this->escape($vehicle->getContactName()) ?></a></td>
+						<td><a href="/vehicle/index/edit/id/<?php echo $veId ?>">修改</a></td>
+						<td><a href="/vehicle/index/display/id/<?php echo $veId ?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+			</div>
+			<div class="overall_content_half floatl">
+				<p class="subMenu">站内消息</p>
+				<div class="exampleDiv">暂无</div>
+			</div>
+				<div class="overall_content_half floatr">
+				<p class="subMenu">待审批计划</p>
+				<div class="exampleDiv">暂无</div>
+			</div>
+		</div><!-- end of overall content -->
 		</div>
+	<div id="msgBox"></div>
 	</div><!-- end of page stage -->
 	</div><!-- end of contentWrapper -->

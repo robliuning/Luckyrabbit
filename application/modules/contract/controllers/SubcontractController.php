@@ -56,7 +56,7 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 
 	public function addAction()
 	{
-		$addForm = new Contract_Forms_subcontractSave();
+		$addForm = new Contract_Forms_SubcontractSave();
 		$addForm->submit->setLabel("保存新建");
 		$addForm->submit2->setAttrib('class','hide');
 		$errorMsg = null;
@@ -105,7 +105,7 @@ class Contract_SubcontractController  extends Zend_Controller_Action
 	
 	public function editAction()
 	{
-	  	$editForm = new Contract_Forms_subcontractSave();
+	  	$editForm = new Contract_Forms_SubcontractSave();
 	  	$editForm->submit->setLabel("保存修改");
 	  	$editForm->submit2->setAttrib('class','hide');
 	  	

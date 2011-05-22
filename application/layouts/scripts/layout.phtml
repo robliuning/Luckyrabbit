@@ -22,7 +22,7 @@
 </head>
 <body>
 <div id="p_header">
-	<a id="p_logo" href="index.php">管理平台首页</a>
+	<a id="p_logo" href="/">管理平台首页</a>
 	<ul id="panel_uinfo" class="radius">
 		<li class="c_user"><?php echo $this->loggedInAs(); ?> </li>
 	</ul>
@@ -33,16 +33,16 @@
 		<li><a href="/employee">员工及岗位管理</a></li>
 		<li><a href="/contract">分包管理</a></li>
 		<li><a href="/worker">工人管理</a></li>
-		<li><a href="/finance">固定资产管理</a></li>
+		<li><a href="/system/emsg/construction">固定资产管理</a></li>
 		<li><a href="/equipment">机械设备管理</a></li>
 		<li><a href="/material">材料管理</a></li>
 		<li><a href="/vehicle">车辆管理</a></li>
-		<li><a href="/finance">财务管理</a></li>
-		<li><a href="/finance">工程文件管理</a></li>
+		<li><a href="/system/emsg/construction">财务管理</a></li>
+		<li><a href="/system/emsg/construction">工程文件管理</a></li>
 	</ul>
 	<ul id="nav_sub" class="radius nav_general">
-		<li><a href="/system/infobox">站内通知</a></li>
-		<li><a href="/system">系统管理</a></li>
+		<li><a href="/system/emsg/construction">站内通知</a></li>
+		<li><a href="/system/emsg/construction">系统管理</a></li>
 	</ul>
 </div>
 <?php echo $this->layout()->content ?>

@@ -56,7 +56,7 @@ class Worker_ExtraController extends Zend_Controller_Action
 	public function addAction()
 	{
 		//
-		$addForm = new Worker_Forms_extraSave();
+		$addForm = new Worker_Forms_ExtraSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 
@@ -105,7 +105,7 @@ class Worker_ExtraController extends Zend_Controller_Action
 	public function editAction()
 	{
 		//
-		$editForm = new Worker_Forms_extraSave();
+		$editForm = new Worker_Forms_ExtraSave();
 		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 

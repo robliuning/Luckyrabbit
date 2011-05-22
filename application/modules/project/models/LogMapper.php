@@ -125,7 +125,7 @@ class Project_Models_LogMapper
    		$logs = array();
    		
    		foreach($resultSet as $row){
-   			$log = new Project_Models_log();
+   			$log = new Project_Models_Log();
         	$log ->setPLogId($row->pLogId)
                    ->setLogDate($row->logDate);
             $logs[] = $log;

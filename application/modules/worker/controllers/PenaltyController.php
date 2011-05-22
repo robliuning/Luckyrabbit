@@ -56,7 +56,7 @@ class Worker_PenaltyController extends Zend_Controller_Action
 	public function addAction()
 	{
 		//
-		$addForm = new Worker_Forms_penaltySave();
+		$addForm = new Worker_Forms_PenaltySave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 
@@ -107,7 +107,7 @@ class Worker_PenaltyController extends Zend_Controller_Action
 	public function editAction()
 	{
 		//
-		$editForm = new Worker_Forms_penaltySave();
+		$editForm = new Worker_Forms_PenaltySave();
 		$editForm->submit->setLabel('保存修改');
     	$editForm->submit2->setAttrib('class','hide');
 
