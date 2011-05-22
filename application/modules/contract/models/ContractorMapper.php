@@ -26,7 +26,7 @@ class Contract_Models_ContractorMapper
     public function getDbTable()
     {
         if (null === $this->_dbTable) {
-            $this->setDbTable('Contract_Models_Dbtable_Contractor');
+            $this->setDbTable('Contract_Models_DbTable_Contractor');
         }
         return $this->_dbTable;
     }

@@ -24,7 +24,7 @@ class General_Models_QualiftypeMapper
     public function getDbtable()
     {
         if (null === $this->_dbtable) {
-            $this->setDbtable('General_Models_Dbtable_Qualiftype');
+            $this->setDbtable('General_Models_DbTable_Qualiftype');
         }
         return $this->_dbtable;
     }

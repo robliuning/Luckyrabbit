@@ -12,9 +12,7 @@
 #cap_body
 {
 	background: url("../images/login/cap-bg.png") repeat-y scroll 0 0 transparent;
-	padding-left: 40px;
-	padding-right: 40px;
-	height: 230px;
+	padding:20px 40px;
 	}
 #cap_bottom
 {

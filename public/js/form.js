@@ -8,7 +8,12 @@ $(document).ready(function()
 		$('.pfocus').focus();
 		})
 	});
-	
+//form element login
+	if($('#p_id').text() == 'admin')
+	{
+		$('#nav_main').addClass('hide');
+		$('#nav_sub').addClass('hide');
+		}
 //form element vehicle repair
 	if($('#insFlag').val() == '1')
 	{

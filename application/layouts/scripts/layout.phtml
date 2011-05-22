@@ -24,10 +24,7 @@
 <div id="p_header">
 	<a id="p_logo" href="index.php">管理平台首页</a>
 	<ul id="panel_uinfo" class="radius">
-		<li class="c_user">管理员 您好！</li>
-		<li class="c_info"><a href="/admin/setup">个人设置</a></li>
-		<li class="c_info"><a href="/admin/help">帮助</a></li>
-		<li class="c_info"><a href="/admin/logout">退出</a></li>
+		<li class="c_user"><?php echo $this->loggedInAs(); ?> </li>
 	</ul>
 	<ul id="nav_main" class="radius nav_general">
 		<li><a href="/index">首页</a></li>

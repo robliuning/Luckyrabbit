@@ -158,6 +158,90 @@
 					</tr>
 					<?php endforeach ?>
 				</table>
+				<p class="subMenu">车辆保养记录</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>保养日期</th>
+						<th>责任人</th>
+						<th>保养公里数</th>
+						<th>保养金额</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayMtncs as $mtnc):?>
+					<?php $mtnId = $this->escape($mtnc->getMtnId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><?php echo $this->escape($mtnc->getRDate()) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mtnc->getContactId()) ?>"><?php echo $this->escape($mtnc->getContactName()) ?></a></td>
+						<td><?php echo $this->escape($mtnc->getMile()) ?></td>
+						<td>
+						<?php echo $this->escape($mtnc->getAmount())?>
+						</td>
+						<td><a href="/vehicle/mtnc/edit/id/<?php echo $mtnId?>/from/1">修改</a></td>
+						<td><a class="lightbox" href="/vehicle/mtnc/ajaxdisplay/id/<?php echo $mtnId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<p class="subMenu">车辆使用记录</p>
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>是否为项目用车</th>
+						<th>用(派)车人</th>
+						<th>出车日期</th>
+						<th>还车日期</th>
+						<th>使用天数</th>
+						<th>行程公里数</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayVerecords as $verecord):?>
+					<?php $recordId = $this->escape($verecord->getRecordId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><?php echo $this->escape($verecord->getPrjFlag()) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->getContactId()) ?>"><?php echo $this->escape($verecord->getContactName()) ?></a></td>
+						<td><?php echo $this->escape($verecord->getStartDate()) ?></td>
+						<td><?php echo $this->escape($verecord->getEndDate()) ?></td>
+						<td><?php echo $this->escape($verecord->getPeriod()) ?></td>
+						<td>
+						<?php echo $this->escape($verecord->getMile())?>
+						</td>
+						<td><a href="/vehicle/verecord/edit/id/<?php echo $recordId?>/from/1">修改</a></td>
+						<td><a class="lightbox" href="/vehicle/verecord/ajaxdisplay/id/<?php echo $recordId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->

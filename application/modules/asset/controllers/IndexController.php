@@ -58,7 +58,7 @@ class Asset_IndexController extends Zend_Controller_Action
     }
     public function addAction()
     {
-       $addForm = new Asset_Forms_PurchaseSave();
+		$addForm = new Asset_Forms_PurchaseSave();
 		   $addForm->submit->setLabel("保存并继续添加");
 		   $addForm->submit2->setLabel("保存并返回");
 		   $purchases = new Asset_Models_PurchaseMapper();

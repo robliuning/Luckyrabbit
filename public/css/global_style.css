@@ -173,6 +173,11 @@ a:link, a:visited
 	float: left;
 	}
 /*menu*/
+#userName
+{
+	padding: 0 10px;
+	color: white;
+	}
 #panel_uinfo
 {
 	background: url("../images/bg-sprite.png") repeat-x scroll 0 -195px #303031;
@@ -195,7 +200,7 @@ a:link, a:visited
 	}
 #panel_uinfo li.c_user
 {
-	color: #808084;
+	color: #bcbcbc;
 	font-style: oblique;
 	}
 #nav_main

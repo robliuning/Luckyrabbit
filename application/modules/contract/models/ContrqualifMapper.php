@@ -59,7 +59,7 @@ class Contract_Models_ContrqualifMapper
                   ->setContractorId($row->contractorId)
 			      ->setQualifTypeId($row->qualifTypeId)
 			      ->setQualifGrade($row->qualifGrade);	
-		$qualiftypes = new General_Models_QualiftypeMapper();
+		$qualiftypes = new General_Models_QualifTypeMapper();
 		$qualiftype = new General_Models_Qualiftype();
 		$qualiftypes->find($contrqualif->getQualifTypeId(),$qualiftype); 
 		$contrqualif->setQualifSerie($qualiftype->getSerie());
