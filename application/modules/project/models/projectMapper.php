@@ -1,7 +1,5 @@
 <?php
-	//creation date 01-4-2011
-	//creating by lincoy
-	//completion date 03-04-2011
+//Updated on 24th May by Rob
 
 class Project_Models_ProjectMapper
 {
@@ -25,7 +23,7 @@ class Project_Models_ProjectMapper
 		}
 		return $this->_dbTable;
 	}
-	public function save(Project_Models_Project $project) //check
+	public function save(Project_Models_Project $project)
 	{
 		$data = array(
 			'projectId' => $project->getProjectId(),
@@ -34,10 +32,16 @@ class Project_Models_ProjectMapper
 			'status' => $project->getStatus(),
 			'structype' => $project->getStructype(),
 			'level' => $project->getLevel(),
+			'period' => $project->getPeriod(),
+			'startDate' => $project->getStartDate(),
+			'contactId' => $project->getContactId(),
+			'constructor' => $project->getConstructor(),
+			'contractor' => $project->getContractor(),
+			'supervisor' => $project->getSupervisor(),
+			'designer' => $project->getDesigner(),
+			'license' => $project->getLicense(),
 			'amount' => $project->getAmount(),
-			'purpose' => $project->getPurpose(),
 			'constrArea' => $project->getConstrArea(),
-			'staffNo' => $project->getStaffNo(),
 			'remark' => $project->getRemark()
 		);
 		if (null === ($id = $project->getProjectId())) {
@@ -48,7 +52,7 @@ class Project_Models_ProjectMapper
 		}
 	}
 
-	public function find($projectId,$project) //check
+	public function find($projectId,Project_Models_Project $project)
 	{
 		$resultSet = $this->getDbTable()->find($projectId);
 
@@ -59,99 +63,48 @@ class Project_Models_ProjectMapper
 
 		$row = $resultSet->current();
 
-		$project  ->setProjectId($row->projectId)
+		$project->setProjectId($row->projectId)
 				->setName($row->name)
-			  	->setAddress($row->address)
-				  ->setStatus($row->status)
-				  ->setStructype($row->structype)
-				  ->setLevel($row->level)
-				  ->setAmount($row->amount)
-				  ->setPurpose($row->purpose)
-				  ->setConstrArea($row->constrArea)
-				  ->setStaffNo($row->staffNo)
-				  ->setRemark($row->remark)
-				  ->setCTime($row->cTime);
+				->setAddress($row->address)
+				->setStatus($row->status)
+				->setStructype($row->structype)
+				->setLevel($row->level)
+				->setPeriod($row->period)
+				->setStartDate($row->startDate)
+				->setContactId($row->contactId)
+				->setConstructor($row->constructor)
+				->setContractor($row->contractor)
+				->setSupervisor($row->supervisor)
+				->setDesigner($row->designer)
+				->setLicense($row->license)
+				->setAmount($row->amount)
+				->setConstrArea($row->constrArea)
+				->setRemark($row->remark)
+				->setCTime($row->cTime);
+		$contacts = new Employee_Models_ContactMapper();
+		$contactName = $contacts->findContactName($project->getContactId());
+		$project->setContactName($contactName);
 	}
 
-	public function fetchAllNames() //check
+	public function fetchAllNames()
 	{
 		$resultSet = $this->getDbTable()->fetchAllNames();
 		$entries = array();
 		foreach($resultSet as $row){
 			$entry = new Project_Models_Project();
 			$entry ->setProjectId($row->projectId)
-				->setName($row->name);
-
+					->setName($row->name);
 			$entries[] = $entry;
 		}
-		return $entries; 
+		return $entries;
 	}
-	
-	public function findProjectName($id) //check
+
+	public function findProjectName($id)
 	{
 		$arrayNames = $this->getDbTable()->findProjectName($id);
-		
 		$name = $arrayNames[0]->name;
-		
 		return $name;
 		}
-
-	/*public function fetchAllJoin() //check
-	{
-		//1.get particular project info from projects
-		$resultSet = $this->getDbTable()->fetchAll();	
-		$projects= array();
-		
-		foreach ($resultSet as $row) 
-		{
-			$project = new Project_Models_Project();
-			$project ->setProjectId($row->projectId)
-				->setName($row->name)
-				//->setAddress($row->address)
-				->setStatus($row->status)
-				->setStructype($row->structype)
-				/*->setLevel($row->level)
-				->setAmount($row->amount)
-				->setPurpose($row->purpose)
-				->setConstrArea($row->constrArea)*/
-				/*->setStaffNo($row->staffNo);
-				/*->setRemark($row->remark)
-				->setCTime($row->cTime);*/
-				
-			/*$projectId = $project->getProjectId();
-			$postId = 000001;
-			//2. find postId of Project Manager
-			
-			$cpps = new Employee_Models_CppMapper();
-			$arrayContacts = $cpps->findContact($projectId,$postId);
-			if(count($arrayContacts)>0)
-			{
-				$project->setCId($arrayContacts[0]->contactId);
-				$project->setCName($arrayContacts[0]->name);
-			}
-			else
-			{	
-				$project->setCName("未指定");
-				$project->setCId(0);
-				}
-			
-			//3. find max stage number
-			/*$progresses = new Project_Models_ProgressMapper();
-			$arrayProgresses = $progresses->fetchAllStages($projectId);
-			if(count($arrayProgresses)>0)
-			{
-				$project->setStage(count($arrayProgresses));
-				}
-				else
-				{
-					$project->setStage(0);
-					}
-			
-			$projects[] = $project;
-		}
-		return $projects;
-	}  */
-	
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
@@ -163,73 +116,103 @@ class Project_Models_ProjectMapper
 			{
 				$resultSet = $this->getDbTable()->search($key,$condition);
 				}
-		
+
 		$projects = array();
-		
+
 		foreach($resultSet as $row){
 			$project = new Project_Models_Project();
 			$project ->setProjectId($row->projectId)
 				->setName($row->name)
 				->setStatus($row->status)
 				->setStructype($row->structype)
-				->setStaffNo($row->staffNo);
-				
-			$projectId = $project->getProjectId();
-			$postId = 000001;
-			//2. find postId of Project Manager
-			
-			$cpps = new Employee_Models_CppMapper();
-			$arrayContacts = $cpps->findContact($projectId,$postId);
-			if(count($arrayContacts)>0)
+				->setStartDate($row->startDate)
+				->setContactId($row->contactId)
+				->setLicense($row->license);
+
+			$contacts = new Employee_Models_ContactMapper();
+			$contactName = $contacts->findContactName($project->getContactId());
+			$project->setContactName($contactName);
+
+			/*$mstprgs = new Pment_Models_MstprgMapper();
+			$arrayMstprgs = $mstprgs->fetchAllStages($projectId);
+			if(count($arrayMstprgs) > 0)
 			{
-				$project->setCId($arrayContacts[0]->contactId);
-				$project->setCName($arrayContacts[0]->name);
-			}
-			else
-			{	
-				$project->setCName("未指定");
-				$project->setCId(0);
-				}
-			
-			//3. find max stage number
-			$progresses = new Project_Models_ProgressMapper();
-			$arrayProgresses = $progresses->fetchAllStages($projectId);
-			if(count($arrayProgresses)>0)
-			{
-				$project->setStage(count($arrayProgresses));
+				$project->setStage(count($arrayMstprgs));
 				}
 				else
-				{
+				{*/
 					$project->setStage(0);
-					}
+					//}
 			
 			$projects[] = $project;
 			}
 		return $projects;
 		}
-		
-	public function findArrayProject($id) //check
+
+	public function findArrayProject($id)
 	{
 		$id = (int)$id;
 		$row = $this->getDbTable()->fetchRow('projectId = ' . $id);
 		if (!$row) {
 			throw new Exception("Could not find row $id");
 		}
-		return $row->toArray();
-		}
+		$row = $row->toArray();
+		$contacts = new Employee_Models_ContactMapper();
+		$contactName = $contacts->findContactName($row['contactId']);
+		$row['contactName'] = $contactName;
+		return $row;
+	}
+
 	public function delete($id)
 	{
 		$this->getDbTable()->delete('projectId = ' . (int)$id);
-		}
+	}
 	
-	public function populateProjectDd($form) 		//check
+			
+	public function formValidator($form,$formType)
 	{
-		$structypes = new General_Models_StructypeMapper();
-		$arrayStructypes = $structypes->fetchAll();
-		foreach($arrayStructypes as $structype)
+		$numberValidator = new Zend_Validate_Float();
+		$numberValidator->setMessage(General_Models_Text::$text_notInt);
+		$form->getElement('amount')->addValidator($numberValidator);
+		
+		$intValidator = new Zend_Validate_Int();
+		$intValidator->setMessage(General_Models_Text::$text_notInt);
+		$form->getElement('level')->addValidator($intValidator);
+		$form->getElement('period')->addValidator($intValidator);
+		$form->getElement('constrArea')->addValidator($intValidator);
+		
+		$emptyValidator = new Zend_Validate_NotEmpty();
+		$emptyValidator->setMessage(General_Models_Text::$text_notEmpty);
+		$form->getElement('name')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+		$form->getElement('contactName')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+		$form->getElement('license')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+		$form->getElement('startDate')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+
+		$dateValidator = new Zend_Validate_Date();
+		$dateValidator->setMessage(General_Models_Text::$text_notDate);
+		$form->getElement('startDate')->addValidator($dateValidator);
+		
+		return $form;
+	}
+	
+	public function dataValidator($formData,$formType)
+	{
+		$errorMsg = null;
+		$trigger = 0;
+
+		if($formData['contactId'] == null)
 		{
-			$form->getElement('structype')->addMultiOption($structype->getName(),$structype->getName());
+			$trigger = 1;
+			$errorMsg = General_Models_Text::$text_vehicle_contact_notFound."<br/>".$errorMsg;
 			}
+
+		$array['trigger'] = $trigger;
+		$array['errorMsg'] = $errorMsg;
+		return $array;
 	}
 }
 ?>

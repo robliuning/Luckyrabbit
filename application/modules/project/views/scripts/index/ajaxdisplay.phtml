@@ -1,0 +1,87 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $project = $this->project;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>工程名称：</td>
+				<td><?php echo $project->getName()?></td>
+			</tr>
+			<tr>
+				<td>地址：</td>
+				<td><?php echo $project->getAddress() ?></td>
+			</tr>
+			<tr>
+				<td>工程状态： </td>
+				<td><?php echo $project->getStatus()?></td>
+			</tr>
+			<tr>
+				<td>结构类型：</td>
+				<td><?php echo $project->getStructype()?></td>
+			</tr>
+			<tr>
+				<td>层数：</td>
+				<td><?php echo $project->getLevel()?></td>
+			</tr>
+			<tr>
+				<td>合同工期(天)：</td>
+				<td><?php echo $project->getPeriod()?></td>
+			</tr>
+			<tr>
+				<td>开工日期: </td>
+				<td><?php echo $project->getStartDate()?></td>
+			</tr>
+			<tr>
+				<td>项目经理：</td>
+				<td><?php echo $project->getContactName()?></td>
+			</tr>
+			<tr>
+				<td>建设单位：</td>
+				<td><?php echo $project->getConstructor()?></td>
+			</tr>
+			<tr>
+				<td>工程承包单位：</td>
+				<td><?php echo $project->getContractor()?></td>
+			</tr>
+			<tr>
+				<td>监理单位：</td>
+				<td><?php echo $project->getSupervisor()?></td>
+			</tr>
+			<tr>
+				<td>设计单位：</td>
+				<td><?php echo $project->getDesigner()?></td>
+			</tr>
+			<tr>
+				<td>施工许可证编号：</td>
+				<td><?php echo $project->getLicense()?></td>
+			</tr>
+			<tr>
+				<td>合同金额(元人民币)：</td>
+				<td><?php echo $project->getAmount()?></td>
+			</tr>
+			<tr>
+				<td>建筑面积(平方米)：</td>
+				<td><?php echo $project->getConstrArea()?></td>
+			</tr>
+			<tr>
+				<td>备注：</td>
+				<td><?php echo $project->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $project->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

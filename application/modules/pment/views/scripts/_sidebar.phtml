@@ -1,0 +1,31 @@
+<?php $this->placeholder('sidebar')->captureStart()?>
+<div id="p_sidebar" class="p_sidebar_general"> 
+	<ul>
+		<li><a href="#">工程岗位信息<?php echo $this->test?></a></li>
+		<li class="slideMenu"><a id ="btPrg">工程进度信息</a>
+			<ul class="hide" id="conPrg">
+				<li><a href="/pment/mstprg">总进度计划</a></li>
+				<li><a href="/pment/monprg">月进度计划</a></li>
+				<li><a href="/pment/wkprg">周进度计划</a></li>
+				<li><a href="/pment/log">工程日志</a></li>
+			</ul>
+		</li>
+		<li><a href="#">工程影像信息</a></li>
+		<li class="slideMenu"><a id="btSafe">安全施工信息</a>
+			<ul class="hide" id="conSafe">
+				<li><a href="#">技术交底信息</a></li>
+				<li><a href="#">安全培训信息</a></li>
+				<li><a href="#">安全措施信息</a></li>
+			</ul>
+		</li>
+		<li><a href="#">工程备案信息</a></li>
+		<li><a href="#">工程保险信息</a></li>
+		<li><a href="#">印章使用记录</a></li>
+		<li><a href="#">工程分包信息</a></li>
+		<li><a href="#">工程设备信息</a></li>
+		<li><a href="#">工程材料信息</a></li>
+		<li><a href="#">工程财务信息</a></li>
+		<li><a href="#">工程用车信息</a></li>
+	</ul>
+</div>
+<?php $this->placeholder('sidebar')->captureEnd()?>

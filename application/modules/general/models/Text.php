@@ -10,6 +10,8 @@
 		public static $text_notInt = "数字不正确";
 		public static $text_notDate = "日期不正确";
 		public static $text_notEmpty = "本项不能为空";
+		public static $text_date_startEndError = "结束日期必须为开始日期之后。";
+		
 		//admin login
 		public static $text_loginFailed = "登录失败，用户名或登录密码错误。";
 

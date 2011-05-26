@@ -1,29 +1,24 @@
 <?php
-  //Author lincoy
-  //Date 2011.4.1
-  //review rob
-  //date 2011.4.7
-  
+//Updated on 24th May by Rob
+
 class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'pm_projects';
+	protected $_name = 'pm_projects';
 	
 	public function findProjectName($id)
-	{    	
+	{	
 		$select = $this->select()
-			->setIntegrityCheck(false)
 			->from('pm_projects',array('name'))
 			->where('projectId = ?',$id);
 			
-   		$entries = $this->fetchAll($select);
-   		
-   		return $entries;
+		$entries = $this->fetchAll($select);
+		
+		return $entries;
 		}
 	
-	public function fetchAllNames() //check
+	public function fetchAllNames()
 	{
 		$select = $this->select()
-				->setIntegrityCheck(false)
 				->from('pm_projects',array('projectId','name'));
 		$entries = $this->fetchAll($select);
 		
@@ -44,12 +39,11 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 				}
 				elseif($condition == 'name')
 				{
-                   $select->setIntegrityCheck(false)
+ 						$select->setIntegrityCheck(false)
 						->from(array('e'=> 'em_contacts'),array('name'))
-				        ->join(array('c'=>'em_cpp'),'e.contactId = c.contactId',array('contactId'))
-						->join(array('p'=>'pm_projects'),'p.projectId = c.projectId')
-						->where('e.name like ?','%'.$key.'%');				
-				   }				   
+						->join(array('p'=>'pm_projects'),'p.contactId = e.contactId')
+						->where('e.name like ?','%'.$key.'%');
+				}
 		$resultSet = $this->fetchAll($select);
 		return $resultSet;
 	}

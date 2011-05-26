@@ -219,7 +219,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
 		}
 	
 	public function ajaxdisplayAction()
-	{  
+	{
 		$this->_helper->layout()->disableLayout();
 		$vehicles = new Vehicle_Models_VehicleMapper();
 		$veId = $this->_getParam('id',0);
@@ -233,7 +233,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			{
 				$this->_redirect('/vehicle');
 				}
-		}
+	}
 
 	public function ajaxdeleteAction()
 	{

@@ -692,3 +692,40 @@ label
 {
 	padding: 5px;
 	}
+.slideMenu
+{
+
+	}
+.slideMenu:hover
+{
+	cursor: pointer;
+	}
+#btPrg,#btSafe
+{
+	background-image: url("/images/sprites-side-nav.png");
+	background-position: 10px -157px;
+	background-repeat: no-repeat;
+	}
+#conPrg a,#conSafe a
+{
+	background-image: url("/images/sprites-side-nav.png");
+	background-position: 30px -535px;
+	background-repeat: no-repeat;
+	padding: 0 0 0 35px;
+	}
+.subMenu_switch_close
+{
+	background-image: url("/images/icons/functions/m_close.png");
+	background-repeat: no-repeat;
+	padding: 5px 30px;
+	}
+.subMenu_switch_open
+{
+	background-image: url("/images/icons/functions/m_open.png");
+	background-repeat: no-repeat;
+	padding: 5px 30px;
+	}
+.conTable td
+{
+	border-right:1px dashed #D7D7D7
+	}
