@@ -506,7 +506,7 @@ jQuery(function($, undefined) {
 					});
 					this.elts.cont.after(elts);
 				}
-				this.elts.cont.css('overflow', 'auto');
+				this.elts.cont.css('overflow', 'hidden');
 				this._callFilters('afterReposition');
 			},
 

@@ -38,7 +38,7 @@ class Zend_View_Helper_DisplayProject extends Zend_View_Helper_Abstract
 						<td>'.$project->getAddress().'</td>
 						<td>层数: </td>
 						<td>'.$project->getLevel().'</td>
-						<td>合同工期: </td>
+						<td>合同工期(天): </td>
 						<td>'.$project->getPeriod().'</td>
 					</tr>
 					<tr>
@@ -60,9 +60,9 @@ class Zend_View_Helper_DisplayProject extends Zend_View_Helper_Abstract
 					<tr>
 						<td>施工许可证编号: </td>
 						<td>'.$project->getLicense().'</td>
-						<td>合同金额: </td>
+						<td>合同金额(元人民币): </td>
 						<td>'.$project->getAmount().'</td>
-						<td>建筑面积: </td>
+						<td>建筑面积(平方米): </td>
 						<td>'.$project->getConstrArea().'</td>
 					</tr>
 					<tr>

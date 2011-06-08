@@ -63,12 +63,11 @@ $(document).ready(function()
 
 	$('.lightbox').nm();
 	
-		$('#cb_sa').click(function(){
-		
-		if($(this).attr("checked") == true)
+	$('#cb_sa').click(function(){
+		if($(this).attr("checked"))
 		{
 			$("[name='cb']").each(function(){
-				if($(this).attr("checked") == false)
+				if(!$(this).attr("checked"))
 				{
 					$(this).attr("checked", true);
 				}
@@ -77,12 +76,12 @@ $(document).ready(function()
 		else
 		{
 			$("[name='cb']").each(function(){
-				if($(this).attr("checked") == true)
+				if($(this).attr("checked"))
 				{
 					$(this).attr("checked",false);
 				}
 			});
-			}
+		}
 	});
 
 	$('.stSearch').change(function() {

@@ -1,0 +1,63 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $seal = $this->seal;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>用章名称：</td>
+				<td><?php echo $seal->getName()?></td>
+			</tr>
+			<tr>
+				<td>用章文件：</td>
+				<td><?php echo $seal->getSealFile() ?></td>
+			</tr>
+			<tr>
+				<td>使用人： </td>
+				<td><?php echo $seal->getSealUser()?></td>
+			</tr>
+			<tr>
+				<td>经办人：</td>
+				<td><?php echo $this->escape($seal->getContactName())?></td>
+			</tr>
+			<tr>
+				<td>使用事由：</td>
+				<td><?php echo $this->escape($seal->getReason())?></td>
+			</tr>
+			<tr>
+				<td>使用日期：</td>
+				<td><?php echo $this->escape($seal->getSealDate())?></td>
+			</tr>
+			<tr>
+				<td>归还日期：</td>
+				<td><?php echo $this->escape($seal->getReturnDate())?></td>
+			</tr>
+			<tr>
+				<td>份数：</td>
+				<td><?php echo $this->escape($seal->getCopy())?></td>
+			</tr>
+			<tr>
+				<td>是否带出：</td>
+				<td><?php echo $this->escape($seal->getTakeOut())?></td>
+			</tr>
+			<tr>
+				<td>备注：</td>
+				<td><?php echo $seal->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $seal->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

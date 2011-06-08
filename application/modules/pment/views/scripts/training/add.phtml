@@ -1,0 +1,41 @@
+ <?php 
+ 	$this->headTitle('- 工程管理 - 安全培训信息');
+ 	$this->headScript()->prependFile('/js/pment.js');
+ 	$this->headScript()->prependFile('/js/form.js');
+ 	$this->headScript()->prependFile('/js/conSafe.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 安全培训信息 - 新建</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 	}?>
+			</p>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a id = "reset"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>		
+					<div><a href="/pment/training"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+					<?php
+						$this->addForm->setAction($this->url());
+						echo $this->addForm;
+					?>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

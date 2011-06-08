@@ -1,0 +1,43 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $tech = $this->tech;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>交底日期：</td>
+				<td><?php echo $tech->getTechDate()?></td>
+			</tr>
+			<tr>
+				<td>交底内容：</td>
+				<td><?php echo $tech->getContent() ?></td>
+			</tr>
+			<tr>
+				<td>姓名： </td>
+				<td><?php echo $tech->getName()?></td>
+			</tr>
+			<tr>
+				<td>填报人：</td>
+				<td><?php echo $this->escape($tech->getContactName())?></td>
+			</tr>
+			<tr>
+				<td>备注：</td>
+				<td><?php echo $tech->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $tech->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

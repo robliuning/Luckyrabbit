@@ -31,6 +31,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 		$mstprgs = new Pment_Models_MstprgMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
+		$condition[1] = null;
 		if($this->getRequest()->isPost())
 		{
 			$arrayMstprgs = array();
@@ -60,7 +61,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 		$this->view->errorMsg = $errorMsg;
 		$this->view->module = "pment";
 		$this->view->controller = "mstprg";
-		$this->view->modelName = "工程总进度信息";
+		$this->view->modelName = "工程总进度计划";
 		}
 		
 	public function addAction()
@@ -107,7 +108,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 						}
 						else
 						{
-							$this->_helper->flashMessenger->addMessage('对总进度任务: '.$mstprg->getTask().'的修改成功。');
+							$this->_helper->flashMessenger->addMessage('对任务: '.$mstprg->getTask().'的修改成功。');
 							$this->_redirect('/pment/mstprg');
 							}
 					}
@@ -132,6 +133,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 
 	public function editAction()
 	{
+		$errorMsg = null;
 		$editForm = new Pment_Forms_MstprgSave();
 		$mstprgs = new Pment_Models_MstprgMapper();
 		$editForm->submit->setLabel('保存修改');
@@ -182,7 +184,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 			}
 			else
 			{
-				if($mstprgId >0)
+				if($mstprgId > 0)
 				{
 					$arrayMstprg = $mstprgs->findArrayMstprg($mstprgId);
 					$editForm->populate($arrayMstprg);
@@ -192,6 +194,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 						$this->_redirect('/pment/mstprg');
 						}
 				}
+		$this->view->errorMsg = $errorMsg;
 		$this->view->editForm = $editForm;
 		$this->view->id = $mstprgId; 
 	}

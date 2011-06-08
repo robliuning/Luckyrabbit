@@ -392,7 +392,7 @@ h3
 	border: 1px solid #e1e1e1;
 	padding: 1px;
 	color: #333333;
-	overflow: auto;
+	overflow: hidden;
 	}
 .overall_content_half
 {
@@ -565,6 +565,39 @@ label
 	text-align: center;
 	float: right;
 	}
+.btUploadImage
+{
+	padding: 5px 30px 5px 30px;
+	border: 1px solid #D7D7D7;
+	display: block;
+	background-color: #808084;
+	color: white;
+	margin: 0 9px 0 0;
+	line-height: 30px;
+	font-size: 15px;
+	text-align: center;
+	}
+.btUploadImage:hover
+{
+	background-color: #CCCCD0;
+	cursor: pointer;
+	}
+#imageUpload
+{
+	background-color: #fffcee;
+	/*background:url("/images/bg_ta.gif") repeat scroll 0 0 #FFFCEE;*/
+	border: 1px solid #EEEEEE;
+	font-size: 12px;
+	line-height: 18px;
+	margin: 0;
+	padding: 5px 5px;
+	color: #777777;
+	outline:medium none;
+	}
+#conUpload
+{
+	padding:0 20px;
+	}
 .btConfirmVar
 {
 	padding: 3px 15px 3px 15px;
@@ -612,6 +645,7 @@ label
 #msgBox
 {
 	display: none;
+	overflow: hidden;
 	}
 #ajaxMsgBox
 {
@@ -728,4 +762,49 @@ label
 .conTable td
 {
 	border-right:1px dashed #D7D7D7
+	}
+.conMonAll
+{
+	display: none;
+	}
+#conUpload
+{
+	display: none;
+	}
+#conImage
+{
+	padding: 5px;
+	}
+.conImage_cell
+{
+	float: left;
+	width: 280px;
+	height: 210px;
+	display: block;
+	padding: 10px;
+	border-bottom: 1px solid #E0E0E0;
+	border-right: 1px solid #E0E0E0;
+	}
+.bubbleInfo {
+	position: relative;
+	top: 5px;
+	left: 5px;
+ }
+	.trigger {
+	position: absolute;
+ }
+	
+ /* Bubble pop-up */
+
+.popup {
+  position: absolute;
+  display: none;
+  z-index: 50;
+  border-collapse: collapse;
+ }
+.ptitle
+{
+	font-size: 13px;
+	font-weight: bold;
+	padding: 5px 10px 5px 0;
 	}

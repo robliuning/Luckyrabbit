@@ -1,0 +1,47 @@
+<div id="ajaxMsgBox">
+<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+		<div class="button_group">
+			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+	<?php $record = $this->record;?>
+	<div class="overall_content">
+		<table>
+			<colgroup>
+				<col style="width:30%"></col>
+				<col style="width:70%"></col>
+			</colgroup>
+			<tr>
+				<td>备案日期：</td>
+				<td><?php echo $record->getRecDate()?></td>
+			</tr>
+			<tr>
+				<td>备案单位：</td>
+				<td><?php echo $record->getRecUnit() ?></td>
+			</tr>
+			<tr>
+				<td>备案内容： </td>
+				<td><?php echo $record->getContent()?></td>
+			</tr>
+			<tr>
+				<td>备案号：</td>
+				<td><?php echo $this->escape($record->getRecNumber())?></td>
+			</tr>
+			<tr>
+				<td>经办人：</td>
+				<td><?php echo $this->escape($record->getContactName())?></td>
+			</tr>
+			<tr>
+				<td>备注：</td>
+				<td><?php echo $record->getRemark()?></td>
+			</tr>
+			<tr>
+				<td>上次修改时间：</td>
+				<td><?php echo $record->getCTime()?></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>

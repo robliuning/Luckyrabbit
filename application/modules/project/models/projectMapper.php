@@ -133,16 +133,16 @@ class Project_Models_ProjectMapper
 			$contactName = $contacts->findContactName($project->getContactId());
 			$project->setContactName($contactName);
 
-			/*$mstprgs = new Pment_Models_MstprgMapper();
-			$arrayMstprgs = $mstprgs->fetchAllStages($projectId);
+			$mstprgs = new Pment_Models_MstprgMapper();
+			$arrayMstprgs = $mstprgs->fetchAllNames($project->getProjectId());
 			if(count($arrayMstprgs) > 0)
 			{
 				$project->setStage(count($arrayMstprgs));
 				}
 				else
-				{*/
-					$project->setStage(0);
-					//}
+				{
+					$project->setStage('暂无');
+					}
 			
 			$projects[] = $project;
 			}

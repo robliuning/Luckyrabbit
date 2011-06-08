@@ -1,0 +1,132 @@
+<link href="/css/buble.css" rel="stylesheet" type="text/css" /> 
+<?php 
+ 	$this->headTitle('- 工程管理 - 工程周进度计划');
+ 	$this->headScript()->prependFile('/js/pment.js');
+ 	$this->headScript()->prependFile('/js/form.js');
+ 	$this->headScript()->prependFile('/js/conPrg.js');
+  	$this->headScript()->prependFile('/js/buble.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 工程周进度计划 - 详情</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 	}?>
+			</p>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/pment/wkprg"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu slideMenu"><a id="btMst" class="subMenu_switch_open">计划详情</a></p>
+				<?php $wkprg = $this->wkprg?>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>周: </td>
+						<td><?php echo $wkprg->getWkNum()?></td>
+					</tr>
+					<tr>
+						<td>开始日期: </td>
+						<td><?php echo $wkprg->getStartDate()?></td>
+					</tr>
+					<tr>
+						<td>结束日期: </td>
+						<td><?php echo $wkprg->getEndDate()?></td>
+					</tr>
+				</table>
+				<div id="conMst">
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>工期(天): </td>
+						<td><?php echo $wkprg->getPeriod()?></td>
+					</tr>
+					<tr>
+						<td>本周计划完成: </td>
+						<td><?php echo $wkprg->getWkPlan()?></td>
+					</tr>
+					<tr>
+						<td>本周实际完成: </td>
+						<td><?php echo $wkprg->getWkAct()?></td>
+					</tr>
+					<tr>
+						<td>下周计划完成: </td>
+						<td><?php echo $wkprg->getNextPlan()?></td>
+					</tr>
+					<tr>
+						<td>存在问题: </td>
+						<td><?php echo $wkprg->getProblem()?></td>
+					</tr>
+					<tr>
+						<td>需解决问题: </td>
+						<td><?php echo $wkprg->getResolve()?></td>
+					</tr>
+					<tr>
+						<td>填报人: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $wkprg->getContactId() ?>"><?php echo $wkprg->getContactName() ?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $wkprg->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $wkprg->getCTime()?></td>
+					</tr>
+				</table>
+				</div>
+				<p class="subMenu slideMenu"><a id="btImgUpload" class="subMenu_switch_close">施工图片上传</a></p>
+			<div id="conUpload">
+				<?php
+					$this->imageForm->setAction($this->url());
+					echo $this->imageForm;
+				?>
+			</div>
+			<p class="subMenu slideMenu"><a id="btImgShow" class="subMenu_switch_open">施工图片展示</a></p>
+			<div id="conImage">
+			<?php foreach($this->arrayImages as $image):?>
+				<div class="conImage_cell bubbleInfo">
+					<div>
+						<a class="lightbox" href="/images/upload/<?php echo $image->getImageSn() ?>"><img class="trigger" src="/images/upload/thumbs/<?php echo $image->getImageSn() ?>"></a>
+					</div>
+					<div id="dpop" class="popup">
+						<div id="cap_top"></div>
+						<div id="cap_body">
+							<div>
+								<p><span class="ptitle">图片描述:</span><?php echo $image->getDescription() ?></p>
+								<p><span class="ptitle">上传时间:</span> <?php echo $image->getCTime()?></p>
+							</div>
+						</div>
+						<div id="cap_bottom"></div>
+					</div>
+				</div>
+			<?php endforeach ?>
+			</div>
+			<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

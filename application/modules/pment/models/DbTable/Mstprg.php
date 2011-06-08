@@ -5,10 +5,11 @@ class Pment_Models_DbTable_Mstprg extends Zend_Db_Table_Abstract
 {
 	protected $_name = 'pm_mstprgs';
 	
-	public function fetchAllNames()
+	public function fetchAllNames($projectId)
 	{
 		$select = $this->select()
-				->from('pm_mstprgs',array('mstprgId','stage','task'));
+				->from('pm_mstprgs',array('mstprgId','stage','task'))
+				->where('projectId = ?',$projectId);
 		$entries = $this->fetchAll($select);
 		
 		return $entries;

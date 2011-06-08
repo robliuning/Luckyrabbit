@@ -38,7 +38,7 @@ class Pment_Forms_MstprgSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'contactName', array(
-			'label' => '*项目经理:',
+			'label' => '*编制人:',
 			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText ac_contactName'
 			)

@@ -69,9 +69,9 @@ class Pment_Models_MstprgMapper
 		$mstprg->setContactName($contactName);
 	}
 
-	public function fetchAllNames()
+	public function fetchAllNames($projectId)
 	{
-		$resultSet = $this->getDbTable()->fetchAllNames();
+		$resultSet = $this->getDbTable()->fetchAllNames($projectId);
 		$entries = array();
 		foreach($resultSet as $row){
 			$entry = new Pment_Models_Mstprg();
@@ -184,7 +184,7 @@ class Pment_Models_MstprgMapper
 	{
 		$stage = null;
 		$stage = $this->getDbTable()->findStage($mstprgId);
-		$stage = (int)$stage[0];
+		$stage = (int)$stage[0]->stage;
 		return $stage;
 		}
 	
