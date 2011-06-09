@@ -26,7 +26,7 @@ class Pment_Forms_SealSave extends Zend_Form
 		$this->addElement(
 			'textarea', 'sealUser', array(
 			'label' => '*使用人:',
-			'class'=>'tbText pfocus',
+			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 4
 			)
@@ -34,7 +34,7 @@ class Pment_Forms_SealSave extends Zend_Form
 		$this->addElement(
 			'textarea', 'reason', array(
 			'label' => '*使用事由:',
-			'class'=>'tbText pfocus',
+			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 4
 			)
@@ -56,7 +56,7 @@ class Pment_Forms_SealSave extends Zend_Form
 		$this->addElement(
 			'textarea', 'recUnit', array(
 			'label' => '*备案单位:',
-			'class'=>'tbText pfocus',
+			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 4
 			)

@@ -21,35 +21,64 @@
 					</tr>
 					<tr>
 						<td>性别: </td>
-						<td><?php 
-							$gender = $contact->getGender();
-							echo $gender?"男":"女";
-						?></td>
+						<td><?php echo $contact->getGender()?></td>
 					</tr>
 					<tr>
 						<td>年龄: </td>
 						<td><?php echo $contact->getAge() ?></td>
 					</tr>
 					<tr>
+						<td>职称专业: </td>
+						<td><?php echo $contact->getTitleSpec()?></td>
+					</tr>
+					<tr>
 						<td>职称: </td>
 						<td><?php echo $contact->getTitleName()?></td>
 					</tr>
 					<tr>
-						<td>身份证: </td>
-						<td><?php echo $contact->getIdCard()?></td>
-					</tr>	
-					<tr>
-						<td>联系方式: </td>
-						<td><?php echo $contact->getPhoneNo()?></td>
+						<td>部门: </td>
+						<td><?php echo $contact->getDeptName()?></td>
 					</tr>
 					<tr>
-						<td>其他联系方式: </td>
-						<td><?php echo $contact->getOtherContact()?></td>
-					</tr>	
+						<td>职务: </td>
+						<td><?php echo $contact->getDutyName()?></td>
+					</tr>
 					<tr>
-						<td>现住址: </td>
+						<td>学历: </td>
+						<td><?php echo $contact->getEdu()?></td>
+					</tr>
+					<tr>
+						<td>入职时间: </td>
+						<td><?php echo $contact->getEnroll()?></td>
+					</tr>
+					<tr>
+						<td>政治面貌: </td>
+						<td><?php echo $contact->getPolitical()?></td>
+					</tr>
+					<tr>
+						<td>身份证: </td>
+						<td><?php echo $contact->getIdCard()?></td>
+					</tr>
+					<tr>
+						<td>民族: </td>
+						<td><?php echo $contact->getEthnic()?></td>
+					</tr>
+					<tr>
+						<td>本市家庭住址: </td>
 						<td><?php echo $contact->getAddress()?></td>
-					</tr>		
+					</tr>
+					<tr>
+						<td>邮编: </td>
+						<td><?php echo $contact->getZip()?></td>
+					</tr>
+					<tr>
+						<td>电话(家): </td>
+						<td><?php echo $contact->getPhoneHome()?></td>
+					</tr>
+					<tr>
+						<td>手机: </td>
+						<td><?php echo $contact->getPhoneMob()?></td>
+					</tr>
 					<tr>
 						<td>备注: </td>
 						<td><?php echo $contact->getRemark()?></td>
@@ -57,7 +86,7 @@
 					<tr>
 						<td>创建时间: </td>
 						<td><?php echo $contact->getCTime()?></td>
-					</tr>		
+					</tr>
 			</table>
 		</div>
 	</div>

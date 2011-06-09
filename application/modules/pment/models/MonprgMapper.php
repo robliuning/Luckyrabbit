@@ -171,7 +171,7 @@ class Pment_Models_MonprgMapper
 		$this->getDbTable()->delete('monprgId = ' . (int)$id);
 	}
 	
-			
+
 	public function formValidator($form,$formType)
 	{	
 		$emptyValidator = new Zend_Validate_NotEmpty();
@@ -188,7 +188,7 @@ class Pment_Models_MonprgMapper
 		$dateValidator = new Zend_Validate_Date();
 		$dateValidator->setMessage(General_Models_Text::$text_notDate);
 		$form->getElement('startDate')->addValidator($dateValidator);
-		$form->getElement('startDate')->addValidator($dateValidator);
+		$form->getElement('endDate')->addValidator($dateValidator);
 		
 		return $form;
 	}

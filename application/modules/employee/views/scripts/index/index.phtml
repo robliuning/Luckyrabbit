@@ -1,6 +1,5 @@
  <?php 
- 	$this->headTitle('- 员工及岗位管理 - 通讯录信息');
- 	$this->headScript()->prependFile('/js/employeejs/p_contact.js');
+ 	$this->headTitle('- 公司员工管理 - 公司员工信息');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,7 +8,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>员工及岗位管理 - 通讯录信息 - 总览</h1>
+		<h1>公司员工管理 - 公司员工信息 - 总览</h1>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
@@ -18,6 +17,13 @@
 					echo $this->errorMsg;
 			 		}?>
 			 		</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -25,9 +31,10 @@
 					<form method="post" action="<?php echo $this->url()?>">
 							<div>
 								<select name="condition" class="tbMediumer stStyle">
-  									<option value="name">姓名</option>
-									<option value="titleName">职称</option>
-  									<option value="phoneNo">电话</option>
+									<option value="name">姓名</option>
+									<option value="phoneHome">电话(家)</option>
+									<option value="phoneMob">手机</option>
+									<option value="deptName">部门</option>
 								</select>
 							</div>
 							<div><input class="tbMedium tbText" name="key" type="text" /></div>
@@ -44,16 +51,17 @@
 			<div class="overall_content">
 				<table>
 					<colgroup>
-						<col style="width:4%"></col>
-						<col style="width:4%"></col>
-						<col style="width:10%"></col>
+						<col style="width:5%"></col>
 						<col style="width:5%"></col>
 						<col style="width:10%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
 						<col style="width:15%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
 						<col style="width:5%"></col>
-						<col style="width:7%"></col>
+						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
@@ -61,15 +69,17 @@
 						<th>姓名</th>
 						<th>性别</th>
 						<th>年龄</th>
-						<th>职称</th>
-						<th>电话</th>
-						<th>其他联系方式</th>
+						<th>部门</th>
+						<th>职务</th>
+						<th>电话(家)</th>
+						<th>手机</th>
 						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
 						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
 						<td colspan="2">全选/取消</td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -87,20 +97,15 @@
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$contactId))?>" class="lightbox"><?php echo $this->escape($contact->getName()); ?></a></td>
-						<td><?php 
-							$gender = $this->escape($contact->getGender());
-							echo $gender?"男":"女";
-						?></td>	
-						<td><?php
-							echo $contact->getAge();
-						?>
-						</td>
-						<td><?php echo $this->escape($contact->getTitleName()) ?></td>
-						<td><?php echo $this->escape($contact->getPhoneNo()) ?></td>
-						<td><?php echo $this->escape($contact->getOtherContact()) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contactId))?>" class="lightbox"><?php echo $this->escape($contact->getName()); ?></a></td>
+						<td><?php echo $this->escape($contact->getGender()) ?></td>	
+						<td><?php echo $this->escape($contact->getAge()) ?></td>
+						<td><?php echo $this->escape($contact->getDeptName()) ?></td>
+						<td><?php echo $this->escape($contact->getDutyName()) ?></td>
+						<td><?php echo $this->escape($contact->getPhoneHome()) ?></td>
+						<td><?php echo $this->escape($contact->getPhoneMob()) ?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contactId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$contactId))?>">详情</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contactId))?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

@@ -5,7 +5,6 @@
 */
 class Employee_Forms_EmployeeSave extends Zend_Form
 {
-
 	public function init()
 	{
 		$this->setMethod('post');
