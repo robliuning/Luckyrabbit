@@ -20,7 +20,7 @@ class Pment_IndexController extends Zend_Controller_Action
 		{
 			$projectNamespace = new Zend_Session_Namespace('projectNamespace');
 			$projectNamespace->projectId = $projectId;
-			$this->_redirect('/pment/mstprg');
+			$this->_redirect('/pment/cpp');
 			}
 			else
 			{

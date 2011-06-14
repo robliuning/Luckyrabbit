@@ -1,6 +1,9 @@
- <?php 
- 	$this->headTitle('- 承包商管理 - 承包商信息');
- ?>
+<?php 
+	$this->headTitle('- 工程管理 - 工程岗位信息');
+	$this->headScript()->prependFile('/form.js');
+	$this->headScript()->prependFile('/js/pment.js');
+	
+?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -8,20 +11,23 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>承包商管理 - 承包商信息 - 新建</h1>
+		<h1>工程管理 - 工程岗位信息 - 新建</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
 				if($this->errorMsg != null)
 				{
 					echo $this->errorMsg;
-				}?>
+			 	}?>
 			</p>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><a id="reset"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>	
-					<div><a href="/contract"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a id="reset"><img src="/images/icons/functions/refresh.png"/><p>清空</p></a></div>
+					<div><a href="/pment/cpp"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

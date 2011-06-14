@@ -1,15 +1,9 @@
 <?php
-
-/*create by lxj
-  2011-04-04	v1.1
-  rewrite by lxj
-  modify by lincoy  04-16
-  2011-04-08   v0.2
-  */
+//updated in 13th June by Rob
 
 class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'sc_contractors'; 
+	protected $_name = 'sc_contractors'; 
 
 	public function findArrayContract($contractorId)
 	{
@@ -26,29 +20,28 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 		$select = $this->select();
 		if($condition == "name")
 		{
-			$select->where("name like ?","%$key%");
+			$select->where("name like ?",'%'.$key.'%');
 			}
-		elseif($condition == "artiPerson")
-		{
-			$select->where("artiPerson like ?","%$key%");
-			}
+			elseif($condition == "contact")
+			{
+				$select->where("contact like ?",'%'.$key.'%');
+				}
 
-    	$resultSet = $this->fetchAll($select);
+		$resultSet = $this->fetchAll($select);
 		return $resultSet;
 	}
 	
 	public function findContractorName($id)
-    {
-    	$select = $this->select()
-    		->setIntegrityCheck(false)
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
 			->from('sc_contractors',array('name'))
 			->where('contractorId = ?',$id);
 			
-   		$entries = $this->fetchAll($select);
-   		
-   		return $entries;
-    	}
-
+		$entries = $this->fetchAll($select);
+		
+		return $entries;
+		}
 }
 
 ?>

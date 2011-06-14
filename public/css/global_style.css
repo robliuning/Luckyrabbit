@@ -734,13 +734,13 @@ label
 {
 	cursor: pointer;
 	}
-#btPrg,#btSafe
+#btPrg,#btSafe,#btContractor
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 10px -157px;
 	background-repeat: no-repeat;
 	}
-#conPrg a,#conSafe a
+#conPrg a,#conSafe a,#conContractor a
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 30px -535px;

@@ -18,7 +18,7 @@
 
 		//vehicle drirecord
 		public static $text_vehicle_pilot_notFound = "错误: 请检查司机输入是否正确。";
-		public static $text_vehicle_contact_notFound = "错误: 请检查车辆负责人输入是否正确。";
+		public static $text_vehicle_contact_notFound = "错误: 请检查姓名输入是否正确。";
 		public static $text_vehicle_plateNo_length = "车牌号长度错误";
 		public static $text_drirecord_no_mile = "无记录";
 		//vehicle repair

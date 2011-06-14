@@ -15,6 +15,14 @@ $(document).ready(function()
 		$("#conSafe").slideUp("slow");
  		}
 	});
+
+	$("#btContractor").click(function () {
+		if($("#conContractor").is(":hidden")) {
+		$("#conContractor").slideDown("slow");
+		} else {
+		$("#conContractor").slideUp("slow");
+ 		}
+	});
 	
 	$("#btPro").click(function () {
 		if($("#conPro").is(":hidden")) {

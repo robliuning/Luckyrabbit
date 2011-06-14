@@ -32,9 +32,8 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'select','qualifGrade',array(
+			'text','qualifGrade',array(
 			'label'=>'资质等级:',
-			'multiOptions'=>array('特级'=>'特级','一级'=>'一级','二级'=>'二级','三级'=>'三级'),
 			'class'=>'tbMedium tbText',
 			'required'=>false
 			)

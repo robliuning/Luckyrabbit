@@ -8,41 +8,49 @@
 	</div><!-- end of overall tool -->
 		<p><?php
 			$cpp = $this->cpp;?>
-			 </p>
-			 <div class="overall_content">
-			 <table>
+			</p>
+			<div class="overall_content">
+			<table>
 					<colgroup>
 						<col style="width:30%"></col>
 						<col style="width:70%"></col>
 					</colgroup>
 					<tr>
-						<td>姓名：</td>
+						<td>员工姓名：</td>
 						<td><?php echo $cpp->getContactName()?></td>
 					</tr>
 					<tr>
-						<td>项目名称：</td>
-						<td><?php echo $cpp->getProjectName()?></td>
-					</tr>
-					<tr>
 						<td>岗位名称：</td>
-						<td><?php echo $cpp->getPostName() ?></td>
+						<td><?php echo $cpp->getPostName()?></td>
 					</tr>
 					<tr>
-						<td>岗位证类型：</td>
-						<td><?php echo $cpp->getPostType() ?></td>
+						<td>执业资格：</td>
+						<td><?php echo $cpp->getQualif() ?></td>
 					</tr>
 					<tr>
-						<td>岗位证编号：</td>
-						<td><?php echo $cpp->getPostCardId() ?></td>
-					</tr>
-					<tr>
-						<td>安全能力考核证：</td>
+						<td>证书编号：</td>
 						<td><?php echo $cpp->getCertId() ?></td>
-					</tr>	
+					</tr>
 					<tr>
-						<td>上次修改：</td>
+						<td>开始承担责任时间：</td>
+						<td><?php echo $cpp->getStartDate() ?></td>
+					</tr>
+					<tr>
+						<td>岗位职责：</td>
+						<td><?php echo $cpp->getResponsi() ?></td>
+					</tr>
+					<tr>
+						<td>具体职责：</td>
+						<td><?php echo $cpp->getPostDetail() ?></td>
+					</tr>
+					<tr>
+						<td>备注：</td>
+						<td><?php echo $cpp->getRemark() ?></td>
+					</tr>
+					<tr>
+						<td>上次修改时间：</td>
 						<td><?php echo $cpp->getCTime() ?></td>
-					</tr>				
+					</tr>
 			</table>
 		</div>
 	</div>

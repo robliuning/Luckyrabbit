@@ -266,7 +266,7 @@ class Employee_IndexController extends Zend_Controller_Action
 				}
 	}
 	
-	public function ajaxdisplayAction()  			
+	public function ajaxdisplayAction()
 	{
 		$this->_helper->layout()->disableLayout();
 		$contactId = $this->_getParam('id',0);
@@ -282,6 +282,22 @@ class Employee_IndexController extends Zend_Controller_Action
 				$this->_redirect('/employee');
 				}
 		}
+	
+	public function displayAction()
+	{
+		$contacts = new Employee_Models_contactMapper();
+		$contactId = $this->_getParam('id',0);
+		if($contactId >0)
+		{
+			$contact = new Employee_Models_contact();
+			$contacts->findComplete($contactId,$contact);
+			$this ->view->contact = $contact;
+			}
+			else
+			{
+				$this->_redirect('/employee');
+				}
+	}
 	
 	public function autocompleteAction()
 	{

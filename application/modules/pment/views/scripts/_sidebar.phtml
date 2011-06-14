@@ -1,7 +1,7 @@
 <?php $this->placeholder('sidebar')->captureStart()?>
 <div id="p_sidebar" class="p_sidebar_general"> 
 	<ul>
-		<li><a href="#">工程岗位信息<?php echo $this->test?></a></li>
+		<li><a href="/pment/cpp">工程岗位信息</a></li>
 		<li class="slideMenu"><a id ="btPrg">工程进度信息</a>
 			<ul class="hide" id="conPrg">
 				<li><a href="/pment/mstprg">总进度计划</a></li>
@@ -20,11 +20,16 @@
 		<li><a href="/pment/record">工程备案信息</a></li>
 		<li><a href="#">工程保险信息</a></li>
 		<li><a href="/pment/seal">印章使用记录</a></li>
-		<li><a href="#">工程分包信息</a></li>
+		<li class="slideMenu"><a id="btContractor">工程分包信息</a>
+			<ul class="hide" id="conContractor">
+				<li><a href="/pment/contractor">工程承包商信息</a></li>
+				<li><a href="/pment/subContract">工程分包单信息</a></li>
+			</ul>
+		</li>
 		<li><a href="#">工程设备信息</a></li>
 		<li><a href="#">工程材料信息</a></li>
 		<li><a href="#">工程财务信息</a></li>
-		<li><a href="#">工程用车信息</a></li>
+		<li><a href="/pment/verecord">工程用车记录</a></li>
 	</ul>
 </div>
 <?php $this->placeholder('sidebar')->captureEnd()?>

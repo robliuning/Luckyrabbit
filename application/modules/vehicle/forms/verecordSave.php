@@ -14,21 +14,6 @@ class Vehicle_Forms_VerecordSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'select', 'prjFlag', array(
-			'label' => '是否为项目用车:',
-			'class'=>'tbMedium tbText',
-			'multiOptions'=> array('0'=>'非项目用车', '1'=>'项目用车')
-			)
-		);
-		$this->addElement(
-			'select', 'projectId', array(
-			'label' => '项目名:',
-			'class' => 'tbMedium tbText',
-			'disabled' => 'disabled',
-			'multiOptions'=> array('0'=>'非项目用车')
-			)
-		);
-		$this->addElement(
 			'text', 'startDate', array(
 			'label' => '*出车日期:',
 			'filters' => array('StringTrim'),

@@ -129,6 +129,7 @@ class Pment_MeasureController extends Zend_Controller_Action
 		$meaId = $this->_getParam('id',0);
 		$projectId =$this->getProjectId();
 		$editForm = $measures->formValidator($editForm,1);
+
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();

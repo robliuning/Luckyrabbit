@@ -128,7 +128,7 @@ class Vehicle_Models_VerecordMapper
 			else
 			{
 				$resultSet = $this->getDbTable()->search($key,$condition);
-				}	
+				}
 		$verecords = array();
 		
 		foreach ($resultSet as $row) 
@@ -149,15 +149,6 @@ class Vehicle_Models_VerecordMapper
 			$contacts = new Employee_Models_ContactMapper();
 			$contactName = $contacts->findContactName($verecord->getContactId());
 			$verecord->setContactName($contactName);
-			
-			if($verecord->getPrjFlag() == '0')
-			{
-				$verecord->setPrjFlag(General_Models_Text::$text_verecord_prjFlag_false);
-				}
-				elseif($verecord->getPrjFlag() == '1')
-				{
-					$verecord->setPrjFlag(General_Models_Text::$text_verecord_prjFlag_true);
-					}
 			$verecords[] = $verecord;
 			}
 		return $verecords;
@@ -173,16 +164,6 @@ class Vehicle_Models_VerecordMapper
 			$text = '车牌: '.$vehicle->getPlateNo()."　名称: ".$vehicle->getName();
 			$form->getElement('veId')->addMultiOption($vehicle->getVeId(),$text);
 		}
-	}
-	
-	public function populateProjectDd($form)
-	{
-		$projects = new Project_Models_ProjectMapper();
-		$arrayProjects = $projects->fetchAllNames();
-		foreach($arrayProjects as $project)
-		{
-			$form->getElement('projectId')->addMultiOption($project->getProjectId(),$project->getName());
-			}
 	}
 	
 	public function formValidator($form,$formType)

@@ -1,7 +1,7 @@
- <?php 
- 	$this->headTitle('- 员工及岗位管理 - 公司员工信息');
- 	$this->headScript()->prependFile('/js/employeejs/p_employee.js');
- ?>
+<?php 
+	$this->headTitle('- 工程管理 - 工程岗位信息');
+	$this->headScript()->prependFile('/js/pment.js');
+?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -9,15 +9,25 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>员工及岗位管理 - 公司员工信息 - 总览</h1>
+		<h1>工程管理 - 工程岗位信息 - 总览</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
 				if($this->errorMsg != null)
 				{
 					echo $this->errorMsg;
-			 		}?>
-			 		</p>
+					}?>
+					</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 			</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -26,15 +36,14 @@
 							<div>
 								<select name="condition" class="tbMediumer stStyle">
   									<option value="name">姓名</option>
-									<option value="deptName">部门</option>
-  									<option value="dutyName">职务</option>
+  									<option value="postName">岗位名称</option>
 								</select>
 							</div>
 							<div><input class="tbMedium tbText" name="key" type="text" /></div>
 							<div><input class= "btSearch" type="submit" value=""></input></div>	
 						</form>
 					</div>	
-					<div><a href="<?php echo $this->url(array('controller'=>'employee','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
@@ -44,13 +53,12 @@
 			<div class="overall_content">
 				<table>
 					<colgroup>
-						<col style="width:3%"></col>
-						<col style="width:2%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
 						<col style="width:10%"></col>
 						<col style="width:20%"></col>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
 						<col style="width:10%"></col>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
@@ -59,11 +67,10 @@
 						<th>#</th>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
 						<th>姓名</th>
-						<th>部门</th>
-						<th>职务</th>
-						<th>职称</th>
-						<th>联系电话</th>
-						<th>状态</th>
+						<th>岗位名称</th>
+						<th>执业资格</th>
+						<th>证书编号</th>
+						<th>开始承担责任时间</th>
 						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
 						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
@@ -76,37 +83,22 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
 					</tr>	
-					<?php $counter = 1;?>	
-					<?php foreach($this->arrayEmployees as $employee):?>
-					<?php $empId = $this->escape($employee->getEmpId()); ?>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayCpps as $cpp):?>
 					<tr>
-						<td><input type="checkbox" name="cb" value="<?php echo $empId; ?>"></td>
+						<td><input type="checkbox" name="cb" value="<?php echo $this->escape($cpp->getCppId()); ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$empId))?>" class="lightbox"><?php echo $this->escape($employee->getEmpName()) ?></td>
-						<td><?php echo $this->escape($employee->getDeptName()) ?></td>
-						<td><?php echo $this->escape($employee->getDutyName()) ?></td>
-						<td><?php echo $this->escape($employee->getTitleName()) ?></td>
-						<td><?php echo $this->escape($employee->getPhoneNo()) ?></td>	
-						<td><?php 
-							$status = $this->escape($employee->getStatus());
-							$stDis = "none";
-							if($status == 0)
-							{
-								$stDis = "在职";
-								}
-								else
-								{
-									$stDis = "离职";
-									}
-						echo $stDis;
-						  ?></td>	
-						<td><a href="<?php echo $this->url(array('controller'=>'employee','action'=>'edit','id'=>$empId))?>">修改</a></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'employee','action'=>'ajaxdisplay','id'=>$empId))?>" class="lightbox">详情</a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($cpp->getContactId()) ?>"><?php echo $this->escape($cpp->getContactName())?></a></td>
+						<td><?php echo $this->escape($cpp->getPostName()) ?></td>
+						<td><?php echo $this->escape($cpp->getQualif()) ?></td>
+						<td><?php echo $this->escape($cpp->getCertId()) ?></td>
+						<td><?php echo $this->escape($cpp->getStartDate()) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'edit','id'=>$this->escape($cpp->getCppId())))?>">修改</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'cpp','action'=>'ajaxdisplay','id'=>$this->escape($cpp->getCppId())))?>" class="lightbox">详情</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

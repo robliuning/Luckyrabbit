@@ -1,6 +1,5 @@
  <?php 
- 	$this->headTitle('- 分包管理 - 承包商信息');
- 	$this->headScript()->prependFile('/js/contractjs/p_contractor.js');
+ 	$this->headTitle('- 承包商管理 - 承包商信息');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,7 +8,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>分包管理 - 承包商信息 - 总览</h1>
+		<h1>承包商管理 - 承包商信息 - 总览</h1>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
@@ -18,6 +17,13 @@
 					echo $this->errorMsg;
 			 		}?>
 			 		</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -26,7 +32,7 @@
 							<div>
 								<select name="condition" class="tbMediumer stStyle">
   									<option value="name">承包商</option>
-									<option value="artiPerson">法定负责人</option>
+									<option value="contact">联系人</option>
 								</select>
 							</div>
 							<div><input class="tbMedium tbText" name="key" type="text" /></div>
@@ -47,9 +53,9 @@
 						<col style="width:2%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
-						<col style="width:12%"></col>
+						<col style="width:17%"></col>
 						<col style="width:13%"></col>
-						<col style="width:25%"></col>
+						<col style="width:20%"></col>
 						<col style="width:15%"></col>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
@@ -58,8 +64,8 @@
 						<th>#</th>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
 						<th>承包商</th>
-						<th>法定负责人</th>
-						<th>许可证号</th>
+						<th>联系人</th>
+						<th>安全生产许可证</th>
 						<th>联系电话</th>
 						<th>其他联系方式</th>
 						<th>地址</th>
@@ -87,7 +93,7 @@
 							$counter++;
 						?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contractorId))?>"><?php echo $this->escape($contractor->getName()) ?></td>
-						<td><?php echo $this->escape($contractor->getArtiPerson()) ?></td>
+						<td><?php echo $this->escape($contractor->getContact()) ?></td>
 						<td><?php echo $this->escape($contractor->getLicenseNo()) ?></td>
 						<td><?php echo $this->escape($contractor->getPhoneNo()) ?></td>
 						<td><?php echo $this->escape($contractor->getOtherContact()) ?></td>	

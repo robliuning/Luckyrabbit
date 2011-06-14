@@ -210,105 +210,105 @@ class Employee_Forms_ContactSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'relation2', array(
-			'label' => '家庭主要成员称呼(1):',
+			'label' => '家庭主要成员称呼:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'name2', array(
-			'label' => '家庭主要成员姓名(1):',
+			'label' => '家庭主要成员一姓名:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'company2', array(
-			'label' => '家庭主要成员工作单位(1):',
+			'label' => '家庭主要成员一工作单位:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'address2', array(
-			'label' => '家庭主要成员居住地(1):',
+			'label' => '家庭主要成员一居住地:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'phone2', array(
-			'label' => '家庭主要成员联系电话(1):',
+			'label' => '家庭主要成员一联系电话:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'relation3', array(
-			'label' => '家庭主要成员称呼(2):',
+			'label' => '家庭主要成员二称呼:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'name3', array(
-			'label' => '家庭主要成员姓名(2):',
+			'label' => '家庭主要成员二姓名:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'company3', array(
-			'label' => '家庭主要成员工作单位(2):',
+			'label' => '家庭主要成员二工作单位:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'address3', array(
-			'label' => '家庭主要成员居住地(2):',
+			'label' => '家庭主要成员二居住地:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'phone3', array(
-			'label' => '家庭主要成员联系电话(2):',
+			'label' => '家庭主要成员二联系电话:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'relation4', array(
-			'label' => '家庭主要成员称呼(3):',
+			'label' => '家庭主要成员三称呼:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'name4', array(
-			'label' => '家庭主要成员姓名(3):',
+			'label' => '家庭主要成员三姓名:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'company4', array(
-			'label' => '家庭主要成员工作单位(3):',
+			'label' => '家庭主要成员三工作单位:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'address4', array(
-			'label' => '家庭主要成员居住地(3):',
+			'label' => '家庭主要成员三居住地:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text', 'phone4', array(
-			'label' => '家庭主要成员联系电话(3):',
+			'label' => '家庭主要成员联系电话:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)

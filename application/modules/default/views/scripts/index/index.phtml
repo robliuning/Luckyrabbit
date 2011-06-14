@@ -57,7 +57,7 @@
 						?></td>
 						<td><a class="lightbox" href="/project/index/ajaxdisplay/id/<?php echo $projectId ?>"><?php echo $this->escape($project->getName()) ?></a></td>
 						<td><?php echo $this->escape($project->getStructype()) ?></td>
-						<td><a href="/employee/contact/ajaxdisplay/id/<?php echo $this->escape($project->getContactId())?>"><?php echo $this->escape($project->getContactName())?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($project->getContactId())?>"><?php echo $this->escape($project->getContactName())?></a></td>
 						<td><a href="/project/index/edit/id/<?php echo $projectId ?>">修改</a></td>
 						<td><a href="/pment/index/index/id/<?php echo $projectId ?>">管理工程</a></td>
 					</tr>

@@ -1,6 +1,5 @@
  <?php 
- 	$this->headTitle('- 分包管理 - 承包商信息');
- 	$this->headScript()->prependFile('/js/contractjs/contractor.js');
+ 	$this->headTitle('- 承包商管理 - 承包商信息');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,7 +8,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>分包管理 - 承包商信息 - 详情</h1>
+		<h1>承包商管理 - 承包商信息 - 详情</h1>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
@@ -39,8 +38,8 @@
 						<td><?php echo $contract->getName()?></td>
 					</tr>
 					<tr>
-						<td>法定负责人：</td>
-						<td><?php echo $contract->getArtiPerson() ?></td>
+						<td>联系人：</td>
+						<td><?php echo $contract->getContact() ?></td>
 					</tr>
 					<tr>
 						<td>许可证号： </td>

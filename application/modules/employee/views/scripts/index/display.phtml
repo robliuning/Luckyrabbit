@@ -1,5 +1,6 @@
 <?php 
 	$this->headTitle('- 公司员工管理 - 公司员工信息');
+ 	$this->headScript()->prependFile('/js/pment.js');
 ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -9,9 +10,6 @@
 	?>
 		<div id="p_content">
 		<h1>公司员工管理 - 公司员工信息 - 详情</h1>
-		<?php 
-			$project = $this->project;
-			echo $this->displayProject($project);?>
 		<div class="p_msg">
 			<h3></h3>
 		</div>
@@ -19,55 +17,159 @@
 				<div class="button_group">
 					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-					<div><a href="/pment/mstprg"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/employee"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
-				<p class="subMenu slideMenu"><a id="btMst" class="subMenu_switch_open">任务详情</a></p>
-				<?php $mstprg = $this->mstprg?>
-				<table>
+				<p class="subMenu slideMenu"><a id="btMst" class="subMenu_switch_open">公司员工详情</a></p>
+				<?php $contact = $this->contact?>
+				<table class="conTable">
 					<colgroup>
-						<col style="width:30%"></col>
-						<col style="width:70%"></col>
+						<col style="width:15%"></col>
+						<col style="width:18%"></col>
+						<col style="width:15%"></col>
+						<col style="width:18%"></col>
+						<col style="width:17%"></col>
+						<col style="width:17%"></col>
 					</colgroup>
 					<tr>
-						<td>阶段号: </td>
-						<td><?php echo $mstprg->getStage()?></td>
+						<td>姓名: </td>
+						<td><?php echo $this->escape($contact->getName())?></td>
+						<td>性别: </td>
+						<td><?php echo $this->escape($contact->getGender())?></td>
+						<td>出生日期: </td>
+						<td><?php echo $this->escape($contact->getBirth())?></td>
 					</tr>
 					<tr>
-						<td>总进度任务名称: </td>
-						<td><?php echo $mstprg->getTask()?></td>
+						<td>年龄: </td>
+						<td><?php echo $this->escape($contact->getAge())?></td>
+						<td>手机号: </td>
+						<td><?php echo $this->escape($contact->getPhoneMob())?></td>
+						<td>电话(家): </td>
+						<td><?php echo $this->escape($contact->getPhoneHome())?></td>
+					</tr>
+					<tr>
+						<td>职称专业: </td>
+						<td><?php echo $this->escape($contact->getTitleSpec())?></td>
+						<td>职称: </td>
+						<td><?php echo $this->escape($contact->getTitleName())?></td>
+						<td>入职时间: </td>
+						<td><?php echo $this->escape($contact->getEnroll())?></td>
+					</tr>
+					<tr>
+						<td>政治面貌: </td>
+						<td><?php echo $this->escape($contact->getPolitical())?></td>
+						<td>部门: </td>
+						<td><?php echo $this->escape($contact->getDeptName())?></td>
+						<td>职务: </td>
+						<td><?php echo $this->escape($contact->getDutyName())?></td>
 					</tr>
 				</table>
-				<div id="conMst">
+				<div id="conMst" class="conTable">
 				<table>
 					<colgroup>
-						<col style="width:30%"></col>
-						<col style="width:70%"></col>
+						<col style="width:15%"></col>
+						<col style="width:18%"></col>
+						<col style="width:15%"></col>
+						<col style="width:18%"></col>
+						<col style="width:17%"></col>
+						<col style="width:17%"></col>
 					</colgroup>
 					<tr>
-						<td>开始日期: </td>
-						<td><?php echo $mstprg->getStartDate()?></td>
+						<td>学历: </td>
+						<td><?php echo $this->escape($contact->getEdu())?></td>
+						<td>民族: </td>
+						<td><?php echo $this->escape($contact->getEthnic())?></td>
+						<td>身份证: </td>
+						<td><?php echo $this->escape($contact->getIdCard())?></td>
 					</tr>
 					<tr>
-						<td>结束日期: </td>
-						<td><?php echo $mstprg->getEndDate()?></td>
+						<td>本市家庭住址: </td>
+						<td><?php echo $this->escape($contact->getAddress())?></td>
+						<td>邮编: </td>
+						<td><?php echo $this->escape($contact->getZip())?></td>
+						<td>户口所在地: </td>
+						<td><?php echo $this->escape($contact->getResidence())?></td>
 					</tr>
 					<tr>
-						<td>工期(天): </td>
-						<td><?php echo $mstprg->getPeriod()?></td>
+						<td>试用期起始日期: </td>
+						<td><?php echo $this->escape($contact->getProbStart())?></td>
+						<td>试用期结束日期: </td>
+						<td><?php echo $this->escape($contact->getProbEnd())?></td>
+						<td>档案所在地: </td>
+						<td><?php echo $this->escape($contact->getProfile())?></td>
 					</tr>
 					<tr>
-						<td>编制人: </td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $mstprg->getContactId() ?>"><?php echo $mstprg->getContactName() ?></td>
+						<td>社保现状: </td>
+						<td><?php echo $this->escape($contact->getSecurity())?></td>
+						<td>社保是否迁入公司: </td>
+						<td><?php echo $this->escape($contact->getSecIn())?></td>
+						<td>社保何时迁入公司: </td>
+						<td><?php echo $this->escape($contact->getSecDate())?></td>
 					</tr>
 					<tr>
-						<td>备注: </td>
-						<td><?php echo $mstprg->getRemark()?></td>
+						<td>入职前体检结果: </td>
+						<td colspan="5"><?php echo $this->escape($contact->getMedical())?></td>
 					</tr>
 					<tr>
-						<td>创建时间: </td>
-						<td><?php echo $mstprg->getCTime()?></td>
+						<td>第一联系人称呼: </td>
+						<td><?php echo $this->escape($contact->getRelation1())?></td>
+						<td>第一联系人姓名: </td>
+						<td><?php echo $this->escape($contact->getName1())?></td>
+						<td>第一联系人工作单位: </td>
+						<td><?php echo $this->escape($contact->getCompany1())?></td>
+					</tr>
+					<tr>
+						<td>第一联系人居住地: </td>
+						<td colspan="3"><?php echo $this->escape($contact->getAddress1())?></td>
+						<td>第一联系人联系电话:</td>
+						<td><?php echo $this->escape($contact->getPhone1())?></td>
+					</tr>
+					<tr>
+						<td>家庭主要成员一称呼:</td>
+						<td><?php echo $this->escape($contact->getRelation2())?></td>
+						<td>家庭主要成员一姓名:</td>
+						<td><?php echo $this->escape($contact->getName2())?></td>
+						<td>家庭主要成员一工作单位:</td>
+						<td><?php echo $this->escape($contact->getCompany2())?></td>
+					</tr>
+					<tr>
+						<td>家庭主要成员一居住地:</td>
+						<td colspan="3"><?php echo $this->escape($contact->getAddress2())?></td>
+						<td>家庭主要成员一联系电话:</td>
+						<td><?php echo $this->escape($contact->getPhone2())?></td>
+					</tr>
+					<tr>
+						<td>家庭主要成员二称呼:</td>
+						<td><?php echo $this->escape($contact->getRelation3())?></td>
+						<td>家庭主要成员二姓名:</td>
+						<td><?php echo $this->escape($contact->getName3())?></td>
+						<td>家庭主要成员二工作单位:</td>
+						<td><?php echo $this->escape($contact->getCompany3())?></td>
+					</tr>
+					<tr>
+						<td>家庭主要成员二居住地:</td>
+						<td colspan="3"><?php echo $this->escape($contact->getAddress3())?></td>
+						<td>家庭主要成员二联系电话:</td>
+						<td><?php echo $this->escape($contact->getPhone3())?></td>
+					</tr>
+					<tr>
+						<td>家庭主要成员三称呼:</td>
+						<td><?php echo $this->escape($contact->getRelation4())?></td>
+						<td>家庭主要成员三姓名:</td>
+						<td><?php echo $this->escape($contact->getName4())?></td>
+						<td>家庭主要成员三工作单位:</td>
+						<td><?php echo $this->escape($contact->getCompany4())?></td>
+					</tr>
+					<tr>
+						<td>家庭主要成员三居住地:</td>
+						<td colspan="3"><?php echo $this->escape($contact->getAddress4())?></td>
+						<td>家庭主要成员三联系电话:</td>
+						<td><?php echo $this->escape($contact->getPhone4())?></td>
+					</tr>
+					<tr>
+						<td>备注:</td>
+						<td colspan="5"><?php echo $this->escape($contact->getRemark())?></td>
 					</tr>
 				</table>
 				</div>
