@@ -1,64 +1,61 @@
 <?php
-/* create by lxj
-   2011-04-08   v 0.2
-   rewrite by lxj
-   2011-04-09   v 0.2
-   */
+//updated in 14th June by Rob
+
 class Contract_Models_ContrqualifMapper
 {
 	protected $_dbTable;
 	
-    public function setDbTable($dbTable)
-    {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
-        }
-        $this->_dbTable = $dbTable;
-        return $this;
-    }
+	public function setDbTable($dbTable)
+	{
+		if (is_string($dbTable)) {
+			$dbTable = new $dbTable();
+		}
+		if (!$dbTable instanceof Zend_Db_Table_Abstract) {
+			throw new Exception('Invalid table data gateway provided');
+		}
+		$this->_dbTable = $dbTable;
+		return $this;
+	}
 
-    public function getDbTable()
-    {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Contract_Models_DbTable_Contrqualif');
-        }
-        return $this->_dbTable;
-    }
+	public function getDbTable()
+	{
+		if (null === $this->_dbTable) {
+			$this->setDbTable('Contract_Models_DbTable_Contrqualif');
+		}
+		return $this->_dbTable;
+	}
 
-    public function save(Contract_Models_Contrqualif $contrqualif) //check
-    {
-        $data = array(
-            'cqId' => $contrqualif->getCqId(),
-            'contractorId' => $contrqualif->getContractorId(),
-            'qualifTypeId' => $contrqualif->getQualifTypeId(),
+	public function save(Contract_Models_Contrqualif $contrqualif) //check
+	{
+		$data = array(
+			'cqId' => $contrqualif->getCqId(),
+			'contractorId' => $contrqualif->getContractorId(),
+			'qualifTypeId' => $contrqualif->getQualifTypeId(),
 			'qualifGrade' => $contrqualif->getQualifGrade()
-        );
-        if (null === ($id = $contrqualif->getCqId())) {
-            unset($data['cqId']);
-            $this->getDbTable()->insert($data);
-        } else {
-            $this->getDbTable()->update($data, array('cqId = ?' => $contrqualif->getCqId()));
-        }
-    }
-    
-    public function find($id,Contract_Models_Contrqualif $contrqualif)
-    {
-    	$resultSet = $this->getDbTable()->find($id);
+		);
+		if (null === ($id = $contrqualif->getCqId())) {
+			unset($data['cqId']);
+			$this->getDbTable()->insert($data);
+		} else {
+			$this->getDbTable()->update($data, array('cqId = ?' => $contrqualif->getCqId()));
+		}
+	}
+	
+	public function find($id,Contract_Models_Contrqualif $contrqualif)
+	{
+		$resultSet = $this->getDbTable()->find($id);
 
-        if (0 == count($resultSet)) {
+		if (0 == count($resultSet)) {
 
-            return;
-        }
+			return;
+		}
 
-        $row = $resultSet->current();
+		$row = $resultSet->current();
 
-        $contrqualif->setCqId($row->cqId)
-                  ->setContractorId($row->contractorId)
-			      ->setQualifTypeId($row->qualifTypeId)
-			      ->setQualifGrade($row->qualifGrade);	
+		$contrqualif->setCqId($row->cqId)
+				->setContractorId($row->contractorId)
+				->setQualifTypeId($row->qualifTypeId)
+				->setQualifGrade($row->qualifGrade);	
 		$qualiftypes = new General_Models_QualifTypeMapper();
 		$qualiftype = new General_Models_Qualiftype();
 		$qualiftypes->find($contrqualif->getQualifTypeId(),$qualiftype); 
@@ -68,24 +65,24 @@ class Contract_Models_ContrqualifMapper
 		$contractorName = $contractors->findContractorName($contrqualif->getContractorId());
 		$contrqualif->setContractorName($contractorName);
 
-    }
-    
-    public function fetchAllJoin($key,$condition)
-    {
-    	if($condition == null)
-    	{
-    		$resultSet = $this->getDbTable()->fetchAll();
-    		}
-    		else
-    		{
-    			$resultSet = $this->getDbTable()->search($key,$condition);
-    			}
-   		
-   		$contrqualifs = array();
-   		
-   		foreach($resultSet as $row){
-   			$contrqualif = new Contract_Models_Contrqualif();
-        	$contrqualif ->setCqId($row->cqId)
+	}
+	
+	public function fetchAllJoin($key,$condition)
+	{
+		if($condition == null)
+		{
+			$resultSet = $this->getDbTable()->fetchAll();
+			}
+			else
+			{
+				$resultSet = $this->getDbTable()->search($key,$condition);
+				}
+ 		
+ 		$contrqualifs = array();
+ 		
+ 		foreach($resultSet as $row){
+ 			$contrqualif = new Contract_Models_Contrqualif();
+			$contrqualif ->setCqId($row->cqId)
 						->setContractorId($row->contractorId)
 						->setQualifTypeId($row->qualifTypeId)
 						->setQualifGrade($row->qualifGrade);
@@ -98,25 +95,25 @@ class Contract_Models_ContrqualifMapper
 			$contrqualif->setQualifType($qualiftype->getName());
 			
 			$contrqualifs[] = $contrqualif;
-   		}
-    	return $contrqualifs;
-    }
+ 		}
+		return $contrqualifs;
+	}
  
-    public function fetchAllQualifTypes($key)
-    {
+	public function fetchAllQualifTypes($key)
+	{
 		$qualiftypes = new General_Models_QualifTypeMapper();
 
 		$arrayQualifTypes = $qualiftypes->fetchAll($key);
 
 		return $arrayQualifTypes;
-    }
-    
-    public function populateContrqualifDd($form,$condition,$serie) //check
-  	{
-  		if($condition == 0)
-  		{
-  			$contractors = new Contract_Models_ContractorMapper();
-			$arrayContractors = $contractors->fetchAllJoin();  //contractor name and id
+	}
+	
+	public function populateContrqualifDd($form,$condition,$serie) //check
+	{
+		if($condition == 0)
+		{
+			$contractors = new Contract_Models_ContractorMapper();
+			$arrayContractors = $contractors->fetchAllJoin();//contractor name and id
 			
 			foreach($arrayContractors as $contr)
 			{
@@ -130,9 +127,9 @@ class Contract_Models_ContrqualifMapper
 		{
 			$form->getElement('qualifTypeId')->addMultiOption($qualif->getTypeId(),$qualif->getName());
 			}
-  	}
-  	
-  	public function findQualiftypes($key) //check
+	}
+	
+	public function findQualiftypes($key) //check
 	{
 		$qualiftypes = new General_Models_QualiftypeMapper();
 		
@@ -175,6 +172,15 @@ class Contract_Models_ContrqualifMapper
 	{
 		$resultSet = $this->getDbTable()->fetchAllContrqualifs($id);
 		return $resultSet;	
+	}
+	
+	public function formValidator($form,$formType)
+	{	
+		$emptyValidator = new Zend_Validate_NotEmpty();
+		$emptyValidator->setMessage(General_Models_Text::$text_notEmpty);
+		$form->getElement('qualifGrade')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+		return $form;
 	}
 }
 ?>

@@ -1,17 +1,11 @@
 <?php
-/*
-author:ming tingling
-create date:2011.4.4
-vision:2.0
-rewrite:mingtingling
-rewrite date:2011.4.9
-Modified by MeiMo,Apr.22.2011
-*/
+//updated in 14th June by Rob
+
 class Contract_ContrqualifController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		/*初始化*/
+		//init
 	}
 	
 	public function preDisPatch()
@@ -19,74 +13,72 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 		$this->view->render("_sidebar.phtml");
 	}
 	
-	public function indexAction() //done
+	public function indexAction()
 	{
- 		$addForm = new Contract_Forms_ContrqualifSave();
-	  	$addForm->submit->setLabel("保存新建");
-	  	$addForm->submit2->setAttrib('class','hide');
+		$addForm = new Contract_Forms_ContrqualifSave();
+		$addForm->submit->setLabel("保存新建");
+		$addForm->submit2->setAttrib('class','hide');
 		$errorMsg = null;
-	  	$contrqualifs = new Contract_Models_ContrqualifMapper();
-	  	$condition = 0;
-	  	$serie = "施工总承包";
-	  	$contrqualifs->populateContrqualifDd($addForm,$condition,$serie);
-	  	
-	  	if($this->getRequest()->isPost())
-	    {
-		   	$formData = $this->getRequest()->getPost();
-		   	$addForm->getElement('qualifTypeId')->setRegisterInArrayValidator(false);//学都了
-		   	if($addForm->isValid($formData))
+		$contrqualifs = new Contract_Models_ContrqualifMapper();
+		$condition = 0;
+		$serie = "施工总承包";
+		$contrqualifs->populateContrqualifDd($addForm,$condition,$serie);
+		$addForm = $contrqualifs->formValidator($addForm,0);
+		
+		if($this->getRequest()->isPost())
+		{
+			$formData = $this->getRequest()->getPost();
+			$addForm->getElement('qualifTypeId')->setRegisterInArrayValidator(false);
+			if($addForm->isValid($formData))
 			{
 				$contrqualif = new Contract_Models_Contrqualif();
-        		$contrqualif->setContractorId($addForm->getValue('contractorId'));
+				$contrqualif->setContractorId($addForm->getValue('contractorId'));
 				$contrqualif->setQualifTypeId($addForm->getValue('qualifTypeId'));
-				$contrqualif->setQualifGrade($addForm->getValue('qualifGrade'));             
-       			$result = $contrqualifs->save($contrqualif);
+				$contrqualif->setQualifGrade($addForm->getValue('qualifGrade'));
+				$result = $contrqualifs->save($contrqualif);
 				$errorMsg = General_Models_Text::$text_save_success;
-				$addForm->getElement('contractorId')->setValue('');
-				$addForm->getElement('qualifSerie')->setValue('');
-				$addForm->getElement('qualifTypeId')->setValue('');
-				$addForm->getElement('qualifGrade')->setValue('');
+				$addForm->reset();
 				}
-		 		else
+				else
 				{
-			 		$addForm->populate($formData);
+					$addForm->populate($formData);
 					}
 		}
 		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
 	}
 	
-	public function editAction()  //done
+	public function editAction()
 	{
-    	$editForm = new Contract_Forms_ContrqualifSave();
+		$editForm = new Contract_Forms_ContrqualifSave();
 		$editForm->submit->setLabel("保存修改");
-	  	$editForm->submit2->setAttrib('class','hide');
-	  	$editForm->getElement('contractorId')->setAttrib('class','hide');
-	  	$editForm->getElement('contractorId')->setLabel('');
-	  	
-	  	$contrqualifs = new Contract_Models_ContrqualifMapper();
-	  	$condition = 0;
-	  	$serie = "施工总承包";
-	  	$contrqualifs->populateContrqualifDd($editForm,$condition,$serie); 
-	  	$cqId = $this->_getParam('id',0);
-	 
-	  	if($this->getRequest()->isPost())
+		$editForm->submit2->setAttrib('class','hide');
+		$editForm->getElement('contractorId')->setAttrib('class','hide');
+		$editForm->getElement('contractorId')->setLabel('');
+		
+		$contrqualifs = new Contract_Models_ContrqualifMapper();
+		$condition = 0;
+		$serie = "施工总承包";
+		$contrqualifs->populateContrqualifDd($editForm,$condition,$serie); 
+		$cqId = $this->_getParam('id',0);
+		$addForm = $contrqualifs->formValidator($editForm,1);
+		if($this->getRequest()->isPost())
 		{
 			$formData=$this->getRequest()->getPost();
 			$editForm->getElement('qualifTypeId')->setRegisterInArrayValidator(false);
-		  	if($editForm->isValid($formData))
+			if($editForm->isValid($formData))
 			{
 				$contrqualif = new Contract_Models_Contrqualif();
 				$contrqualif->setCqId($cqId);				
 				$contrqualif->setContractorId($editForm->getValue('contractorId'));
 				$contrqualif->setQualifTypeId($editForm->getValue('qualifTypeId'));
 				$contrqualif->setQualifGrade($editForm->getValue('qualifGrade'));
-        		$result = $contrqualifs->save($contrqualif);
+				$result = $contrqualifs->save($contrqualif);
 				$this->_redirect('/contract/index/display/id/'.$editForm->getValue('contractorId'));
 				}
-		 		else
+				else
 				{
-			    	$editForm->populate($formData); //uncheck
+					$editForm->populate($formData); 
 					}
 			}
 			else
@@ -96,7 +88,7 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 					$arrayContrqualif = $contrqualifs->findArrayContrQualif($cqId);
 					$condition = 1;
 					$serie = (string)$arrayContrqualif['qualifSerie'];
-				  	$contrqualifs->populateContrqualifDd($editForm,$condition,$serie);
+					$contrqualifs->populateContrqualifDd($editForm,$condition,$serie);
 					$editForm->populate($arrayContrqualif);
 					}
 					else
@@ -114,8 +106,8 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 		$this->view->cqId=$cqId;
 		}
 
- 	public function ajaxdeleteAction() /*删除*/
- 	{
+	public function ajaxdeleteAction()
+	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$cqId = $this->_getParam('id',0);
@@ -132,44 +124,44 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 			}
 		}
 		else
-	 	{
+		{
 			$this->_redirect('/contract');
 		}
- 	}
- 	
- 	public function ajaxdisplayAction() //done
- 	{
- 		$this->_helper->layout()->disableLayout();
- 		$cqId = $this->_getParam('id',0);
-    	if($cqId > 0)
+	}
+	
+	public function ajaxdisplayAction()
+	{
+		$this->_helper->layout()->disableLayout();
+		$cqId = $this->_getParam('id',0);
+		if($cqId > 0)
 		{
 			$contrqualifs = new Contract_Models_ContrqualifMapper();
 			$contrqualif = new Contract_Models_Contrqualif();
 			$contrqualifs->find($cqId,$contrqualif);
-      		$this->view->contrqualif = $contrqualif;
+			$this->view->contrqualif = $contrqualif;
 		}
 		else
 		{
 			$this->_redirect('/contract/contrqualif');
-		  }
- 	}
- 	
- 	public function populateddAction() //done
- 	{
- 		$this->_helper->layout()->disableLayout();
+		}
+	}
+	
+	public function populateddAction()
+	{
+		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
- 		$key = $this->_getParam('id');
- 		if($key != null)
- 		{
- 			$contrqualifs = new Contract_Models_ContrqualifMapper();
- 			
- 			$arrayQualiftypes = $contrqualifs->findQualiftypes($key);
- 			$json = Zend_Json::encode($arrayQualiftypes);
- 			echo $json;  	
- 			}
- 			else
+		$key = $this->_getParam('id');
+		if($key != null)
+		{
+			$contrqualifs = new Contract_Models_ContrqualifMapper();
+			
+			$arrayQualiftypes = $contrqualifs->findQualiftypes($key);
+			$json = Zend_Json::encode($arrayQualiftypes);
+			echo $json;	
+			}
+			else
 			{
 				$this->_redirect('/contract/contrqualif');
-		  	}
- 	}
+			}
+	}
 }

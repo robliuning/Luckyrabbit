@@ -13,7 +13,6 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			'select','contractorId',array(
 			'label'=>'承包商:',
 			'class'=>'tbLarge tbText',
-			'required'=>true
 			)
 		);
 		$this->addElement(
@@ -21,21 +20,18 @@ class Contract_Forms_ContrqualifSave extends Zend_Form
 			'label'=>'资质序列:',
 			'multiOptions'=>array('施工总承包'=>'施工总承包','专业承包'=>'专业承包','劳务分包'=>'劳务分包'),
 			'class'=>'tbMedium tbText',
-			'required'=>true
 			)
 		);
 		$this->addElement(
 			'select','qualifTypeId',array(
 			'label'=>'资质类别:',
 			'class'=>'tbLarge tbText',
-			'required'=>true
 			)
 		);
 		$this->addElement(
 			'text','qualifGrade',array(
 			'label'=>'资质等级:',
 			'class'=>'tbMedium tbText',
-			'required'=>false
 			)
 		);
 

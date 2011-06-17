@@ -67,8 +67,27 @@ class Contract_Models_ContractorMapper
 				->setRemark($row->remark)
 				->setCTime($row->cTime);
 		}
- 
-	public function delete($id) //check
+	
+	public function findById($id)
+	{
+		$resultSet = $this->getDbTable()->find($id);
+
+		if (0 == count($resultSet)) {
+
+			return;
+		}
+		$contract = new Contract_Models_Contractor();
+		$row = $resultSet->current();
+		$contract->setContractorId($row->contractorId)
+				->setName($row->name)
+				->setContact($row->contact)
+				->setLicenseNo($row->licenseNo)
+				->setPhoneNo($row->phoneNo)
+				->setOtherContact($row->otherContact)
+				->setAddress($row->address);
+		return $contract;
+		}
+	public function delete($id)
 	{
 		$result = $this->getDbTable()->delete('contractorId = ' . (int)$id);
 		return $result;	
@@ -114,6 +133,36 @@ class Contract_Models_ContractorMapper
 		
 		return $name;
 	}
+	
+	public function fetchAllContractors()
+	{
+		$arrayContractors = $this->getDbtable()->fetchAll();
+		
+		$entries = array();
+		
+		$i = 0;
+		
+		foreach($arrayContractors as $contractor)
+		{
+			$entries[$i]['contractorId'] = $contractor->contractorId;
+			$entries[$i]['name'] = $contractor->name;
+			$entries[$i]['contact'] = $contractor->contact;
+			$i++;
+			}
+		
+		return $entries;
+	}
+	
+	public function populateContractors($form)
+	{
+		$arrayContractors = $this->fetchAllContractors();
+			
+		foreach($arrayContractors as $contr)
+		{
+			$name = "承包商: ".$contr['name']." 联系人: ".$contr['contact'];
+			$form->getElement('contractorId')->addMultiOption($contr['contractorId'],$name);
+			}
+		}
 
 	public function formValidator($form,$formType)
 	{	

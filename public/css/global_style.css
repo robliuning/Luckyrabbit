@@ -552,6 +552,23 @@ label
 	text-align: center;
 	width: 50px;
 	}
+.btConfirmNf
+{
+	padding: 5px 30px 5px 30px;
+	border: 1px solid #D7D7D7;
+	display: block;
+	background-color: #808084;
+	color: white;
+	margin: 10px 9px 0 0;
+	line-height: 30px;
+	font-size: 15px;
+	text-align: center;
+	}
+.btConfirmNf:hover
+{
+	background-color: #CCCCD0;
+	cursor: pointer;
+	}
 .btConfirm
 {
 	padding: 5px 30px 5px 30px;
@@ -759,6 +776,10 @@ label
 	background-repeat: no-repeat;
 	padding: 5px 30px;
 	}
+#conAddCp
+{
+	padding: 0 0 5px 15px;
+}
 .conTable td
 {
 	border-right:1px dashed #D7D7D7

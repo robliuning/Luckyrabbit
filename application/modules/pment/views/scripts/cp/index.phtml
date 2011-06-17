@@ -1,0 +1,110 @@
+<?php 
+	$this->headTitle('- 工程管理 - 工程承包商信息');
+	$this->headScript()->prependFile('/js/pment.js');
+	$this->headScript()->prependFile('/js/conContractor.js');
+?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 工程承包商信息 - 总览</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+					}?>
+					</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新页面</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_close">添加属于本工程的承包商</a></p>
+				<div id="conAddCp" class="hide conRdSlide">
+						<?php
+							$this->addForm->setAction($this->url());
+							echo $this->addForm;
+						?>
+				</div>
+				<p class="subMenu slideMenu"><a class="btRdSlide2 subMenu_switch_open">本工程承包商列表</a></p>
+				<div class="conRdSlide2">
+				<table>
+					<colgroup>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:17%"></col>
+						<col style="width:13%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:5%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>承包商</th>
+						<th>联系人</th>
+						<th>安全生产许可证</th>
+						<th>联系电话</th>
+						<th>其他联系方式</th>
+						<th>地址</th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php $counter = 1;?>	
+					<?php foreach($this->arrayCps as $contractor):?>
+					<?php $contractorId = $this->escape($contractor->getContractorId()); ?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $this->escape($contractor->getCpId()); ?>"></td>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="/contract/index/ajaxdisplay/id/<?php echo $contractorId ?>"><?php echo $this->escape($contractor->getName()) ?></td>
+						<td><?php echo $this->escape($contractor->getContact()) ?></td>
+						<td><?php echo $this->escape($contractor->getLicenseNo()) ?></td>
+						<td><?php echo $this->escape($contractor->getPhoneNo()) ?></td>
+						<td><?php echo $this->escape($contractor->getOtherContact()) ?></td>	
+						<td><?php echo $this->escape($contractor->getAddress())?></td>
+						<td><a class="lightbox" href="/contract/index/ajaxdisplay/id/<?php echo $contractorId ?>">详情</a></td>	
+					</tr>
+					<?php endforeach ?>
+				</table>
+				</div>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

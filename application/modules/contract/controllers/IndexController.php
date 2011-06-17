@@ -53,10 +53,11 @@ class Contract_IndexController extends Zend_Controller_Action
 		$editForm->submit2->setAttrib('class','hide');
 		$contractors = new Contract_Models_ContractorMapper();
 		$contractorId = $this->_getParam('id',0);
+		$addForm = $contractors->formValidator($editForm,1);
 		if($this->getRequest()->isPost())
 		{
-		$formData = $this->getRequest()->getPost();
-		if($editForm->isValid($formData))
+			$formData = $this->getRequest()->getPost();
+			if($editForm->isValid($formData))
 			{
 				$contractor = new Contract_Models_Contractor();
 				$contractor->setContractorId($contractorId);
@@ -71,24 +72,24 @@ class Contract_IndexController extends Zend_Controller_Action
 				$contractors->save($contractor);
 				$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的修改成功。');
 				$this->_redirect('/contract');
+				}
+				else
+				{
+					$editForm->populate($formData);
 					}
-					else
-					{
-						$editForm->populate($formData);
-					}
-		}
- 	else
-		{
-			if($contractorId>0)
-			{
-				$arrayContractor = $contractors->findArrayContractor($contractorId);
-				$editForm->populate($arrayContractor);
 			}
 			else
 			{
-					$this->_redirect('/contract/');
-			 	}
-		}
+				if($contractorId>0)
+				{
+					$arrayContractor = $contractors->findArrayContractor($contractorId);
+					$editForm->populate($arrayContractor);
+					}
+					else
+					{
+						$this->_redirect('/contract/');
+			 			}
+				}
 		$this->view->editForm = $editForm;
 		$this->view->id = $contractorId;
 	}
@@ -100,34 +101,46 @@ class Contract_IndexController extends Zend_Controller_Action
 		$addForm->submit2->setLabel("保存返回上页");
 		$errorMsg = null;
 		$contractors = new Contract_Models_ContractorMapper();
+		$addForm = $contractors->formValidator($addForm,0);
+
 		if($this->getRequest()->isPost())
 		{
 			$btClicked = $this->getRequest()->getPost('submit');
 			$formData = $this->getRequest()->getPost();
 			if($addForm->isValid($formData))
 			{
-				$contractor = new Contract_Models_Contractor();
-				$contractor->setName($addForm->getValue('name'));
-				$contractor->setContact($addForm->getValue('contact'));
-				$contractor->setLicenseNo($addForm->getValue('licenseNo'));
-				$contractor->setBusiField($addForm->getValue('busiField'));
-				$contractor->setPhoneNo($addForm->getValue('phoneNo'));
-				$contractor->setOtherContact($addForm->getValue('otherContact'));
-				$contractor->setAddress($addForm->getValue('address'));
-				$contractor->setRemark($addForm->getValue('remark'));
-				$contractors->save($contractor);
-				$errorMsg = General_Models_Text::$text_save_success;
-				$addForm->reset();
-				if($btClicked=="保存返回上页")
+				$array = $contractors->dataValidator($formData,0);
+				$trigger = $array['trigger'];
+				$errorMsg = $array['errorMsg'];
+				if($trigger == 0)
 				{
-					$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的修改成功。');
-					$this->_redirect('/contract');
+					$contractor = new Contract_Models_Contractor();
+					$contractor->setName($addForm->getValue('name'));
+					$contractor->setContact($addForm->getValue('contact'));
+					$contractor->setLicenseNo($addForm->getValue('licenseNo'));
+					$contractor->setBusiField($addForm->getValue('busiField'));
+					$contractor->setPhoneNo($addForm->getValue('phoneNo'));
+					$contractor->setOtherContact($addForm->getValue('otherContact'));
+					$contractor->setAddress($addForm->getValue('address'));
+					$contractor->setRemark($addForm->getValue('remark'));
+					$contractors->save($contractor);
+					$errorMsg = General_Models_Text::$text_save_success;
+					$addForm->reset();
+					if($btClicked=="保存返回上页")
+					{
+						$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的修改成功。');
+						$this->_redirect('/contract');
+						}
+					}
+					else
+					{
+						$addForm->populate($formData);
+						}
 				}
-			}
-			else
-			{
+				else
+				{
 					$addForm->populate($formData);
-			}
+					}
 		}
 		$this->view->errorMsg = $errorMsg;
 		$this->view->addForm = $addForm;
@@ -153,8 +166,26 @@ class Contract_IndexController extends Zend_Controller_Action
 		{
 		 $this->_redirect('/contract');
 		}
- 	}
- 
+	}
+
+	public function ajaxdisplayAction()
+	{
+		$this->_helper->layout()->disableLayout();
+		$contractorId = $this->_getParam('id',0);
+		if($contractorId > 0)
+		{
+			$contractors = new Contract_Models_ContractorMapper();
+			$contractor = new Contract_Models_Contractor();
+			$contractors->find($contractorId,$contractor);
+			
+			$this->view->contractor = $contractor;
+			}
+			else
+			{
+				$this->_redirect('/contract');
+				}
+	}
+
 	public function displayAction()
 	{
 		$contractors = new Contract_Models_ContractorMapper();

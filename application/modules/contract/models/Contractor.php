@@ -13,6 +13,7 @@ class Contract_Models_Contractor
 	protected $_address;
 	protected $_remark;
 	protected $_cTime;
+	protected $_cpId;
 	
 	public function __construct(array $options = null)
 	{
@@ -160,6 +161,17 @@ class Contract_Models_Contractor
 	public function getCTime()
 	{
 		return $this->_cTime;
+	}
+
+	public function setCpId($cpId)
+	{
+		$this->_cpId = $cpId;
+		return $this;
+	}
+
+	public function getCpId()
+	{
+		return $this->_cpId;
 	}
 }
 ?>
