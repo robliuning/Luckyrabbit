@@ -1,0 +1,131 @@
+ <?php 
+ 	$this->headTitle('- 工程管理 - 工程日志');
+ 	$this->headScript()->prependFile('/js/pment.js');
+	$this->headScript()->prependFile('/js/conContractor.js'); ?>
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 工程分包单 - 详情</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
+		<div class="p_msg">
+			<h3></h3>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</div>
+		<?php $subcontract = $this->subcontract?>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/pment/subcontract"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu slideMenu">工程分包单详情</p>
+			 <table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>分包类型：</td>
+						<td><?php echo $subcontract->getScontrType()?></td>
+					</tr>
+					<tr>
+						<td>承包商名称：</td>
+						<td><a class="lightbox" href="/contract/index/ajaxdisplay/id/<?php echo $this->escape($subcontract->getContractorId()) ?>"><?php echo $this->escape($subcontract->getContractorName()) ?></a></td>
+					</tr>
+					<tr>
+						<td>分包项目：</td>
+						<td><?php echo $subcontract->getContent()?></td>
+					</tr>
+					<tr>
+						<td>具体描述：</td>
+						<td><?php echo $subcontract->getDetail()?></td>
+					</tr>
+					<tr>
+						<td>质量等级：</td>
+						<td><?php echo $subcontract->getQuality()?></td>
+					</tr>
+					<tr>
+						<td>预计开始时间：</td>
+						<td><?php echo $subcontract->getStartDateExp()?></td>
+					</tr>
+					<tr>
+						<td>预计结束时间：</td>
+						<td><?php echo $subcontract->getEndDateExp()?></td>
+					</tr>
+					<tr>
+						<td>预计工期：</td>
+						<td><?php echo $subcontract->getPeriodExp()?></td>
+					</tr>
+					<tr>
+						<td>实际开始时间：</td>
+						<td><?php echo $subcontract->getStartDateAct()?></td>
+					</tr>
+					<tr>
+						<td>实际结束时间：</td>
+						<td><?php echo $subcontract->getEndDateAct()?></td>
+					</tr>
+					<tr>
+						<td>实际工期：</td>
+						<td><?php echo $subcontract->getPeriodAct()?></td>
+					</tr>
+					<tr>
+						<td>承包方违约情况：</td>
+						<td><?php echo $subcontract->getBrConContr()?></td>
+					</tr>
+					<tr>
+						<td>承包方违约责任：</td>
+						<td><?php echo $subcontract->getBrResContr()?></td>
+					</tr>
+					<tr>
+						<td>分包方违约情况：</td>
+						<td><?php echo $subcontract->getBrConSContr()?></td>
+					</tr>
+					<tr>
+						<td>分包方违约责任：</td>
+						<td><?php echo $subcontract->getBrResScontr()?></td>
+					</tr>
+					<tr>
+						<td>合同金额：</td>
+						<td><?php echo $subcontract->getContrAmt()?></td>
+					</tr>
+					<tr>
+						<td>履约保函：</td>
+						<td><?php echo $subcontract->getGuarantee()?></td>
+					</tr>
+					<tr>
+						<td>工程保证金：</td>
+						<td><?php echo $subcontract->getPrjMargin()?></td>
+					</tr>
+					<tr>
+						<td>工程保修金：</td>
+						<td><?php echo $subcontract->getPrjWarr()?></td>
+					</tr>
+					<tr>
+						<td>备注：</td>
+						<td><?php echo $subcontract->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>上次修改时间：</td>
+						<td><?php echo $subcontract->getCTime()?></td>
+					</tr>
+				</table>
+			<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

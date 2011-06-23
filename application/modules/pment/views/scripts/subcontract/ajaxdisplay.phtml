@@ -16,10 +16,6 @@
 						<col style="width:70%"></col>
 					</colgroup>
 					<tr>
-						<td>工程名称：</td>
-						<td><?php echo $subcontract->getProjectName()?></td>
-					</tr>
-					<tr>
 						<td>分包类型：</td>
 						<td><?php echo $subcontract->getScontrType()?></td>
 					</tr>
@@ -28,8 +24,12 @@
 						<td><?php echo $subcontract->getContractorName()?></td>
 					</tr>
 					<tr>
-						<td>分包项目及描述：</td>
-						<td><?php echo $subcontract->getscontrDetail()?></td>
+						<td>分包项目：</td>
+						<td><?php echo $subcontract->getContent()?></td>
+					</tr>
+					<tr>
+						<td>具体描述：</td>
+						<td><?php echo $subcontract->getDetail()?></td>
 					</tr>
 					<tr>
 						<td>质量等级：</td>
@@ -60,32 +60,28 @@
 						<td><?php echo $subcontract->getPeriodAct()?></td>
 					</tr>
 					<tr>
-						<td>承包人违约情况：</td>
+						<td>承包方违约情况：</td>
 						<td><?php echo $subcontract->getBrConContr()?></td>
 					</tr>
 					<tr>
-						<td>承包商违约责任：</td>
+						<td>承包方违约责任：</td>
 						<td><?php echo $subcontract->getBrResContr()?></td>
 					</tr>
 					<tr>
-						<td>分包人违约情况：</td>
+						<td>分包方违约情况：</td>
 						<td><?php echo $subcontract->getBrConSContr()?></td>
 					</tr>
 					<tr>
-						<td>分包人违约责任：</td>
+						<td>分包方违约责任：</td>
 						<td><?php echo $subcontract->getBrResScontr()?></td>
 					</tr>
 					<tr>
-						<td>保修信息：</td>
-						<td><?php echo $subcontract->getWarranty()?></td>
-					</tr>
-					<tr>
-						<td>合同造价：</td>
+						<td>合同金额：</td>
 						<td><?php echo $subcontract->getContrAmt()?></td>
 					</tr>
 					<tr>
-						<td>施工保证金：</td>
-						<td><?php echo $subcontract->getConsMargin()?></td>
+						<td>履约保函：</td>
+						<td><?php echo $subcontract->getGuarantee()?></td>
 					</tr>
 					<tr>
 						<td>工程保证金：</td>

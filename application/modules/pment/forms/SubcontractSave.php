@@ -1,25 +1,15 @@
 <?php
-/*
-	Richard Song
-	2011.4.27
-*/
-class Contract_Forms_SubcontractSave  extends Zend_Form
+//updated in 22th June by Rob
+
+class Pment_Forms_SubcontractSave  extends Zend_Form
 {
 	public function init()
 	{
 		$this->setMethod('post');
 
 		$this->addElement(
-			'select','projectId',array(
-			'label'=>'工程名称:',
-			'required'=>true,
-			'class'=>'tbLarge tbText'
-			)
-		);
-		$this->addElement(
 			'select','scontrType',array(
 			'label'=>'分包类型:',
-			'required'=>true,
 			'multiOptions'=>array('专业分包'=>'专业承包', '劳务分包'=>'劳务分包'),
 			'class'=>'tbMedium tbText'
 			)
@@ -27,14 +17,20 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		$this->addElement(
 			'select','contractorId',array(
 			'label'=>'分包商名称:',
-			'required'=>true,
 			'class'=>'tbLarge tbText'
 			)
 		);
 		$this->addElement(
-			'textarea','scontrDetail',array(
-			'label'=>'分包项目及描述:',
-			'required'=>false,
+			'textarea','content',array(
+			'label'=>'*分包项目:',
+			'class'=>'tbText pfocus',
+			'cols'=> 60,
+			'rows'=> 4
+			)
+		);
+		$this->addElement(
+			'textarea','detail',array(
+			'label'=>'具体描述:',
 			'class'=>'tbText',
 			'cols'=> 60,
 			'rows'=> 4
@@ -43,47 +39,41 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		$this->addElement(
 			'select','quality',array(
 			'label'=>'质量等级:',
-			'required'=>false,
-			'multiOptions'=>array('基本合格'=>'基本合格', '合格'=>'合格', '优良'=>'优良'),
+			'multiOptions'=>array('优良'=>'优良', '中等'=>'中等', '合格'=>'合格'),
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text','startDateExp',array(
-			'label'=>'预计开始日期:',
-			'required'=>false,
+			'label'=>'预计进场日期:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text','endDateExp',array(
-			'label'=>'预计结束时间:',
-			'required'=>false,
+			'label'=>'预计完成时间:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text','startDateAct',array(
-			'label'=>'实际开始时间:',
-			'required'=>false,
+			'label'=>'实际进场时间:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'text','endDateAct',array(
-			'label'=>'实际结束时间:',
-			'required'=>false,
+			'label'=>'实际完成时间:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText datepicker'
 			)
 		);
 		$this->addElement(
 			'textarea','brConContr',array(
-			'label'=>'承包人违约情况:',
-			'required'=>false,
+			'label'=>'承包方违约情况:',
 			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
@@ -91,8 +81,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'textarea','brResContr',array(
-			'label'=>'承包人违约责任:',
-			'required'=>false,
+			'label'=>'承包方违约责任:',
 			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
@@ -100,8 +89,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'textarea','brConSContr',array(
-			'label'=>'分包商违约责任:',
-			'required'=>false,
+			'label'=>'分包方违约责任:',
 			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
@@ -109,17 +97,7 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'textarea','brResSContr',array(
-			'label'=>'分包商违约责任:',
-			'required'=>false,
-			'class'=>'tbText',
-			'cols' => 60,
-			'rows' => 4
-			)
-		);
-		$this->addElement(
-			'textarea','warranty',array(
-			'label'=>'保修信息:',
-			'required'=>false,
+			'label'=>'分包方违约责任:',
 			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4
@@ -127,31 +105,29 @@ class Contract_Forms_SubcontractSave  extends Zend_Form
 		);
 		$this->addElement(
 			'text','contrAmt',array(
-			'label'=>'合同造价:',
+			'label'=>'合同金额(元人民币):',
 			'filters'=>array('StringTrim'),
-			'required'=>false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
-			'text','consMargin',array(
-			'label'=>'施工保证金:',
+			'text','guarantee',array(
+			'label'=>'履约保函(元人民币):',
 			'filters'=>array('StringTrim'),
-			'required'=>false,
 			'class'=>'tbMedium tbText'
 			)
 		);
+
 		$this->addElement(
 			'text','prjMargin',array(
-			'label'=>'工程保证金:',
+			'label'=>'工程保证金(元人民币):',
 			'filters'=>array('StringTrim'),
-			'required'=>false,
 			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'text','prjWarr',array(
-			'label'=>'工程保修金:',
+			'label'=>'工程保修金(元人民币):',
 			'filters'=>array('StringTrim'),
 			'required'=>false,
 			'class'=>'tbMedium tbText'

@@ -13,6 +13,11 @@
 		public static $text_date_startEndError = "结束日期必须为开始日期之后。";
 		public static $text_date_exist = "输入的时间已经存在。";
 		
+		//pment subcontractor
+		public static $text_date_startEndError_sub_exp = "预计完成日期必须为预计进场日期之后。";
+		public static $text_date_startEndError_sub_act = "实际完成日期必须为实际进场日期之后。";
+
+		
 		//admin login
 		public static $text_loginFailed = "登录失败，用户名或登录密码错误。";
 
