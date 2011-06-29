@@ -19,13 +19,13 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 					->where('ve.plateNo like ?','%'.$key.'%')
 					->where('re.projectId = ?',$condition[0]);
 				}
-				elseif($condition == 'date')
+				elseif($condition[1] == 'date')
 				{
 					$select->where('startDate <= ?',$key)
 						->where('endDate >= ?',$key)
 						->where('projectId = ?',$condition[0]);
 					}
-					elseif($condition == 'contactName')
+					elseif($condition[1] == 'contactName')
 					{
 						$select->setIntegrityCheck(false)
 							->from(array('em' => 'em_contacts'),array('name'))
@@ -33,10 +33,10 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 							->where('em.name like ?','%'.$key.'%')
 							->where('re.projectId = ?',$condition[0]);
 							}
-							elseif($condition == 'veId')
+							elseif($condition[1] == 'veId')
 							{
 								$select->where('veId = ?',$key)
-									->where('projectId = ?',$condtion[0]);
+									->where('projectId = ?',$condition[0]);
 								}
 			}
 			else

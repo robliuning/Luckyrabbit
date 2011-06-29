@@ -205,7 +205,9 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			$arrayDrirecords = $drirecords->fetchAllJoin($veId,$condition);
 			$arrayRepairs = $repairs->fetchAllJoin($veId,$condition);
 			$arrayMtncs = $mtncs->fetchAllJoin($veId,$condition);
-			$arrayVerecords = $verecords->fetchAllJoin($veId,$condition);
+			$conditionVar[0] = '0';
+			$conditionVar[1] = 'veId';
+			$arrayVerecords = $verecords->fetchAllJoin($veId,$conditionVar);
 			$this ->view->vehicle = $vehicle;
 			$this ->view->arrayDrirecords = $arrayDrirecords;
 			$this ->view->arrayRepairs = $arrayRepairs;

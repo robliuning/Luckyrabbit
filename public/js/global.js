@@ -247,7 +247,7 @@ $(document).ready(function()
 				}
 				else
 				{
-					window.location = "/"+module+"/"+controller+"/index/id/"+ajax_id;	
+					window.location = "/"+module+"/"+controller+"/index/id/"+ajax_id;
 					}
 		});
 	});

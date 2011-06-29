@@ -1,0 +1,67 @@
+<div id="ajaxMsgBox">
+	<div id="ajaxMsgBox_Emp">
+	<div class="overall_tool">
+			<div class="button_group">
+				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+			</div><!-- end of button group -->
+	</div><!-- end of overall tool -->
+		<p><?php
+			$file = $this->file;?>
+			</p>
+			<div class="overall_content">
+			<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>文件编号：</td>
+						<td><?php echo $file->getFileId()?></td>
+					</tr>
+					<tr>
+						<td>文件名：</td>
+						<td><?php echo $file->getDisplay()?></td>
+					</tr>
+					<tr>
+						<td>文件类型：</td>
+						<td><?php echo $file->getType() ?></td>
+					</tr>
+					<tr>
+						<td>文件大小：</td>
+						<td><?php echo $file->getSize() ?></td>
+					</tr>
+					<tr>
+						<td>文件类别：</td>
+						<td><?php echo $file->getSpecId() ?></td>
+					</tr>
+					<tr>
+						<td>文号：</td>
+						<td><?php echo $file->getEdition() ?></td>
+					</tr>
+					<tr>
+						<td>录入人：</td>
+						<td><?php echo $file->getContactName() ?></td>
+					</tr>
+					<tr>
+						<td>内部文件：</td>
+						<td><?php echo $file->getInFlag() ?></td>
+					</tr>
+					<tr>
+						<td>复核状态：</td>
+						<td><?php echo $file->getStatus() ?></td>
+					</tr>
+					<tr>
+						<td>备注：</td>
+						<td><?php echo $file->getRemark() ?></td>
+					</tr>
+					<tr>
+						<td>上次修改时间：</td>
+						<td><?php echo $file->getCTime() ?></td>
+					</tr>
+			</table>
+		</div>
+	</div>
+	</div>
+	</div>
+</div>

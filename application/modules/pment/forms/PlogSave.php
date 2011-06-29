@@ -102,10 +102,11 @@ class Pment_Forms_PlogSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'relatedFile', array(
+			'textarea', 'relatedFile', array(
 			'label' => '往来文件:',
-			'filters' => array('StringTrim'),
-			'class'=>'tbLarge tbText'
+			'class'=>'tbText',
+			'cols'=> 60,
+			'rows'=> 4
 			)
 		);
 		$this->addElement(

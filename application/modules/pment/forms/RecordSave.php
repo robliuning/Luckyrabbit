@@ -39,7 +39,7 @@ class Pment_Forms_RecordSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'contactName', array(
-			'label' => '*填报人:',
+			'label' => '*经办人:',
 			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText ac_contactName'
 			)

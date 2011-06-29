@@ -201,18 +201,16 @@
 				<table>
 					<colgroup>
 						<col style="width:10%"></col>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
+						<col style="width:20%"></col>
 						<col style="width:15%"></col>
 						<col style="width:15%"></col>
 						<col style="width:10%"></col>
-						<col style="width:10%"></col>
+						<col style="width:20%"></col>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th>是否为项目用车</th>
 						<th>用(派)车人</th>
 						<th>出车日期</th>
 						<th>还车日期</th>
@@ -229,14 +227,13 @@
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><?php echo $this->escape($verecord->getPrjFlag()) ?></td>
 						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->getContactId()) ?>"><?php echo $this->escape($verecord->getContactName()) ?></a></td>
 						<td><?php echo $this->escape($verecord->getStartDate()) ?></td>
 						<td><?php echo $this->escape($verecord->getEndDate()) ?></td>
 						<td><?php echo $this->escape($verecord->getPeriod()) ?></td>
 						<td>
 						<?php echo $this->escape($verecord->getMile())?>
-						</td>
+						公里</td>
 						<td><a href="/vehicle/verecord/edit/id/<?php echo $recordId?>/from/1">修改</a></td>
 						<td><a class="lightbox" href="/vehicle/verecord/ajaxdisplay/id/<?php echo $recordId?>">详情</a></td>
 					</tr>

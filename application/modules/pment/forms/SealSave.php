@@ -54,14 +54,6 @@ class Pment_Forms_SealSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'textarea', 'recUnit', array(
-			'label' => '*备案单位:',
-			'class'=>'tbText',
-			'cols'=> 60,
-			'rows'=> 4
-			)
-		);
-		$this->addElement(
 			'text', 'copy', array(
 			'label' => '*份数:',
 			'filters' => array('StringTrim'),
@@ -70,7 +62,7 @@ class Pment_Forms_SealSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'contactName', array(
-			'label' => '*填报人:',
+			'label' => '*经办人:',
 			'filters' => array('StringTrim'),
 			'class'=>'tbMedium tbText ac_contactName'
 			)
