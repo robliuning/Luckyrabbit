@@ -71,13 +71,6 @@ class Pment_Forms_PlogSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'contactName', array(
-			'label' => '*填报案:',
-			'filters' => array('StringTrim'),
-			'class'=>'tbMedium tbText ac_contactName'
-			)
-		);
-		$this->addElement(
 			'textarea', 'safety', array(
 			'label' => '安全情况:',
 			'class'=>'tbText',
@@ -145,12 +138,6 @@ class Pment_Forms_PlogSave extends Zend_Form
 			'ignore'=>true,
 			'class'=>'btConfirm radius',
 			'name'=>'submit'
-			)
-		);
-		$this->addElement(
-			'text', 'contactId', array(
-			'filters' => array('StringTrim'),
-			'class'=>'hide ac_contactId'
 			)
 		);
 		$this->setElementDecorators(

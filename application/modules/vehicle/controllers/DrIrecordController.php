@@ -188,10 +188,10 @@ class Vehicle_DrirecordController extends Zend_Controller_Action
 	public function ajaxdisplayAction()
 	{
 		$this->_helper->layout()->disableLayout();
-		$drirecords = new Vehicle_Models_DrirecordMapper();
 		$recordId = $this->_getParam('id',0);
 		if($recordId >0)
 		{
+			$drirecords = new Vehicle_Models_DrirecordMapper();
 			$drirecord = new Vehicle_Models_Drirecord();
 			$drirecords->findDrirecordJoin($recordId,$drirecord);
 			$this ->view->drirecord = $drirecord;

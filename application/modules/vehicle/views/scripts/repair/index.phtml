@@ -47,12 +47,12 @@
 						<col style="width:5%"></col>
 						<col style="width:10%"></col>
 						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:20%"></col>
+						<col style="width:10%"></col>
+						<col style="width:22%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:8%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
@@ -97,7 +97,7 @@
 						<?php echo $this->escape($repair->getInsFlag())?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'repair','action'=>'edit','id'=>$repId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'repair','action'=>'ajaxdisplay','id'=>$repId))?>">详情</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'repair','action'=>'ajaxdisplay','id'=>$repId))?>">快速查看</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

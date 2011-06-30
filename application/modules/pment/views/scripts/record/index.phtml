@@ -60,9 +60,9 @@
 						<col style="width:20%"></col>
 						<col style="width:20%"></col>
 						<col style="width:20%"></col>
-						<col style="width:20%"></col>
+						<col style="width:17%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:8%"></col>
 					</colgroup>
 					<thead>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
@@ -98,7 +98,7 @@
 						<td><?php echo $this->escape($record->getRecNumber()) ?></td>
 						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($record->getContactId()) ?>"><?php echo $this->escape($record->getContactName())?></a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'record','action'=>'edit','id'=>$recId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'record','action'=>'ajaxdisplay','id'=>$recId))?>">详情</a></td></tr>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'record','action'=>'ajaxdisplay','id'=>$recId))?>">快速查看</a></td></tr>
 					<?php endforeach ?>
 					</table>
 				<div id="msgBox"></div>

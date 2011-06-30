@@ -30,13 +30,6 @@ class Pment_Forms_TechSave extends Zend_Form
 			)
 		);
 		$this->addElement(
-			'text', 'contactName', array(
-			'label' => '*填报人:',
-			'filters' => array('StringTrim'),
-			'class'=>'tbMedium tbText ac_contactName'
-			)
-		);
-		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注:',
 			'class'=>'tbText',
@@ -56,12 +49,6 @@ class Pment_Forms_TechSave extends Zend_Form
 			'ignore'=>true,
 			'class'=>'btConfirm radius',
 			'name'=>'submit'
-			)
-		);
-		$this->addElement(
-			'text', 'contactId', array(
-			'filters' => array('StringTrim'),
-			'class'=>'hide ac_contactId'
 			)
 		);
 		$this->setElementDecorators(

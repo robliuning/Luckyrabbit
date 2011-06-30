@@ -85,12 +85,15 @@ class Pment_TechController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$tech = new Pment_Models_Tech();
 					$tech->setProjectId($projectId);
 					$tech->setTechDate($addForm->getValue('techDate'));
 					$tech->setContent($addForm->getValue('content'));
 					$tech->setName($addForm->getValue('name'));
-					$tech->setContactId($addForm->getValue('contactId'));
+					$tech->setContactId($contactId);
 					$tech->setRemark($addForm->getValue('remark'));
 					$techs->save($tech);
 					$errorMsg = General_Models_Text::$text_save_success;
@@ -141,13 +144,16 @@ class Pment_TechController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$tech = new Pment_Models_Tech();
 					$tech->setTechId($techId);
 					$tech->setProjectId($projectId);
 					$tech->setTechDate($editForm->getValue('techDate'));
 					$tech->setContent($editForm->getValue('content'));
 					$tech->setName($editForm->getValue('name'));
-					$tech->setContactId($editForm->getValue('contactId'));
+					$tech->setContactId($contactId);
 					$tech->setRemark($editForm->getValue('remark'));
 					$techs->save($tech); 
 					$this->_helper->flashMessenger->addMessage('对技术交底信息的修改成功。');
@@ -226,6 +232,12 @@ class Pment_TechController extends Zend_Controller_Action
 	{
 		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
 		return $projectNamespace->projectId;
+		}
+	
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }
 ?>

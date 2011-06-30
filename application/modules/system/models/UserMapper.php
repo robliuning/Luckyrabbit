@@ -39,5 +39,14 @@ class System_Models_UserMapper
 		
 		return $contactId;
 	}
+	
+	public function getUserId($name)
+	{
+		$resultSet = $this->getDbTable()->getUserId($name);
+		
+		$userId = $resultSet[0]->id;
+		
+		return $userId;
+		}
 }
 ?>

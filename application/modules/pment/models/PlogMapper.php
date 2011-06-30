@@ -157,8 +157,6 @@ class Pment_Models_PlogMapper
 								->addValidator($emptyValidator);
 		$form->getElement('foreman')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
-		$form->getElement('contactName')->setAllowEmpty(false)
-								->addValidator($emptyValidator);
 
 		$dateValidator = new Zend_Validate_Date();
 		$dateValidator->setMessage(General_Models_Text::$text_notDate);
@@ -177,12 +175,6 @@ class Pment_Models_PlogMapper
 	{
 		$errorMsg = null;
 		$trigger = 0;
-
-		if($formData['contactId'] == null)
-		{
-			$trigger = 1;
-			$errorMsg = General_Models_Text::$text_vehicle_contact_notFound."<br/>".$errorMsg;
-			}
 		$projectId = $formData['projectId'];
 		$logDate = $formData['logDate'];
 		if($formType == 0)

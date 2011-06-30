@@ -1,0 +1,111 @@
+ <?php 
+ 	$this->headTitle('- 承包商管理 - 承包商信息');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>承包商管理 - 承包商信息 - 详情</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+			</div>
+			<div class="overall_tool">
+				<div class="button_group">	
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/contract"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu">承包商信息</p>
+				<?php $contract = $this->contract ?>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>					
+					</colgroup>
+					<tr>
+						<td>承包商名称: </td>
+						<td><?php echo $contract->getName()?></td>
+					</tr>
+					<tr>
+						<td>安全许可证: </td>
+						<td><?php echo $contract->getLicenseNo() ?></td>
+					</tr>
+					<tr>
+						<td>业务范围: </td>
+						<td><?php echo $contract->getBusiField()?></td>
+					</tr>
+					<tr>
+						<td>联系人: </td>
+						<td><?php echo $contract->getContact()?></td>
+					</tr>
+					<tr>
+						<td>联系电话: </td>
+						<td><?php echo $contract->getPhoneNo()?></td>
+					</tr>
+					<tr>
+						<td>其他联系方式: </td>
+						<td><?php echo $contract->getOtherContact()?></td>
+					</tr>
+					<tr>
+						<td>地址: </td>
+						<td><?php echo $contract->getAddress()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td><?php echo $contract->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>创建时间: </td>
+						<td><?php echo $contract->getCTime()?></td>
+					</tr>
+			</table>
+			<p class="subMenu">承包商资质信息</p>
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:25%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>资质序列</th>
+						<th>资质类别</th>
+						<th>资质等级</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayContrqualifs as $contrqualif):?>
+					<?php $cqId = $this->escape($contrqualif->getCqId()) ?>
+					<tr>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><?php echo $this->escape($contrqualif->getQualifSerie()) ?></td>
+						<td><?php echo $this->escape($contrqualif->getQualifType()) ?></td>	
+						<td><?php echo $this->escape($contrqualif->getQualifGrade()) ?></td>
+						<td><a href="/contract/contrqualif/edit/id/<?php echo $cqId?>">修改</a></td>
+						<td><a class="lightbox" href="/contract/contrqualif/ajaxdisplay/id/<?php echo $cqId?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

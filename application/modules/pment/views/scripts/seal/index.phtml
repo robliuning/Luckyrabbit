@@ -56,14 +56,14 @@
 					<colgroup>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
-						<col style="width:25%"></col>
-						<col style="width:25%"></col>
+						<col style="width:24%"></col>
+						<col style="width:23%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:8%"></col>
 					</colgroup>
 					<thead>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
@@ -73,7 +73,7 @@
 						<th>经办人</th>
 						<th>使用日期</th>
 						<th>归还日期</th>
-						<th>是否带出</th>
+						<th>带出</th>
 						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
 						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
@@ -104,7 +104,7 @@
 						<td><?php echo $this->escape($seal->getReturnDate()) ?></td>
 						<td><?php echo $this->escape($seal->getTakeOut()) ?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'seal','action'=>'edit','id'=>$seaId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'seal','action'=>'ajaxdisplay','id'=>$seaId))?>">详情</a></td></tr>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'seal','action'=>'ajaxdisplay','id'=>$seaId))?>">快速查看</a></td></tr>
 					<?php endforeach ?>
 					</table>
 				<div id="msgBox"></div>

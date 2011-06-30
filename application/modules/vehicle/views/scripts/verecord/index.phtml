@@ -51,9 +51,9 @@
 						<col style="width:15%"></col>
 						<col style="width:15%"></col>
 						<col style="width:10%"></col>
-						<col style="width:20%"></col>
+						<col style="width:17%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>						
+						<col style="width:8%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
@@ -96,7 +96,7 @@
 						<?php echo $this->escape($verecord->getMile())?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'verecord','action'=>'edit','id'=>$verecordId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'verecord','action'=>'ajaxdisplay','id'=>$verecordId))?>">详情</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'verecord','action'=>'ajaxdisplay','id'=>$verecordId))?>">快速查看</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

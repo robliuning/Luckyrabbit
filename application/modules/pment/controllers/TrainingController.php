@@ -85,12 +85,15 @@ class Pment_TrainingController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$training = new Pment_Models_Training();
 					$training->setProjectId($projectId);
 					$training->setTraDate($addForm->getValue('traDate'));
 					$training->setContent($addForm->getValue('content'));
 					$training->setName($addForm->getValue('name'));
-					$training->setContactId($addForm->getValue('contactId'));
+					$training->setContactId($contactId);
 					$training->setRemark($addForm->getValue('remark'));
 					$trainings->save($training);
 					$errorMsg = General_Models_Text::$text_save_success;
@@ -139,13 +142,16 @@ class Pment_TrainingController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$training = new Pment_Models_Training();
 					$training->setTraId($traId);
 					$training->setProjectId($projectId);
 					$training->setTraDate($editForm->getValue('traDate'));
 					$training->setContent($editForm->getValue('content'));
 					$training->setName($editForm->getValue('name'));
-					$training->setContactId($editForm->getValue('contactId'));
+					$training->setContactId($contactId);
 					$training->setRemark($editForm->getValue('remark'));
 					$trainings->save($training); 
 					$this->_helper->flashMessenger->addMessage('对安全培训信息的修改成功。');
@@ -224,6 +230,12 @@ class Pment_TrainingController extends Zend_Controller_Action
 	{
 		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
 		return $projectNamespace->projectId;
+		}
+	
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }
 ?>

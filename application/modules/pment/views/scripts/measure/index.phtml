@@ -56,10 +56,10 @@
 					<colgroup>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
-						<col style="width:40%"></col>
-						<col style="width:40%"></col>
+						<col style="width:39%"></col>
+						<col style="width:38%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:8%"></col>
 					</colgroup>
 					<thead>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
@@ -89,7 +89,7 @@
 						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'measure','action'=>'ajaxdisplay','id'=>$meaId))?>"><?php echo $this->escape($measure->getMeaDate())?></a></td>
 						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($measure->getContactId()) ?>"><?php echo $this->escape($measure->getContactName())?></a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'measure','action'=>'edit','id'=>$meaId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'measure','action'=>'ajaxdisplay','id'=>$meaId))?>">详情</a></td></tr>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'measure','action'=>'ajaxdisplay','id'=>$meaId))?>">快速查看</a></td></tr>
 					<?php endforeach ?>
 					</table>
 				<div id="msgBox"></div>

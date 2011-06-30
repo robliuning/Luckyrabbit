@@ -58,10 +58,10 @@
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
 						<col style="width:25%"></col>
-						<col style="width:30%"></col>
+						<col style="width:27%"></col>
 						<col style="width:25%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:8%"></col>
 					</colgroup>
 					<thead>
 						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
@@ -93,7 +93,7 @@
 						<td><?php echo $this->escape($training->getName())?></td>
 						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($training->getContactId()) ?>"><?php echo $this->escape($training->getContactName())?></a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'training','action'=>'edit','id'=>$traId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'training','action'=>'ajaxdisplay','id'=>$traId))?>">详情</a></td></tr>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'training','action'=>'ajaxdisplay','id'=>$traId))?>">快速查看</a></td></tr>
 					<?php endforeach ?>
 					</table>
 				<div id="msgBox"></div>

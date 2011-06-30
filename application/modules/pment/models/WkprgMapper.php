@@ -153,8 +153,6 @@ class Pment_Models_WkprgMapper
 								->addValidator($emptyValidator);
 		$form->getElement('endDate')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
-		$form->getElement('contactName')->setAllowEmpty(false)
-								->addValidator($emptyValidator);
 
 		$dateValidator = new Zend_Validate_Date();
 		$dateValidator->setMessage(General_Models_Text::$text_notDate);
@@ -169,11 +167,6 @@ class Pment_Models_WkprgMapper
 		$errorMsg = null;
 		$trigger = 0;
 
-		if($formData['contactId'] == null)
-		{
-			$trigger = 1;
-			$errorMsg = General_Models_Text::$text_vehicle_contact_notFound."<br/>".$errorMsg;
-			}
 		$dateStart = new Zend_Date($formData['startDate'],'YYYY-MM-DD');
 		$dateEnd = new Zend_Date($formData['endDate'],'YYYY-MM-DD');
 		

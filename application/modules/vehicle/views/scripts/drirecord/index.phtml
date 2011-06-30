@@ -44,11 +44,11 @@
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
 						<col style="width:20%"></col>
-						<col style="width:20%"></col>
-						<col style="width:20%"></col>
+						<col style="width:18%"></col>
+						<col style="width:18%"></col>
 						<col style="width:20%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:9%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
@@ -85,7 +85,7 @@
 						<?php echo $this->escape($drirecord->getMile())?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'drirecord','action'=>'edit','id'=>$recordId))?>">修改</a></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'drirecord','action'=>'ajaxdisplay','id'=>$recordId))?>">详情</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'drirecord','action'=>'ajaxdisplay','id'=>$recordId))?>">快速查看</a></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

@@ -86,6 +86,9 @@ class Pment_PlogController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$plog = new Pment_Models_Plog();
 					$plog->setProjectId($projectId);
 					$plog->setLogDate($addForm->getValue('logDate'));
@@ -103,7 +106,7 @@ class Pment_PlogController extends Zend_Controller_Action
 					$plog->setRelatedFile($addForm->getValue('relatedFile'));
 					$plog->setChangeSig($addForm->getValue('changeSig'));
 					$plog->setMaterial($addForm->getValue('material'));
-					$plog->setContactId($addForm->getValue('contactId'));
+					$plog->setContactId($contactId);
 					$plog->setRemark($addForm->getValue('remark'));
 					$plogs->save($plog);
 					$errorMsg = General_Models_Text::$text_save_success;
@@ -155,6 +158,9 @@ class Pment_PlogController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$plog = new Pment_Models_Plog();
 					$plog->setPlogId($plogId);
 					$plog->setProjectId($projectId);
@@ -173,7 +179,7 @@ class Pment_PlogController extends Zend_Controller_Action
 					$plog->setRelatedFile($editForm->getValue('relatedFile'));
 					$plog->setChangeSig($editForm->getValue('changeSig'));
 					$plog->setMaterial($editForm->getValue('material'));
-					$plog->setContactId($editForm->getValue('contactId'));
+					$plog->setContactId($contactId);
 					$plog->setRemark($editForm->getValue('remark'));
 					$plogs->save($plog); 
 					$this->_helper->flashMessenger->addMessage('对日志: '.$plog->getLogDate().'的修改成功。');
@@ -251,6 +257,13 @@ class Pment_PlogController extends Zend_Controller_Action
 	{
 		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
 		return $projectNamespace->projectId;
+		}
+		
+		
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }
 ?>

@@ -85,12 +85,15 @@ class Pment_MeasureController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$measure = new Pment_Models_Measure();
 					$measure->setProjectId($projectId);
 					$measure->setMeaDate($addForm->getValue('meaDate'));
 					$measure->setProblem($addForm->getValue('problem'));
 					$measure->setMeasure($addForm->getValue('measure'));
-					$measure->setContactId($addForm->getValue('contactId'));
+					$measure->setContactId($contactId);
 					$measure->setRemark($addForm->getValue('remark'));
 					$measures->save($measure);
 					$errorMsg = General_Models_Text::$text_save_success;
@@ -140,13 +143,16 @@ class Pment_MeasureController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$measure = new Pment_Models_Measure();
 					$measure->setMeaId($meaId);
 					$measure->setProjectId($projectId);
 					$measure->setMeaDate($editForm->getValue('meaDate'));
 					$measure->setProblem($editForm->getValue('problem'));
 					$measure->setMeasure($editForm->getValue('measure'));
-					$measure->setContactId($editForm->getValue('contactId'));
+					$measure->setContactId($contactId);
 					$measure->setRemark($editForm->getValue('remark'));
 					$measures->save($measure); 
 					$this->_helper->flashMessenger->addMessage('对安全措施信息的修改成功。');
@@ -225,6 +231,12 @@ class Pment_MeasureController extends Zend_Controller_Action
 	{
 		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
 		return $projectNamespace->projectId;
+		}
+	
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }
 ?>

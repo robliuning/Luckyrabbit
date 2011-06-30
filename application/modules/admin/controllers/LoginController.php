@@ -19,6 +19,10 @@ class admin_LoginController extends Zend_Controller_Action
 			if ($loginForm->isValid($request->getPost())) {
 				if ($this->_process($loginForm->getValues())) {
 					// We're authenticated! Redirect to the home page
+					$value = $loginForm->getValues();
+					$userName = $value['username'];
+					$users = new System_Models_UserMapper();
+					$userId = $users->getUserId($userName);
 					$userNamespace = new Zend_Session_Namespace('userNamespace');
 					$userNamespace->userId = $userId;
 					$this->_redirect('/');

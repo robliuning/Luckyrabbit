@@ -71,7 +71,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 		$wkprgs = new Pment_Models_WkprgMapper();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
-		$errorMsg = null;
+		$errorMsg =null;
 		$addForm = $wkprgs->formValidator($addForm,0);
 		$wkNum = $wkprgs->calWkNum($projectId);
 		$tbWkNum = $addForm->getElement('wkNum');
@@ -97,6 +97,9 @@ class Pment_WkprgController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$wkprg = new Pment_Models_Wkprg();
 					$wkprg->setProjectId($projectId);
 					$wkprg->setWkNum($wkNum);
@@ -114,7 +117,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 					$wkprg->setNextPlan($addForm->getValue('nextPlan'));
 					$wkprg->setProblem($addForm->getValue('problem'));
 					$wkprg->setResolve($addForm->getValue('resolve'));
-					$wkprg->setContactId($addForm->getValue('contactId'));
+					$wkprg->setContactId($contactId);
 					$wkprg->setRemark($addForm->getValue('remark'));
 					$wkprgs->save($wkprg);
 					$errorMsg = General_Models_Text::$text_save_success;
@@ -203,6 +206,9 @@ class Pment_WkprgController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
 					$wkprg = new Pment_Models_Wkprg();
 					$wkprg->setWkprgId($wkprgId);
 					$wkprg->setProjectId($projectId);
@@ -221,7 +227,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 					$wkprg->setNextPlan($editForm->getValue('nextPlan'));
 					$wkprg->setProblem($editForm->getValue('problem'));
 					$wkprg->setResolve($editForm->getValue('resolve'));
-					$wkprg->setContactId($editForm->getValue('contactId'));
+					$wkprg->setContactId($contactId);
 					$wkprg->setRemark($editForm->getValue('remark'));
 					$wkprgs->save($wkprg); 
 					$this->_helper->flashMessenger->addMessage('对计划: 周'.$wkprg->getwkNum().'的修改成功。');
@@ -354,6 +360,12 @@ class Pment_WkprgController extends Zend_Controller_Action
 	{
 		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
 		return $projectNamespace->projectId;
+		}
+	
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }
 ?>

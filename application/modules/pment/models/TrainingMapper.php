@@ -125,8 +125,6 @@ class Pment_Models_TrainingMapper
 								->addValidator($emptyValidator);
 		$form->getElement('name')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
-		$form->getElement('contactName')->setAllowEmpty(false)
-								->addValidator($emptyValidator);
 
 		$dateValidator = new Zend_Validate_Date();
 		$dateValidator->setMessage(General_Models_Text::$text_notDate);
@@ -139,12 +137,6 @@ class Pment_Models_TrainingMapper
 	{
 		$errorMsg = null;
 		$trigger = 0;
-
-		if($formData['contactId'] == null)
-		{
-			$trigger = 1;
-			$errorMsg = General_Models_Text::$text_vehicle_contact_notFound."<br/>".$errorMsg;
-			}
 
 		$array['trigger'] = $trigger;
 		$array['errorMsg'] = $errorMsg;

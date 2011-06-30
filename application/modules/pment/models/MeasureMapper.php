@@ -62,7 +62,7 @@ class Pment_Models_MeasureMapper
 				->setRemark($row->remark)
 				->setCTime($row->cTime);
 		$contacts = new Employee_Models_ContactMapper();
-		$contactName = $contacts->findcontactName($measure->getContactId());
+		$contactName = $contacts->findContactName($measure->getContactId());
 		$measure->setcontactName($contactName);
 	}
 
@@ -87,8 +87,8 @@ class Pment_Models_MeasureMapper
 				->setContactId($row->contactId);
 
 			$contacts = new Employee_Models_ContactMapper();
-			$contactName = $contacts->findcontactName($measure->getContactId());
-			$measure->setcontactName($contactName);
+			$contactName = $contacts->findContactName($measure->getContactId());
+			$measure->setContactName($contactName);
 			$measures[] = $measure;
 			}
 		return $measures;
@@ -103,7 +103,7 @@ class Pment_Models_MeasureMapper
 		}
 		$row = $row->toArray();
 		$contacts = new Employee_Models_ContactMapper();
-		$contactName = $contacts->findcontactName($row['contactId']);
+		$contactName = $contacts->findContactName($row['contactId']);
 		$row['contactName'] = $contactName;
 		return $row;
 	}
@@ -124,8 +124,6 @@ class Pment_Models_MeasureMapper
 								->addValidator($emptyValidator);
 		$form->getElement('problem')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
-		$form->getElement('contactName')->setAllowEmpty(false)
-								->addValidator($emptyValidator);
 
 		$dateValidator = new Zend_Validate_Date();
 		$dateValidator->setMessage(General_Models_Text::$text_notDate);
@@ -138,12 +136,6 @@ class Pment_Models_MeasureMapper
 	{
 		$errorMsg = null;
 		$trigger = 0;
-
-		if($formData['contactId'] == null)
-		{
-			$trigger = 1;
-			$errorMsg = General_Models_Text::$text_vehicle_contact_notFound."<br/>".$errorMsg;
-			}
 
 		$array['trigger'] = $trigger;
 		$array['errorMsg'] = $errorMsg;
