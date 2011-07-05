@@ -1,7 +1,7 @@
 <?php
-//updated in 13th June by Rob
+//updated in 30th June by Rob
 
-class Contract_IndexController extends Zend_Controller_Action
+class Vendor_IndexController extends Zend_Controller_Action
 {
 	public function init()
 	{
@@ -13,18 +13,19 @@ class Contract_IndexController extends Zend_Controller_Action
 	}
 	public function indexAction()
 	{
-		$contractors = new Contract_Models_ContractorMapper();
+		$expand = 0;
+		$vendors = new Vendor_Models_VendorMapper();
 		$errorMsg = null;
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
-			$arrayContractors = array();
+			$arrayVendors = array();
 			$key = trim($formData['key']);
 			if($key != null)
 			{
 				$condition = $formData['condition'];
-				$arrayContractors = $contractors->fetchAllJoin($key,$condition);
-				if(count($arrayContractors) == 0)
+				$arrayVendors = $vendors->fetchAllOrganize($key,$condition);
+				if(count($arrayVendors) == 0)
 				{
 					$errorMsg = General_Models_Text::$text_searchErrorNr;
 				}
@@ -33,45 +34,54 @@ class Contract_IndexController extends Zend_Controller_Action
 			{
 				$errorMsg = General_Models_Text::$text_searchErrorNi;
 			}
+			$expand = 1;
 		}
 		else
 		{
-			$arrayContractors = $contractors->fetchAllJoin();
+			$arrayVendors = $vendors->fetchAllOrganize();
 		}
+		$this->view->expand = $expand;
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
-		$this->view->arrayContractors = $arrayContractors;
+		$this->view->arrayVendors = $arrayVendors;
 		$this->view->errorMsg = $errorMsg;	
-		$this->view->module = "contract";
+		$this->view->module = "vendor";
 		$this->view->controller = "index";
-		$this->view->modelName = "承包商信息";
+		$this->view->modelName = "供应商管理";
 		}
 
 	public function editAction()
 	{
-		$editForm = new Contract_Forms_ContractorSave();
+		$editForm = new Vendor_Forms_VendorSave();
 		$editForm->submit->setLabel("保存修改");
 		$editForm->submit2->setAttrib('class','hide');
-		$contractors = new Contract_Models_ContractorMapper();
-		$contractorId = $this->_getParam('id',0);
-		$addForm = $contractors->formValidator($editForm,1);
+		$vendors = new Vendor_Models_VendorMapper();
+		$vId = $this->_getParam('id',0);
+		$vtypes = new General_Models_VtypeMapper();
+		$vtypes->populateDd($editForm);
+		$editForm = $vendors->formValidator($editForm,1);
+		
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();
 			if($editForm->isValid($formData))
 			{
-				$contractor = new Contract_Models_Contractor();
-				$contractor->setContractorId($contractorId);
-				$contractor->setContact($editForm->getValue('contact'));
-				$contractor->setName($editForm->getValue('name'));
-				$contractor->setLicenseNo($editForm->getValue('licenseNo'));
-				$contractor->setBusiField($editForm->getValue('busiField'));
-				$contractor->setPhoneNo($editForm->getValue('phoneNo'));
-				$contractor->setOtherContact($editForm->getValue('otherContact'));
-				$contractor->setAddress($editForm->getValue('address'));
-				$contractor->setRemark($editForm->getValue('remark'));
-				$contractors->save($contractor);
-				$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的修改成功。');
-				$this->_redirect('/contract');
+				$vendor = new Vendor_Models_Vendor();
+				$userId = $this->getUserId();
+				$users = new System_Models_UserMapper();
+				$contactId = $users->getContactId($userId); 
+				$vendor->setVId($vId);
+				$vendor->setContact($editForm->getValue('contact'));
+				$vendor->setName($editForm->getValue('name'));
+				$vendor->setTypeId($editForm->getValue('typeId'));
+				$vendor->setBusiField($editForm->getValue('busiField'));
+				$vendor->setPhoneNo($editForm->getValue('phoneNo'));
+				$vendor->setOtherContact($editForm->getValue('otherContact'));
+				$vendor->setAddress($editForm->getValue('address'));
+				$vendor->setRemark($editForm->getValue('remark'));
+				$vendor->setContactId($contactId);
+				$vendors->save($vendor);
+				$this->_helper->flashMessenger->addMessage('对供应商:'.$vendor->getName().'的修改成功。');
+				$this->_redirect('/vendor');
 				}
 				else
 				{
@@ -80,28 +90,30 @@ class Contract_IndexController extends Zend_Controller_Action
 			}
 			else
 			{
-				if($contractorId>0)
+				if($vId>0)
 				{
-					$arrayContractor = $contractors->findArrayContractor($contractorId);
-					$editForm->populate($arrayContractor);
+					$arrayVendor = $vendors->findArrayVendor($vId);
+					$editForm->populate($arrayVendor);
 					}
 					else
 					{
-						$this->_redirect('/contract/');
-			 			}
+						$this->_redirect('/vendor/');
+						}
 				}
 		$this->view->editForm = $editForm;
-		$this->view->id = $contractorId;
+		$this->view->id = $vId;
 	}
 
 	public function addAction()
 	{
-		$addForm = new Contract_Forms_ContractorSave();
+		$addForm = new Vendor_Forms_VendorSave();
 		$addForm->submit->setLabel("保存继续新建");
 		$addForm->submit2->setLabel("保存返回上页");
 		$errorMsg = null;
-		$contractors = new Contract_Models_ContractorMapper();
-		$addForm = $contractors->formValidator($addForm,0);
+		$vendors = new Vendor_Models_VendorMapper();
+		$vtypes = new General_Models_VtypeMapper();
+		$vtypes->populateDd($addForm);
+		$addForm = $vendors->formValidator($addForm,0);
 
 		if($this->getRequest()->isPost())
 		{
@@ -109,27 +121,31 @@ class Contract_IndexController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			if($addForm->isValid($formData))
 			{
-				$array = $contractors->dataValidator($formData,0);
+				$array = $vendors->dataValidator($formData,0);
 				$trigger = $array['trigger'];
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$contractor = new Contract_Models_Contractor();
-					$contractor->setName($addForm->getValue('name'));
-					$contractor->setContact($addForm->getValue('contact'));
-					$contractor->setLicenseNo($addForm->getValue('licenseNo'));
-					$contractor->setBusiField($addForm->getValue('busiField'));
-					$contractor->setPhoneNo($addForm->getValue('phoneNo'));
-					$contractor->setOtherContact($addForm->getValue('otherContact'));
-					$contractor->setAddress($addForm->getValue('address'));
-					$contractor->setRemark($addForm->getValue('remark'));
-					$contractors->save($contractor);
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$contactId = $users->getContactId($userId); 
+					$vendor = new Vendor_Models_Vendor();
+					$vendor->setName($addForm->getValue('name'));
+					$vendor->setContact($addForm->getValue('contact'));
+					$vendor->setTypeId($addForm->getValue('typeId'));
+					$vendor->setBusiField($addForm->getValue('busiField'));
+					$vendor->setPhoneNo($addForm->getValue('phoneNo'));
+					$vendor->setOtherContact($addForm->getValue('otherContact'));
+					$vendor->setAddress($addForm->getValue('address'));
+					$vendor->setRemark($addForm->getValue('remark'));
+					$vendor->setContactId($contactId);
+					$vendors->save($vendor);
 					$errorMsg = General_Models_Text::$text_save_success;
 					$addForm->reset();
 					if($btClicked=="保存返回上页")
 					{
-						$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的修改成功。');
-						$this->_redirect('/contract');
+						$this->_helper->flashMessenger->addMessage('对供应商:'.$vendor->getName().'的修改成功。');
+						$this->_redirect('/vendor');
 						}
 					}
 					else
@@ -149,12 +165,12 @@ class Contract_IndexController extends Zend_Controller_Action
 	{
 		$this->_helper->layout()->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
-		$contractorId = $this->_getParam('id',0);
-		if($contractorId>0)
+		$vId = $this->_getParam('id',0);
+		if($vId>0)
 		{
-			$contractors = new Contract_Models_ContractorMapper();
+			$vendors = new Vendor_Models_VendorMapper();
 			try{
-				$contractors->delete($contractorId);
+				$vendors->delete($vId);
 				echo "s";
 			}
 			catch(Exception $e)
@@ -164,45 +180,48 @@ class Contract_IndexController extends Zend_Controller_Action
 		}
 		else
 		{
-		 $this->_redirect('/contract');
+		 $this->_redirect('/vendor');
 		}
 	}
 
 	public function ajaxdisplayAction()
 	{
 		$this->_helper->layout()->disableLayout();
-		$contractorId = $this->_getParam('id',0);
-		if($contractorId > 0)
+		$vId = $this->_getParam('id',0);
+		if($vId > 0)
 		{
-			$contractors = new Contract_Models_ContractorMapper();
-			$contractor = new Contract_Models_Contractor();
-			$contractors->find($contractorId,$contractor);
+			$vendors = new Vendor_Models_VendorMapper();
+			$vendor = new Vendor_Models_Vendor();
+			$vendors->find($vId,$vendor);
 			
-			$this->view->contractor = $contractor;
+			$this->view->vendor = $vendor;
 			}
 			else
 			{
-				$this->_redirect('/contract');
+				$this->_redirect('/vendor');
 				}
 	}
 
 	public function displayAction()
 	{
-		$contractors = new Contract_Models_ContractorMapper();
+		$vendors = new Vendor_Models_VendorMapper();
 		$id = $this->_getParam('id',0);
 		if($id >0)
 		{
-			$contract = new Contract_Models_Contractor();
-			$contractors->find($id,$contract);
-			$contrqualifs = new Contract_Models_ContrqualifMapper();
-			$condition = 'contractorId';
-			$arrayContrqualifs = $contrqualifs->fetchAllJoin($id,$condition);
-			$this->view->arrayContrqualifs = $arrayContrqualifs;
-			$this->view->contract = $contract;
+			$vendor = new Vendor_Models_Vendor();
+			$vendors->find($id,$vendor);
+			$this->view->vendor = $vendor;
 			}
 			else
 			{
-				$this->_redirect('/contract');
+				$this->_redirect('/vendor');
 				}
+	}
+	
+		
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }

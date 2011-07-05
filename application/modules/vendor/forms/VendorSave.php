@@ -1,7 +1,7 @@
 <?php
 //update in 13th June by Rob
 
-class Contract_Forms_ContractorSave extends Zend_Form
+class Vendor_Forms_VendorSave extends Zend_Form
 {
 	public function init()
 	{
@@ -9,21 +9,20 @@ class Contract_Forms_ContractorSave extends Zend_Form
 
 		$this->addElement(
 			'text','name',array(
-			'label'=>'*承包商名称:',
+			'label'=>'*供应商名称:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText',
 			)
 		);
 		$this->addElement(
-			'text','licenseNo',array(
-			'label'=>'*安全生产许可证:',
-			'filters'=>array('StringTrim'),
-			'class'=>'tbLarge tbText',
+			'select','typeId',array(
+			'label'=>'类别:',
+			'class'=>'tbMedium tbText'
 			)
 		);
 		$this->addElement(
 			'textarea','busiField',array(
-			'label'=>'业务范围:',
+			'label'=>'*业务范围:',
 			'class'=>'tbText',
 			'cols' => 60,
 			'rows' => 4

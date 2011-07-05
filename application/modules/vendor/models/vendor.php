@@ -6,6 +6,7 @@ class Vendor_Models_Vendor
 	protected $_vId;
 	protected $_name;
 	protected $_typeId;
+	protected $_typeName;
 	protected $_busiField;
 	protected $_contact;
 	protected $_phoneNo;
@@ -96,9 +97,20 @@ class Vendor_Models_Vendor
 	public function getTypeId()
 	{
 		return $this->_typeId;
-	} 
+	}
 
- 	public function setBusiField($busiField)
+	public function setTypeName($typeName)
+	{
+		$this->_typeName = $typeName;
+		return $this;
+	}
+
+	public function getTypeName()
+	{
+		return $this->_typeName;
+	}
+	
+	public function setBusiField($busiField)
 	{
 		$this->_busiField = $busiField;
 		return $this;

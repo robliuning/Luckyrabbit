@@ -1,7 +1,8 @@
  <?php 
- 	$this->headTitle('- 材料管理 - 材料需求计划');
- 	$this->headScript()->prependFile('/materialjs/p_plan.js');
- ?>
+ 	$this->headTitle('- 工程管理 - 材料月计划信息');
+	$this->headScript()->prependFile('/js/pment.js');
+	$this->headScript()->prependFile('/js/conMtr.js');
+	$this->headScript()->prependFile('/js/form.js'); ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
 	<div id="p_stage_sidebar">	
@@ -9,14 +10,17 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>材料管理 - 材料需求计划 - 修改</h1>
+		<h1>工程管理 - 材料月计划信息 - 修改</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
 		<div class="p_msg">
 			<h3></h3>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<div><a href="/material/plan/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
-					<div><a href="/material/plan"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/pment/mplan/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>	
+					<div><a href="/pment/mplan"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

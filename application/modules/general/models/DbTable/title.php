@@ -18,11 +18,9 @@ class General_Models_DbTable_Title extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 
-	public function addTitle(
-								$name
-								)
+	public function addTitle($name)
 	{
-		$data = array (			
+		$data = array (
 			'name' => $name
 		);
 		$this->insert($data);

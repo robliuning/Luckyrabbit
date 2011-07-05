@@ -762,13 +762,13 @@ label
 {
 	cursor: pointer;
 	}
-#btPrg,#btSafe,#btContractor
+#btPrg,#btSafe,#btContractor,#btMaterial
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 10px -157px;
 	background-repeat: no-repeat;
 	}
-#conPrg a,#conSafe a,#conContractor a
+#conPrg a,#conSafe a,#conContractor, #conMaterial a
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 30px -535px;

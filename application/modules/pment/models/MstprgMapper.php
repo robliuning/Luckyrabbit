@@ -83,7 +83,7 @@ class Pment_Models_MstprgMapper
 		return $entries;
 	}
 
-	public function fetchAllJoin($key = null,$condition = null) //check
+	public function fetchAllJoin($key = null,$condition = null)
 	{
 		if($condition == null)
 		{

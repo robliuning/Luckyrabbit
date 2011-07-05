@@ -67,7 +67,10 @@ class Vendor_Models_VendorMapper
 				->setContactId($row->contactId);
 		$contacts = new Employee_Models_ContactMapper();
 		$contactName = $contacts->findContactName($vendor->getContactId());
+		$vtypes = new General_Models_VtypeMapper();
+		$typeName = $vtypes->findTypeName($vendor->getTypeId());
 		$vendor->setContactName($contactName);
+		$vendor->setTypeName($typeName);
 		}
 	
 	public function delete($id)
@@ -100,11 +103,47 @@ class Vendor_Models_VendorMapper
 						->setContactId($row->contactId);
 			$contacts = new Employee_Models_ContactMapper();
 			$contactName = $contacts->findContactName($entry->getContactId());
+			$vtypes = new General_Models_VtypeMapper();
+			$typeName = $vtypes->findTypeName($entry->getTypeId());
+			$entry->setTypeName($typeName);
 			$entry->setContactName($contactName);
 			$entries[] = $entry;
 		}
 		return $entries;
 	}
+	
+	public function fetchAllOrganize($key = null,$condition = null)
+		{
+			$arrayVendors = $this->fetchAllJoin($key,$condition);
+			$arrayYm = null;
+			foreach($arrayVendors as $vendor)
+			{
+				$typeName = $vendor->getTypeName();
+				foreach($arrayVendors as $ven)
+				{
+					if($typeName == $ven->getTypeName())
+					{
+						$tri = 0;
+						if(!isset($arrayYm[$typeName]))
+						{
+							$arrayYm[$typeName] = array();
+							}
+						foreach($arrayYm[$typeName] as $v)
+						{
+							if($vendor->getVId() == $v->getVId())
+							{
+								$tri = 1;
+								}
+							}
+							if($tri == 0)
+							{
+								$arrayYm[$typeName][] = $vendor;
+								}
+						}
+					}
+				}
+			return $arrayYm;
+		}
 
 	public function findArrayVendor($id)
 	{
@@ -121,7 +160,7 @@ class Vendor_Models_VendorMapper
 	}
 
 	public function formValidator($form,$formType)
-	{	
+	{
 		$emptyValidator = new Zend_Validate_NotEmpty();
 		$emptyValidator->setMessage(General_Models_Text::$text_notEmpty);
 		$form->getElement('name')->setAllowEmpty(false)
@@ -134,15 +173,13 @@ class Vendor_Models_VendorMapper
 								->addValidator($emptyValidator);
 		$form->getElement('phoneNo')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
-		
 		return $form;
 	}
-	
+
 	public function dataValidator($formData,$formType)
 	{
 		$errorMsg = null;
 		$trigger = 0;
-
 		$array['trigger'] = $trigger;
 		$array['errorMsg'] = $errorMsg;
 		return $array;

@@ -1,5 +1,13 @@
 $(document).ready(function()
 {
+	var expand = $('#expand').text();
+	if(expand == 1)
+	{
+		$(".conMonAll").slideDown("slow");
+		$(".btMonAll").removeClass("subMenu_switch_close");
+		$(".btMonAll").addClass("subMenu_switch_open");
+		}
+	
 	$("#btPrg").click(function () {
 		if($("#conPrg").is(":hidden")) {
 		$("#conPrg").slideDown("slow");
@@ -21,7 +29,15 @@ $(document).ready(function()
 		$("#conContractor").slideDown("slow");
 		} else {
 		$("#conContractor").slideUp("slow");
- 		}
+		}
+	});
+
+	$("#btMaterial").click(function () {
+		if($("#conMaterial").is(":hidden")) {
+		$("#conMaterial").slideDown("slow");
+		} else {
+		$("#conMaterial").slideUp("slow");
+		}
 	});
 	
 	$("#btPro").click(function () {
@@ -84,5 +100,4 @@ $(document).ready(function()
 		$("#btImgShow").addClass("subMenu_switch_close");
  		}
 	});
-
 });

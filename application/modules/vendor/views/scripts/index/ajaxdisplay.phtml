@@ -7,7 +7,7 @@
 			</div><!-- end of button group -->
 	</div><!-- end of overall tool -->
 		<p><?php
-			$contractor = $this->contractor;?>
+			$vendor = $this->vendor;?>
 			 </p>
 			 <div class="overall_content">
 			 <table>
@@ -16,40 +16,44 @@
 						<col style="width:70%"></col>
 					</colgroup>
 					<tr>
-						<td>承包商名称: </td>
-						<td><?php echo $contractor->getName()?></td>
+						<td>供应商名称: </td>
+						<td><?php echo $vendor->getName()?></td>
 					</tr>
 					<tr>
-						<td>安全许可证: </td>
-						<td><?php echo $contractor->getLicenseNo() ?></td>
+						<td>类型: </td>
+						<td><?php echo $vendor->getTypeName() ?></td>
 					</tr>
 					<tr>
 						<td>业务范围: </td>
-						<td><?php echo $contractor->getBusiField()?></td>
+						<td><?php echo $vendor->getBusiField()?></td>
 					</tr>
 					<tr>
 						<td>联系人: </td>
-						<td><?php echo $contractor->getContact()?></td>
+						<td><?php echo $vendor->getContact()?></td>
 					</tr>
 					<tr>
 						<td>联系电话: </td>
-						<td><?php echo $contractor->getPhoneNo()?></td>
+						<td><?php echo $vendor->getPhoneNo()?></td>
 					</tr>
 					<tr>
 						<td>其他联系方式: </td>
-						<td><?php echo $contractor->getOtherContact()?></td>
+						<td><?php echo $vendor->getOtherContact()?></td>
 					</tr>
 					<tr>
 						<td>地址: </td>
-						<td><?php echo $contractor->getAddress()?></td>
+						<td><?php echo $vendor->getAddress()?></td>
+					</tr>
+					<tr>
+						<td>填报人: </td>
+						<td><?php echo $vendor->getContactName()?></td>
 					</tr>
 					<tr>
 						<td>备注: </td>
-						<td><?php echo $contractor->getRemark()?></td>
+						<td><?php echo $vendor->getRemark()?></td>
 					</tr>
 					<tr>
 						<td>创建时间: </td>
-						<td><?php echo $contractor->getCTime()?></td>
+						<td><?php echo $vendor->getCTime()?></td>
 					</tr>
 				</table>
 			</div>

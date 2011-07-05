@@ -27,6 +27,7 @@ class Pment_MonprgController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
+		$expand = 0;
 		$projectId =$this->getProjectId();
 		$monprgs = new Pment_Models_MonprgMapper();
 		$errorMsg = null;
@@ -50,12 +51,13 @@ class Pment_MonprgController extends Zend_Controller_Action
 			{
 				$errorMsg = General_Models_Text::$text_searchErrorNi;
 			}
+		$expand = 1;
 		}
 		else
 		{
 			$arrayYm = $monprgs->fetchAllOrganize(null,$condition);
 		}
-
+		$this->view->expand = $expand;
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayYm = $arrayYm;
 		$this->view->errorMsg = $errorMsg;

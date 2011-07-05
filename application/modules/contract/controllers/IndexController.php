@@ -53,7 +53,7 @@ class Contract_IndexController extends Zend_Controller_Action
 		$editForm->submit2->setAttrib('class','hide');
 		$contractors = new Contract_Models_ContractorMapper();
 		$contractorId = $this->_getParam('id',0);
-		$addForm = $contractors->formValidator($editForm,1);
+		$editForm = $contractors->formValidator($editForm,1);
 		if($this->getRequest()->isPost())
 		{
 			$formData = $this->getRequest()->getPost();

@@ -1,5 +1,6 @@
  <?php 
- 	$this->headTitle('- 承包商管理 - 承包商信息');
+ 	$this->headTitle('- 供应商管理 - 供应商信息');
+	$this->headScript()->prependFile('/js/vendor.js');
  ?>
 	<div id="contentWrapper">
 	<div id="p_breadcrumb"></div>
@@ -8,7 +9,8 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>承包商管理 - 承包商信息 - 总览</h1>
+		<p id="expand" class="hide"><?php echo $this->expand ?></p>
+		<h1>供应商管理 - 供应商信息 - 总览</h1>
 		<div class="p_msg">
 			<h3></h3>
 			<p class="errorMsg"><?php
@@ -31,7 +33,7 @@
 					<form method="post" action="<?php echo $this->url()?>">
 							<div>
 								<select name="condition" class="tbMediumer stStyle">
-  									<option value="name">承包商</option>
+  									<option value="name">供应商</option>
 									<option value="contact">联系人</option>
 								</select>
 							</div>
@@ -49,26 +51,24 @@
 			<div class="overall_content">
 				<table>
 					<colgroup>
-						<col style="width:3%"></col>
-						<col style="width:2%"></col>
+						<col style="width:5%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
-						<col style="width:17%"></col>
-						<col style="width:13%"></col>
+						<col style="width:10%"></col>
 						<col style="width:20%"></col>
-						<col style="width:15%"></col>
+						<col style="width:20%"></col>
+						<col style="width:10%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:10%"></col>
 					</colgroup>
 					<thead>
-						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
-						<th>承包商</th>
+						<th>#<input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>供应商名称</th>
 						<th>联系人</th>
-						<th>安全生产许可证</th>
 						<th>联系电话</th>
 						<th>其他联系方式</th>
 						<th>地址</th>
+						<th>录入人</th>
 						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
 						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
 					</thead>
@@ -81,28 +81,45 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
-					</tr>	
-					<?php $counter = 1;?>	
-					<?php foreach($this->arrayContractors as $contractor):?>
-					<?php $contractorId = $this->escape($contractor->getContractorId()); ?>
-					<tr>
-						<td><input type="checkbox" name="cb" value="<?php echo $contractorId; ?>"></td>
-						<td><?php 
-							echo $counter;
-							$counter++;
-						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contractorId))?>"><?php echo $this->escape($contractor->getName()) ?></td>
-						<td><?php echo $this->escape($contractor->getContact()) ?></td>
-						<td><?php echo $this->escape($contractor->getLicenseNo()) ?></td>
-						<td><?php echo $this->escape($contractor->getPhoneNo()) ?></td>
-						<td><?php echo $this->escape($contractor->getOtherContact()) ?></td>	
-						<td><?php echo $this->escape($contractor->getAddress())?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contractorId))?>">修改</a></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contractorId))?>">详情</a></td>	
 					</tr>
+				</table>
+					<?php $arrayYm = $this->arrayVendors;?>
+					<?php if ($arrayYm != null) : ?>
+					<?php foreach($arrayYm as $key => $value):?>
+					<div>
+					<p class="subMenu slideMenu"><a class="btMonAll subMenu_switch_close"><?php echo $key ?></a></p>
+					<div class="conMonAll">
+						<table>
+							<colgroup>
+								<col style="width:5%"></col>
+								<col style="width:10%"></col>
+								<col style="width:10%"></col>
+								<col style="width:10%"></col>
+								<col style="width:20%"></col>
+								<col style="width:20%"></col>
+								<col style="width:10%"></col>
+								<col style="width:5%"></col>
+								<col style="width:10%"></col>
+							</colgroup>
+							<?php foreach($value as $val):?>
+							<?php $vId = $val->getVId()?>
+							<tr>
+								<td><input type="checkbox" name="cb" value="<?php echo $vId ?>"></td>
+								<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$vId))?>"><?php echo $this->escape($val->getName()) ?></td>
+								<td><?php echo $this->escape($val->getContact()) ?></td>
+								<td><?php echo $this->escape($val->getPhoneNo()) ?></td>
+								<td><?php echo $this->escape($val->getOtherContact()) ?></td>	
+								<td><?php echo $this->escape($val->getAddress())?></td>
+								<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($val->getContactId()) ?>"><?php echo $this->escape($val->getContactName())?></a></td>
+								<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$vId))?>">修改</a></td>
+								<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$vId))?>">快速查看</a></td>	
+							</tr>
 					<?php endforeach ?>
 				</table>
+				</div>
+				</div>
+				<?php endforeach ?>
+				<?php endif; ?>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->
