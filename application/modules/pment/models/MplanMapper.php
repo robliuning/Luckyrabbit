@@ -35,7 +35,14 @@ class Pment_Models_MplanMapper
 			'pDate' => $mplan->getPDate(),
 			'contactId' => $mplan->getContactId(),
 			'status' =>$mplan->getStatus(),
-			'remark' => $mplan->getRemark()
+			'remark' => $mplan->getRemark(),
+			'approvcId' => $mplan->getApprovcId(),
+			'approvcDate' => $mplan->getApprovcDate(),
+			'approvcRemark' => $mplan->getApprovcRemark(),
+			'approvfId' => $mplan->getApprovfId(),
+			'approvfDate' => $mplan->getApprovfDate(),
+			'approvfRemark' => $mplan->getApprovfRemark(),
+			'total' => $mplan->getTotal()
 		);
 		if (null === ($id = $mplan->getPlanId())) {
 			unset($data['planId']);
@@ -45,7 +52,7 @@ class Pment_Models_MplanMapper
 		}
 	}
 	
-	/*public function find($id,Pment_Models_Mplan $mplan)
+	public function find($id,Pment_Models_Mplan $mplan)
 	{
 		$result = $this->getDbTable()->find($id);
 
@@ -54,28 +61,36 @@ class Pment_Models_MplanMapper
 		}
 		$row = $result->current();
 		$mplan->setPlanId($row->planId)
-				->setPlanType($row->planType)
 				->setProjectId($row->projectId)
-				->setDueDate($row->dueDate)
-				->setApplicId($row->applicId)
-				->setApplicDate($row->applicDate)
-				->setApprovId($row->approvId)
- 				->setApprovDate($row->approvDate)
+				->setYearNum($row->yearNum)
+				->setMonNum($row->monNum)
+				->setPDate($row->pDate)
+				->setContactId($row->contactId)
 				->setTotal($row->total)
+				->setApprovcId($row->approvcId)
+				->setApprovcDate($row->approvcDate)
+				->setApprovcRemark($row->approvcRemark)
+				->setApprovfId($row->approvfId)
+				->setApprovfDate($row->approvfDate)
+				->setApprovfRemark($row->approvfRemark)
+				->setStatus($row->status)
 				->setRemark($row->remark)
 				->setCTime($row->cTime);
-		$projects = new Project_Models_ProjectMapper();
-		$projectName = $projects->findProjectName($mplan->getProjectId());
-		$mplan->setProjectName($projectName);
 		$contacts = new Employee_Models_ContactMapper();
-		$applicName = $contacts->findContactName($mplan->getApplicId());
-		if($mplan->getApprovId()!= null)
+		$contactName = $contacts->findContactName($mplan->getContactId());
+		$status = $mplan->getStatus();
+		if($status == 1)
 		{
-			$approvName = $contacts->findContactName($mplan->getApprovId());
-			$mplan->setApprovName($approvName);
+			$approvcName = $contacts->findContactName($mplan->getApprovcId());
+			$mplan->setApprovcName($approvcName);
 			}
-		$mplan->setApplicName($applicName);
-	}*/
+		if($status == 2)
+		{
+			$approvfName = $contacts->findContactName($mplan->getApprovfId());
+			$mplan->setApprovfName($approvfName);
+			}
+		$mplan->setContactName($contactName);
+	}
 	
 	public function findArrayMplan($id) 
 	{

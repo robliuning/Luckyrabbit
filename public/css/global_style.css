@@ -499,6 +499,20 @@ label
 	color: #777777;
 	outline:medium none;
 	}
+.tbTextS
+{
+	background-color: #fffcee;
+	/*background:url("/images/bg_ta.gif") repeat scroll 0 0 #FFFCEE;*/
+	border-radius:4px 4px 4px 4px;
+	border: 1px solid #EEEEEE;
+	box-shadow:1px 1px 1px #BBBBBB inset, 0 0 1px #CCCCCC inset;
+	font-size: 10px;
+	line-height: 21px;
+	margin: 0;
+	padding: 5px 5px;
+	color: #777777;
+	outline:medium none;
+	}
 #searchBox div
 {
 	float: left;
@@ -540,6 +554,10 @@ label
 .tbShort
 {
 	width:50px;
+	}
+.tbMax
+{
+	width: 90%;
 	}
 .btSearch
 {
@@ -768,7 +786,7 @@ label
 	background-position: 10px -157px;
 	background-repeat: no-repeat;
 	}
-#conPrg a,#conSafe a,#conContractor, #conMaterial a
+#conPrg a,#conSafe a,#conContractor a, #conMaterial a
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 30px -535px;

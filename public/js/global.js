@@ -169,40 +169,6 @@ $(document).ready(function()
 	
 	//---------end
 	//Enable the auto-completing of workers
-		$( ".ac_workerName" ).autocomplete({
-			source: function( request, response ) {
-				$.ajax({
-					url: "/worker/worker/autocomplete/key/"+ $(".ac_workerName").val(),
-					//dataType: "jsonp",
-					data: {
-						featureClass: "P",
-						style: "full",
-						maxRows: 12,
-					},
-					success: function(data) {
-							var jsonObj = eval('('+data+')');
-							response( $.map(jsonObj, function(item) {
-							return {
-								label: item.name +"　电话: "+item.phoneNo,
-								value: item.name,
-								name: item.workerId
-							}
-						}));
-					}
-				});
-			},
-			minLength:1,
-			select: function( event, ui ) {
-				$(".ac_workerId").val(ui.item.name);
-			},
-			open: function() {
-				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-			},
-			close: function() {
-				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-			}
-		});
-	//--------end
 	
 	var modelName = $('#modelName').val();
 	var module = $('#module').val();

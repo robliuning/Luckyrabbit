@@ -10,6 +10,11 @@
 		public static $text_notInt = "数字不正确";
 		public static $text_notDate = "日期不正确";
 		public static $text_notEmpty = "本项不能为空";
+		public static $text_notEmpty_part = "不能为空";
+		public static $text_numeric_part = "必须为数字";
+		public static $text_numeric_all = "核量,单价和合价输入必须为数字";
+		public static $text_notEmpty_all = "核量,单价和合价输入不能为空";
+		
 		public static $text_date_startEndError = "结束日期必须为开始日期之后。";
 		public static $text_date_exist = "输入的时间已经存在。";
 		

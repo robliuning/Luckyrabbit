@@ -12,7 +12,7 @@ class Pment_Models_Material
 	protected $_amount;
 	protected $_amountc;
 	protected $_cost;
-	protected $_constTotal;
+	protected $_costTotal;
 	protected $_budget;
 	protected $_budgetTotal;
 	protected $_weight;

@@ -30,6 +30,7 @@ class Pment_MaterialController extends Zend_Controller_Action
 	public function indexAction()
 	{
 		$planId = $this->_getParam('id',0);
+		$errorMsg = null;
 		
 		if($planId > 0)
 		{
@@ -41,7 +42,7 @@ class Pment_MaterialController extends Zend_Controller_Action
 			$condition = "planId";
 			$arrayMaterials = $materials->fetchAllJoin($planId,$condition);
 			
-			$this->view->plan = $plan;
+			$this->view->mplan = $mplan;
 			$this->view->planId = $planId;
 			$this->view->module = "pment";
 			$this->view->controller = "material";
@@ -52,19 +53,29 @@ class Pment_MaterialController extends Zend_Controller_Action
 			if($this->getRequest()->isPost())
 			{
 				$formData = $this->getRequest()->getPost();
-				$material = new Pment_Models_Material();
-				$material->setPlanId($planId);
-				$material->setType($formData['type']);
-				$material->setMName($formData['mName']);
-				$material->setUnit($formData['unit']);
-				$material->setSpec($formData['spec']);
-				$material->setAmount($formData['amount']);
-				$material->setWeight($formData['weight']);
-				$material->setLimitation($formData['limitation']);
-				$material->setInDate($formData['inDate']);
-				$material->setRemark($formData['remark']);
-				$materials->save($material);
-				$this->_redirect('/pment/material/index/id/'.$planId);
+				$array = $materials->dataValidator($formData);
+				$trigger = $array['trigger'];
+				$errorMsg = $array['errorMsg'];
+				if($trigger == 0)
+				{
+					$material = new Pment_Models_Material();
+					$material->setPlanId($planId);
+					$material->setType($formData['type']);
+					$material->setMName($formData['mName']);
+					$material->setUnit($formData['unit']);
+					$material->setSpec($formData['spec']);
+					$material->setAmount($formData['amount']);
+					$material->setWeight($formData['weight']);
+					$material->setLimitation($formData['limitation']);
+					$material->setInDate($formData['inDate']);
+					$material->setRemark($formData['remark']);
+					$materials->save($material);
+					$this->_redirect('/pment/material/index/id/'.$planId);
+					}
+					else
+					{
+						$this->view->errorMsg = $errorMsg;
+						}
 				}
 			}
 			else

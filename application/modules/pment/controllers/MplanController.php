@@ -210,7 +210,7 @@ class Pment_MplanController extends Zend_Controller_Action
 		}
 	}
 	
-	/*public function displayAction()
+	public function displayAction()
 	{
 		$id = $this->_getParam('id',0);
 		
@@ -218,24 +218,94 @@ class Pment_MplanController extends Zend_Controller_Action
 		{
 			//display plan info
 			$mplans = new Pment_Models_MplanMapper();
-		  	$mplan = new Pment_Models_Mplan();
+			$mplan = new Pment_Models_Mplan();
 			$mplans->find($id,$mplan);
-			$this->view->plan = $mplan;
-			$this->view->id = $id;		
-			$this->view->module = "material";
-			$this->view->controller = "plan";
-			$this->view->modelName = "材料需求计划"; 
+			$status = $mplan->getStatus();
+			$this->view->mplan = $mplan;
+			$this->view->status = $status;
+			$this->view->id = $id;
+			$this->view->module = "pment";
+			$this->view->controller = "mplan";
+			$this->view->modelName = "材料月计划信息"; 
 			//display material info
-			$mtrplans = new Pment_Models_MtrplanMapper();
+			$materials = new Pment_Models_MaterialMapper();
 			$condition = "planId";
-			$arrayMtrplans = $mtrplans->fetchAllJoin($id,$condition);
-			$this->view->arrayMtrplans = $arrayMtrplans;	
+			$arrayMaterials = $materials->fetchAllOrganize($id,$condition);
+			$this->view->arrayMaterials = $arrayMaterials;
 			}
 			else
 			{
-				$this->_redirect('/material/plan');
+				$this->_redirect('/pment/mplan');
 				}
-	}*/
+	}
+	
+	public function approveAction()
+	{
+		$id = $this->_getParam('id',0);
+		
+		if($id > 0)
+		{
+			//display plan info
+			$mplans = new Pment_Models_MplanMapper();
+			$mplan = new Pment_Models_Mplan();
+			$errorMsg = null;
+			$mplans->find($id,$mplan);
+			$status = $mplan->getStatus();
+			$this->view->mplan = $mplan;
+			$this->view->status = $status;
+			$this->view->id = $id;
+			$this->view->module = "pment";
+			$this->view->controller = "mplan";
+			$this->view->modelName = "材料月计划信息"; 
+			//display material info
+			$materials = new Pment_Models_MaterialMapper();
+			$condition = "planId";
+			$arrayMaterials = $materials->fetchAllOrganize($id,$condition);
+			$this->view->arrayMaterials = $arrayMaterials;
+			
+			if($this->getRequest()->isPost())
+			{
+				$formData = $this->getRequest()->getPost();
+				$array = $materials->approvcValidator($formData);
+				$trigger = $array['trigger'];
+				$errorMsg = $array['errorMsg'];
+				if($trigger == 0)
+				{
+					$arrayMtrIds = $materials->fetchArryMtrIds($id);
+					foreach($arrayMtrIds as $mtrId)
+					{
+						$material = new Pment_Models_Material();
+						$materials->find($mtrId,$material);
+						$material->setAmountc($formData['amountc_'.$mtrId]);
+						$material->setCost($formData['cost_'.$mtrId]);
+						$material->setCostTotal($formData['costTotal_'.$mtrId]);
+						$material->setBudget($formData['budget_'.$mtrId]);
+						$material->setBudgetTotal($formData['budgetTotal_'.$mtrId]);
+						$errorMsg = $material->getPlanId()."and".$material->getBudgetTotal();
+						$materials->save($material);
+						}
+					$userId = $this->getUserId();
+					$users = new System_Models_UserMapper();
+					$approvcId = $users->getContactId($userId);
+					$mplan->setStatus(1);
+					$mplan->setApprovcId($approvcId);
+					$mplan->setApprovcDate(date('Y-m-d'));
+					$mplan->setApprovcRemark($formData['approvcRemark']);
+					$mplans->save($mplan);
+					$this->_redirect('/pment/mplan/display/id/'.$id);
+					}
+					else
+					{
+					
+						}
+				}
+			$this->view->errorMsg = $errorMsg;
+			}
+			else
+			{
+				$this->_redirect('/pment/mplan');
+				}
+		}
 	
 	protected function getProjectId()
 	{

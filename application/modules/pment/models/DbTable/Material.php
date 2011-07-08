@@ -1,11 +1,9 @@
 <?php
-  //creation date 15-04-2011
-  //creating by lincoy
-  //completion date 15-04-2011
+//updated in 5th july by rob
 
-class Material_Models_DbTable_Mtrplan extends Zend_Db_Table_Abstract
+class Pment_Models_DbTable_Material extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'mm_mtr_plan';
+	protected $_name = 'mm_materials';
 	
 	public function search($key,$condition)
 	{
