@@ -17,6 +17,13 @@
 					echo $this->errorMsg;
 					}?>
 					</p>
+					<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+				<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -52,13 +59,13 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>车牌号</th>
 						<th>年份</th>
 						<th>月份</th>
 						<th>当月行驶公里数</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -71,23 +78,25 @@
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayDrirecords as $drirecord):?>
-					<?php $recordId = $this->escape($drirecord->getRecordId());?>
+					<?php $recordId = $this->escape($drirecord->recordId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $recordId ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="/vehicle/index/ajaxdisplay/id/<?php echo $this->escape($drirecord->getVeId())?>"><?php echo $this->escape($drirecord->getPlateNo()) ?></a></td>
-						<td><?php echo $this->escape($drirecord->getRYear()) ?></td>	
-						<td><?php echo $this->escape($drirecord->getRMonth()) ?></td>
+						<td><a class="lightbox" href="/vehicle/index/ajaxdisplay/id/<?php echo $this->escape($drirecord->veId)?>"><?php echo $this->escape($drirecord->plateNo) ?></a></td>
+						<td><?php echo $this->escape($drirecord->rYear) ?></td>	
+						<td><?php echo $this->escape($drirecord->rMonth) ?></td>
 						<td>
-						<?php echo $this->escape($drirecord->getMile())?>
+						<?php echo $this->escape($drirecord->mile)?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'drirecord','action'=>'edit','id'=>$recordId))?>">修改</a></td>
 						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'drirecord','action'=>'ajaxdisplay','id'=>$recordId))?>">快速查看</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayDrirecords) != 0)
+						echo "<tr><td colspan='8'>".$this->paginationControl($this->arrayDrirecords, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

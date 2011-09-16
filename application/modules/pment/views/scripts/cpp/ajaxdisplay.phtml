@@ -1,14 +1,15 @@
+<?php $cpp = $this->cpp;
+		$arrayFuncs = $this->arrayFuncs;
+?>
 <div id="ajaxMsgBox">
 	<div id="ajaxMsgBox_Emp">
 	<div class="overall_tool">
 			<div class="button_group">
-				<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-				<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+				<?php if($arrayFuncs['ajaxpdf'] == 1):?>
+				<div><a target="_blank" href="/general/pdf/generate/page/7/id/<?php echo $cpp->cppId?>"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+				<?php endif;?>
 			</div><!-- end of button group -->
 	</div><!-- end of overall tool -->
-		<p><?php
-			$cpp = $this->cpp;?>
-			</p>
 			<div class="overall_content">
 			<table>
 					<colgroup>

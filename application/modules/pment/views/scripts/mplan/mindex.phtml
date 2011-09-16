@@ -1,0 +1,273 @@
+ <?php 
+ 	$this->headTitle('- 工程管理 - 材料计划信息');
+ 	$this->headScript()->prependFile('/js/pment.js');
+ 	$this->headScript()->prependFile('/js/conMtr.js');
+ 	$this->headScript()->prependFile('/js/rdSlide.js');
+  	$this->headScript()->prependFile('/js/approvf.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 材料部 - 材料计划信息 - 总览</h1>
+		<?php 
+			$project = $this->project;
+			echo $this->displayProject($project);?>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+			<p class="subMenu slideMenu"><a class="btAllSlide subMenu_switch_open"><span>关闭</span>全部内容</a></p>
+			<div>
+			<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">待审批的材料计划</a></p>
+			<div class="conRdSlide">
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:15%"></col>
+						<col style="width:7%"></col>
+						<col style="width:10%"></col>
+						<col style="width:8%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>材料计划名称</th>
+						<th>材料计划类型</th>
+						<th>材料计划时间<input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>填报人</th>
+						<th>填报日期</th>
+						<th>预算部审批人</th>
+						<th>预算部审批时间</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="3">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<?php if(count($this->arrayMplans1) != 0):?>
+					<?php foreach($this->arrayMplans1 as $plan):?>
+					<?php $planId = $this->escape($plan->planId); ?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $planId; ?>"></td>
+						<td><?php echo $this->escape($plan->planName)?></td>
+						<td><?php echo $this->escape($plan->typeName)?></td>
+						<td><?php echo $this->escape($plan->yearNum)."年".$this->escape($plan->monNum)."月"?></td>	
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->contactId)?>"><?php echo $this->escape($plan->contactName) ?></a></td>
+						<td><?php echo $this->escape($plan->pDate)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->approvcId)?>"><?php echo $this->escape($plan->approvName) ?></a></td>
+						<td><?php echo $this->escape($plan->approvcDate)?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'mapprove','id'=>$planId))?>">开始审批</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'display','id'=>$planId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+					<?php echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayMplans1, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
+					<?php else:?>
+					<tr>
+						<td colspan="10"><span class="highlight">暂无记录</span></td>
+					</tr>
+					<?php endif;?>
+				</table>
+			</div>
+			</div>
+			<div>
+			<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">审批中的材料计划</a></p>
+			<div class="conRdSlide">
+				<table>
+					<colgroup>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>材料计划名称</th>
+						<th>材料计划类型</th>
+						<th>材料计划时间</th>
+						<th>填报人</th>
+						<th>填报日期</th>
+						<th>预算部审批人</th>
+						<th>预算部审批时间</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php if(count($this->arrayMplans2) != 0):?>
+					<?php foreach($this->arrayMplans2 as $plan):?>
+					<?php $planId = $this->escape($plan->planId); ?>
+					<tr>
+						<td><?php echo $this->escape($plan->planName)?></td>
+						<td><?php echo $this->escape($plan->typeName)?></td>
+						<td><?php echo $this->escape($plan->yearNum)."年".$this->escape($plan->monNum)."月"?></td>	
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->contactId)?>"><?php echo $this->escape($plan->contactName) ?></a></td>
+						<td><?php echo $this->escape($plan->pDate)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->approvcId)?>"><?php echo $this->escape($plan->approvName) ?></a></td>
+						<td><?php echo $this->escape($plan->approvcDate)?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'mapprove','id'=>$planId))?>">继续审批</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'display','id'=>$planId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+					<?php
+						echo "<tr><td colspan='9'>".$this->paginationControl($this->arrayMplans2, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
+					<?php else:?>
+					<tr>
+						<td colspan="9"><span class="highlight">暂无记录</span></td>
+					</tr>
+					<?php endif;?>
+				</table>
+			</div>
+			</div>
+			<div>
+			<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">退回预算部重审的材料计划</a></p>
+			<div class="conRdSlide">
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>材料计划名称</th>
+						<th>材料计划类型</th>
+						<th>材料计划时间</th>
+						<th>填报人</th>
+						<th>填报日期</th>
+						<th>预算部审批人</th>
+						<th>预算部审批时间</th>
+						<th>材料部退回人</th>
+						<th>材料部退回时间</th>
+						<th></th>
+					</thead>
+					<?php if(count($this->arrayMplans3) != 0):?>
+					<?php foreach($this->arrayMplans3 as $plan):?>
+					<?php $planId = $this->escape($plan->planId); ?>
+					<tr>
+						<td><?php echo $this->escape($plan->planName)?></td>
+						<td><?php echo $this->escape($plan->typeName)?></td>
+						<td><?php echo $this->escape($plan->yearNum)."年".$this->escape($plan->monNum)."月"?></td>	
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->contactId)?>"><?php echo $this->escape($plan->contactName) ?></a></td>
+						<td><?php echo $this->escape($plan->pDate)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->approvcId)?>"><?php echo $this->escape($plan->approvName) ?></a></td>
+						<td><?php echo $this->escape($plan->approvcDate)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->approvfId)?>"><?php echo $this->escape($plan->approvfName) ?></a></td>
+						<td><?php echo $this->escape($plan->approvfDate)?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'display','id'=>$planId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+					<?php
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayMplans3, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
+					<?php else:?>
+					<tr>
+						<td colspan="10"><span class="highlight">暂无记录</span></td>
+					</tr>
+					<?php endif;?>
+				</table>
+			</div>
+			</div>
+			<div>
+			<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">审批完成的材料计划</a></p>
+			<div class="conRdSlide">
+				<table>
+					<colgroup>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:7%"></col>
+						<col style="width:7%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:9%"></col>
+						<col style="width:7%"></col>
+					</colgroup>
+					<thead>
+						<th>材料计划名称</th>
+						<th>材料计划类型</th>
+						<th>材料计划时间</th>
+						<th>填报人</th>
+						<th>填报日期</th>
+						<th>预算部审批人</th>
+						<th>预算部审批时间</th>
+						<th>材料部审批人</th>
+						<th>材料部审批时间</th>
+						<th></th>
+						<th></th>
+					</thead>
+					<?php if(count($this->arrayMplans4) != 0):?>
+					<?php foreach($this->arrayMplans4 as $plan):?>
+					<?php $planId = $this->escape($plan->planId); ?>
+					<tr>
+						<td><?php echo $this->escape($plan->planName)?></td>
+						<td><?php echo $this->escape($plan->typeName)?></td>
+						<td><?php echo $this->escape($plan->yearNum)."年".$this->escape($plan->monNum)."月"?></td>	
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->contactId)?>"><?php echo $this->escape($plan->contactName) ?></a></td>
+						<td><?php echo $this->escape($plan->pDate)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->approvcId)?>"><?php echo $this->escape($plan->approvName) ?></a></td>
+						<td><?php echo $this->escape($plan->approvcDate)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($plan->approvfId)?>"><?php echo $this->escape($plan->approvfName) ?></a></td>
+						<td><?php echo $this->escape($plan->approvfDate)?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'mfinal','id'=>$planId))?>">采购信息</a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'mplan','action'=>'display','id'=>$planId))?>">详情</a></td>
+					</tr>
+					<?php endforeach ?>
+					<?php
+						echo "<tr><td colspan='11'>".$this->paginationControl($this->arrayMplans4, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
+					<?php else:?>
+					<tr>
+						<td colspan="11"><span class="highlight">暂无记录</span></td>
+					</tr>
+					<?php endif;?>
+				</table>
+			</div>
+			</div>
+			<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

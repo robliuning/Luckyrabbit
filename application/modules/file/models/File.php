@@ -18,6 +18,7 @@ class File_Models_File
 	protected $_remark;
 	protected $_status;
 	protected $_type;
+	protected $_parent;
 	
 	public function __construct(array $options = null)
 	{
@@ -244,6 +245,18 @@ class File_Models_File
 	public function getType()
 	{
 		return $this->_type;
+	}
+
+	/************************************************/
+	public function setParent($parent)
+	{
+		$this->_parent = $parent;
+		return $this;
+	}
+
+	public function getParent()
+	{
+		return $this->_parent;
 	}
 }
 ?>

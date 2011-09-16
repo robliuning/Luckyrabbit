@@ -35,5 +35,28 @@ class Vehicle_Models_DbTable_Repair extends Zend_Db_Table_Abstract
 		
 		return $resultSet;
 	}
+	
+	public function fetchAllJoin($key, $condition)
+	{
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('ve'=>'ve_repairs'))
+						->join(array('em'=>'em_contacts'),'em.contactId = ve.contactId',array('contactName'))
+						->join(array('vv'=>'ve_vehicles'),'vv.veId = ve.veId',array('plateNo'));
+		if($condition == 'plateNo')
+		{
+			$select->where('vv.plateNo like ?','%'.$key.'%');
+			}
+			elseif($condition == 'contactName')
+				{
+					$select->where('em.contactName like ?','%'.$key.'%');
+					}
+					elseif($condition == 'date')
+					{
+						$select->where('ve.rDate = ?',$key);
+						}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>

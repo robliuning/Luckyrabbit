@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('- 工程管理 - 材料月计划信息');
+ 	$this->headTitle('- 工程管理 - 材料计划信息');
  	$this->headScript()->prependFile('/js/pment.js');
  	$this->headScript()->prependFile('/js/conMtr.js'); 
  	$this->headScript()->prependFile('/js/rdSlide.js'); 
@@ -11,7 +11,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 材料月计划信息 - 详情</h1>
+		<h1>工程管理 - 材料计划信息 - 详情</h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -20,30 +20,12 @@
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
-					<?php 
-						$status = $this->status;
-						$dis = null;
-						if($status == 0)
-						{
-							$dis = "预算部审批";
-							}
-							elseif($status == 1)
-							{
-								$dis = "最终审批";
-								}
-						$html = "<div><a href='/pment/mplan/approve/id/".$this->id."'><img src='/images/icons/functions/approve.png'/><p>".$dis."</p></a></div>";
-						if($status != 2)
-						{
-							echo $html;
-							}
-					?>	
-					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 					<div><a href="/pment/mplan/"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
-				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">月计划信息</a></p>
+				<p class="subMenu">材料计划信息</p>
 				<?php $mplan = $this->mplan?>
 				<table>
 					<colgroup>
@@ -54,109 +36,90 @@
 					</colgroup>
 					<tr>
 						<td>计划状态</td>
-						<td><img src="/images/status/<?php echo $status ?>.png">&nbsp;&nbsp;&nbsp;&nbsp;<?php 
-							$dis = null;
-							if($status == 0)
-							{
-								$dis = "项目部填报";
-								}
-								elseif($status == 1)
-								{
-									$dis = "预算部审批完成";
-									}
-									elseif($status == 2)
-									{
-										$dis = "最终审批完成";
-										}
-							echo $dis;
-						?></td>
-						<td>计划时间: </td>
+						<td><img class="m_status" src="/images/status/<?php echo $this->escape($mplan->getStatus())?>.png"/><?php echo $mplan->getStatusName()?></td>
+						<td>材料计划名称: </td>
+						<td><?php echo $mplan->getPlanName() ?></td>
+					</tr>
+					<tr>
+						<td>材料计划类型: </td>
+						<td><?php echo $mplan->getTypeName()?></td>						<td>计划时间: </td>
 						<td><?php echo $mplan->getYearNum()."年".$mplan->getMonNum()."月"?></td>
 					</tr>
 					<tr>
 						<td>填报人: </td>
 						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mplan->getContactId())?>"><?php echo $mplan->getContactName()?></a></td>
-						<td>填报时间: </td>
+						<td>填报日期: </td>
 						<td><?php echo $mplan->getPDate()?></td>
 					</tr>
-				</table>
-				<div class="conRdSlide">
-				<table>
-					<colgroup>
-						<col style="width:15%"></col>
-						<col style="width:35%"></col>
-						<col style="width:15%"></col>
-						<col style="width:35%"></col>
-					</colgroup>
 					<tr>
 						<td>备注: </td>
 						<td colspan="3"><?php echo $mplan->getRemark()?></td>
 					</tr>
-					<?php if ($status == 1) : ?>
+					<?php if($this->status>=3): ?>
 					<tr>
-						<td>预算部审批人</td>
+						<td>预算部审批人: </td>
 						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mplan->getApprovcId())?>"><?php echo $mplan->getApprovcName()?></a></td>
-						<td>预算部审批日期</td>
+						<td>预算部审批时间: </td>
 						<td><?php echo $mplan->getApprovcDate()?></td>
 					</tr>
 					<tr>
 						<td>预算部审批意见: </td>
 						<td colspan="3"><?php echo $mplan->getApprovcRemark()?></td>
 					</tr>
-					<?php endif; ?>
-					<?php if ($status == 2) : ?>
+					<?php endif;?>
+					<?php if($this->status==4): ?>
 					<tr>
-						<td>最终审批人</td>
-						<td><?php echo $mplan->getApprovfName()?></td>
-						<td>最终审批日期</td>
+						<td>材料部返回人: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mplan->getApprovfId())?>"><?php echo $mplan->getApprovfName()?></a></td>
+						<td>材料部返回时间: </td>
 						<td><?php echo $mplan->getApprovfDate()?></td>
 					</tr>
 					<tr>
-						<td>最终审批意见: </td>
+						<td>材料部返回意见: </td>
 						<td colspan="3"><?php echo $mplan->getApprovfRemark()?></td>
 					</tr>
+					<?php endif;?>
+					<?php if($this->status==6): ?>
 					<tr>
-						<td>计划总价: </td>
-						<td><?php echo $mplan->getTotal()?></td>
-						<td>上次修改时间: </td>
-						<td><?php echo $mplan->getCTime()?></td>
+						<td>材料部审批人: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mplan->getApprovfId())?>"><?php echo $mplan->getApprovfName()?></a></td>
+						<td>材料部审批时间: </td>
+						<td><?php echo $mplan->getApprovfDate()?></td>
 					</tr>
-					<?php endif; ?>
+					<tr>
+						<td>材料部审批意见: </td>
+						<td colspan="3"><?php echo $mplan->getApprovfRemark()?></td>
+					</tr>
+					<?php endif;?>
 				</table>
-				</div>
-				<p class="subMenu slideMenu"><a class="btRdSlide3 subMenu_switch_open">计划相关材料信息</a></p>
-					<div class="conRdSlide3">
+				<div>
+				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">材料计划材料信息</a></p>
+					<div class="conRdSlide">
 					<table>
-					<colgroup>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:15%"></col>
-					</colgroup>
-					<thead>
-						<th>材料名</th>
-						<th>规格型号</th>
-						<th>限额值</th>
-						<th>项目部审核量</th>
-						<th>预算部审核量</th>
-						<th>成本单价</th>
-						<th>成本合价</th>
-						<th>预算单价</th>
-						<th>预算合价</th>
-						<th>重量</th>
-						<th>单位</th>
-						<th>需进场时间</th>
-						<th>备注</th>
-					</thead>
+						<colgroup>
+							<col style="width:15%"></col>
+							<col style="width:20%"></col>
+							<col style="width:5%"></col>
+							<col style="width:7%"></col>
+							<col style="width:7%"></col>
+							<col style="width:8%"></col>
+							<col style="width:8%"></col>
+							<col style="width:5%"></col>
+							<col style="width:8%"></col>
+							<col style="width:17%"></col>
+						</colgroup>
+						<thead>
+							<th>材料名</th>
+							<th>规格型号</th>
+							<th>项目部报量</th>
+							<th>预算部核量</th>
+							<th>控制价(人民币)</th>
+							<th>控制价合价(人民币)</th>
+							<th>实收数量</th>
+							<th>单位</th>
+							<th>需进场日期</th>
+							<th>备注</th>
+						</thead>
 				</table>
 				<?php $arrayMaterials = $this->arrayMaterials;?>
 				<?php if ($arrayMaterials != null) : ?>
@@ -165,40 +128,40 @@
 				<p class="subMenu"><?php echo $key ?></p>
 				<table>
 					<colgroup>
-						<col style="width:15%"></col>
-						<col style="width:15%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:15%"></col>
+							<col style="width:15%"></col>
+							<col style="width:20%"></col>
+							<col style="width:5%"></col>
+							<col style="width:7%"></col>
+							<col style="width:7%"></col>
+							<col style="width:8%"></col>
+							<col style="width:8%"></col>
+							<col style="width:5%"></col>
+							<col style="width:8%"></col>
+							<col style="width:17%"></col>
 					</colgroup>
 					<?php foreach($value as $val):?>
 					<tr>
 						<td><?php echo $this->escape($val->getMName()) ?></td>
 						<td><?php echo $this->escape($val->getSpec())?></td>
-						<td><?php echo $this->escape($val->getLimitation())?></td>
 						<td><?php echo $this->escape($val->getAmount())?></td>
-						<?php if($status == 1 || $status == 2):?>
+						<?php if($this->status == 1):?>
+						<td>等待审批</td>
+						<td>等待审批</td>
+						<td>等待审批</td>
+						<?php elseif($this->groupId != 3):?>
 						<td><?php echo $this->escape($val->getAmountc())?></td>
-						<td><?php echo $this->escape($val->getCost())?></td>
-						<td><?php echo $this->escape($val->getCostTotal())?></td>
 						<td><?php echo $this->escape($val->getBudget())?></td>
 						<td><?php echo $this->escape($val->getBudgetTotal())?></td>
 						<?php else:?>
-						<td>未审批</td>
-						<td>未审批</td>
-						<td>未审批</td>
-						<td>未审批</td>
-						<td>未审批</td>
+						<td><?php echo $this->escape($val->getAmountc())?></td>
+						<td>-</td>
+						<td>-</td>
 						<?php endif;?>
-						<td><?php echo $this->escape($val->getWeight())?></td>
+						<?php if($this->status != 6):?>
+						<td>暂无</td>
+						<?php else:?>
+						<td><?php echo $this->escape($val->getAmountf())?></td>
+						<?php endif;?>
 						<td><?php echo $this->escape($val->getUnit())?></td>
 						<td><?php echo $this->escape($val->getInDate())?></td>
 						<td><?php echo $this->escape($val->getRemark())?></td>
@@ -208,6 +171,39 @@
 				</div>
 				<?php endforeach ?>
 				<?php endif; ?>
+				</div>
+				</div>
+				<div>
+				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">核验人</a></p>
+				<div class="conRdSlide">
+					<table id="tableAp">
+						<colgroup>
+							<col style="width:15%"></col>
+							<col style="width:20%"></col>
+							<col style="width:65%"></col>
+						</colgroup>
+						<tr>
+							<td>核验人</td>
+							<td>状态</td>
+							<td>核验时间</td>
+						</tr>
+						<?php $arrayReviewers = $this->arrayReviewers; ?>
+						<?php if($arrayReviewers != null ):?>
+						<?php foreach($arrayReviewers as $val):?>
+						<tr>
+							<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $val->getContactId() ?>"><?php echo $val->getContactName()?></a></td>
+							<td><?php echo $this->escape($val->getStatusName())?></td>
+							<td><?php echo $this->escape($val->getAddDate())?></td>
+						</tr>
+						<?php endforeach ?>
+						<?php else:?>
+						<tr>
+							<td colspan="3"><span class="highlight">暂无记录</span></td>
+						</tr>
+						<?php endif;?>
+					</table>
+				</div><!-- end of conRdSlide -->
+				</div>
 				<div id="msgBox"></div>
 				<p id="ajax_id" class="hide"><?php echo $this->id?></p>
 				<input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>">

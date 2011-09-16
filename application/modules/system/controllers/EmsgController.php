@@ -21,5 +21,10 @@ class System_EmsgController extends Zend_Controller_Action
 	{
 	
 		}
+	
+	public function authfailedAction()
+	{
+	
+		}
 }
 ?>

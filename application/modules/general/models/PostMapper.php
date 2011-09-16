@@ -34,7 +34,7 @@ class General_Models_PostMapper
 		}
 		
 		$post = array();
-		$post['name'] = $row->name;
+		$post['name'] = $row->postName;
 		$post['detail'] = $row->detail;
 		
 		return $post;
@@ -47,7 +47,7 @@ class General_Models_PostMapper
 		foreach ($resultSet as $row) {
 			$entry = new General_Models_Post();
 			$entry->setPostId($row->postId)
-					->setName($row->name);
+					->setName($row->postName);
 
 			$entries[] = $entry;
 		}

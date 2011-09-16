@@ -11,14 +11,14 @@ class Pment_Models_Material
 	protected $_spec;
 	protected $_amount;
 	protected $_amountc;
+	protected $_amountf;
 	protected $_cost;
 	protected $_costTotal;
 	protected $_budget;
 	protected $_budgetTotal;
-	protected $_weight;
-	protected $_limitation;
 	protected $_inDate;
 	protected $_remark;
+	protected $_vendorName;
 	
 	public function __construct(array $options = null)
 	{
@@ -189,26 +189,15 @@ class Pment_Models_Material
 		return $this->_budgetTotal;
 	}
 	
-	public function setWeight($weight)
+	public function setAmountf($amountf)
 	{
-		$this->_weight = $weight;
+		$this->_amountf = $amountf;
 		return $this;
 	} 
 
-	public function getWeight()
+	public function getAmountf()
 	{
-		return $this->_weight;
-	}
-	
-	public function setLimitation($limitation)
-	{
-		$this->_limitation = $limitation;
-		return $this;
-	} 
-
-	public function getLimitation()
-	{
-		return $this->_limitation;
+		return $this->_amountf;
 	}
 
 	public function setInDate($inDate)
@@ -231,6 +220,17 @@ class Pment_Models_Material
 	public function getRemark()
 	{
 		return $this->_remark;
+	}
+
+	public function setVendorName($vendorName)
+	{
+		$this->_vendorName = $vendorName;
+		return $this;
+	} 
+
+	public function getVendorName()
+	{
+		return $this->_vendorName;
 	}
 }
 ?>

@@ -5,20 +5,12 @@ class Pment_MeasureController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_MeasureController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$measures = new Pment_Models_MeasureMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,20 @@ class Pment_MeasureController extends Zend_Controller_Action
 		{
 			$arrayMeasures = $measures->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayMeasures) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayMeasures->setCurrentPageNumber($pageNumber);
+			$arrayMeasures->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayMeasures = $arrayMeasures;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "measure";
-		$this->view->modelName = "安全措施信息";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_MeasureSave();
 		$measures = new Pment_Models_MeasureMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -85,7 +79,7 @@ class Pment_MeasureController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$measure = new Pment_Models_Measure();
@@ -130,7 +124,7 @@ class Pment_MeasureController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$meaId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$editForm = $measures->formValidator($editForm,1);
 
 		if($this->getRequest()->isPost())
@@ -143,7 +137,7 @@ class Pment_MeasureController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$measure = new Pment_Models_Measure();
@@ -192,7 +186,7 @@ class Pment_MeasureController extends Zend_Controller_Action
 		if($meaId > 0)
 		{
 			$measures = new Pment_Models_MeasureMapper();
-			$projectId = $this->getProjectId();
+			$projectId = $this->_getProjectId();
 			$measure = new Pment_Models_Measure();
 			$measures->find($meaId,$measure);
 			$this ->view->measure = $measure;
@@ -226,17 +220,5 @@ class Pment_MeasureController extends Zend_Controller_Action
 			$this->_redirect('/pment/measure');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
-	
-	protected function getUserId()
-	{
-		$userNamespace = new Zend_Session_Namespace('userNamespace');
-		return $userNamespace->userId;
-		}
 }
 ?>

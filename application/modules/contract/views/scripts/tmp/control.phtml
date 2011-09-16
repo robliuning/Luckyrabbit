@@ -1,0 +1,46 @@
+<?php if ($this->pageCount): ?>
+<div class="paginationControl">
+<p>
+第<?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?>条,总记<?php echo $this->totalItemCount; ?>条</p>
+<!-- First page link -->
+<p><?php if (isset($this->previous)): ?>
+<a href="<?php echo $this->url(array('page' => $this->first)); ?>">第一页</a> |
+<?php else: ?>
+	<span class="disabled">第一页</span> |
+<?php endif; ?></p>
+<!-- Previous page link -->
+<p><?php if (isset($this->previous)): ?>
+	<a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+	&lt; 上页
+	</a> |
+<?php else: ?>
+	<span class="disabled">&lt; 上页</span> |
+<?php endif; ?></p>
+<p><?php foreach ($this->pagesInRange as $page): ?>
+		<?php if ($page != $this->current): ?>
+		<a href="<?php echo $this->url(array('page' => $page)); ?>">
+			<?php echo $page; ?>
+		</a> |
+		<?php else: ?>
+		<?php echo $page; ?> |
+		<?php endif; ?>
+	<?php endforeach; ?></p>
+<!-- Next page link -->
+<p><?php if (isset($this->next)): ?>
+<a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+	下页 &gt;
+	</a> |
+<?php else: ?>
+	<span class="disabled">下页 &gt;</span> |
+<?php endif; ?></p>
+<!-- Last page link -->
+<p><?php if (isset($this->next)): ?>
+	<a href="<?php echo $this->url(array('page' => $this->last)); ?>">
+	最后一页
+	</a>
+<?php else: ?>
+	<span class="disabled">最后一页</span>
+<?php endif; ?></p>
+	</div>
+	<?php endif; ?>
+	

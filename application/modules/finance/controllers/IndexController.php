@@ -1,4 +1,4 @@
-<?php
+in<?php
 
 class Finance_IndexController extends Zend_Controller_Action
 {

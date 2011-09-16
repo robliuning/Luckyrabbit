@@ -1,10 +1,37 @@
 $(document).ready(function()
 {
+	var modelName = $('#sidName').val().trim();
+	var module = $('#module').val().trim();
+	var controller = $('#controller').val().trim();
+	var ajax_id = $("#ajax_id").text().trim();
+
+	$('#nav_main li').each(function(){
+		var moduleHl = module;
+		if(module == 'pment')
+		{
+			moduleHl = 'project';
+			}
+		if($(this).attr('id') == moduleHl)
+		{
+			$(this).find('a').attr('id','nav_general_selected');
+			}
+	});
+	
+	$("#p_sidebar ul li").each(function(){
+		var controllerHl = controller;
+		if(controller == 'material')
+		{
+			controllerHl = 'mplan';
+			}
+		if($(this).attr('id') == controllerHl)
+		{
+			$(this).find('a').attr('id','nav_sidebar_selected');
+			}
+	});
 	//wiget
 	$('.tb_sc').click(function(){
 		$(this).val('');
 	});
-	
 	
 	$('#wg_sc').hover(function(){
 		var id = $('.ac_contactId').val();
@@ -168,12 +195,52 @@ $(document).ready(function()
 		});
 	
 	//---------end
-	//Enable the auto-completing of workers
-	
-	var modelName = $('#modelName').val();
-	var module = $('#module').val();
-	var controller = $('#controller').val();
-	var ajax_id = $("#ajax_id").text();
+	//Enable the auto-completing of registered users
+		$( ".ac_registerName" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "/employee/index/acregister/key/"+ $(".ac_registerName").val(),
+					//dataType: "jsonp",
+					data: {
+						featureClass: "P",
+						style: "full",
+						maxRows: 12,
+					},
+					success: function(data) {
+							var jsonObj = eval('('+data+')');
+							response( $.map(jsonObj, function(item) {
+							return {
+								label: item.name +"　性别: "+item.gender,
+								value: item.name,
+								name: item.contactId
+							}
+						}));
+					}
+				});
+			},
+			minLength:1,
+			select: function( event, ui ) {
+				$(".ac_registerId").val(ui.item.name);
+			},
+			open: function() {
+				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+		});
+	//---------------end
+
+	$('#ajaxpdf').click(function(){
+		$.ajax({
+				type:"post",
+				url:"/"+module+"/"+controller+"/ajaxpdf/",
+				success:function(rt){
+					alert("文件转化需要一定时间,请耐心等待!");
+					window.location = rt;
+					}
+			});	
+	});
 		
 	$('#btDel').hover(function(){
 		var count = $('[name="cb"]:checked').length;
@@ -216,5 +283,13 @@ $(document).ready(function()
 					window.location = "/"+module+"/"+controller+"/index/id/"+ajax_id;
 					}
 		});
+	});
+	
+	$("#btSlideGn").click(function () {
+		if($("#conSlideGn").is(":hidden")) {
+		$("#conSlideGn").slideDown("slow");
+		} else {
+		$("#conSlideGn").slideUp("slow");
+ 		}
 	});
 });

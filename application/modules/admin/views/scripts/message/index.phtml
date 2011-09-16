@@ -1,0 +1,92 @@
+<?php 
+	$this->headTitle('- 站内消息 - 所有消息');
+	$this->headScript()->prependFile('/js/ad_message.js');
+?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>站内消息 - 所有消息 - 总览</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+					}?>
+					</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+				<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+									<option value="username">用户名</option>
+									<option value="title">标题</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+				</div>		
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table id="ad_message">
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+						<col style="width:25%"></col>
+						<col style="width:40%"></col>
+						<col style="width:25%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th>状态</th>
+						<th>发件人</th>
+						<th>标题</th>
+						<th>收件时间</th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayMessages as $message):?>
+					<?php $msgId = $this->escape($message->msgId);?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $msgId ?>"></td>
+						<td class="ad_message_td"><img src="/images/mail/<?php echo $message->status?>.png"></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($message->contactId) ?>"><?php echo $this->escape($message->contactName) ?></a></td>
+						<td class="ad_message_td">
+						<?php echo $this->escape($message->title)?>
+						</td>
+						<td class="ad_message_td"><?php echo $this->escape($message->sendTime) ?></td>
+					</tr>
+					<?php endforeach ?>
+					<?php if(count($this->arrayMessages) != 0)
+						echo "<tr><td colspan='7'>".$this->paginationControl($this->arrayMessages, 'Sliding', 'tmp/control.phtml')."</td></tr>";
+					?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

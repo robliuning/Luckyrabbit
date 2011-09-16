@@ -5,20 +5,12 @@ class Pment_CppController extends  Zend_Controller_Action
 {
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 		}
 
 	public function preDispatch()
@@ -27,7 +19,7 @@ class Pment_CppController extends  Zend_Controller_Action
 	}
 	public function indexAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$errorMsg = null;
 		$cpps = new Pment_Models_CppMapper();
 		$condition[0] = $projectId;
@@ -56,18 +48,21 @@ class Pment_CppController extends  Zend_Controller_Action
 		{
 			$arrayCpps = $cpps->fetchAllJoin(null,$condition);
 			}
-
+		if(count($arrayCpps) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayCpps->setCurrentPageNumber($pageNumber);
+			$arrayCpps->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayCpps = $arrayCpps;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "cpp";
-		$this->view->modelName = "工程岗位信息";
+		$this->view->projectId = $projectId;
 	}
 
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm=new Pment_Forms_CppSave();
 		$addForm->submit->setLabel("保存继续新建");
 		$addForm->submit2->setLabel("保存返回上页");
@@ -129,7 +124,7 @@ class Pment_CppController extends  Zend_Controller_Action
 		$cpps = new Pment_Models_CppMapper();
 		$editForm->submit->setLabel("保存修改");
 		$editForm->submit2->setAttrib('class','hide');
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$cppId = $this->_getParam('id',0);
 		$cpps->populateCppDd($editForm);
 		$editForm = $cpps->formValidator($editForm,1);
@@ -212,7 +207,7 @@ class Pment_CppController extends  Zend_Controller_Action
 		$cppId = $this->_getParam('id',0);
 		if($cppId >0)
 		{
-			$projectId = $this->getProjectId();
+			$projectId = $this->_getProjectId();
 			$cpps = new Pment_Models_CppMapper();
 			$cpp = new Pment_Models_Cpp();
 			$cpps->find($cppId,$cpp);
@@ -222,11 +217,5 @@ class Pment_CppController extends  Zend_Controller_Action
 			{
 				$this->_redirect('/pment/cpp');
 				}
-		}
-	
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
 		}
 }

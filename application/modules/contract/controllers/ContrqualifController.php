@@ -5,8 +5,10 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		//init
-	}
+		/* Initialize action controller here */
+		$this->view->module = "contract";
+		$this->view->controller = 'contrqualif';
+		}
 	
 	public function preDisPatch()
 	{
@@ -157,7 +159,7 @@ class Contract_ContrqualifController extends Zend_Controller_Action
 			
 			$arrayQualiftypes = $contrqualifs->findQualiftypes($key);
 			$json = Zend_Json::encode($arrayQualiftypes);
-			echo $json;	
+			echo $json;
 			}
 			else
 			{

@@ -6,6 +6,9 @@ class Pment_Models_Mplan
 	protected $_planId;
 	protected $_projectId;
 	protected $_projectName;
+	protected $_planName;
+	protected $_typeId;
+	protected $_typeName;
 	protected $_yearNum;
 	protected $_monNum;
 	protected $_pDate;
@@ -21,6 +24,7 @@ class Pment_Models_Mplan
 	protected $_approvfDate;
 	protected $_approvfRemark;
 	protected $_status;
+	protected $_statusName;
 	protected $_remark;
 	protected $_cTime;
 	
@@ -276,6 +280,18 @@ class Pment_Models_Mplan
 	}
 	
 	/*******************************************/
+	public function setStatusName($statusName)
+	{
+		$this->_statusName = $statusName;
+		return $this;
+	}
+
+	public function getStatusName()
+	{
+		return $this->_statusName;
+	}
+	
+	/*******************************************/
 	public function setRemark($remark)
 	{
 		$this->_remark= $remark;
@@ -297,6 +313,39 @@ class Pment_Models_Mplan
 	public function getCTime()
 	{
 		return $this->_cTime;
+	}
+	/*******************************************/
+	public function setPlanName($planName)
+	{
+		$this->_planName= $planName;
+		return $this;
+	}
+
+	public function getPlanName()
+	{
+		return $this->_planName;
+	}
+	/*******************************************/
+	public function setTypeId($typeId)
+	{
+		$this->_typeId= $typeId;
+		return $this;
+	}
+
+	public function getTypeId()
+	{
+		return $this->_typeId;
+	}
+	/*******************************************/
+	public function setTypeName($typeName)
+	{
+		$this->_typeName= $typeName;
+		return $this;
+	}
+
+	public function getTypeName()
+	{
+		return $this->_typeName;
 	}
 }
 ?>

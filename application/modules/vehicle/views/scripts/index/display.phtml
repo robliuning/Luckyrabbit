@@ -100,19 +100,21 @@
 					</thead>
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayDrirecords as $drirecord):?>
-					<?php $recordId = $this->escape($drirecord->getRecordId()) ?>
+					<?php $recordId = $this->escape($drirecord->recordId) ?>
 					<tr>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><?php echo $this->escape($drirecord->getRYear()) ?></td>
-						<td><?php echo $this->escape($drirecord->getRMonth()) ?></td>
-						<td><?php echo $this->escape($drirecord->getMile()) ?></td>
+						<td><?php echo $this->escape($drirecord->rYear) ?></td>
+						<td><?php echo $this->escape($drirecord->rMonth) ?></td>
+						<td><?php echo $this->escape($drirecord->mile) ?></td>
 						<td><a href="/vehicle/drirecord/edit/id/<?php echo $recordId?>/from/1">修改</a></td>
 						<td><a class="lightbox" href="/vehicle/drirecord/ajaxdisplay/id/<?php echo $recordId?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayDrirecords) != 0)
+						echo "<tr><td colspan='6'>".$this->paginationControl($this->arrayDrirecords, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<p class="subMenu">车辆维修记录</p>
 				<table>
@@ -138,25 +140,27 @@
 					</thead>
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayRepairs as $repair):?>
-					<?php $repId = $this->escape($repair->getRepId()) ?>
+					<?php $repId = $this->escape($repair->repId) ?>
 					<tr>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><?php echo $this->escape($repair->getRDate()) ?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($repair->getContactId()) ?>"><?php echo $this->escape($repair->getContactName()) ?></a></td>
-						<td><?php echo $this->escape($repair->getSpot()) ?></td>
+						<td><?php echo $this->escape($repair->rDate) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($repair->contactId) ?>"><?php echo $this->escape($repair->contactName) ?></a></td>
+						<td><?php echo $this->escape($repair->spot) ?></td>
 						<td>
-						<?php echo $this->escape($repair->getAmount())?>
+						<?php echo $this->escape($repair->amount)?>
 						</td>
 						<td>
-						<?php echo $this->escape($repair->getInsFlag())?>
+						<?php echo $this->escape($repair->insFlag)?>
 						</td>
 						<td><a href="/vehicle/repair/edit/id/<?php echo $repId?>/from/1">修改</a></td>
 						<td><a class="lightbox" href="/vehicle/repair/ajaxdisplay/id/<?php echo $repId?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayRepairs) != 0)
+						echo "<tr><td colspan='8'>".$this->paginationControl($this->arrayRepairs, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<p class="subMenu">车辆保养记录</p>
 				<table>
@@ -180,22 +184,24 @@
 					</thead>
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayMtncs as $mtnc):?>
-					<?php $mtnId = $this->escape($mtnc->getMtnId()) ?>
+					<?php $mtnId = $this->escape($mtnc->mtnId) ?>
 					<tr>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><?php echo $this->escape($mtnc->getRDate()) ?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mtnc->getContactId()) ?>"><?php echo $this->escape($mtnc->getContactName()) ?></a></td>
-						<td><?php echo $this->escape($mtnc->getMile()) ?></td>
+						<td><?php echo $this->escape($mtnc->rDate) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mtnc->contactId) ?>"><?php echo $this->escape($mtnc->contactName) ?></a></td>
+						<td><?php echo $this->escape($mtnc->mile) ?></td>
 						<td>
-						<?php echo $this->escape($mtnc->getAmount())?>
+						<?php echo $this->escape($mtnc->amount)?>
 						</td>
 						<td><a href="/vehicle/mtnc/edit/id/<?php echo $mtnId?>/from/1">修改</a></td>
 						<td><a class="lightbox" href="/vehicle/mtnc/ajaxdisplay/id/<?php echo $mtnId?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayMtncs) != 0)
+						echo "<tr><td colspan='7'>".$this->paginationControl($this->arrayMtncs, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<p class="subMenu">车辆使用记录</p>
 				<table>
@@ -221,23 +227,25 @@
 					</thead>
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayVerecords as $verecord):?>
-					<?php $recordId = $this->escape($verecord->getRecordId()) ?>
+					<?php $recordId = $this->escape($verecord->recordId) ?>
 					<tr>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->getContactId()) ?>"><?php echo $this->escape($verecord->getContactName()) ?></a></td>
-						<td><?php echo $this->escape($verecord->getStartDate()) ?></td>
-						<td><?php echo $this->escape($verecord->getEndDate()) ?></td>
-						<td><?php echo $this->escape($verecord->getPeriod()) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->contactId) ?>"><?php echo $this->escape($verecord->contactName) ?></a></td>
+						<td><?php echo $this->escape($verecord->startDate) ?></td>
+						<td><?php echo $this->escape($verecord->endDate) ?></td>
+						<td><?php echo $this->escape($verecord->period) ?></td>
 						<td>
-						<?php echo $this->escape($verecord->getMile())?>
+						<?php echo $this->escape($verecord->mile)?>
 						公里</td>
 						<td><a href="/vehicle/verecord/edit/id/<?php echo $recordId?>/from/1">修改</a></td>
 						<td><a class="lightbox" href="/vehicle/verecord/ajaxdisplay/id/<?php echo $recordId?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayVerecords) != 0)
+						echo "<tr><td colspan='8'>".$this->paginationControl($this->arrayVerecords, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

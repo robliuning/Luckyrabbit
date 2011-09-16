@@ -121,7 +121,9 @@ class Vehicle_Models_VerecordMapper
 
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -151,7 +153,7 @@ class Vehicle_Models_VerecordMapper
 			$verecord->setContactName($contactName);
 			$verecords[] = $verecord;
 			}
-		return $verecords;
+		return $verecords;*/
 	}
 
 	public function populateVeDd($form) 

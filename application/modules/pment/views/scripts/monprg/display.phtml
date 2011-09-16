@@ -1,6 +1,6 @@
 <link href="/css/buble.css" rel="stylesheet" type="text/css" />
 <?php 
- 	$this->headTitle('- 工程管理 - 工程月进度计划');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
  	$this->headScript()->prependFile('/js/pment.js');
  	$this->headScript()->prependFile('/js/form.js');
  	$this->headScript()->prependFile('/js/conPrg.js');
@@ -12,9 +12,10 @@
 	<div id="p_stage_sidebar">	
 	<?php 
 		echo $this->placeholder('sidebar');
+		$arrayFuncs = $this->arrayFuncs;
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程月进度计划 - 详情</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -29,8 +30,9 @@
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
+					<?php if($arrayFuncs['ajaxpdf'] == 1):?>
 					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<?php endif;?>
 					<div><a href="/pment/monprg"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->

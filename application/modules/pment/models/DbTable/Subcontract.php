@@ -15,26 +15,24 @@ class Pment_Models_DbTable_Subcontract extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 	
-	public function Search($key, $condition)
+	public function fetchAllJoin($key,$condition)
 	{
-		$select = $this->select();
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('s' => 'sc_subcontracts'))
+						->join(array('c'=>'sc_contractors'),'c.contractorId = s.contractorId',array('name'));
+		
 		if($condition[1] != null)
 		{
+		
 			if($condition[1] == "contractorName")
 			{
-					$select->setIntegrityCheck(false)
-						->from(array('c'=>'sc_contractors'),array('name'))
-						->join(array('s'=>'sc_subcontracts'),'c.contractorId = s.contractorId')
-						->where('c.name like ?','%'.$key.'%')
-						->where('s.projectId = ?',$condition[0]);
+					$select->where('c.name like ?','%'.$key.'%');
 				}
-			}
-			else
-			{
-				$select->where('projectId = ?',$condition[0]);
 				}
-			$resultSet = $this->fetchAll($select);
-			return $resultSet;
-	}
+		$select->where('s.projectId = ?', $condition[0]);
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>

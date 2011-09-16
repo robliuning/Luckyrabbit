@@ -43,8 +43,7 @@
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<div><a target="_blank" href="/general/pdf/generate/page/4"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -52,28 +51,26 @@
 					<colgroup>
 						<col style="width:3%"></col>
 						<col style="width:2%"></col>
+						<col style="width:10%"></col>
 						<col style="width:25%"></col>
 						<col style="width:8%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
-						<col style="width:15%"></col>
+						<col style="width:17%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:7%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
+						<th></th>
 						<th>工程名称</th>
 						<th>工程状态</th>
 						<th>结构类型</th>
 						<th>开工时间</th>
 						<th>项目经理</th>
 						<th>施工许可证编号</th>
-						<th>当前进度阶段</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -85,28 +82,28 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
 					</tr>
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayProjects as $project):?>
-					<?php $projectId = $this->escape($project->getProjectId());?>
+					<?php $projectId = $this->escape($project->projectId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $projectId ?>"></td>
 						<td><?php
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$projectId))?>"><?php echo $this->escape($project->getName()) ?></a></td>
-						<td><?php echo $this->escape($project->getStatus())?></td>
-						<td><?php echo $this->escape($project->getStructype()) ?></td>
-						<td><?php echo $this->escape($project->getStartDate()) ?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($project->getContactId()) ?>"><?php echo $this->escape($project->getContactName())?></a></td>
-						<td><?php echo $this->escape($project->getLicense()) ?></td>
-						<td><?php echo $this->escape($project->getStage()) ?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$projectId))?>">修改</a></td>
 						<td><a href="pment/index/index/id/<?php echo $projectId?>">管理工程</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$projectId))?>"><?php echo $this->escape($project->name) ?></a></td>
+						<td><?php echo $this->escape($project->status)?></td>
+						<td><?php echo $this->escape($project->structype) ?></td>
+						<td><?php echo $this->escape($project->startDate) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($project->contactId) ?>"><?php echo $this->escape($project->contactName)?></a></td>
+						<td><?php echo $this->escape($project->license) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$projectId))?>">修改</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayProjects) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayProjects, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

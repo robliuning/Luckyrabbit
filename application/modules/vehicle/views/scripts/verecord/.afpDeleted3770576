@@ -1,0 +1,109 @@
+ <?php 
+ 	$this->headTitle('- 车辆管理 - 车辆使用记录信息');
+ 	$this->headScript()->prependFile('/js/vehiclejs/p_verecord.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>车辆管理 - 车辆使用记录 - 总览</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+		</p>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle stSearch">
+  									<option value="plateNo">车牌号</option>
+									<option value="date">使用时间</option>
+  									<option value="contactName">用(派)车人</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText tbSearch" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+					</div>		
+					<div><a href="<?php echo $this->url(array('controller'=>'verecord','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:3%"></col>
+						<col style="width:2%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:17%"></col>
+						<col style="width:5%"></col>
+						<col style="width:8%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th>车牌号</th>
+						<th>用(派)车人</th>
+						<th>出车日期</th>
+						<th>还车日期</th>
+						<th>使用天数</th>
+						<th>行程公里数</th>
+						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
+						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayVerecords as $verecord):?>
+					<?php $verecordId = $this->escape($verecord->recordId);?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $verecordId ?>"></td>
+						<td><?php 
+							echo $counter;
+							$counter++;
+						?></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$verecord->veId))?>"><?php echo $this->escape($verecord->plateNo) ?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->contactId) ?>"><?php echo $this->escape($verecord->contactName) ?></a></td>
+						<td><?php echo $this->escape($verecord->startDate) ?></td>	
+						<td><?php echo $this->escape($verecord->endDate) ?></td>
+						<td><?php echo $this->escape($verecord->period) ?></td>
+						<td>
+						<?php echo $this->escape($verecord->mile)?>
+						</td>
+						<td><a href="<?php echo $this->url(array('controller'=>'verecord','action'=>'edit','id'=>$verecordId))?>">修改</a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'verecord','action'=>'ajaxdisplay','id'=>$verecordId))?>">快速查看</a></td>
+					</tr>
+					<?php endforeach ?>
+					<?php if(count($this->arrayVerecords) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayVerecords, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

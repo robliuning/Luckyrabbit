@@ -1,0 +1,22 @@
+controller indexAction
+$this->view->messages = $this->_helper->flashMessenger->getMessages();
+
+
+index.phtml
+
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+					}?>
+					</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			</div>

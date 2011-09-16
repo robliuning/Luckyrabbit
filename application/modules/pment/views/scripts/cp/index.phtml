@@ -1,5 +1,5 @@
 <?php 
-	$this->headTitle('- 工程管理 - 工程承包商信息');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
 	$this->headScript()->prependFile('/js/pment.js');
 	$this->headScript()->prependFile('/js/conContractor.js');
 ?>
@@ -8,9 +8,10 @@
 	<div id="p_stage_sidebar">	
 	<?php 
 		echo $this->placeholder('sidebar');
+		$arrayFuncs = $this->arrayFuncs;
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程承包商信息 - 总览</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -32,13 +33,15 @@
 			</div>
 			<div class="overall_tool">
 				<div class="button_group">
+					<?php if($arrayFuncs['ajaxdelete'] == 1):?>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<?php endif;?>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新页面</p></a></div>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
+				<?php if($arrayFuncs['add'] == 1):?>
 				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_close">添加属于本工程的承包商</a></p>
 				<div id="conAddCp" class="hide conRdSlide">
 						<?php
@@ -46,6 +49,7 @@
 							echo $this->addForm;
 						?>
 				</div>
+				<?php endif;?>
 				<p class="subMenu slideMenu"><a class="btRdSlide2 subMenu_switch_open">本工程承包商列表</a></p>
 				<div class="conRdSlide2">
 				<table>
@@ -62,15 +66,14 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>承包商</th>
 						<th>联系人</th>
 						<th>安全生产许可证</th>
 						<th>联系电话</th>
 						<th>其他联系方式</th>
 						<th>地址</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -81,26 +84,27 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
 					</tr>	
 					<?php $counter = 1;?>	
 					<?php foreach($this->arrayCps as $contractor):?>
-					<?php $contractorId = $this->escape($contractor->getContractorId()); ?>
+					<?php $contractorId = $this->escape($contractor->contractorId); ?>
 					<tr>
-						<td><input type="checkbox" name="cb" value="<?php echo $this->escape($contractor->getCpId()); ?>"></td>
+						<td><input type="checkbox" name="cb" value="<?php echo $this->escape($contractor->cpId); ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="/contract/index/ajaxdisplay/id/<?php echo $contractorId ?>"><?php echo $this->escape($contractor->getName()) ?></td>
-						<td><?php echo $this->escape($contractor->getContact()) ?></td>
-						<td><?php echo $this->escape($contractor->getLicenseNo()) ?></td>
-						<td><?php echo $this->escape($contractor->getPhoneNo()) ?></td>
-						<td><?php echo $this->escape($contractor->getOtherContact()) ?></td>	
-						<td><?php echo $this->escape($contractor->getAddress())?></td>
+						<td><a class="lightbox" href="/contract/index/ajaxdisplay/id/<?php echo $contractorId ?>"><?php echo $this->escape($contractor->name) ?></td>
+						<td><?php echo $this->escape($contractor->contact) ?></td>
+						<td><?php echo $this->escape($contractor->licenseNo) ?></td>
+						<td><?php echo $this->escape($contractor->phoneNo) ?></td>
+						<td><?php echo $this->escape($contractor->otherContact) ?></td>	
+						<td><?php echo $this->escape($contractor->address)?></td>
 						<td><a class="lightbox" href="/contract/index/ajaxdisplay/id/<?php echo $contractorId ?>">快速查看</a></td>	
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayCps) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayCps, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				</div>
 				<div id="msgBox"></div>

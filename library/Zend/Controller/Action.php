@@ -685,4 +685,96 @@ abstract class Zend_Controller_Action implements Zend_Controller_Action_Interfac
     {
         $this->_helper->redirector->gotoUrl($url, $options);
     }
+	
+    /*
+    *New functionality added by rob 09.07.2011
+    */
+    
+	protected function _getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
+	}
+	
+	protected function _getProjectId()
+	{
+		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
+		return $projectNamespace->projectId;
+		}
+	protected function _getGroupId()
+	{
+		$userId = $this->_getUserId();
+		$users = new System_Models_UserMapper();
+		$groupId = $users->getGroupId($userId);
+		return $groupId;
+	}
+	protected function _pushLocations()
+	{
+		$names = new System_Models_PrivMapper();
+		$modCName = $names->getModCName($this->_request->getModuleName());
+		$sidName = $names->getSidName($this->_request->getModuleName(),$this->_request->getControllerName());
+		$actCName = $names->getActCName($this->_request->getActionName());
+		$this->view->module = $this->_request->getModuleName();
+		$this->view->controller = $this->_request->getControllerName();
+		$this->view->action = $this->_request->getActionName();
+		$this->view->modCName = $modCName;
+		$this->view->sidName = $sidName;
+		$this->view->actCName = $actCName;
+	}
+	
+	protected function _loadMenu()
+	{
+		$menus = new System_Models_PrivMapper();
+		$arrayMenus = $menus->loadMenu($this->_getGroupId()); 
+		$this->view->arrayMenus = $arrayMenus;
+		}
+	
+	protected function _loadSidebar()
+	{
+		$sidebars = new System_Models_PrivMapper();
+		$arraySidebars = $sidebars->loadSidebar($this->_getGroupId(),$this->_request->getModuleName());
+		$this->view->arraySidebars = $arraySidebars;
+	}
+	
+	protected function _loadProject()
+	{
+		$projectId = null;
+		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
+		if(isset($projectNamespace->projectId))
+		{
+			$projectId = $projectNamespace->projectId;
+			}
+			else
+			{
+				$this->_redirect('/');
+				}
+		$projects = new Project_Models_ProjectMapper();
+		$project = new Project_Models_Project();
+		$projects->find($projectId,$project);
+		$this->view->project = $project;
+	}
+	
+	protected function _pushFuncs()
+	{
+		$groupId = $this->_getGroupId();
+		$modEName = $this->_request->getModuleName();
+		$conName = $this->_request->getControllerName();
+		$privs = new System_Models_PrivMapper();
+		$arrayFuncs = $privs->fetchArrayFuncs($groupId,$modEName,$conName);
+		$this->view->arrayFuncs = $arrayFuncs;
+	}
+	
+	protected function _userAccess()
+	{
+		$groupId = $this->_getGroupId();
+		$modEName = $this->_request->getModuleName();
+		$conName = $this->_request->getControllerName();
+		$actEName = $this->_request->getActionName();
+		$privs = new System_Models_PrivMapper();
+		$priv = $privs->getPriv($groupId,$modEName,$conName,$actEName);
+		if($priv == 0)
+		{
+			$this->_redirect('/');
+			}
+	}
 }

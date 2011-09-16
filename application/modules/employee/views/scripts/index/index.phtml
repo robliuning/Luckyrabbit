@@ -32,7 +32,6 @@
 							<div>
 								<select name="condition" class="tbMediumer stStyle">
 									<option value="name">姓名</option>
-									<option value="phoneHome">电话(家)</option>
 									<option value="phoneMob">手机</option>
 									<option value="deptName">部门</option>
 								</select>
@@ -44,8 +43,7 @@
 					<div><a href="<?php echo $this->url(array('controller'=>'index','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a target="_blank" href="/general/pdf/generate/page/1"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -55,8 +53,8 @@
 						<col style="width:5%"></col>
 						<col style="width:10%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
-						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
 						<col style="width:15%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
@@ -65,16 +63,16 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>姓名</th>
 						<th>性别</th>
-						<th>年龄</th>
+						<th>生日</th>
 						<th>部门</th>
 						<th>职务</th>
-						<th>电话(家)</th>
+						<th>入职时间</th>
 						<th>手机</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -90,26 +88,32 @@
 					</tr>
 					<?php $counter = 1;?>	
 					<?php foreach($this->arrayContacts as $contact):?>
-					<?php $contactId = $this->escape($contact->getContactId()); ?>
+					<?php $contactId = $this->escape($contact->contactId); ?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $contactId; ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contactId))?>"><?php echo $this->escape($contact->getName()); ?></a></td>
-						<td><?php echo $this->escape($contact->getGender()) ?></td>	
-						<td><?php echo $this->escape($contact->getAge()) ?></td>
-						<td><?php echo $this->escape($contact->getDeptName()) ?></td>
-						<td><?php echo $this->escape($contact->getDutyName()) ?></td>
-						<td><?php echo $this->escape($contact->getPhoneHome()) ?></td>
-						<td><?php echo $this->escape($contact->getPhoneMob()) ?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contactId))?>"><?php echo $this->escape($contact->contactName); ?></a></td>
+						<td><?php echo $this->escape($contact->gender) ?></td>	
+						<td><?php echo $this->escape($contact->birth) ?></td>
+						<td><?php echo $this->escape($contact->deptName) ?></td>
+						<td><?php echo $this->escape($contact->dutyName) ?></td>
+						<td><?php echo $this->escape($contact->enroll) ?></td>
+						<td><?php echo $this->escape($contact->phoneMob) ?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contactId))?>">修改</a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contactId))?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
+					<tr>
+						<td colspan="11"><?= $this->paginationControl($this->arrayContacts, 'Sliding', 'tmp/control.phtml'); ?></td>
+					</tr>
 				</table>
 				<div id="msgBox"></div>
+				<div id="ajaxPdfBox" class="hide">
+					
+				</div>
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->
 	</div><!-- end of page stage -->

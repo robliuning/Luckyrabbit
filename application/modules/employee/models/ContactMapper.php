@@ -27,9 +27,24 @@ class Employee_Models_ContactMapper
 
 	public function save(Employee_Models_Contact $contact)
 	{
+		$probStart = $contact->getProbStart();
+		$probEnd = $contact->getProbEnd();
+		$secDate = $contact->getSecDate();
+		if($probStart == "")
+		{
+			$probStart = null;
+			}
+		if($probEnd == "")
+		{
+			$probEnd = null;
+			}
+		if($secDate == "")
+		{
+			$secDate = null;
+			}
 		$data = array(
 			'contactId' => $contact->getContactId(),
-			'name' => $contact->getName(),
+			'contactName' => $contact->getName(),
 			'gender' => $contact->getGender(),
  			'titleName' => $contact->getTitleName(),
 			'birth' => $contact->getBirth(),
@@ -46,12 +61,12 @@ class Employee_Models_ContactMapper
 			'phoneHome' => $contact->getPhoneHome(),
 			'phoneMob' => $contact->getPhoneMob(),
 			'residence' => $contact->getResidence(),
-			'probStart' => $contact->getProbStart(),
-			'probEnd' => $contact->getProbEnd(),
+			'probStart' => $probStart,
+			'probEnd' => $probEnd,
 			'profile' => $contact->getProfile(),
 			'security' => $contact->getSecurity(),
 			'secIn' => $contact->getSecIn(),
-			'secDate' => $contact->getSecDate(),
+			'secDate' => $secDate,
 			'medical' => $contact->getMedical(),
 			'relation1' => $contact->getRelation1(),
 			'name1' => $contact->getName1(),
@@ -96,7 +111,7 @@ class Employee_Models_ContactMapper
 		$row = $result->current();
 
 		$contact->setContactId($row->contactId)
-				->setName($row->name)
+				->setName($row->contactName)
 				->setGender($row->gender)
 				->setTitleName($row->titleName)
 				->setBirth($row->birth)
@@ -132,7 +147,7 @@ class Employee_Models_ContactMapper
 		$row = $result->current();
 
 		$contact->setContactId($row->contactId)
-				->setName($row->name)
+				->setName($row->contactName)
 				->setGender($row->gender)
 				->setTitleName($row->titleName)
 				->setBirth($row->birth)
@@ -197,22 +212,28 @@ class Employee_Models_ContactMapper
 	{
 		$arrayNames = $this->getDbTable()->findContactName($id);
 		
-		$name = $arrayNames[0]->name;
+		$name = $arrayNames[0]->contactName;
 		
 		return $name;
 		}
 
-	public function findContactNames($key)
+	public function findContactNames($key,$type)
 	{
-		$arrayNames = $this->getDbTable()->findContactNames($key);
-		
+		if($type == 0)
+		{
+			$arrayNames = $this->getDbTable()->findContactNames($key);
+			}
+			else
+			{
+				$arrayNames = $this->getDbTable()->findRegisterNames($key);
+				}
 		$entries = array();
 		
 		$i = 0;
 		
 		foreach($arrayNames as $name)
 		{
-			$entries[$i]['name'] = $name->name;
+			$entries[$i]['name'] = $name->contactName;
 			$entries[$i]['contactId'] = $name->contactId;
 			$entries[$i]['gender'] = $name->gender;
 			$entries[$i]['titleName'] = $name->titleName;
@@ -228,32 +249,9 @@ class Employee_Models_ContactMapper
 
 	public function fetchAllJoin($key = null,$condition = null) 
 	{
-		if($condition == null)
-		{
-			$resultSet = $this->getDbTable()->fetchAll();
-			}
-			else
-			{
-				$resultSet = $this->getDbTable()->search($key,$condition);
-				}
-
-		$entries= array();
-
-		foreach ($resultSet as $row) {
-			$entry = new Employee_Models_Contact();
-			$entry ->setContactId($row->contactId)
-				->setName($row->name)
-				->setDeptName($row->deptName)
-				->setDutyName($row->dutyName)
-				->setGender($row->gender)
-				->setBirth($row->birth)
-				->setPhoneHome($row->phoneHome)
-				->setPhoneMob($row->phoneMob);
-			$age = $this->caculateAge($entry->getBirth());
-			$entry->setAge($age);
-			$entries[] = $entry;
-		}
-		return $entries;
+		$paginator = $this->getDbTable()->fetchAllJoin($key,$condition);
+		
+		return $paginator;
 	}
 
 	public function delete($id)
@@ -304,7 +302,9 @@ class Employee_Models_ContactMapper
 								->addValidator($emptyValidator);
 		$form->getElement('phoneMob')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
-
+		$form->getElement('idCard')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+								
 		$dateValidator = new Zend_Validate_Date();
 		$dateValidator->setMessage(General_Models_Text::$text_notDate);
 		$form->getElement('birth')->addValidator($dateValidator);
@@ -321,13 +321,16 @@ class Employee_Models_ContactMapper
 		$errorMsg = null;
 		$trigger = 0;
 
-		$dateStart = new Zend_Date($formData['probStart'],'YYYY-MM-DD');
-		$dateEnd = new Zend_Date($formData['probEnd'],'YYYY-MM-DD');
-		
-		if($dateStart->isLater($dateEnd))
+		if($formData['probStart'] != null && $formData['probEnd'] != null)
 		{
-			$trigger = 1;
-			$errorMsg = General_Models_Text::$text_date_startEndError."<br/>".$errorMsg;
+			$dateStart = new Zend_Date($formData['probStart'],'YYYY-MM-DD');
+			$dateEnd = new Zend_Date($formData['probEnd'],'YYYY-MM-DD');
+			
+			if($dateStart->isLater($dateEnd))
+			{
+				$trigger = 1;
+				$errorMsg = General_Models_Text::$text_date_startEndError."<br/>".$errorMsg;
+				}
 			}
 			
 		$array['trigger'] = $trigger;

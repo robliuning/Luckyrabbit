@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('- 工程管理 - 工程岗位信息');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
  	$this->headScript()->prependFile('/js/employeejs/p_cpp.js');
  ?>
 	<div id="contentWrapper">
@@ -9,7 +9,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程岗位信息 - 修改</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -25,7 +25,7 @@
 			<div class="overall_tool">
 				<div class="button_group">
 					<div><a href="/pment/cpp/edit/id/<?php echo $this->id; ?>"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>
-					<div><a href="/employee/cpp"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+					<div><a href="/pment/cpp"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">

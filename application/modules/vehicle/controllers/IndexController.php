@@ -6,11 +6,14 @@ class Vehicle_IndexController extends Zend_Controller_Action
 	{
 		/* Initialize action controller here */
 		/*$userSession = new Zend_Session_Namespace('userSession');
+
 	
 	if(!isset($userSession->userName))
 	{
 		return $this->_redirect('admin/login');
 		}*/
+		$this->view->module = "vehicle";
+		$this->view->controller = "index";
 	}
 	
 	public function preDispatch()
@@ -47,11 +50,15 @@ class Vehicle_IndexController extends Zend_Controller_Action
 		{
 			$arrayVehicles = $vehicles->fetchAllJoin();
 		}
+		if(count($arrayVehicles) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayVehicles->setCurrentPageNumber($pageNumber);
+			$arrayVehicles->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayVehicles = $arrayVehicles;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "vehicle";
-		$this->view->controller = "index";
 		$this->view->modelName = "车辆信息";
 		}
 	
@@ -96,6 +103,7 @@ class Vehicle_IndexController extends Zend_Controller_Action
 						}
 						else
 						{
+							$this->_helper->flashMessenger->addMessage($vehicle->getPlateNo().'新建成功');
 							$this->_redirect('/vehicle');
 							}
 					}
@@ -205,13 +213,38 @@ class Vehicle_IndexController extends Zend_Controller_Action
 			$arrayDrirecords = $drirecords->fetchAllJoin($veId,$condition);
 			$arrayRepairs = $repairs->fetchAllJoin($veId,$condition);
 			$arrayMtncs = $mtncs->fetchAllJoin($veId,$condition);
+			
 			$conditionVar[0] = '0';
 			$conditionVar[1] = 'veId';
 			$arrayVerecords = $verecords->fetchAllJoin($veId,$conditionVar);
+			if(count($arrayDrirecords) != 0)
+			{
+				$pageNumber = $this->_getParam('page');
+				$arrayDrirecords->setCurrentPageNumber($pageNumber);
+				$arrayDrirecords->setItemCountPerPage('20');
+			}
 			$this ->view->vehicle = $vehicle;
 			$this ->view->arrayDrirecords = $arrayDrirecords;
+			if(count($arrayRepairs) != 0)
+			{
+				$pageNumber = $this->_getParam('page');
+				$arrayRepairs->setCurrentPageNumber($pageNumber);
+				$arrayRepairs->setItemCountPerPage('20');
+			}
 			$this ->view->arrayRepairs = $arrayRepairs;
+			if(count($arrayMtncs) != 0)
+			{
+				$pageNumber = $this->_getParam('page');
+				$arrayMtncs->setCurrentPageNumber($pageNumber);
+				$arrayMtncs->setItemCountPerPage('20');
+			}
 			$this ->view->arrayMtncs = $arrayMtncs;
+			if(count($arrayVerecords) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayVerecords->setCurrentPageNumber($pageNumber);
+			$arrayVerecords->setItemCountPerPage('20');
+			}
 			$this ->view->arrayVerecords = $arrayVerecords;
 			}
 			else

@@ -100,7 +100,11 @@ class Pment_Models_SubcontractMapper
 	
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key,$condition);
+		
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -125,7 +129,7 @@ class Pment_Models_SubcontractMapper
 			
 			$entries[] = $entry;
 		}
-		return $entries;
+		return $entries;*/
 	}
 	
 	public function findArraySubcontract($scontrId)
@@ -143,11 +147,11 @@ class Pment_Models_SubcontractMapper
 	public function populateSubcontractDd($form,$projectId)
 	{
 		$cps = new Pment_Models_CpMapper();
-		$arrayContractors = $cps->fetchAllJoin($projectId,'projectId');
+		$arrayContractors = $cps->fetchAllContractorIds($projectId);
 			
 		foreach($arrayContractors as $contr)
 		{
-			$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getName());
+			$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getContractorName());
 			}
 	}
 	

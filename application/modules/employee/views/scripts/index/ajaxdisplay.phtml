@@ -1,14 +1,11 @@
+<?php
+			$contact = $this->contact;?>
 <div id="ajaxMsgBox">
 	<div id="ajaxMsgBox_Emp">
 	<div class="overall_tool">
 				<div class="button_group">
-					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
-				</div><!-- end of button group -->
+					<div><a target="_blank" href="/general/pdf/generate/page/3/id/<?php echo $contact->getContactId()?>"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>				</div><!-- end of button group -->
 	</div><!-- end of overall tool -->
-			<p><?php
-			$contact = $this->contact;?>
-			 </p>
 			 <div class="overall_content">
 			 <table>
 					<colgroup>

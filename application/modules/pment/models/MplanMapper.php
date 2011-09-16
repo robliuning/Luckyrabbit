@@ -30,6 +30,8 @@ class Pment_Models_MplanMapper
 		$data = array(
 			'planId' => $mplan->getPlanId(),
 			'projectId' => $mplan->getProjectId(),
+			'planName' => $mplan->getPlanName(),
+			'typeId' => $mplan->getTypeId(),
 			'yearNum' => $mplan->getYearNum(),
 			'monNum' => $mplan->getMonNum(),
 			'pDate' => $mplan->getPDate(),
@@ -62,6 +64,8 @@ class Pment_Models_MplanMapper
 		$row = $result->current();
 		$mplan->setPlanId($row->planId)
 				->setProjectId($row->projectId)
+				->setPlanName($row->planName)
+				->setTypeId($row->typeId)
 				->setYearNum($row->yearNum)
 				->setMonNum($row->monNum)
 				->setPDate($row->pDate)
@@ -79,17 +83,23 @@ class Pment_Models_MplanMapper
 		$contacts = new Employee_Models_ContactMapper();
 		$contactName = $contacts->findContactName($mplan->getContactId());
 		$status = $mplan->getStatus();
-		if($status == 1)
+		$mstatus = new General_Models_MstatusMapper();
+		$statusName = $mstatus->getStatusName($status);
+		$mplan->setStatusName($statusName);
+		if($status >= 3)
 		{
 			$approvcName = $contacts->findContactName($mplan->getApprovcId());
 			$mplan->setApprovcName($approvcName);
 			}
-		if($status == 2)
+		if($status == 4 || $status ==6)
 		{
 			$approvfName = $contacts->findContactName($mplan->getApprovfId());
 			$mplan->setApprovfName($approvfName);
 			}
 		$mplan->setContactName($contactName);
+		$ptypes = new General_Models_PtypeMapper();
+		$typeName = $ptypes->findPtypeName($mplan->getTypeId());
+		$mplan->setTypeName($typeName);
 	}
 	
 	public function findArrayMplan($id) 
@@ -102,7 +112,7 @@ class Pment_Models_MplanMapper
 
 	public function fetchAllJoin($key = null,$condition = null) 
 	{
-		if($condition == null)
+	/*	if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -127,9 +137,34 @@ class Pment_Models_MplanMapper
 			
 			$entries[] = $entry;
 			}
-		return $entries;
+		return $entries;*/
+		$paginator = $this->getDbTable()->fetchAllJoin($key,$condition);
+		return $paginator;
 		}
 	
+	public function fetchAllValidations($userId)
+	{
+		$contactId = $this->userIdToContactId($userId);
+		$resultSet = $this->getDbTable()->fetchAllValidations($contactId);
+		$entries = array();
+		foreach($resultSet as $row){
+			$entry = new Pment_Models_Mplan();
+			$entry->setPlanId($row->planId)
+				->setPlanName($row->planName)
+				->setTypeId($row->typeId)
+				->setTypeName($row->typeName)
+				->setYearNum($row->yearNum)
+				->setMonNum($row->monNum)
+				->setProjectId($row->projectId)
+				->setProjectName($row->name)
+				->setPDate($row->pDate)
+				->setContactId($row->contactId)
+				->setContactName($row->contactName);
+			$entries[] = $entry;
+			}
+		return $entries;
+		}
+
 	public function delete($planId)
 	{
 		$this->getDbTable()->delete("planId = ".(int)$planId);
@@ -153,6 +188,14 @@ class Pment_Models_MplanMapper
 			$form->getElement('monNum')->addMultiOption($i,$dis);
 			}
 		$form->setDefault('monNum',$monNow);
+		
+		$ptypes = new General_Models_PtypeMapper();
+		$arrayPtypes = $ptypes->fetchAll();
+
+		foreach($arrayPtypes as $ptype)
+		{
+			$form->getElement('typeId')->addMultiOption($ptype->getId(),$ptype->getName());
+			}
 	}
 
 	public function formValidator($form,$formType)
@@ -160,6 +203,8 @@ class Pment_Models_MplanMapper
 		$emptyValidator = new Zend_Validate_NotEmpty();
 		$emptyValidator->setMessage(General_Models_Text::$text_notEmpty);
 		$form->getElement('pDate')->setAllowEmpty(false)
+								->addValidator($emptyValidator);
+		$form->getElement('planName')->setAllowEmpty(false)
 								->addValidator($emptyValidator);
 
 		$dateValidator = new Zend_Validate_Date();
@@ -177,5 +222,12 @@ class Pment_Models_MplanMapper
 		$array['errorMsg'] = $errorMsg;
 		return $array;
 	}
+
+	public function userIdToContactId($userId)
+	{
+		$users = new System_Models_UserMapper();
+		$contactId = $users->getContactId($userId);
+		return $contactId;
+		}
 }
 ?>

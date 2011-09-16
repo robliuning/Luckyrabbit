@@ -1,5 +1,5 @@
 <?php
-	$this->headTitle('- 工程管理 - 工程周进度计划');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
 	$this->headScript()->prependFile('/js/pment.js');
 	$this->headScript()->prependFile('/js/conPrg.js');
 ?>
@@ -8,9 +8,10 @@
 	<div id="p_stage_sidebar">
 	<?php
 		echo $this->placeholder('sidebar');
+		$arrayFuncs = $this->arrayFuncs;
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程周进度计划 - 总览</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -44,11 +45,16 @@
 							<div><input class= "btSearch" type="submit" value=""></input></div>
 						</form>
 					</div>
+					<?php if($arrayFuncs['add'] == 1):?>
 					<div><a href="<?php echo $this->url(array('controller'=>'wkprg','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<?php endif;?>
+					<?php if($arrayFuncs['ajaxdelete'] == 1):?>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<?php endif;?>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<?php if($arrayFuncs['ajaxpdf'] == 1):?>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<?php endif;?>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -61,18 +67,24 @@
 						<col style="width:20%"></col>
 						<col style="width:20%"></col>
 						<col style="width:20%"></col>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
+						<?php else:?>
+						<col style="width:10%"></col>
+						<?php endif; ?>
 					</colgroup>
 					<thead>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>周数</th>
 						<th>开始日期</th>
 						<th>结束日期</th>
 						<th>工期(天)</th>
 						<th>填报人</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<?php if($arrayFuncs['edit'] == 1):?>
+						<th></th>
+						<?php endif;?>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -80,21 +92,27 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<td></td>
+						<?php endif;?>
 						<td></td>
 					</tr>
 					<?php foreach($this->arrayWkprgs as $wkprg):?>
-					<?php $wkprgId = $this->escape($wkprg->getWkprgId());?>
+					<?php $wkprgId = $this->escape($wkprg->wkprgId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $wkprgId ?>"></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'wkprg','action'=>'display','id'=>$wkprgId))?>">周<?php echo $this->escape($wkprg->getWkNum())?></a></td>
-						<td><?php echo $this->escape($wkprg->getStartDate()) ?></td>
-						<td><?php echo $this->escape($wkprg->getEndDate()) ?></td>
-						<td><?php echo $this->escape($wkprg->getPeriod()) ?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($wkprg->getContactId()) ?>"><?php echo $this->escape($wkprg->getContactName())?></a></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'wkprg','action'=>'display','id'=>$wkprgId))?>">周<?php echo $this->escape($wkprg->wkNum)?></a></td>
+						<td><?php echo $this->escape($wkprg->startDate) ?></td>
+						<td><?php echo $this->escape($wkprg->endDate) ?></td>
+						<td><?php echo $this->escape($wkprg->period) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($wkprg->contactId) ?>"><?php echo $this->escape($wkprg->contactName)?></a></td>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<td><a href="<?php echo $this->url(array('controller'=>'wkprg','action'=>'edit','id'=>$wkprgId))?>">修改</a></td>
+						<?php endif;?>
 						<td><a href="<?php echo $this->url(array('controller'=>'wkprg','action'=>'display','id'=>$wkprgId))?>">详情</a></td></tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayWkprgs) != 0)
+						echo "<tr><td colspan='8'>".$this->paginationControl($this->arrayWkprgs, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 					</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

@@ -62,15 +62,15 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>承包商</th>
 						<th>联系人</th>
 						<th>安全生产许可证</th>
 						<th>联系电话</th>
 						<th>其他联系方式</th>
 						<th>地址</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -85,23 +85,25 @@
 					</tr>	
 					<?php $counter = 1;?>	
 					<?php foreach($this->arrayContractors as $contractor):?>
-					<?php $contractorId = $this->escape($contractor->getContractorId()); ?>
+					<?php $contractorId = $this->escape($contractor->contractorId); ?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $contractorId; ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contractorId))?>"><?php echo $this->escape($contractor->getName()) ?></td>
-						<td><?php echo $this->escape($contractor->getContact()) ?></td>
-						<td><?php echo $this->escape($contractor->getLicenseNo()) ?></td>
-						<td><?php echo $this->escape($contractor->getPhoneNo()) ?></td>
-						<td><?php echo $this->escape($contractor->getOtherContact()) ?></td>	
-						<td><?php echo $this->escape($contractor->getAddress())?></td>
+						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contractorId))?>"><?php echo $this->escape($contractor->name) ?></td>
+						<td><?php echo $this->escape($contractor->contact) ?></td>
+						<td><?php echo $this->escape($contractor->licenseNo) ?></td>
+						<td><?php echo $this->escape($contractor->phoneNo) ?></td>
+						<td><?php echo $this->escape($contractor->otherContact) ?></td>	
+						<td><?php echo $this->escape($contractor->address)?></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$contractorId))?>">修改</a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$contractorId))?>">详情</a></td>	
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayContractors) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayContractors, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

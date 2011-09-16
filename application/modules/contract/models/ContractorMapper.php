@@ -28,7 +28,7 @@ class Contract_Models_ContractorMapper
 	public function save(Contract_Models_Contractor $contractor)
 	{
 		$data = array(
-			'ContractorId' => $contractor->getContractorId(),
+			'contractorId' => $contractor->getContractorId(),
 			'name' => $contractor->getName(),
 			'contact' => $contractor->getContact(),
 			'licenseNo' => $contractor->getLicenseNo(),
@@ -95,7 +95,9 @@ class Contract_Models_ContractorMapper
 
 	public function fetchAllJoin($key=null,$condition=null)
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -116,7 +118,7 @@ class Contract_Models_ContractorMapper
 						->setAddress($row->address);
 			$entries[] = $entry;
 		}
-		return $entries;
+		return $entries;*/
 	}
 
 	public function findArrayContractor($contractorId)
@@ -189,5 +191,23 @@ class Contract_Models_ContractorMapper
 		$array['errorMsg'] = $errorMsg;
 		return $array;
 	}
+	
+	public function fetchAllContractorIds()
+	{
+		$resultSet = $this->getDbTable()->fetchAllContractorIds();
+		$entries = array();
+		foreach ($resultSet as $row) {
+			$entry = new Contract_Models_Contractor();
+			$entry ->setContractorId($row->contractorId)
+						->setName($row->name)
+						->setContact($row->contact)
+						->setLicenseNo($row->licenseNo)
+						->setPhoneNo($row->phoneNo)
+						->setOtherContact($row->otherContact)
+						->setAddress($row->address);
+			$entries[] = $entry;
+		}
+		return $entries;
+		}
 }
 ?>

@@ -17,6 +17,13 @@
 					echo $this->errorMsg;
 					}?>
 					</p>
+					<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+				<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -56,15 +63,15 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>车牌号</th>
 						<th>维修日期</th>
 						<th>责任人</th>
 						<th>事故地点</th>
 						<th>维修金额</th>
 						<th>是否出险</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -79,27 +86,29 @@
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayRepairs as $repair):?>
-					<?php $repId = $this->escape($repair->getRepId());?>
+					<?php $repId = $this->escape($repair->repId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $repId ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="/vehicle/index/ajaxdisplay/id/<?php echo $this->escape($repair->getVeId())?>"><?php echo $this->escape($repair->getPlateNo()) ?></a></td>
-						<td><?php echo $this->escape($repair->getRDate()) ?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($repair->getContactId()) ?>"><?php echo $this->escape($repair->getContactName()) ?></a></td>
-						<td><?php echo $this->escape($repair->getSpot()) ?></td>
+						<td><a class="lightbox" href="/vehicle/index/ajaxdisplay/id/<?php echo $this->escape($repair->veId)?>"><?php echo $this->escape($repair->plateNo) ?></a></td>
+						<td><?php echo $this->escape($repair->rDate) ?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($repair->contactId) ?>"><?php echo $this->escape($repair->contactName) ?></a></td>
+						<td><?php echo $this->escape($repair->spot) ?></td>
 						<td>
-						<?php echo $this->escape($repair->getAmount())?>
+						<?php echo $this->escape($repair->amount)?>
 						</td>
 						<td>
-						<?php echo $this->escape($repair->getInsFlag())?>
+						<?php echo $this->escape($repair->insFlag)?'是':'否'?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'repair','action'=>'edit','id'=>$repId))?>">修改</a></td>
 						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'repair','action'=>'ajaxdisplay','id'=>$repId))?>">快速查看</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayRepairs) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayRepairs, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

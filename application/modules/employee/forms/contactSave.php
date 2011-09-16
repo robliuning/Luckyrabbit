@@ -31,7 +31,7 @@ class Employee_Forms_ContactSave extends Zend_Form
 		 $this->addElement(
 			'select', 'titleName', array(
 			'label' => '职称:',
-			'multiOptions'=> array('高级'=>'高级', '中级'=>'中级', '初级'=>'初级'),
+			'multiOptions'=> array('无'=>'无','高级'=>'高级', '中级'=>'中级', '初级'=>'初级'),
 			'class'=>'tbMedium tbText'
 			)
 		);
@@ -77,7 +77,7 @@ class Employee_Forms_ContactSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'idCard', array(
-			'label' => '身份证:',
+			'label' => '*身份证:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbLarge tbText'
 			)
@@ -210,7 +210,7 @@ class Employee_Forms_ContactSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'relation2', array(
-			'label' => '家庭主要成员称呼:',
+			'label' => '家庭主要成员一称呼:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)
@@ -308,7 +308,7 @@ class Employee_Forms_ContactSave extends Zend_Form
 		);
 		$this->addElement(
 			'text', 'phone4', array(
-			'label' => '家庭主要成员联系电话:',
+			'label' => '家庭主要成员三联系电话:',
 			'filters'=>array('StringTrim'),
 			'class'=>'tbMedium tbText'
 			)

@@ -36,14 +36,14 @@ class Pment_Models_MaterialMapper
 			'spec' => $material->getSpec(),
 			'amount' => $material->getAmount(),
 			'amountc' => $material->getAmountc(),
+			'amountf' =>$material->getAmountf(),
 			'cost' => $material->getCost(),
 			'costTotal' => $material->getCostTotal(),
 			'budget' => $material->getBudget(),
 			'budgetTotal' => $material->getBudgetTotal(),
-			'weight' => $material->getWeight(),
-			'limitation' => $material->getLimitation(),
 			'inDate' => $material->getInDate(),
-			'remark' => $material->getRemark()
+			'remark' => $material->getRemark(),
+			'vendorName' =>$material->getVendorName()
 			);
 		if (null === ($id = $material->getMtrId())) {
 			unset($data['mtrId']);
@@ -69,14 +69,23 @@ class Pment_Models_MaterialMapper
 				->setSpec($row->spec)
 				->setAmount($row->amount)
 				->setAmountc($row->amountc)
+				->setAmountf($row->amountf)
 				->setCost($row->cost)
 				->setCostTotal($row->costTotal)
 				->setBudget($row->budget)
 				->setBudgetTotal($row->budgetTotal)
-				->setWeight($row->weight)
-				->setLimitation($row->limitation)
 				->setInDate($row->inDate)
-				->setRemark($row->remark);
+				->setRemark($row->remark)
+				->setVendorName($row->vendorName);
+	}
+	
+	public function findMaterial($mtrId)
+	{
+		$result = $this->getDbTable()->find($mtrId);
+		
+		$result = $result->toArray();
+		
+		return $result;
 	}
 
 	public function fetchAllJoin($key = null,$condition = null) 
@@ -101,15 +110,15 @@ class Pment_Models_MaterialMapper
 				->setUnit($row->unit)
 				->setSpec($row->spec)
 				->setAmount($row->amount)
-				->setWeight($row->weight)
-				->setLimitation($row->limitation)
 				->setInDate($row->inDate)
 				->setAmountc($row->amountc)
+				->setAmountf($row->amountf)
 				->setCost($row->cost)
 				->setCostTotal($row->costTotal)
 				->setBudget($row->budget)
 				->setBudgetTotal($row->budgetTotal)
-				->setRemark($row->remark);
+				->setRemark($row->remark)
+				->setVendorName($row->vendorName);
 			$entries[] = $entry;
 			}
 		return $entries;
@@ -148,7 +157,7 @@ class Pment_Models_MaterialMapper
 			}
 		return $arrayMaterials;
 	}
-	
+
 	public function fetchArryMtrIds($id)
 	{
 		$resultSet = $this->fetchAllJoin($id,'planId');
@@ -234,29 +243,78 @@ class Pment_Models_MaterialMapper
 		return $array;
 		}
 
-	public function approvcValidator($data)
+	public function bapprovcValidator($data)
 	{
 		$errorMsg = null;
 		$trigger = 0;
 		
-		foreach($data as $key => $value)
+	/*	foreach($data as $key => $value)
 		{
+			$arr = explode("_",$key);
 			if($key != "approvcRemark")
 			{
-				if($value == "")
+				if($arr[0] != "tbAp")
 				{
-					$trigger = 1;
-					$errorMsg = General_Models_Text::$text_empty_all;
-					}
-				if(!is_numeric($value))
-				{
-					$trigger = 1;
-					$errorMsg = General_Models_Text::$text_numeric_all;
+					if($value == "")
+					{
+						$trigger = 1;
+						$errorMsg .= General_Models_Text::$text_notEmpty_all;
+						}
+						else
+						{
+							if($arr[0] == "amountc" || $arr[0] == "budget" || $arr[0] == "budgetTotal")
+							{
+								if(!is_numeric($value))
+								{
+									$trigger = 1;
+									$errorMsg = General_Models_Text::$text_numeric_all;
+									}
+								}
+						}
 					}
 				}
+			}*/
 		$array['trigger'] = $trigger;
 		$array['errorMsg'] = $errorMsg;
-		return $array;
-		}
+		return $array;	
+		
+	}
+	
+	public function mfinalValidator($data)
+	{
+		$errorMsg = null;
+		$trigger = 0;
+		
+	/*	foreach($data as $key => $value)
+		{
+			$arr = explode("_",$key);
+			if($key != "approvcRemark")
+			{
+				if($arr[0] != "tbAp")
+				{
+					if($value == "")
+					{
+						$trigger = 1;
+						$errorMsg .= General_Models_Text::$text_notEmpty_all;
+						}
+						else
+						{
+							if($arr[0] == "amountc" || $arr[0] == "budget" || $arr[0] == "budgetTotal")
+							{
+								if(!is_numeric($value))
+								{
+									$trigger = 1;
+									$errorMsg = General_Models_Text::$text_numeric_all;
+									}
+								}
+						}
+					}
+				}
+			}*/
+		$array['trigger'] = $trigger;
+		$array['errorMsg'] = $errorMsg;
+		return $array;	
+		
+	}
 }
 ?>

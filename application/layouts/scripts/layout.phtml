@@ -3,9 +3,12 @@
 	$this->headLink()->prependStylesheet('/css/global_style.css');
 	$this->headLink()->prependStylesheet('/css/nyroModal.css');
 	$this->headLink()->prependStylesheet('/css/smoothness/jquery-ui-1.8.11.custom.css');
+	$this->headScript()->prependFile('/js/ajax_error_report.js');
 	$this->headScript()->prependFile('/js/global.js');
+	$this->headScript()->prependFile('/js/buble.js');
+	$this->headScript()->prependFile('/js/jquery.floatDiv.js');
 	$this->headScript()->prependFile('/js/lightbox/jquery.nyroModal.custom.js');
-	//$this->headScript()->prependFile('/js/jquery.livequery.js');	
+	$this->headScript()->prependFile('/js/jquery.livequery.js');
 	$this->headScript()->prependFile('/js/jquery.ui.datepicker-zh-CN.js');	
 	$this->headScript()->prependFile('/js/jquery-ui-1.8.11.custom.min.js');
 	$this->headScript()->prependFile('/js/jquery-1.6.1.min.js');
@@ -15,38 +18,53 @@
  	<?php echo $this->headTitle(); ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="version" content="0.1" />
-	<meta name="author" content="Project Luckyrabbit" />
+	<meta name="author" content="Luckyrabbit Project Team" />
 	<meta name="" content="description" />
-    <?php echo $this->headLink(); ?>
+	<?php echo $this->headLink(); ?>
 	<?php echo $this->headScript();?>
 </head>
 <body>
+<input id="module" type="text" class="hide" value="<?php echo $this->module ?>">
+<input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>">
+<input id="action" type="text" class="hide" value="<?php echo $this->action ?>">
+<input id="sidName" type="text" class="hide" value="<?php echo $this->sidName ?>">
+<input id="modCName" type="text" class="hide" value="<?php echo $this->modCName ?>">
 <div id="p_header">
 	<a id="p_logo" href="/">管理平台首页</a>
 	<ul id="panel_uinfo" class="radius">
 		<li class="c_user"><?php echo $this->loggedInAs(); ?> </li>
 	</ul>
+	<?php if ($this->checkLogin()) : ?>
 	<ul id="nav_main" class="radius nav_general">
-		<li><a href="/index">首页</a></li>
-		<!--<li><a href="/general">基本信息管理</a></li> -->
-		<li><a href="/project">工程管理</a></li>
-		<li><a href="/employee">公司员工管理</a></li>
-		<li><a href="/contract">承包商管理</a></li>
-		<li><a href="/vendor">供应商管理</a></li>
-		<li><a href="/vehicle">车辆管理</a></li>
-		<li><a href="/system/emsg/construction">财务管理</a></li>
-		<li><a href="/file/index/index/id/1">工程文件管理</a></li>
+		<?php foreach($this->arrayMenus as $menu):?>
+		<li id="<?php echo $menu->getModEName()?>"><a href="/<?php echo $menu->getModEName()?>"><?php echo $menu->getModCName()?></a></li>
+		<?php endforeach;?>
+		<!-- <li id="default"><a href="/index">首页</a></li>
+		<li id="project" ><a href="/project">工程管理</a></li>
+		<li id="employee"><a href="/employee">公司员工管理</a></li>
+		<li id="contract"><a href="/contract">承包商管理</a></li>
+		<li id="vendor"><a href="/vendor">供应商管理</a></li>
+		<li id="vehicle"><a href="/vehicle">车辆管理</a></li>
+		<li id="finance"><a href="/system/emsg/construction">财务管理</a></li>
+		<li id="file"><a href="/file/index/index/id/1">工程文件管理</a></li> -->
 	</ul>
 	<ul id="nav_sub" class="radius nav_general">
-		<li><a href="/system/emsg/construction">站内通知</a></li>
-		<li><a href="/system/emsg/construction">系统管理</a></li>
+		<li id="press"><a href="/press">新闻,通知</a></li>
+		<li id="message"><a href="/admin/message">站内消息</a></li>
+		<li id="system"><a href="/system/user">系统管理</a></li>
 	</ul>
+	<?php endif;?>
 </div>
 <?php echo $this->layout()->content ?>
 <div id="p_footer">
 		<a href="#">隐私策略</a></li>
 		<a href="#">服务条款</a></li>
-		<a href="#">Alpha Project Team保留所有权</a>
+		<a href="#">Luckyrabbit Project Team保留所有权</a>
 </div>
+<?php if($this->checkLogin())
+	{
+		echo $this->loadErrorReport();
+		}
+?>
 </body>
 </html>

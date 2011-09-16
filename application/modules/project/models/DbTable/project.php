@@ -24,28 +24,27 @@ class Project_Models_DbTable_Project extends Zend_Db_Table_Abstract
 		
 		return $entries;	
 		}
-
-	public function search($key,$condition)
+	public function fetchAllJoin($key, $condition)
 	{
-		$select = $this->select();
-		
-		if($condition == 'projectName')
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('p' => 'pm_projects'))
+						->join(array('e'=>'em_contacts'),'e.contactId = p.contactId',array('contactName'));
+
+		if($condition == "projectName")
 		{
-			$select->where('name like ?','%'.$key.'%');
+			$select->where('p.name like ?','%'.$key.'%');
 			}
-			elseif($condition == 'structype')
+			elseif($condition == "structype")
 			{
-				$select->where('structype like ?','%'.$key.'%');
+				$select->where('p.structype like ?','%'.$key.'%');
 				}
-				elseif($condition == 'name')
+				elseif($condition == "name")
 				{
- 						$select->setIntegrityCheck(false)
-						->from(array('e'=> 'em_contacts'),array('name'))
-						->join(array('p'=>'pm_projects'),'p.contactId = e.contactId')
-						->where('e.name like ?','%'.$key.'%');
-				}
-		$resultSet = $this->fetchAll($select);
-		return $resultSet;
+					$select->where('e.contactName like ?','%'.$key.'%');
+					}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
 	}
 }
 ?>

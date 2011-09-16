@@ -5,28 +5,27 @@ class Pment_Models_DbTable_Seal extends Zend_Db_Table_Abstract
 {
 	protected $_name = 'pm_seals';
 
-	public function search($key,$condition)
+	public function fetchAllJoin($key, $condition)
 	{
-		$select = $this->select();
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('p' => 'pm_seals'))
+						->join(array('e'=>'em_contacts'),'e.contactId = p.contactId',array('contactName'));
 		if($condition[1] != null)
 		{
-			if($condition[1] == 'name')
+			if($condition[1] == "name")
 			{
-				$select->where('name like ?','%'.$key.'%')
-						->where('projectId = ?',$condition[0]);
+				$select->where('p.name like ?','%'.$key.'%');
 				}
-				elseif($condition[1] == 'date')
+				elseif($condition[1] == "date")
 				{
- 						$select->where('seaDate = ?',$key)
-						->where('projectId = ?',$condition[0]);
+					$select->where('p.sealDate = ?',$key);
 					}
-			}
-			else
-			{
-				$select->where('projectId = ?',$condition[0]);
 				}
-		$resultSet = $this->fetchAll($select);
-		return $resultSet;
-	}
+		$select->where('p.projectId = ?',$condition[0]);
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
+
 }
 ?>

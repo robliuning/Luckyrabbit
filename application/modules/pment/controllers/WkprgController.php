@@ -5,20 +5,12 @@ class Pment_WkprgController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$wkprgs = new Pment_Models_WkprgMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,20 @@ class Pment_WkprgController extends Zend_Controller_Action
 		{
 			$arrayWkprgs = $wkprgs->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayWkprgs) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayWkprgs->setCurrentPageNumber($pageNumber);
+			$arrayWkprgs->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayWkprgs = $arrayWkprgs;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "wkprg";
-		$this->view->modelName = "工程周进度计划";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_WkprgSave();
 		$wkprgs = new Pment_Models_WkprgMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -97,7 +91,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$wkprg = new Pment_Models_Wkprg();
@@ -180,7 +174,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$wkprgId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$wkNum = $wkprgs->findWkNum($wkprgId);
 		$tbwkNum = $editForm->getElement('wkNum');
 		$tbwkNum->setValue($wkNum);
@@ -206,7 +200,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$wkprg = new Pment_Models_Wkprg();
@@ -281,7 +275,7 @@ class Pment_WkprgController extends Zend_Controller_Action
 		$wkprgs = new Pment_Models_WkprgMapper();
 		$images = new Pment_Models_ImageMapper();
 		$wkprgId = $this->_getParam('id',0);
-		$projectId = $this->getProjectId();
+		$projectId = $this->_getProjectId();
 		$prgType = 'wk';
 		$wkprg = new Pment_Models_Wkprg();
 		$wkprgs->find($wkprgId,$wkprg);
@@ -355,17 +349,5 @@ class Pment_WkprgController extends Zend_Controller_Action
 			$this->_redirect('/pment/wkprg');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
-	
-	protected function getUserId()
-	{
-		$userNamespace = new Zend_Session_Namespace('userNamespace');
-		return $userNamespace->userId;
-		}
 }
 ?>

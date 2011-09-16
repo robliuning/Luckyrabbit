@@ -6,6 +6,8 @@ class Vehicle_MtncController extends Zend_Controller_Action
 	public function init()
 	{
 		/* Initialize action controller here */
+		$this->view->module = "vehicle";
+		$this->view->controller = "mtnc";
 	}
 	
 	public function preDispatch()
@@ -42,10 +44,15 @@ class Vehicle_MtncController extends Zend_Controller_Action
 		{
 			$arrayMtncs = $mtncs->fetchAllJoin();
 		}
+		if(count($arrayMtncs) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayMtncs->setCurrentPageNumber($pageNumber);
+			$arrayMtncs->setItemCountPerPage('20');
+			}
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayMtncs = $arrayMtncs;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "vehicle";
-		$this->view->controller = "mtnc";
 		$this->view->modelName = "车辆保养记录";
 		}
 	
@@ -88,6 +95,9 @@ class Vehicle_MtncController extends Zend_Controller_Action
 						}
 						else
 						{
+							$veId = new Vehicle_Models_VehicleMapper();
+							$plateNo = $veId->findPlateNo($mtnc->getVeId());
+							$this->_helper->flashMessenger->addMessage($plateNo.'创建成功。');
 							$this->_redirect('/vehicle/mtnc');
 							}
 					}
@@ -152,6 +162,9 @@ class Vehicle_MtncController extends Zend_Controller_Action
 					$mtnc->setAmount($editForm->getValue('amount'));
 					$mtnc->setRemark($editForm->getValue('remark'));
 					$mtncs->save($mtnc);
+					$veId = new Vehicle_Models_VehicleMapper();
+					$plateNo = $veId->findPlateNo($mtnc->getVeId());
+					$this->_helper->flashMessenger->addMessage($plateNo.'修改成功。');
 					$this->_redirect($link);
 					}
 					else

@@ -58,5 +58,31 @@ class Pment_Models_DbTable_Cpp extends Zend_Db_Table_Abstract
 		$resultSet = $this->fetchAll($select);
 		return $resultSet;
 	}
+	
+	public function fetchAllJoin($key, $condition)
+	{
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('c' => 'em_cpp'))
+						->join(array('e'=>'em_contacts'),'e.contactId = c.contactId',array('contactName'))
+						->join(array('g'=>'ge_posts'),'g.postId = c.postId', array('postName'))
+						->join(array('p'=>'pm_projects'), 'p.projectId = c.projectId', array('name'));
+		
+		if($condition[1] != null)
+		{
+		
+			if($condition[1] == "postName")
+			{
+				$select->where('g.postName like ?','%'.$key.'%');
+				}
+				elseif($condition[1] == "name")
+				{
+					$select->where('e.contactName like ?','%'.$key.'%');
+					}
+				}
+		$select->where('c.projectId = ?', $condition[0]);
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>

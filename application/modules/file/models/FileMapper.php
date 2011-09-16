@@ -26,26 +26,27 @@ class File_Models_FileMapper
 	public function save(File_Models_File $file) 
 	{
 		$data = array(
-			'fileId' => $file->getFileId(),
-			'name' => $file->getName(),
-			'display' => $file->getDisplay(),
-			'size' => $file->getSize(),
+			'file_id' => $file->getFileId(),
+			'file_name' => $file->getName(),
+			'file_display' => $file->getDisplay(),
+			'file_size' => $file->getSize(),
 			'specId' => $file->getSpecId(),
-			'edition' => $file->getEdition(),
+			'file_edition' => $file->getEdition(),
 			'contactId' => $file->getContactId(),
-			'inFlag' => $file->getInFlag(),
-			'projFlag' => $file->getProjFlag(),
+			'file_inFlag' => $file->getInFlag(),
+			'file_projFlag' => $file->getProjFlag(),
 			'projectId' => $file->getProjectId(),
-			'status' => $file->getStatus(),
-			'remark' => $file->getRemark(),
-			'type' => $file->getType()
+			'file_status' => $file->getStatus(),
+			'file_remark' => $file->getRemark(),
+			'file_type' => $file->getType(),
+			'file_parent'=>$file->getParent()
 		);
 
 		if (null === ($id = $file->getFileId())) {
-			unset($data['fileId']);
+			unset($data['file_id']);
 			$this->getDbTable()->insert($data);
 		} else {
-			$this->getDbTable()->update($data, array('fileId = ?' => $file->getFileId()));
+			$this->getDbTable()->update($data, array('file_id = ?' => $file->getFileId()));
 		}
 	}
 
@@ -59,20 +60,21 @@ class File_Models_FileMapper
 		}
 
 		$row = $resultSet->current();
-		$file->setFileId($row->fileId)
-				->setName($row->name)
-				->setDisplay($row->display)
-				->setSize($row->size)
+		$file->setFileId($row->file_id)
+				->setName($row->file_name)
+				->setDisplay($row->file_display)
+				->setSize($row->file_size)
 				->setSpecId($row->specId)
-				->setEdition($row->edition)
+				->setEdition($row->file_edition)
 				->setContactId($row->contactId)
-				->setInFlag($row->inFlag)
-				->setProjFlag($row->projFlag)
+				->setInFlag($row->file_inFlag)
+				->setProjFlag($row->file_projFlag)
 				->setProjectId($row->projectId)
-				->setStatus($row->status)
-				->setRemark($row->remark)
-				->setType($row->type)
-				->setCTime($row->cTime);
+				->setStatus($row->file_status)
+				->setRemark($row->file_remark)
+				->setType($row->file_type)
+				->setParent($row->file_parent)
+				->setCTime($row->file_cTime);
 
 		$contacts = new Employee_Models_ContactMapper();
 		$contactName = $contacts->findContactName($file->getContactId());
@@ -81,49 +83,21 @@ class File_Models_FileMapper
 
 	public function delete($fileId)
 	{
-		$result = $this->getDbTable()->delete('fileId = '.(int)$fileId);
+		$result = $this->getDbTable()->delete('file_id = '.(int)$fileId);
 		return $result;
 	}
 
 	public function fetchAllJoin($key = null,$condition = null) 
 	{
-		if($condition == null)
-		{
-			$resultSet = $this->getDbTable()->fetchAll();
-			}
-			else
-			{
-				$resultSet = $this->getDbTable()->search($key,$condition);
-				}	
-
-		$entries = array();
+		$paginator = $this->getDbTable()->fetchAllJoin($key,$condition);
 		
-		foreach ($resultSet as $row) 
-		{
-			$entry = new File_Models_File();
-			$entry->setFileId($row->fileId)
-				->setName($row->name)
-				->setDisplay($row->display)
-				->setSize($row->size)
-				->setType($row->type)
-				->setEdition($row->edition)
-				->setContactId($row->contactId)
-				->setInFlag($row->inFlag)
-				->setStatus($row->status);
-				
-			$contacts = new Employee_Models_ContactMapper();
-			$contactId = $entry->getContactId();
-			$contactName = $contacts->findContactName($contactId);
-			$entry->setContactName($contactName);
-			$entries[] = $entry;
-			}
-		return $entries;
+		return $paginator;
 	}
 	
 	public function findArrayFile($id)
 	{
 		$id = (int)$id;
-		$row = $this->getDbTable()->fetchRow('fileId = '.$id);
+		$row = $this->getDbTable()->fetchRow('file_id = '.$id);
 		if(!$row){
 			throw new Exception("Could not find row $id");
 		}

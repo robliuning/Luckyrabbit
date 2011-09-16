@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('- 工程管理 - 工程日志');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
  	$this->headScript()->prependFile('/js/pment.js');
 	$this->headScript()->prependFile('/js/conContractor.js'); ?>
  ?>
@@ -8,9 +8,10 @@
 	<div id="p_stage_sidebar">	
 	<?php 
 		echo $this->placeholder('sidebar');
+		$arrayFuncs = $this->arrayFuncs;
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 工程分包单信息 - 详情</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -27,8 +28,9 @@
 		<?php $subcontract = $this->subcontract?>
 			<div class="overall_tool">
 				<div class="button_group">
+					<?php if($arrayFuncs['ajaxpdf'] == 1):?>
 					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<?php endif;?>
 					<div><a href="/pment/subcontract"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->

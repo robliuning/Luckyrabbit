@@ -1,5 +1,5 @@
 <?php
-	$this->headTitle('- 工程管理 - 技术交底信息');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
 	$this->headScript()->prependFile('/js/pment.js');
 	$this->headScript()->prependFile('/js/conSafe.js');
 ?>
@@ -8,9 +8,10 @@
 	<div id="p_stage_sidebar">
 	<?php
 		echo $this->placeholder('sidebar');
+		$arrayFuncs = $this->arrayFuncs;
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 技术交底信息 - 总览</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -44,11 +45,16 @@
 							<div><input class= "btSearch" type="submit" value=""></input></div>
 						</form>
 					</div>
+					<?php if($arrayFuncs['add'] == 1):?>
 					<div><a href="<?php echo $this->url(array('controller'=>'tech','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<?php endif;?>
+					<?php if($arrayFuncs['ajaxdelete'] == 1):?>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<?php endif;?>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<?php if($arrayFuncs['ajaxpdf'] == 1):?>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<?php endif;?>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -60,41 +66,53 @@
 						<col style="width:25%"></col>
 						<col style="width:27%"></col>
 						<col style="width:25%"></col>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<col style="width:5%"></col>
 						<col style="width:8%"></col>
+						<?php else:?>
+						<col style="width:13%"></col>
+						<?php endif;?>
 					</colgroup>
 					<thead>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>#</th>
 						<th>交底日期</th>
 						<th>姓名</th>
 						<th>填报人</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<?php if($arrayFuncs['edit'] == 1):?>
+						<th></th>
+						<?php endif;?>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
 						<td colspan="2">全选/取消</td>
 						<td></td>
 						<td></td>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<td></td>
+						<?php endif;?>
 						<td></td>
 					</tr>
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayTechs as $tech):?>
-					<?php $techId = $this->escape($tech->getTechId());?>
+					<?php $techId = $this->escape($tech->techId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $techId ?>"></td>
 						<td><?php
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'tech','action'=>'ajaxdisplay','id'=>$techId))?>"><?php echo $this->escape($tech->getTechDate())?></a></td>
-						<td><?php echo $this->escape($tech->getName())?></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($tech->getContactId()) ?>"><?php echo $this->escape($tech->getContactName())?></a></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'tech','action'=>'ajaxdisplay','id'=>$techId))?>"><?php echo $this->escape($tech->techDate)?></a></td>
+						<td><?php echo $this->escape($tech->name)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($tech->contactId) ?>"><?php echo $this->escape($tech->contactName)?></a></td>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<td><a href="<?php echo $this->url(array('controller'=>'tech','action'=>'edit','id'=>$techId))?>">修改</a></td>
+						<?php endif;?>
 						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'tech','action'=>'ajaxdisplay','id'=>$techId))?>">快速查看</a></td></tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayTechs) != 0)
+						echo "<tr><td colspan='7'>".$this->paginationControl($this->arrayTechs, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 					</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

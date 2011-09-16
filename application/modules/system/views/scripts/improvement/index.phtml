@@ -1,0 +1,141 @@
+<?php
+	$this->headTitle('- 系统管理 - 系统问题反馈');
+	$this->headScript()->prependFile('/js/improvement.js');
+?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>系统管理 - 系统问题反馈 - 总览</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+					}?>
+					</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+				<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+				<div id="searchBox">
+					<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+									<option value="typeName">问题类型</option>
+									<option value="modName">所属模块</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>	
+						</form>
+				</div>		
+					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>	
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+						<col style="width:5%"></col>
+						<col style="width:15%"></col>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+					</colgroup>
+					<thead>
+						<th>#</th>
+						<th></th>
+						<th>状态</th>
+						<th>问题类型</th>
+						<th>所属模块</th>
+						<th>提报人</th>
+						<th>提报时间</th>
+						<th>优先级</th>
+						<th></th>
+						<th>修改状态</th>
+						<th>站内通知</th>
+					</thead>
+					<tr>
+						<td><input type="checkbox" id="cb_sa"></td>
+						<td colspan="2">全选/取消</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayImprovements as $improvement):?>
+					<?php $id = $this->escape($improvement->imprId);?>
+					<tr>
+						<td><input type="checkbox" name="cb" value="<?php echo $id ?>"></td>
+						<td><?php echo $counter;
+							$counter++;?></td>
+						<td><img src="/images/status2/<?php echo $this->escape($improvement->status)?>.png" /></td>
+						<td><?php echo $this->escape($improvement->impName)?></td>
+						<td><?php echo $this->escape($improvement->cName)?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($improvement->contactId) ?>"><?php echo $this->escape($improvement->contactName) ?></a></td>
+						<td><?php echo $this->escape($improvement->iTime)?></td>
+						<td><?php echo $this->escape($improvement->priority)?></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'improvement','action'=>'ajaxdisplay','id'=>$id))?>">问题描述</a></td>
+						<td><span class="hide"><?php echo $id ?></span>
+							<select class = "ajax_changeStatus" name="ajax_changeStatus" >
+								<?php 
+									$array['0'] = "等待处理";
+									$array['1'] = "处理中";
+									$array['2'] = "已解决";
+									$array['3'] = "暂时不能解决";
+									foreach($array as $key=>$value)
+									{
+										if($key == $this->escape($improvement->status))
+										{
+											echo "<option value=".$key." selected>".$value."</option>";
+											}
+											else
+											{
+												echo "<option value=".$key.">".$value."</option>";
+												}
+										}
+								?>
+							</select>
+						</td>
+						<td>
+							<select class="ajax_sendMsg" name ="ajax_sendMsg">
+								<option value="0">否</option>
+								<option value="1">是</option>
+							</select>
+						</td>
+					</tr>
+					<?php endforeach ?>
+					<tr>
+						<?php if(count($this->arrayImprovements) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayImprovements, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
+					</tr>
+				</table>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

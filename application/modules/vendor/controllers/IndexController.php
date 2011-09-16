@@ -6,6 +6,8 @@ class Vendor_IndexController extends Zend_Controller_Action
 	public function init()
 	{
 		/*init*/
+		$this->view->module = "vendor";
+		$this->view->controller = "index";
 	}
 	public function preDisPatch()
 	{
@@ -44,10 +46,8 @@ class Vendor_IndexController extends Zend_Controller_Action
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayVendors = $arrayVendors;
 		$this->view->errorMsg = $errorMsg;	
-		$this->view->module = "vendor";
-		$this->view->controller = "index";
-		$this->view->modelName = "供应商管理";
-		}
+		$this->view->modelName = "供应商信息";
+	}
 
 	public function editAction()
 	{
@@ -144,7 +144,7 @@ class Vendor_IndexController extends Zend_Controller_Action
 					$addForm->reset();
 					if($btClicked=="保存返回上页")
 					{
-						$this->_helper->flashMessenger->addMessage('对供应商:'.$vendor->getName().'的修改成功。');
+						$this->_helper->flashMessenger->addMessage('对供应商:'.$vendor->getName().'的新建成功。');
 						$this->_redirect('/vendor');
 						}
 					}
@@ -201,24 +201,7 @@ class Vendor_IndexController extends Zend_Controller_Action
 				$this->_redirect('/vendor');
 				}
 	}
-
-	public function displayAction()
-	{
-		$vendors = new Vendor_Models_VendorMapper();
-		$id = $this->_getParam('id',0);
-		if($id >0)
-		{
-			$vendor = new Vendor_Models_Vendor();
-			$vendors->find($id,$vendor);
-			$this->view->vendor = $vendor;
-			}
-			else
-			{
-				$this->_redirect('/vendor');
-				}
-	}
 	
-		
 	protected function getUserId()
 	{
 		$userNamespace = new Zend_Session_Namespace('userNamespace');

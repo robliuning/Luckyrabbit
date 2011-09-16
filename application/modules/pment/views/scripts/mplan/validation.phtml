@@ -1,0 +1,162 @@
+ <?php 
+ 	$this->headTitle('- 工程管理 - 材料月计划信息');
+ 	$this->headScript()->prependFile('/js/pment.js');
+ 	$this->headScript()->prependFile('/js/conMtr.js'); 
+ 	$this->headScript()->prependFile('/js/rdSlide.js'); 
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+//		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程管理 - 材料月计划信息 - 核验单</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="/"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu">材料月计划信息</p>
+				<?php $mplan = $this->mplan?>
+				<table>
+					<colgroup>
+						<col style="width:15%"></col>
+						<col style="width:35%"></col>
+						<col style="width:15%"></col>
+						<col style="width:35%"></col>
+					</colgroup>
+					<tr>
+						<td>计划状态</td>
+						<td><?php echo $mplan->getStatusName()?></td>
+						<td>计划时间: </td>
+						<td><?php echo $mplan->getYearNum()."年".$mplan->getMonNum()."月"?></td>
+					</tr>
+					<tr>
+						<td>填报人: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mplan->getContactId())?>"><?php echo $mplan->getContactName()?></a></td>
+						<td>填报时间: </td>
+						<td><?php echo $mplan->getPDate()?></td>
+					</tr>
+					<tr>
+						<td>备注: </td>
+						<td colspan="3"><?php echo $mplan->getRemark()?></td>
+					</tr>
+					<tr>
+						<td>预算部审批人: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($mplan->getApprovcId())?>"><?php echo $mplan->getApprovcName()?></a></td>
+						<td>预算部审批时间: </td>
+						<td><?php echo $mplan->getApprovcDate()?></td>
+					</tr>
+					<tr>
+						<td>预算部审批意见: </td>
+						<td colspan="3"><?php echo $mplan->getApprovcRemark()?></td>
+					</tr>
+				</table>
+				<p class="subMenu slideMenu"><a class="btRdSlide3 subMenu_switch_open">计划相关材料信息</a></p>
+					<div class="conRdSlide3">
+					<table>
+					<colgroup>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+					</colgroup>
+					<thead>
+						<th>材料名</th>
+						<th>规格型号</th>
+						<th>项目部报量</th>
+						<th>预算部核量</th>
+						<th>控制价(人民币)</th>
+						<th>控制价合价(人民币)</th>
+						<th>单位</th>
+						<th>需进场时间</th>
+						<th>备注</th>
+					</thead>
+				</table>
+				<?php $arrayMaterials = $this->arrayMaterials;?>
+				<?php if ($arrayMaterials != null) : ?>
+				<?php foreach($arrayMaterials as $key => $value):?>
+				<div>
+				<p class="subMenu"><?php echo $key ?></p>
+				<table>
+					<colgroup>
+						<col style="width:15%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:10%"></col>
+						<col style="width:5%"></col>
+						<col style="width:10%"></col>
+						<col style="width:20%"></col>
+					</colgroup>
+					<?php foreach($value as $val):?>
+					<tr>
+						<td><?php echo $this->escape($val->getMName()) ?></td>
+						<td><?php echo $this->escape($val->getSpec())?></td>
+						<td><?php echo $this->escape($val->getAmount())?></td>
+						<td><?php echo $this->escape($val->getAmountc())?></td>
+						<td><?php echo $val->getBudget()?></td>
+						<td><?php echo $val->getBudgetTotal()?></td>
+						<td><?php echo $this->escape($val->getUnit())?></td>
+						<td><?php echo $this->escape($val->getInDate())?></td>
+						<td><?php echo $this->escape($val->getRemark())?></td>
+					</tr>
+					<?php endforeach ?>
+				</table>
+				</div>
+				<?php endforeach ?>
+				<?php endif; ?>
+				<form action="<?php echo $this->url()?>" method="post">
+					<table>
+						<colgroup>
+							<col style="width:33%"></col>
+							<col style="width:34%"></col>
+							<col style="width:33%"></col>
+						</colgroup>
+						<tr>
+							<td></td>
+							<td>
+								<label class="tbFloatM">核验人登陆密码: </label>
+								<input type="password" id="tbPassword" name="tbPassword" class="tbText tbMedium tbFloatM" /></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="submit" id="btValidation" name="btValidation" class="btConfirmVar2 radius" value="核验材料计划"/></td>
+							<td></td>
+						</tr>
+					</table>
+				</form>
+				<div id="msgBox"></div>
+				<p id="ajax_id" class="hide"><?php echo $this->id?></p>
+				<input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>">
+				<input id="module" type="text" class="hide" value="<?php echo $this->module ?>">
+				<input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>">
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

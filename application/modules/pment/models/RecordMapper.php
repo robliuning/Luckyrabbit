@@ -70,7 +70,10 @@ class Pment_Models_RecordMapper
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -95,7 +98,7 @@ class Pment_Models_RecordMapper
 			$record->setContactName($contactName);
 			$records[] = $record;
 			}
-		return $records;
+		return $records;*/
 		}
 
 	public function findArrayRecord($id)

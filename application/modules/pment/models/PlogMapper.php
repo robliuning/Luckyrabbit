@@ -105,7 +105,9 @@ class Pment_Models_PlogMapper
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -122,7 +124,7 @@ class Pment_Models_PlogMapper
 				->setLogDate($row->logDate);
 			$plogs[] = $plog;
 			}
-		return $plogs;
+		return $plogs;*/
 		}
 
 	public function findarrayPlog($id)

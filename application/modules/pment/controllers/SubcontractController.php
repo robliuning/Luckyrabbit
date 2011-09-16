@@ -5,20 +5,12 @@ class Pment_SubcontractController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 		}
 	
 	public function preDisPatch()
@@ -28,7 +20,7 @@ class Pment_SubcontractController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$subcontracts = new Pment_Models_SubcontractMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -57,17 +49,20 @@ class Pment_SubcontractController extends Zend_Controller_Action
 		{
 			$arraySubcontracts = $subcontracts->fetchAllJoin(null,$condition);
 		}
+		if(count($arraySubcontracts) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arraySubcontracts->setCurrentPageNumber($pageNumber);
+			$arraySubcontracts->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arraySubcontracts = $arraySubcontracts;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "subcontract";
-		$this->view->modelName = "工程分包单信息";
 	}
 
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_SubcontractSave();
 		$addForm->submit->setLabel("保存新建");
 		$addForm->submit2->setAttrib('class','hide');
@@ -114,7 +109,7 @@ class Pment_SubcontractController extends Zend_Controller_Action
 						}
 						else
 						{
-							$this->_helper->flashMessenger->addMessage('对技术交底信息的修改成功。');
+							$this->_helper->flashMessenger->addMessage('对工程分包单信息的新建成功。');
 							$this->_redirect('/pment/subcontract');
 							}
 					}
@@ -135,7 +130,7 @@ class Pment_SubcontractController extends Zend_Controller_Action
 	
 	public function editAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$editForm = new Pment_Forms_SubcontractSave();
 		$editForm->submit->setLabel("保存修改");
 		$editForm->submit2->setAttrib('class','hide');
@@ -177,7 +172,7 @@ class Pment_SubcontractController extends Zend_Controller_Action
 					$subcontract->setPrjWarr($editForm->getValue('prjWarr'));
 					$subcontract->setRemark($editForm->getValue('remark'));
 					$subcontracts->save($subcontract);
-					$this->_helper->flashMessenger->addMessage('对技术交底信息的修改成功。');
+					$this->_helper->flashMessenger->addMessage('对工程分包单信息的修改成功。');
 					$this->_redirect('/pment/subcontract');
 					}
 					else
@@ -236,7 +231,7 @@ class Pment_SubcontractController extends Zend_Controller_Action
 		if($scontrId > 0)
 		{
 			$subcontracts = new Pment_Models_SubcontractMapper();
-			$projectId = $this->getProjectId();
+			$projectId = $this->_getProjectId();
 			$subcontract = new Pment_Models_Subcontract();
 			$subcontracts->find($scontrId,$subcontract);
 			$this ->view->subcontract = $subcontract;
@@ -264,10 +259,4 @@ class Pment_SubcontractController extends Zend_Controller_Action
 				$this->_redirect('/pment/subcontract');
 				}
 	}
-	
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
 }

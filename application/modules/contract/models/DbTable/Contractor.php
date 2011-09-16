@@ -15,7 +15,7 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 		return $row->toArray();
 	}
 
-	public function Search($key, $condition)
+	public function search($key, $condition)
 	{
 		$select = $this->select();
 		if($condition == "name")
@@ -41,6 +41,30 @@ class Contract_Models_DbTable_Contractor extends Zend_Db_Table_Abstract
 		$entries = $this->fetchAll($select);
 		
 		return $entries;
+		}
+		
+	public function fetchAllJoin($key, $condition)
+	{
+		$select = $this->select()
+						->from(array('s'=>'sc_contractors'));
+		if($condition == "name")
+		{
+			$select->where("s.name like ?",'%'.$key.'%');
+			}
+			elseif($condition == "contact")
+			{
+				$select->where("s.contact like ?",'%'.$key.'%');
+				}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+	}
+	
+	public function fetchAllContractorIds()
+	{
+		$select = $this->select()
+						->from(array('s'=>'sc_contractors'));
+		$resultSet = $this->fetchAll($select);
+		return $resultSet;
 		}
 }
 

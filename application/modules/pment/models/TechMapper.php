@@ -68,7 +68,10 @@ class Pment_Models_TechMapper
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -92,7 +95,7 @@ class Pment_Models_TechMapper
 			$tech->setContactName($contactName);
 			$techs[] = $tech;
 			}
-		return $techs;
+		return $techs;*/
 		}
 
 	public function findArrayTech($id)

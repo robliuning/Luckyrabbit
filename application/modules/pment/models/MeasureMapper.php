@@ -68,7 +68,10 @@ class Pment_Models_MeasureMapper
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -91,7 +94,7 @@ class Pment_Models_MeasureMapper
 			$measure->setContactName($contactName);
 			$measures[] = $measure;
 			}
-		return $measures;
+		return $measures;*/
 		}
 
 	public function findArrayMeasure($id)

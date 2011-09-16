@@ -1,12 +1,11 @@
+<?php $project = $this->project;?>
 <div id="ajaxMsgBox">
 <div id="ajaxMsgBox_Emp">
 	<div class="overall_tool">
 		<div class="button_group">
-			<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
-			<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+			<div><a target="_blank" href="/general/pdf/generate/page/5/id/<?php echo $project->getProjectId()?>"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>				</div><!-- end of button group -->
 			</div><!-- end of button group -->
 	</div><!-- end of overall tool -->
-	<?php $project = $this->project;?>
 	<div class="overall_content">
 		<table>
 			<colgroup>

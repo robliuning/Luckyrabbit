@@ -5,20 +5,12 @@ class Pment_MstprgController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$mstprgs = new Pment_Models_MstprgMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,21 @@ class Pment_MstprgController extends Zend_Controller_Action
 		{
 			$arrayMstprgs = $mstprgs->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayMstprgs) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayMstprgs->setCurrentPageNumber($pageNumber);
+			$arrayMstprgs->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayMstprgs = $arrayMstprgs;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "mstprg";
-		$this->view->modelName = "工程总进度计划";
+		$this->view->projectId = $projectId;
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_MstprgSave();
 		$mstprgs = new Pment_Models_MstprgMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -139,7 +134,7 @@ class Pment_MstprgController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$mstprgId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$stage = $mstprgs->findStage($mstprgId);
 		$tbStage = $editForm->getElement('stage');
 		$tbStage->setValue($stage);
@@ -238,11 +233,5 @@ class Pment_MstprgController extends Zend_Controller_Action
 			$this->_redirect('/pment/mstprg');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
 }
 ?>

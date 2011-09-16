@@ -18,7 +18,10 @@ class Pment_VerecordController extends Zend_Controller_Action
 		$projects = new Project_Models_ProjectMapper();
 		$project = new Project_Models_Project();
 		$projects->find($projectId,$project);
-		$this->view->project = $project;	}
+		$this->view->project = $project;
+		$this->view->module = "pment";
+		$this->view->controller = "verecord";
+		}
 	
 	public function preDispatch()
 	{
@@ -55,10 +58,15 @@ class Pment_VerecordController extends Zend_Controller_Action
 		{
 			$arrayVerecords = $verecords->fetchAllJoin(null,$condition);
 		}
+		if(count($arrayVerecords) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayVerecords->setCurrentPageNumber($pageNumber);
+			$arrayVerecords->setItemCountPerPage('20');
+			}
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayVerecords = $arrayVerecords;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "verecord";
 		$this->view->modelName = "工程用车记录";
 		}
 	
@@ -108,6 +116,9 @@ class Pment_VerecordController extends Zend_Controller_Action
 						}
 						else
 						{
+							$veId = new Vehicle_Models_VehicleMapper();
+							$plateNo = $veId->findPlateNo($verecord->getVeId());
+							$this->_helper->flashMessenger->addMessage('对工程用车'.$plateNo.'记录新建成功。');
 							$this->_redirect('/pment/verecord');
 							}
 					}
@@ -170,6 +181,9 @@ class Pment_VerecordController extends Zend_Controller_Action
 					$verecord->setAmount($editForm->getValue('amount'));
 					$verecord->setRemark($editForm->getValue('remark'));
 					$verecords->save($verecord);
+					$veId = new Vehicle_Models_VehicleMapper();
+					$plateNo = $veId->findPlateNo($verecord->getVeId());
+					$this->_helper->flashMessenger->addMessage('对工程用车记录'.$plateNo.'修改成功。');
 					$this->_redirect('/pment/verecord');
 					}
 					else

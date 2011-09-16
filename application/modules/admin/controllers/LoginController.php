@@ -25,6 +25,13 @@ class admin_LoginController extends Zend_Controller_Action
 					$userId = $users->getUserId($userName);
 					$userNamespace = new Zend_Session_Namespace('userNamespace');
 					$userNamespace->userId = $userId;
+					// add user to online list
+					$onlines = new System_Models_OnlineMapper();
+					$onlines->save($userId);
+					$onlines->updateOnlineUsers();
+					// add user to ulog list
+					$ulogs = new System_Models_UlogMapper();
+					$ulogs->save($userId,'登陆');
 					$this->_redirect('/');
 				}
 				else
@@ -59,7 +66,7 @@ class admin_LoginController extends Zend_Controller_Action
 		$dbAdapter = Zend_Db_Table::getDefaultAdapter();
 		$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 
-		$authAdapter->setTableName('users')
+		$authAdapter->setTableName('sy_users')
 					->setIdentityColumn('username')
 					->setCredentialColumn('password')
 					->setCredentialTreatment('SHA1(CONCAT(?,salt))');
@@ -69,10 +76,20 @@ class admin_LoginController extends Zend_Controller_Action
 
 	public function logoutAction()
 	{
+		$userId = $this->getUserId();
+		$onlines = new System_Models_OnlineMapper();
+		$onlines->deleteUser($userId);
+		$ulogs = new System_Models_UlogMapper();
+		$ulogs->save($userId,'登出');
 		Zend_Auth::getInstance()->clearIdentity();
 		$this->_helper->redirector('index'); // back to login page
 	}
 	
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
+		}
 }
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-	$this->headTitle('- 工程管理 - 工程月进度计划');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
 	$this->headScript()->prependFile('/js/pment.js');
 	$this->headScript()->prependFile('/js/conPrg.js');
 ?>
@@ -8,10 +8,11 @@
 	<div id="p_stage_sidebar">
 	<?php
 		echo $this->placeholder('sidebar');
+		$arrayFuncs = $this->arrayFuncs;
 	?>
 		<div id="p_content">
 		<p id="expand" class="hide"><?php echo $this->expand ?></p>
-		<h1>工程管理 - 工程月进度计划 - 总览</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -45,11 +46,16 @@
 							<div><input class= "btSearch" type="submit" value=""></input></div>
 						</form>
 					</div>
+					<?php if($arrayFuncs['add'] == 1):?>
 					<div><a href="<?php echo $this->url(array('controller'=>'monprg','action'=>'add'))?>"><img src="/images/icons/functions/new.png"/><p>新建</p></a></div>
+					<?php endif;?>
+					<?php if($arrayFuncs['ajaxdelete'] == 1):?>
 					<div><a href="#msgBox" class="lightbox" id="btDel"><img src="/images/icons/functions/delete.png"/><p>删除</p></a></div>
+					<?php endif;?>
 					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<?php if($arrayFuncs['ajaxpdf'] == 1):?>
 					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
-					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+					<?php endif;?>
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
@@ -62,18 +68,24 @@
 						<col style="width:15%"></col>
 						<col style="width:10%"></col>
 						<col style="width:10%"></col>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
+						<?php else:?>
+						<col style="width:10%"></col>
+						<?php endif;?>
 					</colgroup>
 					<thead>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>总进度任务名称</th>
 						<th>开始日期</th>
 						<th>结束日期</th>
 						<th>工期(天)</th>
 						<th>编制人</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<?php if($arrayFuncs['edit'] == 1):?>
+						<th></th>
+						<?php endif;?>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -82,7 +94,9 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<?php if($arrayFuncs['edit'] == 1):?>
 						<td></td>
+						<?php endif;?>
 						<td></td>
 					</tr>
 				</table>
@@ -103,10 +117,14 @@
 								<col style="width:15%"></col>
 								<col style="width:10%"></col>
 								<col style="width:10%"></col>
+								<?php if($arrayFuncs['edit'] == 1):?>
 								<col style="width:5%"></col>
 								<col style="width:5%"></col>
+								<?php else:?>
+								<col style="width:10%"></col>
+								<?php endif;?>
 							</colgroup>
-					<?php foreach($value2 as $key3 => $value3):?>
+							<?php foreach($value2 as $key3 => $value3):?>
 							<tr>
 								<?php $monprgId = $value3->getMonprgId()?>
 								<td><input type="checkbox" name="cb" value="<?php echo $monprgId ?>"></td>
@@ -115,7 +133,9 @@
 								<td><?php echo $value3->getEndDate()?></td>
 								<td><?php echo $value3->getPeriod()?></td>
 								<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($value3->getContactId()) ?>"><?php echo $this->escape($value3->getContactName())?></a></td>
+								<?php if($arrayFuncs['edit'] == 1):?>
 								<td><a href="<?php echo $this->url(array('controller'=>'monprg','action'=>'edit','id'=>$monprgId))?>">修改</a></td>
+								<?php endif;?>
 								<td><a href="<?php echo $this->url(array('controller'=>'monprg','action'=>'display','id'=>$monprgId))?>">详情</a></td>
 							</tr>
 					<?php endforeach ?>

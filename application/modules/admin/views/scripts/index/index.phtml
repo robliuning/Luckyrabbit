@@ -1,0 +1,57 @@
+ <?php 
+ 	$this->headTitle('- 用户管理');
+ 	$this->headScript()->prependFile('/js/form.js');
+ ?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>用户管理 - 密码修改</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 	}?>
+			</p>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="/admin"><img src="/images/icons/functions/refresh.png"/><p>刷新</p></a></div>		
+					<div><a href="/default"><img src="/images/icons/functions/back.png"/><p>返回首页</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<p class="subMenu">用户信息</p>
+				<?php $user = $this->user?>
+				<table>
+					<colgroup>
+						<col style="width:30%"></col>
+						<col style="width:70%"></col>
+					</colgroup>
+					<tr>
+						<td>用户名: </td>
+						<td><?php echo $user->getUserName()?></td>
+					</tr>
+					<tr>
+						<td>所属用户组: </td>
+						<td><?php echo $user->getGroupName()?></td>
+					</tr>
+					<tr>
+						<td>真实姓名: </td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $user->getContactId() ?>"><?php echo $user->getContactName()?></a></td>
+					</tr>
+				</table>
+				<p class="subMenu">密码修改(密码修改后需重新登陆)</p>
+					<?php
+						$this->editForm->setAction($this->url());
+						echo $this->editForm;
+					?>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

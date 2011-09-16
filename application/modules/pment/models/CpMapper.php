@@ -48,7 +48,10 @@ class Pment_Models_CpMapper
 
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -68,7 +71,7 @@ class Pment_Models_CpMapper
 			$entry->setCpId($row->cpId);
 			$entries[] = $entry;
 			}
-			return $entries;
+			return $entries;*/
 	}
 
 	public function dataValidator($formData,$projectId)
@@ -87,5 +90,20 @@ class Pment_Models_CpMapper
 		$array['errorMsg'] = $errorMsg;
 		return $array;
 	}
+	
+	public function fetchAllContractorIds($projectId)
+	{
+		$resultSet = $this->getDbTable()->fetchAllContractorIds($projectId);
+		$entries = array();
+		foreach ($resultSet as $row) {
+			$entry = new Pment_Models_Cp();
+
+			 $entry ->setContractorId($row->contractorId)
+					->setProjectId($row->projectId)
+					->setContractorName($row->name);
+					$entries[] = $entry;
+		}
+		return $entries;
+		}
 }
 ?>

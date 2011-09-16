@@ -57,7 +57,7 @@ class Contract_Models_ContrqualifMapper
 				->setQualifTypeId($row->qualifTypeId)
 				->setQualifGrade($row->qualifGrade);	
 		$qualiftypes = new General_Models_QualifTypeMapper();
-		$qualiftype = new General_Models_Qualiftype();
+		$qualiftype = new General_Models_QualifType();
 		$qualiftypes->find($contrqualif->getQualifTypeId(),$qualiftype); 
 		$contrqualif->setQualifSerie($qualiftype->getSerie());
 		$contrqualif->setQualifType($qualiftype->getName());
@@ -108,30 +108,29 @@ class Contract_Models_ContrqualifMapper
 		return $arrayQualifTypes;
 	}
 	
-	public function populateContrqualifDd($form,$condition,$serie) //check
+	public function populateContrqualifDd($form,$condition,$serie)
 	{
 		if($condition == 0)
 		{
 			$contractors = new Contract_Models_ContractorMapper();
-			$arrayContractors = $contractors->fetchAllJoin();//contractor name and id
+			$arrayContractors = $contractors->fetchAllContractorIds();
 			
 			foreach($arrayContractors as $contr)
 			{
 				$form->getElement('contractorId')->addMultiOption($contr->getContractorId(),$contr->getName());
 				}
 			}
-			
-		$qualifTypes = new General_Models_QualifTypeMapper();		
-		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie); 
+		$qualifTypes = new General_Models_QualifTypeMapper();
+		$arrayQualifTypes = $qualifTypes->fetchAllBySerie($serie);
 		foreach($arrayQualifTypes as $qualif)
 		{
 			$form->getElement('qualifTypeId')->addMultiOption($qualif->getTypeId(),$qualif->getName());
 			}
 	}
 	
-	public function findQualiftypes($key) //check
+	public function findQualiftypes($key)
 	{
-		$qualiftypes = new General_Models_QualiftypeMapper();
+		$qualiftypes = new General_Models_QualifTypeMapper();
 		
 		$arrayQualiftypes = $qualiftypes->fetchAllBySerie($key);
 		
@@ -161,7 +160,7 @@ class Contract_Models_ContrqualifMapper
 	{
 		$resultSet = $this->getDbTable()->findArrayContrqualif($id);
 		$qualifTypeId = $resultSet['qualifTypeId'];
-		$qualiftypes = new General_Models_QualiftypeMapper();
+		$qualiftypes = new General_Models_QualifTypeMapper();
 		$qualifSerie = $qualiftypes->findQualifSerie($qualifTypeId);
 		$resultSet['qualifSerie'] = $qualifSerie;
 		

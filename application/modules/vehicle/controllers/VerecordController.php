@@ -7,6 +7,8 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 	public function init()
 	{
 		/* Initialize action controller here */
+		$this->view->module = "vehicle";
+		$this->view->controller = "verecord";
 	}
 	
 	public function preDispatch()
@@ -18,7 +20,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 	{
 		$verecords = new Vehicle_Models_VerecordMapper();
 		$errorMsg = null;
-		$condition[0] = 0;
+		$condition[0] = null;
 		$condition[1] = null;
 		if($this->getRequest()->isPost())
 		{
@@ -43,10 +45,15 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 		{
 			$arrayVerecords = $verecords->fetchAllJoin(null,$condition);
 		}
+		if(count($arrayVerecords) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayVerecords->setCurrentPageNumber($pageNumber);
+			$arrayVerecords->setItemCountPerPage('20');
+			}
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayVerecords = $arrayVerecords;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "vehicle";
-		$this->view->controller = "verecord";
 		$this->view->modelName = "车辆使用记录";
 		}
 	
@@ -95,6 +102,9 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 						}
 						else
 						{
+							$veId = new Vehicle_Models_VehicleMapper();
+							$plateNo = $veId->findPlateNo($verecord->getVeId());
+							$this->_helper->flashMessenger->addMessage($plateNo.'创建成功。');
 							$this->_redirect('/vehicle/verecord');
 							}
 					}
@@ -149,7 +159,7 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$verecord = new Vehicle_Models_verecord();
+					$verecord = new Vehicle_Models_Verecord();
 					$verecord->setrecordId($recordId);
 					$verecord->setVeId($vId);
 					$verecord->setPrjFlag(0);
@@ -165,6 +175,9 @@ class Vehicle_VerecordController extends Zend_Controller_Action
 					$verecord->setContactId($editForm->getValue('contactId'));
 					$verecord->setAmount($editForm->getValue('amount'));
 					$verecord->setRemark($editForm->getValue('remark'));
+					$veId = new Vehicle_Models_VehicleMapper();
+					$plateNo = $veId->findPlateNo($verecord->getVeId());
+					$this->_helper->flashMessenger->addMessage($plateNo.'修改成功。');
 					$verecords->save($verecord);
 					$this->_redirect($link);
 					}

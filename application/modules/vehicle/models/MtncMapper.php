@@ -88,7 +88,9 @@ class Vehicle_Models_MtncMapper
 
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -116,7 +118,7 @@ class Vehicle_Models_MtncMapper
 			$mtnc->setContactName($contactName);
 			$mtncs[] = $mtnc;
 			}
-		return $mtncs;
+		return $mtncs;*/
 	}
 
 	public function populateVeDd($form) 

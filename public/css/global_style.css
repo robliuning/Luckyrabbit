@@ -83,9 +83,6 @@ a:link, a:visited
 	top:14px;
 	text-indent: -9999px;
 	}
-#nav_main
-{
-	}
 #p_stage,#p_stage_sidebar
 {
 	background:transparent url("/images/bggray.png") repeat scroll 0 0;
@@ -559,6 +556,12 @@ label
 {
 	width: 90%;
 	}
+.tbFloatM
+{
+	float: left;
+	margin: 5px auto;
+	padding: 5px 30px;
+	}
 .btSearch
 {
 	background: url("/images/icons/functions/search2.png") no-repeat scroll 0 0;
@@ -606,10 +609,24 @@ label
 	background-color: #808084;
 	color: white;
 	margin: 0 9px 0 0;
-	line-height: 30px;
+	line-height: 25px;
 	font-size: 15px;
 	text-align: center;
 	float: right;
+	}
+.btConfirmVar2
+{
+	padding: 5px 30px 5px 30px;
+	border: 1px solid #D7D7D7;
+	display: block;
+	background-color: #808084;
+	color: white;
+	line-height: 25px;
+	font-size: 15px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
 	}
 .btUploadImage
 {
@@ -667,6 +684,10 @@ label
 	background-color: #CCCCD0;
 	cursor: pointer;
 	}
+.btConfirmVar2:hover
+{
+	background-color: #CCCCD0;
+	cursor: pointer;	}
 .btDelete
 {
 	padding: 5px 30px 5px 30px;
@@ -703,7 +724,12 @@ label
 	font-size: medium;
 	line-height: 15px;
 	}
-
+.ajaxMsgBox_p
+{
+	padding: 10px;
+	font-size:small;
+	line-height: 15px;
+	}
 #ajaxMsgBox_Emp
 {
 	width:500px;
@@ -780,13 +806,13 @@ label
 {
 	cursor: pointer;
 	}
-#btPrg,#btSafe,#btContractor,#btMaterial
+#btPrg,#btSafe,#btContractor,#btMaterial,#btSlideGn
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 10px -157px;
 	background-repeat: no-repeat;
 	}
-#conPrg a,#conSafe a,#conContractor a, #conMaterial a
+#conPrg a,#conSafe a,#conContractor a, #conMaterial a,#conSlideGn a
 {
 	background-image: url("/images/sprites-side-nav.png");
 	background-position: 30px -535px;
@@ -878,3 +904,112 @@ label
 {
 	padding:10px 20px;
 }
+
+#floatTop_content
+{
+	width: 500px;
+	}
+.ajax_slide
+{
+	height: 20px;
+	padding: 13px 0 2px 15px;
+	background: transparent url(/images/slide_bg.png) no-repeat scroll 0 0;
+	}
+.ajax_slide_button
+{
+	cursor: pointer;
+	height: 15px;
+	font-size: 13px;
+	font-weight: bold;
+	}
+.ajax_slide_content
+{
+	height: 390px;
+	margin: 0 0 0 10px;
+	padding: 5px;
+	font-size:13px;
+	color: #888888;
+	background:none repeat scroll 0 0 #FFFFFF;
+	border:1px solid #E1E1E1;
+	}
+.ajax_slide_content table
+{
+	width: 100%;
+	text-align: left;
+	table-layout: auto;
+	empty-cells: show;
+	}
+.ajax_slide_content table td
+{
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-bottom: 1px dashed #D7D7D7;
+	font-weight: normal;
+	padding: 5px 0 4px 10px;
+	}
+.ajax_slide_button_width
+{
+	width: 100px;
+	}
+#ajax_btAddMtr
+{
+	height: 550px;
+	overflow-y: scroll;
+	}
+.paginationControl p
+{
+	float: left;
+	padding:5px;
+	display: block;
+	}
+	
+/*ad_message*/
+#ad_message td.ad_message_td:hover
+{
+	cursor: pointer;
+}
+
+table tbody tr:hover td {
+	background: #f3f3f3;
+}
+
+#ad_message_new a
+{
+	background:transparent url("/images/ad_message_new.png") repeat-x scroll 0 0;
+	padding: 0 10px 0 25px;
+}
+.highlight
+{
+	font-weight: bold;
+	font-style: italic;
+	}
+.ajaxButton
+{
+	color: #006BD8;
+	font-style: italic;
+	padding: 0 10px;
+	cursor: pointer;
+	}
+.m_status
+{
+	margin: 0 4px 0 0;
+	}
+.c_pointer
+{
+	cursor: pointer;
+	}
+#nav_general_selected
+{
+	color: white;
+	}
+#nav_sidebar_selected
+{
+	background-color: #cccccc;
+	}
+#btSubPlan a
+{
+	color: #ffffff;
+	}
+.conListTable tr td
+{
+	background-color: #f3f3f3;
+	}

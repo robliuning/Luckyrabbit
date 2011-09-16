@@ -22,8 +22,14 @@
 							echo $this->errorMsg;
 			 			}?>
 					</p>
-					<p class="errors">测试帐号为：admin 密码: password<br/>
-					server is unavailable at the moment !</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+					<p class="errors"></p>
 				</div>
 			</div><!-- end of cap_body -->
 			<div id="cap_bottom"></div>

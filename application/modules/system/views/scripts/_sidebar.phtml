@@ -1,0 +1,16 @@
+<?php $this->placeholder('sidebar')->captureStart()?>
+<div id="p_sidebar" class="p_sidebar_general"> 
+	<ul>
+		<!-- <li><a href="/system">系统信息</a></li> -->
+		<li id="user"><a href="/system/user">用户信息</a></li>
+		<li id="improvement"><a href="/system/improvement">系统问题反馈</a></li>
+		<!-- <li><a href="/system/auth">用户权限</a></li> -->
+		<li class="slideMenu"><a id="btSlideGn">系统统计</a>
+			<ul class="hide" id="conSlideGn">
+				<li id="online"><a href="/system/online">在线用户</a></li>
+				<li id="ulog"><a href="/system/ulog">用户登陆历史</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<?php $this->placeholder('sidebar')->captureEnd()?>

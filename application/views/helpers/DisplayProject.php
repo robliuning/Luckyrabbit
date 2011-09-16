@@ -16,7 +16,7 @@ class Zend_View_Helper_DisplayProject extends Zend_View_Helper_Abstract
 					</colgroup>
 					<tr>
 						<td>工程名称: </td>
-						<td>'.$project->getName().'</td>
+						<td><b>'.$project->getName().'</b></td>
 						<td>工程状态: </td>
 						<td>'.$project->getStatus().'</td>
 						<td>结构类型: </td>

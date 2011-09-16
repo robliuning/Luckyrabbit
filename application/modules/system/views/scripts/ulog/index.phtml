@@ -1,0 +1,81 @@
+<?php
+	$this->headTitle('- 工程文件管理');
+	$this->headScript()->prependFile('/js/conSlideGn.js');
+?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+		<h1>工程文件管理 - 在线用户历史 - 总览</h1>
+		<div class="p_msg">
+			<h3></h3>
+			<p class="errorMsg"><?php
+				if($this->errorMsg != null)
+				{
+					echo $this->errorMsg;
+			 		}?>
+			 		</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div id="searchBox">
+						<form method="post" action="<?php echo $this->url()?>">
+							<div>
+								<select name="condition" class="tbMediumer stStyle">
+									<option value="contactName">姓名</option>
+								</select>
+							</div>
+							<div><input class="tbMedium tbText tbSearch" name="key" type="text" /></div>
+							<div><input class= "btSearch" type="submit" value=""></input></div>
+						</form>
+					</div>
+					<div><a href="<?php echo $this->url(); ?>"><img src="/images/icons/functions/refresh.png"/><p>显示全部</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+			<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">用户列表</a></p>
+			<div class="conRdSlide">
+				<table>
+					<colgroup>
+						<col style="width:5%"></col>
+						<col style="width:20%"></col>
+						<col style="width:20%"></col>
+						<col style="width:55%"></col>
+					</colgroup>
+					<thead>
+						<th></th>
+						<th>用户名</th>
+						<th>登录类型<input id="logType" type="text" class="hide"></th>
+						<th>登录时间</th>
+					</thead>
+					<?php $counter = 1;?>
+					<?php foreach($this->arrayUlogs as $ulog):?>
+					<?php $logId = $this->escape($ulog->logId);?>
+					<tr>
+						<td><?php echo $counter; $counter++?></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($ulog->contactId) ?>"><?php echo $this->escape($ulog->contactName) ?></a></td>
+						<td><?php echo $ulog->logType?></td>
+						<td><?php echo $ulog->cTime?></td>
+					<?php endforeach ?>
+					<tr>
+						<td colspan="4"><?= $this->paginationControl($this->arrayUlogs, 'Sliding', 'tmp/control.phtml'); ?></td>
+					</tr>
+				</table>
+				</div>
+				<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

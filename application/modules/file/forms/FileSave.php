@@ -8,13 +8,6 @@ class File_Forms_FileSave extends Zend_Form
 		$this->setMethod('post');
 
 		$this->addElement(
-			'text', 'display', array(
-			'label' => '文件名(默认为上传文件名):',
-			'filters' => array('StringTrim'),
-			'class'=>'tbMedium tbText'
-			)
-		);
-		$this->addElement(
 			'textarea', 'edition', array(
 			'label' => '文号:',
 			'class'=>'tbText',
@@ -36,6 +29,14 @@ class File_Forms_FileSave extends Zend_Form
 			'class'=>'tbMedium tbText'
 			)
 		);
+		
+		$this->addElement(
+			'text', 'parent', array(
+			'label' => '上级目录:',
+			'filters' => array('StringTrim'),
+			'class'=>'tbMedium tbText'
+			)
+		);
 		$this->addElement(
 			'textarea', 'remark', array(
 			'label' => '备注:',
@@ -51,7 +52,7 @@ class File_Forms_FileSave extends Zend_Form
 				// ensure only 1 file
 		$element->addValidator('Count', false, 1);
 				// limit to 100K
-		$element->addValidator('Size', false, 50024000);
+		$element->addValidator('Size', false, 500024000);
 		$element->addValidator('Extension', false, array('pdf','doc','xls','dwg','ppt','rar'));
 		$this->addElement($element, 'fileUpload');
 		

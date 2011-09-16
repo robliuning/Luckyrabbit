@@ -28,12 +28,8 @@
 						<td><?php echo $file->getType() ?></td>
 					</tr>
 					<tr>
-						<td>文件大小：</td>
+						<td>文件大小(kb)：</td>
 						<td><?php echo $file->getSize() ?></td>
-					</tr>
-					<tr>
-						<td>文件类别：</td>
-						<td><?php echo $file->getSpecId() ?></td>
 					</tr>
 					<tr>
 						<td>文号：</td>
@@ -50,6 +46,10 @@
 					<tr>
 						<td>复核状态：</td>
 						<td><?php echo $file->getStatus() ?></td>
+					</tr>
+					<tr>
+						<td>上级目录: </td>
+						<td><?php echo $file->getParent() ?></td>
 					</tr>
 					<tr>
 						<td>备注：</td>

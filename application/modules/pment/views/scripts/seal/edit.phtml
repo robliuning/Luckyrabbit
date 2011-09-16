@@ -1,5 +1,5 @@
 <?php 
- 	$this->headTitle('- 工程管理 - 印章使用信息');
+	$this->headTitle(' - '.$this->modCName.' - '.$this->sidName);
 	$this->headScript()->prependFile('/js/pment.js');
  	$this->headScript()->prependFile('/js/form.js');
  ?>
@@ -10,7 +10,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 印章使用信息 - 修改</h1>
+		<h1><?php echo $this->modCName.' - '.$this->sidName.' - '.$this->actCName?></h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>

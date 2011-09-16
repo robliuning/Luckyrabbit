@@ -35,5 +35,28 @@ class Vehicle_Models_DbTable_Mtnc extends Zend_Db_Table_Abstract
 		
 		return $resultSet;
 	}
+	
+	public function fetchAllJoin($key, $condition)
+	{
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('vm'=>'ve_mtncs'))
+						->join(array('ve'=>'ve_vehicles'),'ve.veId = vm.veId',array('plateNo'))
+						->join(array('ec'=>'em_contacts'),'ec.contactId = vm.contactId',array('contactName'));
+		if($condition == 'plateNo')
+		{
+			$select->where('ve.plateNo like ?','%'.$key.'%');
+			}
+			elseif($condition == 'contactName')
+				{
+					$select->where('ec.contactName like ?','%'.$key.'%');
+					}
+					elseif($condition == 'date')
+					{
+						$select->where('vm.rDate = ?',$key);
+						}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>

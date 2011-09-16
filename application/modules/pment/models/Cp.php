@@ -6,6 +6,7 @@ class Pment_Models_Cp
 	protected $_cpId;
 	protected $_projectId;
 	protected $_contractorId;
+	protected $_contractorName;
 
 	public function __construct(array $options = null)
 	{
@@ -68,13 +69,24 @@ class Pment_Models_Cp
 
 	public function setProjectId($projectId)
 	{
-		$this->_projectId= (string)$projectId;
+		$this->_projectId= $projectId;
 		return $this;
 	} 
 
 	public function getProjectId()
 	{
 		return $this->_projectId;
+	}
+	
+	public function setContractorName($contractorName)
+	{
+		$this->_contractorName= (string)$contractorName;
+		return $this;
+	} 
+
+	public function getContractorName()
+	{
+		return $this->_contractorName;
 	}
 }
 ?>

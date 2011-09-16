@@ -1,0 +1,52 @@
+<?php 
+	$this->headTitle('- 站内消息 - 阅读消息');
+	$this->headScript()->prependFile('/js/ad_message.js');
+?>
+	<div id="contentWrapper">
+	<div id="p_breadcrumb"></div>
+	<div id="p_stage_sidebar">	
+	<?php 
+		echo $this->placeholder('sidebar');
+	?>
+		<div id="p_content">
+				<?php $message = $this->message?>
+		<h1>站内消息 - 阅读消息 - <?php echo $message->getTitle()?></h1>
+		<div class="p_msg">
+			<h3></h3>
+		</div>
+			<div class="overall_tool">
+				<div class="button_group">
+					<div><a href="#"/><img src="/images/icons/functions/export.png"/><p>导出</p></a></div>
+					<div><a href="#"><img src="/images/icons/functions/print.png"/><p>打印</p></a></div>	
+					<div><a href="/admin/message"><img src="/images/icons/functions/back.png"/><p>返回</p></a></div>	
+				</div><!-- end of button group -->
+			</div><!-- end of overall tool -->
+			<div class="overall_content">
+				<table>
+					<colgroup>
+						<col style="width:15%"></col>
+						<col style="width:85%"></col>
+					</colgroup>
+					<tr>
+						<td>发件人: </td>
+						<td><?php echo $this->escape($message->getFromCname())?></td>
+					</tr>
+					<tr>
+						<td>收件时间: </td>
+						<td><?php echo $this->escape($message->getSendTime())?></td>
+					</tr>
+					<tr>
+						<td>标题: </td>
+						<td><?php echo $this->escape($message->getTitle())?></td>
+					</tr>
+					<tr>
+						<td>内容: </td>
+						<td><?php echo $this->escape($message->getContent())?></td>
+					</tr>
+				</table>
+				</div>
+			<div id="msgBox"></div>
+			</div><!-- end of overall content -->
+		</div><!-- end of p_content -->
+	</div><!-- end of page stage -->
+	</div><!-- end of contentWrapper -->

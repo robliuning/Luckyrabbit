@@ -5,20 +5,12 @@ class Pment_TrainingController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_TrainingController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$trainings = new Pment_Models_TrainingMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,20 @@ class Pment_TrainingController extends Zend_Controller_Action
 		{
 			$arrayTrainings = $trainings->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayTrainings) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayTrainings->setCurrentPageNumber($pageNumber);
+			$arrayTrainings->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayTrainings = $arrayTrainings;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "training";
-		$this->view->modelName = "安全培训信息";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_TrainingSave();
 		$trainings = new Pment_Models_TrainingMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -85,7 +79,7 @@ class Pment_TrainingController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$training = new Pment_Models_Training();
@@ -130,7 +124,7 @@ class Pment_TrainingController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$traId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$editForm = $trainings->formValidator($editForm,1);
 		if($this->getRequest()->isPost())
 		{
@@ -142,7 +136,7 @@ class Pment_TrainingController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$training = new Pment_Models_Training();
@@ -191,7 +185,7 @@ class Pment_TrainingController extends Zend_Controller_Action
 		if($traId > 0)
 		{
 			$trainings = new Pment_Models_TrainingMapper();
-			$projectId = $this->getProjectId();
+			$projectId = $this->_getProjectId();
 			$training = new Pment_Models_Training();
 			$trainings->find($traId,$training);
 			$this ->view->training = $training;
@@ -225,17 +219,5 @@ class Pment_TrainingController extends Zend_Controller_Action
 			$this->_redirect('/pment/training');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
-	
-	protected function getUserId()
-	{
-		$userNamespace = new Zend_Session_Namespace('userNamespace');
-		return $userNamespace->userId;
-		}
 }
 ?>

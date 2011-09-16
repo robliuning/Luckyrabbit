@@ -5,47 +5,39 @@ class Vehicle_Models_DbTable_Verecord extends Zend_Db_Table_Abstract
 {
 	protected $_name = 've_verecords';
 
-	public function search($key,$condition)
+	public function fetchAllJoin($key,$condition)
 	{
-		$select = $this->select();
-		
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('v' => 've_verecords'))
+						->join(array('e'=>'em_contacts'),'e.contactId = v.contactId',array('contactName'))
+						->join(array('h'=>'ve_vehicles'),'h.veId = v.veId');
 		if($condition[1] != null)
 		{
 			if($condition[1] == 'plateNo')
 			{
-				$select->setIntegrityCheck(false)
-					->from(array('ve' => 've_vehicles'),array('plateNo'))
-					->join(array('re' => 've_verecords'),'ve.veId = re.veId')
-					->where('ve.plateNo like ?','%'.$key.'%')
-					->where('re.projectId = ?',$condition[0]);
+				$select->where('h.plateNo like ?','%'.$key.'%');
 				}
 				elseif($condition[1] == 'date')
 				{
 					$select->where('startDate <= ?',$key)
-						->where('endDate >= ?',$key)
-						->where('projectId = ?',$condition[0]);
+						->where('endDate >= ?',$key);
 					}
 					elseif($condition[1] == 'contactName')
 					{
-						$select->setIntegrityCheck(false)
-							->from(array('em' => 'em_contacts'),array('name'))
-							->join(array('re' => 've_verecords'),'em.contactId = re.contactId')
-							->where('em.name like ?','%'.$key.'%')
-							->where('re.projectId = ?',$condition[0]);
+						$select->where('e.contactName like ?','%'.$key.'%');
 							}
-							elseif($condition[1] == 'veId')
-							{
-								$select->where('veId = ?',$key)
-									->where('projectId = ?',$condition[0]);
-								}
+			}
+		if($condition[0] != null)
+		{
+			$select->where('v.projectId = ?', $condition[0]);
 			}
 			else
 			{
-				$select->where('projectId = ?',$condition[0]);
+				$select->where('v.prjFlag = 0');
 				}
-		
-		$resultSet = $this->fetchAll($select);
-		return $resultSet;
-	}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>

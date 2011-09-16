@@ -29,5 +29,29 @@ class Pment_Models_DbTable_Cp extends Zend_Db_Table_Abstract
 			}
 		return $checkRe;
 	}
+	
+	public function fetchAllJoin($key, $condition)
+	{
+		$select = $this->select();
+		$select->setIntegrityCheck(false)
+						->from(array('s'=>'sc_contr_proj'))
+						->join(array('c'=>'sc_contractors'),'c.contractorId = s.contractorId', array('name', 'contact', 'licenseNo', 										'phoneNo', 'otherContact', 'address'));
+		$select->where('s.projectId = ?',$key);
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
+	
+	public function fetchAllContractorIds($projectId)
+	{
+		$select = $this->select()
+			->setIntegrityCheck(false)
+			->from(array('s'=>'sc_contr_proj'))
+			->join(array('c'=>'sc_contractors'), 'c.contractorId = s.contractorId',array('name'))
+			->where('s.projectId = ?',$projectId);
+			
+		$entries = $this->fetchAll($select);
+		
+		return $entries;
+		}
 }
 ?>

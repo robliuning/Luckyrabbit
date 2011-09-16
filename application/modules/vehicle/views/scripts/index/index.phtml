@@ -63,15 +63,15 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>车牌号</th>
 						<th>车辆名称</th>
 						<th>车辆颜色</th>
 						<th>车辆行驶证号</th>
 						<th>车辆负责人</th>
 						<th>车辆驾驶员</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -86,25 +86,27 @@
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayVehicles as $vehicle):?>
-					<?php $veId = $this->escape($vehicle->getVeId());?>
+					<?php $veId = $this->escape($vehicle->veId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $veId ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$veId))?>"><?php echo $this->escape($vehicle->getPlateNo()) ?></a></td>
-						<td><?php echo $this->escape($vehicle->getName()) ?></td>	
-						<td><?php echo $this->escape($vehicle->getColor()) ?></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$veId))?>"><?php echo $this->escape($vehicle->plateNo) ?></a></td>
+						<td><?php echo $this->escape($vehicle->name) ?></td>	
+						<td><?php echo $this->escape($vehicle->color) ?></td>
 						<td>
-						<?php echo $this->escape($vehicle->getLicense())?>
+						<?php echo $this->escape($vehicle->license)?>
 						</td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($vehicle->getContactId()) ?>"><?php echo $this->escape($vehicle->getContactName()) ?></a></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($vehicle->getPilot()) ?>"><?php echo $this->escape($vehicle->getPilotName()) ?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($vehicle->contactId) ?>"><?php echo $this->escape($vehicle->cName) ?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($vehicle->pilot) ?>"><?php echo $this->escape($vehicle->pilotName) ?></a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'edit','id'=>$veId))?>">修改</a></td>
 						<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'display','id'=>$veId))?>">详情</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayVehicles) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayVehicles, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

@@ -5,20 +5,12 @@ class Pment_TechController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_TechController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$techs = new Pment_Models_TechMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,20 @@ class Pment_TechController extends Zend_Controller_Action
 		{
 			$arrayTechs = $techs->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayTechs) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayTechs->setCurrentPageNumber($pageNumber);
+			$arrayTechs->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayTechs = $arrayTechs;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "tech";
-		$this->view->modelName = "技术交底信息";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_TechSave();
 		$techs = new Pment_Models_TechMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -85,7 +79,7 @@ class Pment_TechController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$tech = new Pment_Models_Tech();
@@ -130,7 +124,7 @@ class Pment_TechController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$techId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		
 		$editForm = $techs->formValidator($editForm,1);
 
@@ -144,7 +138,7 @@ class Pment_TechController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$tech = new Pment_Models_Tech();
@@ -193,7 +187,7 @@ class Pment_TechController extends Zend_Controller_Action
 		if($techId > 0)
 		{
 			$techs = new Pment_Models_TechMapper();
-			$projectId = $this->getProjectId();
+			$projectId = $this->_getProjectId();
 			$tech = new Pment_Models_Tech();
 			$techs->find($techId,$tech);
 			$this ->view->tech = $tech;
@@ -227,17 +221,5 @@ class Pment_TechController extends Zend_Controller_Action
 			$this->_redirect('/pment/tech');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
-	
-	protected function getUserId()
-	{
-		$userNamespace = new Zend_Session_Namespace('userNamespace');
-		return $userNamespace->userId;
-		}
 }
 ?>

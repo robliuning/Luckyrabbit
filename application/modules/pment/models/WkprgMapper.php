@@ -92,7 +92,10 @@ class Pment_Models_WkprgMapper
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -118,7 +121,7 @@ class Pment_Models_WkprgMapper
 			$wkprg->setContactName($contactName);
 			$wkprgs[] = $wkprg;
 			}
-		return $wkprgs;
+		return $wkprgs;*/
 		}
 
 	public function findArrayWkprg($id)

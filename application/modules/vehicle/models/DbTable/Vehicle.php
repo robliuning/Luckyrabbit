@@ -45,28 +45,29 @@ class Vehicle_Models_DbTable_Vehicle extends Zend_Db_Table_Abstract
 		return $this->fetchAll($select);
 		}
 
-	public function search($key,$condition)
+	public function fetchAllJoin($key, $condition)
 	{
-		$select = $this->select();
-		
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('v'=>'ve_vehicles'))
+						->join(array('e'=>'em_contacts'),'e.contactId = v.contactId',array('cName'=>'contactName'))
+						->join(array('f'=>'em_contacts'),'v.pilot = f.contactId',array('pilotName'=>'contactName'));
+
 		if($condition == 'plateNo')
 		{
-			$select->where('plateNo like ?','%'.$key.'%');
+			$select->where('v.plateNo like ?','%'.$key.'%');
 			}
 			elseif($condition == 'name')
 			{
-				$select->where('name like ?','%'.$key.'%');
+				$select->where('v.name like ?','%'.$key.'%');
 				}
 				elseif($condition == 'contactName')
 				{
 					$select->setIntegrityCheck(false)
-						->from(array('e'=> 'em_contacts'),array('name'))
-						->join(array('v'=>'ve_vehicles'),'e.contactId = v.contactId')
-						->where('e.name like ?','%'.$key.'%');
+							->where('e.contactName like ?','%'.$key.'%');
 					}
-		$resultSet = $this->fetchAll($select);
-		
-		return $resultSet;
-	}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>

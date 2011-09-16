@@ -5,7 +5,9 @@ class Contract_IndexController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		/*init*/
+		/* Initialize action controller here */
+		$this->view->module = "contract";
+		$this->view->controller = 'index';
 	}
 	public function preDisPatch()
 	{
@@ -38,11 +40,15 @@ class Contract_IndexController extends Zend_Controller_Action
 		{
 			$arrayContractors = $contractors->fetchAllJoin();
 		}
+		if(count($arrayContractors) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayContractors->setCurrentPageNumber($pageNumber);
+			$arrayContractors->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayContractors = $arrayContractors;
 		$this->view->errorMsg = $errorMsg;	
-		$this->view->module = "contract";
-		$this->view->controller = "index";
 		$this->view->modelName = "承包商信息";
 		}
 
@@ -128,7 +134,7 @@ class Contract_IndexController extends Zend_Controller_Action
 					$addForm->reset();
 					if($btClicked=="保存返回上页")
 					{
-						$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的修改成功。');
+						$this->_helper->flashMessenger->addMessage('对承包商:'.$contractor->getName().'的新建成功。');
 						$this->_redirect('/contract');
 						}
 					}

@@ -85,7 +85,12 @@ class Pment_Models_MstprgMapper
 
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key,$condition);
+		
+		return $paginator;
+		
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -112,7 +117,7 @@ class Pment_Models_MstprgMapper
 			$mstprg->setContactName($contactName);
 			$mstprgs[] = $mstprg;
 			}
-		return $mstprgs;
+		return $mstprgs;*/
 		}
 
 	public function findArrayMstprg($id)

@@ -18,6 +18,13 @@
 					echo $this->errorMsg;
 			 		}?>
 		</p>
+		<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+				<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
 		</div>
 			<div class="overall_tool">
 				<div class="button_group">
@@ -57,15 +64,15 @@
 					</colgroup>
 					<thead>
 						<th>#</th>
-						<th><input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>"></th>
+						<th></th>
 						<th>车牌号</th>
 						<th>用(派)车人</th>
 						<th>出车日期</th>
 						<th>还车日期</th>
 						<th>使用天数</th>
 						<th>行程公里数</th>
-						<th><input id="module" type="text" class="hide" value="<?php echo $this->module ?>"></th>
-						<th><input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>"></th>
+						<th></th>
+						<th></th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
@@ -80,25 +87,27 @@
 					</tr>	
 					<?php $counter = 1;?>
 					<?php foreach($this->arrayVerecords as $verecord):?>
-					<?php $verecordId = $this->escape($verecord->getRecordId());?>
+					<?php $verecordId = $this->escape($verecord->recordId);?>
 					<tr>
 						<td><input type="checkbox" name="cb" value="<?php echo $verecordId ?>"></td>
 						<td><?php 
 							echo $counter;
 							$counter++;
 						?></td>
-						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$verecord->getVeId()))?>"><?php echo $this->escape($verecord->getPlateNo()) ?></a></td>
-						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->getContactId()) ?>"><?php echo $this->escape($verecord->getContactName()) ?></a></td>
-						<td><?php echo $this->escape($verecord->getStartDate()) ?></td>	
-						<td><?php echo $this->escape($verecord->getEndDate()) ?></td>
-						<td><?php echo $this->escape($verecord->getPeriod()) ?></td>
+						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'index','action'=>'ajaxdisplay','id'=>$verecord->veId))?>"><?php echo $this->escape($verecord->plateNo) ?></a></td>
+						<td><a class="lightbox" href="/employee/index/ajaxdisplay/id/<?php echo $this->escape($verecord->contactId) ?>"><?php echo $this->escape($verecord->contactName) ?></a></td>
+						<td><?php echo $this->escape($verecord->startDate) ?></td>	
+						<td><?php echo $this->escape($verecord->endDate) ?></td>
+						<td><?php echo $this->escape($verecord->period) ?></td>
 						<td>
-						<?php echo $this->escape($verecord->getMile())?>
+						<?php echo $this->escape($verecord->mile)?>
 						</td>
 						<td><a href="<?php echo $this->url(array('controller'=>'verecord','action'=>'edit','id'=>$verecordId))?>">修改</a></td>
 						<td><a class="lightbox" href="<?php echo $this->url(array('controller'=>'verecord','action'=>'ajaxdisplay','id'=>$verecordId))?>">快速查看</a></td>
 					</tr>
 					<?php endforeach ?>
+					<?php if(count($this->arrayVerecords) != 0)
+						echo "<tr><td colspan='10'>".$this->paginationControl($this->arrayVerecords, 'Sliding', 'tmp/control.phtml')."</td></tr>";?>
 				</table>
 				<div id="msgBox"></div>
 			</div><!-- end of overall content -->

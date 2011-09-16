@@ -93,7 +93,9 @@ class Vehicle_Models_DrirecordMapper
 
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -123,7 +125,7 @@ class Vehicle_Models_DrirecordMapper
 			$drirecord->setPlateNo($plateNo);
 			$drirecords[] = $drirecord;
 			}
-		return $drirecords;
+		return $drirecords;*/
 	}
 
 	public function populateVeDd($form) 

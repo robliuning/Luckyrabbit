@@ -8,6 +8,19 @@ class Pment_Forms_MplanSave extends Zend_Form
 		$this->setMethod('post');
 
 		$this->addElement(
+			'text', 'planName', array(
+			'label' => '材料计划名称:',
+			'filters'=>array('StringTrim'),
+			'class'=>'tbLarge tbText pfocus'
+			)
+		);
+		$this->addElement(
+			'select', 'typeId', array(
+			'label' => '材料计划类型:',
+			'class'=>'tbMedium tbText'
+			)
+		);
+		$this->addElement(
 			'select', 'yearNum', array(
 			'label' => '年份:',
 			'class'=>'tbMedium tbText'

@@ -104,7 +104,9 @@ class Vehicle_Models_RepairMapper
 
 	public function fetchAllJoin($key = null,$condition = null)
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -142,7 +144,7 @@ class Vehicle_Models_RepairMapper
 			$repair->setContactName($contactName);
 			$repairs[] = $repair;
 			}
-		return $repairs;
+		return $repairs;*/
 	}
 
 	public function populateVeDd($form) 
@@ -159,7 +161,7 @@ class Vehicle_Models_RepairMapper
 	
 	public function formValidator($form,$formType)
 	{
-		$numberValidator = new Zend_Validate_float();
+		$numberValidator = new Zend_Validate_Float();
 		$numberValidator->setMessage(General_Models_Text::$text_notInt);
 		$form->getElement('amount')->addValidator($numberValidator);
 		$form->getElement('indem')->addValidator($numberValidator);
@@ -182,7 +184,7 @@ class Vehicle_Models_RepairMapper
 		return $form;
 	}
 	
-	public function dataValidator($formData,$rid,$vId,$formType)
+	public function dataValidator($formData,$formType)
 	{
 		$errorMsg = null;
 		$trigger = 0;

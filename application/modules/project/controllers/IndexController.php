@@ -6,6 +6,9 @@ class Project_IndexController extends Zend_Controller_Action
 	public function init()
 	{
 		/* Initialize action controller here */
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
 	}
 	
 	public function preDispatch(){
@@ -39,12 +42,15 @@ class Project_IndexController extends Zend_Controller_Action
 		{
 			$arrayProjects = $projects->fetchAllJoin();
 		}
-
+		if(count($arrayProjects) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayProjects->setCurrentPageNumber($pageNumber);
+			$arrayProjects->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayProjects = $arrayProjects;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "project";
-		$this->view->controller = "index";
 		$this->view->modelName = "工程概况";
 		}
 		
@@ -95,7 +101,7 @@ class Project_IndexController extends Zend_Controller_Action
 						}
 						else
 						{
-							$this->_helper->flashMessenger->addMessage('对工程: '.$project->getName().'的修改成功。');
+							$this->_helper->flashMessenger->addMessage('对工程: '.$project->getName().'的新建成功。');
 							$this->_redirect('/project');
 							}
 					}

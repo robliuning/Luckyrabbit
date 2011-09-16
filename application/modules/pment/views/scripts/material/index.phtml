@@ -1,5 +1,5 @@
  <?php 
- 	$this->headTitle('- 工程管理 - 月计划材料信息');
+ 	$this->headTitle('- 工程管理 - 材料计划材料信息');
  	$this->headScript()->prependFile('/js/pment.js');
  	$this->headScript()->prependFile('/js/conMtr.js'); 
  	$this->headScript()->prependFile('/js/rdSlide.js'); 
@@ -12,7 +12,7 @@
 		echo $this->placeholder('sidebar');
 	?>
 		<div id="p_content">
-		<h1>工程管理 - 月计划材料信息 - 编辑材料</h1>
+		<h1>工程管理 - 材料计划材料信息 - 编辑材料</h1>
 		<?php 
 			$project = $this->project;
 			echo $this->displayProject($project);?>
@@ -24,9 +24,17 @@
 					echo $this->errorMsg;
 			 	}?>
 			</p>
+			<?php if (count($this->messages)) : ?>
+				<ul id="messages">
+				<?php foreach ($this->messages as $message) : ?>
+					<li><p class="errorMsg"><?php echo $this->escape($message); ?></p></li>
+			<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 			<div class="overall_content">
-				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_close">月计划信息</a></p>
+			<div>
+				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_close">材料计划信息</a></p>
 				<?php $mplan = $this->mplan?>
 				<table>
 					<colgroup>
@@ -36,6 +44,11 @@
 						<col style="width:35%"></col>
 					</colgroup>
 					<tr>
+						<td>材料计划名称: </td>
+						<td><?php echo $mplan->getPlanName() ?></td>
+						<td>材料计划类型: </td>
+						<td><?php echo $mplan->getTypeName()?></td>
+					</tr>
 					<tr>
 						<td>计划时间: </td>
 						<td><?php echo $mplan->getYearNum()."年".$mplan->getMonNum()."月"?></td>
@@ -52,7 +65,7 @@
 						<col style="width:35%"></col>
 					</colgroup>
 					<tr>
-						<td>填报时间: </td>
+						<td>填报日期: </td>
 						<td><?php echo $mplan->getPDate()?></td>
 						<td>上次修改时间: </td>
 						<td><?php echo $mplan->getCTime()?></td>
@@ -63,9 +76,11 @@
 					</tr>
 				</table>
 				</div>
-				<p class="subMenu slideMenu"><a class="btRdSlide2 subMenu_switch_open">添加材料</a></p>
+				</div><!-- end of div wrapper -->
+				<div>
+				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">添加材料</a></p>
 				<form action="<?php echo $this->url()?>" method="post">
-				<div class="conRdSlide2">
+				<div class="conRdSlide">
 				<table>
 					<tr>
 						<td><label>类别: </label></td>
@@ -77,24 +92,16 @@
 							</select></td>
 						<td><label>材料名: </label></td>
 						<td><input type="text" id="mName" name="mName" class="tbMedium tbText" /></td>
-						<td><label>单位: </label></td>
-						<td><input type="text" id="unit" name="unit" class="tbMedium tbText" /></td>
-					</tr>
-					<tr>
 						<td><label>规格型号: </label></td>
 						<td><input type="text" name="spec" id="spec" class="tbMedium tbText"/></td>
-						<td><label>项目部核量: </label></td>
-						<td><input type="text" name="amount" id="amount" class="tbMedium tbText"/></td>
-						<td><label>重量: </label></td>
-						<td><input type="text" name="weight" id="weight" class="tbMedium tbText"/></td>
 					</tr>
 					<tr>
-						<td><label>限额值: </label></td>
-						<td><input type="text" name="limitation" id="limitation" class="tbMedium tbText"/></td>
-						<td><label>需进场时间: </label></td>
+						<td><label>项目部报量: </label></td>
+						<td><input type="text" name="amount" id="amount" class="tbMedium tbText"/></td>
+						<td><label>单位: </label></td>
+						<td><input type="text" id="unit" name="unit" class="tbMedium tbText" /></td>
+						<td><label>需进场日期: </label></td>
 						<td><input type="text" name="inDate" id="inDate" class="tbMedium tbText datepicker"/></td>
-						<td></td>
-						<td></td>
 					</tr>
 					<tr>
 						<td><label>备注: </label></td>
@@ -107,6 +114,7 @@
 					</table>
 					</div>
 					</form>
+				</div><!-- end of div wrapper  -->
 			</div><!-- end of overall content -->
 			<div class="overall_tool">
 				<div class="button_group">
@@ -116,21 +124,20 @@
 				</div><!-- end of button group -->
 			</div><!-- end of overall tool -->
 			<div class="overall_content">
-					<p class="subMenu slideMenu"><a class="btRdSlide3 subMenu_switch_open">计划相关材料信息</a></p>
-					<div class="conRdSlide3">
+				<div>
+				<p class="subMenu slideMenu"><a class="btRdSlide subMenu_switch_open">计划相关材料信息</a></p>
+					<div class="conRdSlide">
 					<table>
 					<colgroup>
 						<col style="width:5%"></col>
 						<col style="width:5%"></col>
-						<col style="width:5%"></col>
+						<col style="width:10%"></col>
 						<col style="width:20%"></col>
 						<col style="width:5%"></col>
 						<col style="width:15%"></col>
-						<col style="width:5%"></col>
-						<col style="width:5%"></col>
 						<col style="width:10%"></col>
-						<col style="width:5%"></col>
-						<col style="width:20%"></col>
+						<col style="width:7%"></col>
+						<col style="width:23%"></col>
 					</colgroup>
 					<thead>
 						<th>#</th>
@@ -139,17 +146,13 @@
 						<th>材料名</th>
 						<th>单位</th>
 						<th>规格型号</th>
-						<th>项目部审核量</th>
-						<th>重量</th>
-						<th>限额值</th>
-						<th>需进场时间</th>
+						<th>项目部报量</th>
+						<th>需进场日期</th>
 						<th>备注</th>
 					</thead>
 					<tr>
 						<td><input type="checkbox" id="cb_sa"></td>
 						<td colspan="2">全选/取消</td>
-						<td></td>
-						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -171,19 +174,16 @@
 						<td><?php echo $this->escape($material->getUnit())?></td>
 						<td><?php echo $this->escape($material->getSpec())?></td>
 						<td><?php echo $this->escape($material->getAmount())?></td>
-						<td><?php echo $this->escape($material->getWeight())?></td>
-						<td><?php echo $this->escape($material->getLimitation())?></td>
 						<td><?php echo $this->escape($material->getInDate())?></td>
 						<td><?php echo $this->escape($material->getRemark())?></td>
 					</tr>
 					<?php endforeach ?>
 				</table>
+				</div><!-- end of div wrapper -->
 				</div>
 				<div id="msgBox"></div>
 				<p id="ajax_id" class="hide"><?php echo $this->planId ?></p>
 				<input id="modelName" type="text" class="hide" value="<?php echo $this->modelName ?>">
-				<input id="module" type="text" class="hide" value="<?php echo $this->module ?>">
-				<input id="controller" type="text" class="hide" value="<?php echo $this->controller ?>">
 			</div><!-- end of overall content -->
 		</div><!-- end of p_content -->
 	</div><!-- end of page stage -->

@@ -108,45 +108,9 @@ class Project_Models_ProjectMapper
 
 	public function fetchAllJoin($key = null,$condition = null) //check
 	{
-		if($condition == null)
-		{
-			$resultSet = $this->getDbTable()->fetchAll();
-			}
-			else
-			{
-				$resultSet = $this->getDbTable()->search($key,$condition);
-				}
-
-		$projects = array();
-
-		foreach($resultSet as $row){
-			$project = new Project_Models_Project();
-			$project ->setProjectId($row->projectId)
-				->setName($row->name)
-				->setStatus($row->status)
-				->setStructype($row->structype)
-				->setStartDate($row->startDate)
-				->setContactId($row->contactId)
-				->setLicense($row->license);
-
-			$contacts = new Employee_Models_ContactMapper();
-			$contactName = $contacts->findContactName($project->getContactId());
-			$project->setContactName($contactName);
-
-			$mstprgs = new Pment_Models_MstprgMapper();
-			$arrayMstprgs = $mstprgs->fetchAllNames($project->getProjectId());
-			if(count($arrayMstprgs) > 0)
-			{
-				$project->setStage(count($arrayMstprgs));
-				}
-				else
-				{
-					$project->setStage('暂无');
-					}
-			
-			$projects[] = $project;
-			}
-		return $projects;
+		
+		$paginator = $this->getDbTable()->fetchAllJoin($key,$condition);
+		return $paginator;
 		}
 
 	public function findArrayProject($id)

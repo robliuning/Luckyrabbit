@@ -5,20 +5,12 @@ class Pment_RecordController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_RecordController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$records = new Pment_Models_RecordMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,20 @@ class Pment_RecordController extends Zend_Controller_Action
 		{
 			$arrayRecords = $records->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayRecords) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayRecords->setCurrentPageNumber($pageNumber);
+			$arrayRecords->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayRecords = $arrayRecords;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "record";
-		$this->view->modelName = "工程备案信息";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_RecordSave();
 		$records = new Pment_Models_RecordMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -128,7 +122,7 @@ class Pment_RecordController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$recId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$editForm = $records->formValidator($editForm,1);
 		if($this->getRequest()->isPost())
 		{
@@ -187,7 +181,7 @@ class Pment_RecordController extends Zend_Controller_Action
 		if($recId > 0)
 		{
 			$records = new Pment_Models_RecordMapper();
-			$projectId = $this->getProjectId();
+			$projectId = $this->_getProjectId();
 			$record = new Pment_Models_Record();
 			$records->find($recId,$record);
 			$this ->view->record = $record;
@@ -221,11 +215,5 @@ class Pment_RecordController extends Zend_Controller_Action
 			$this->_redirect('/pment/record');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
 }
 ?>

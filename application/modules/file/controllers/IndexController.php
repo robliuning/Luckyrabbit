@@ -42,6 +42,9 @@ class File_IndexController extends Zend_Controller_Action
 		{
 			$arrayFiles = $files->fetchAllJoin(null,$condition);
 		}
+		$pageNumber = $this->_getParam('page');
+		$arrayFiles->setCurrentPageNumber($pageNumber);
+		$arrayFiles->setItemCountPerPage('20');
 		$this->view->spec = $spec;
 		$this->view->specId = $specId;
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
@@ -97,6 +100,7 @@ class File_IndexController extends Zend_Controller_Action
 					$file->setProjFlag(0);
 					$file->setProjectId(0);
 					$file->setStatus($fileForm->getValue('status'));
+					$file->setParent($fileForm->getValue('parent'));
 					$file->setRemark($fileForm->getValue('remark'));
 					$file->setType($type);
 					$files->save($file);
@@ -114,76 +118,7 @@ class File_IndexController extends Zend_Controller_Action
 	
 	public function editAction()
 	{
-		$projectId =$this->getProjectId();
-		$editForm = new File_Forms_SubcontractSave();
-		$editForm->submit->setLabel("保存修改");
-		$editForm->submit2->setAttrib('class','hide');
-		$errorMsg = null;
-		$files = new File_Models_SubcontractMapper();
-		$scontrId = $this->_getParam('id',0);
-		
-		$files->populateSubcontractDd($editForm,$projectId);
-		$editForm = $files->formValidator($editForm,1);
-		if($this->getRequest()->isPost())
-		{
-			$formData = $this->getRequest()->getPost();
-			if($editForm->isValid($formData))
-			{
-				$array = $files->dataValidator($formData,1);
-				$trigger = $array['trigger'];
-				$errorMsg = $array['errorMsg'];
-				if($trigger == 0)
-				{
-					$subcontract = new File_Models_Subcontract();
-					$subcontract->setScontrId($scontrId);
-					$subcontract->setProjectId($projectId);
-					$subcontract->setScontrType($editForm->getValue('scontrType'));
-					$subcontract->setContractorId($editForm->getValue('contractorId'));
-					$subcontract->setDetail($editForm->getValue('detail'));
-					$subcontract->setContent($editForm->getValue('content'));
-					$subcontract->setQuality($editForm->getValue('quality'));
-					$subcontract->setStartDateExp($editForm->getValue('startDateExp'));
-					$subcontract->setEndDateExp($editForm->getValue('endDateExp'));
-					$subcontract->setStartDateAct($editForm->getValue('startDateAct'));
-					$subcontract->setEndDateAct($editForm->getValue('endDateAct'));
-					$subcontract->setBrConContr($editForm->getValue('brConContr'));
-					$subcontract->setBrResContr($editForm->getValue('brResContr'));
-					$subcontract->setBrConSContr($editForm->getValue('brConSContr'));
-					$subcontract->setBrResSContr($editForm->getValue('brResSContr'));
-					$subcontract->setContrAmt($editForm->getValue('contrAmt'));
-					$subcontract->setGuarantee($editForm->getValue('guarantee'));
-					$subcontract->setPrjMargin($editForm->getValue('prjMargin'));
-					$subcontract->setPrjWarr($editForm->getValue('prjWarr'));
-					$subcontract->setRemark($editForm->getValue('remark'));
-					$files->save($subcontract);
-					$this->_helper->flashMessenger->addMessage('对技术交底信息的修改成功。');
-					$this->_redirect('/File/subcontract');
-					}
-					else
-					{
-						$editForm->populate($formData);
-						}
-				}
-				else
-				{
-					$editForm->populate($formData);
-					}
-		 	}
-			else
-		 	{
-				if($scontrId>0)
-				{
-					$arraySubcontract = $files->findArraySubcontract($scontrId);
-					$editForm->populate($arraySubcontract);
-					}
-					else
-					{
-						$this->_redirect('/file/subcontract');
-						}
-				}
-		$this->view->errorMsg = $errorMsg;
-		$this->view->id = $scontrId;
-		$this->view->editForm = $editForm;
+
 	}
 	
 	public function ajaxdeleteAction()
@@ -211,19 +146,7 @@ class File_IndexController extends Zend_Controller_Action
 	
 	public function displayAction()
 	{
-		$scontrId = $this->_getParam('id',0);
-		if($scontrId > 0)
-		{
-			$files = new File_Models_SubcontractMapper();
-			$projectId = $this->getProjectId();
-			$subcontract = new File_Models_Subcontract();
-			$files->find($scontrId,$subcontract);
-			$this ->view->subcontract = $subcontract;
-			}
-			else
-			{
-				$this->_redirect('/File/subcontract');
-				}
+
 	}
 	
 	public function ajaxdisplayAction()

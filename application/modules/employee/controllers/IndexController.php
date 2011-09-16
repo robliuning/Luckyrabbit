@@ -6,6 +6,8 @@ class Employee_IndexController extends Zend_Controller_Action
 	public function init()
 	{
 		/* Initialize action controller here */
+		$this->view->module = "employee";
+		$this->view->controller = 'index';
 	}
 	
 	public function preDispatch()
@@ -41,11 +43,11 @@ class Employee_IndexController extends Zend_Controller_Action
 		{
 			$arrayContacts = $contacts->fetchAllJoin();
 			}
-			
+		$pageNumber = $this->_getParam('page');
+		$arrayContacts->setCurrentPageNumber($pageNumber);
+		$arrayContacts->setItemCountPerPage('20');
 		$this->view->arrayContacts = $arrayContacts;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "employee";
-		$this->view->controller = "index";
 		$this->view->modelName = "公司员工信息";
 	}
 	
@@ -124,18 +126,18 @@ class Employee_IndexController extends Zend_Controller_Action
 						}
 						else
 						{
-							$this->_helper->flashMessenger->addMessage('对员工: '.$contact->getName().'的修改成功。');
+							$this->_helper->flashMessenger->addMessage('对员工: '.$contact->getName().'的新建成功。');
 							$this->_redirect('/employee');
 							}
 					}
 					else
 					{
-						$editForm->populate($formData);
+						$addForm->populate($formData);
 						}
 				}
 				else
 				{
-					$editForm->populate($formData);
+					$addForm->populate($formData);
 					}
 			}
 		$this->view->errorMsg = $errorMsg;
@@ -285,12 +287,13 @@ class Employee_IndexController extends Zend_Controller_Action
 	
 	public function displayAction()
 	{
-		$contacts = new Employee_Models_contactMapper();
+		$contacts = new Employee_Models_ContactMapper();
 		$contactId = $this->_getParam('id',0);
 		if($contactId >0)
 		{
-			$contact = new Employee_Models_contact();
+			$contact = new Employee_Models_Contact();
 			$contacts->findComplete($contactId,$contact);
+			$this->view->id = $contact->getContactId();
 			$this ->view->contact = $contact;
 			}
 			else
@@ -305,9 +308,103 @@ class Employee_IndexController extends Zend_Controller_Action
 		$this->_helper->viewRenderer->setNoRender(true);
 		$key = $this->_getParam('key');
 		$contacts = new Employee_Models_ContactMapper();
-		$arrayNames = $contacts->findContactNames($key);
-		$json = Zend_Json::encode($arrayNames);  	
+		$arrayNames = $contacts->findContactNames($key,0);
+		$json = Zend_Json::encode($arrayNames);
 		echo $json;
+		}
+		
+	public function acregisterAction()
+	{
+		$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$key = $this->_getParam('key');
+		$contacts = new Employee_Models_ContactMapper();
+		$arrayNames = $contacts->findContactNames($key,1);
+		$json = Zend_Json::encode($arrayNames);
+		echo $json;
+		}
+	//pdf test
+	public function ajaxpdfAction()
+	{
+		$this->_helper->layout()->disableLayout();
+	//	$this->_helper->viewRenderer->setNoRender(true);
+		
+		$pdf = new Zend_Pdf();
+		$page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+		$font = Zend_Pdf_Font::fontWithPath('font/simkai.ttf',(Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+		//put the personal information to the pdf
+		$contacts = new Employee_Models_ContactMapper();
+		$arrayContacts = $contacts->fetchAllJoin();
+		$count = 1;//every page show approximately 20 pieces;
+		//$arrayCount = count($arrayContacts);
+		$totalItems = $arrayContacts->getTotalItemCount();
+		$arrayContacts->setItemCountPerPage($totalItems);
+
+		$pageNumber = ceil($totalItems / 25);
+		$x = 0; $y = 750;
+		$currentpage = 1;
+		foreach($arrayContacts as $contact)
+		{
+			if($count == 1)
+			{
+				$page->setLineWidth(0.5);
+				$page->drawLine(50, 770, 560, 770);
+				$page->drawLine(50, 125, 560, 125);
+				$page->setFont($font,13)
+						->drawText("编号", 50, $y, 'UTF-8')
+						->drawText("姓名", 100, $y, 'UTF-8')
+						->drawText("性别", 145, $y, 'UTF-8')
+						->drawText("生日", 195, $y, 'UTF-8')
+						->drawText("部门", 275, $y, 'UTF-8')
+						->drawText("职务", 335, $y, 'UTF-8')
+						->drawText("入职时间", 415, $y, 'UTF-8')
+						->drawText("手机号码", 495, $y, 'UTF-8');
+				$time = Date("Y-m-d,H:i");
+				$users = new System_Models_UserMapper();
+				$contactId = $users->getContactId($this->getUserId());
+				$contacts = new Employee_Models_ContactMapper();
+				$contactName = $contacts->findContactName($contactId);
+				$page->setFont($font,11)
+						->drawText("公司员工信息总览", 250, 790, 'UTF-8')
+						->drawText("导出人:".$contactName, 50, 100, 'UTF-8')
+						->drawText("导出日期:".$time, 250, 100, 'UTF-8')
+						->drawText("页数:".$currentpage."(".$pageNumber.")", 500, 100, 'UTF-8');
+				}
+				$y -= 25;$count++;
+				$page->setFont($font, 11)
+						->drawText($contact->contactId, $x+=50, $y, 'UTF-8')
+						->drawText($contact->contactName, $x+=50, $y, 'UTF-8')
+						->drawText($contact->gender, $x+=45, $y, 'UTF-8')
+						->drawText($contact->birth, $x+=50, $y, 'UTF-8')
+						->drawText($contact->deptName, $x+=80, $y, 'UTF-8')
+						->drawText($contact->dutyName, $x+=60, $y, 'UTF-8')
+						->drawText($contact->enroll, $x+=80, $y, 'UTF-8')
+						->drawText($contact->phoneMob, $x+=80, $y, 'UTF-8');
+			if($count >= 25)
+			{
+				$pdf->pages[] = $page;
+				$page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+				$count = 1;
+				$y = 750;
+				$currentpage++;
+				}
+			$x = 0;
+			}
+		$pdf->pages[] = $page;
+		$name_string = "公司员工信息总览".time().".pdf";
+		//server
+		$base = General_Models_ServerInfo::$localUrl;
+		$url = 'tmp/'.$name_string;
+		$pdf->save($url);
+		$murl = $base.'/'.$url;
+		$this->view->murl = $murl;
+		}
+	
+	protected function getUserId()
+	{
+		$userNamespace = new Zend_Session_Namespace('userNamespace');
+		return $userNamespace->userId;
 		}
 }
 ?>

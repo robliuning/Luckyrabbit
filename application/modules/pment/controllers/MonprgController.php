@@ -5,20 +5,12 @@ class Pment_MonprgController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -28,7 +20,7 @@ class Pment_MonprgController extends Zend_Controller_Action
 	public function indexAction() 
 	{
 		$expand = 0;
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$monprgs = new Pment_Models_MonprgMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -61,14 +53,11 @@ class Pment_MonprgController extends Zend_Controller_Action
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayYm = $arrayYm;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "monprg";
-		$this->view->modelName = "工程月进度计划";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_MonprgSave();
 		$monprgs = new Pment_Models_MonprgMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -134,7 +123,7 @@ class Pment_MonprgController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$monprgId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$editForm = $monprgs->formValidator($editForm,1);
 		$monprgs->populateMonprgDd($editForm);
 		if($this->getRequest()->isPost())
@@ -193,7 +182,7 @@ class Pment_MonprgController extends Zend_Controller_Action
 		$monprgs = new Pment_Models_MonprgMapper();
 		$images = new Pment_Models_ImageMapper();
 		$monprgId = $this->_getParam('id',0);
-		$projectId = $this->getProjectId();
+		$projectId = $this->_getProjectId();
 		$prgType = 'mon';
 		$monprg = new Pment_Models_Monprg();
 		$monprgs->find($monprgId,$monprg);
@@ -267,11 +256,5 @@ class Pment_MonprgController extends Zend_Controller_Action
 			$this->_redirect('/pment/monprg');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
 }
 ?>

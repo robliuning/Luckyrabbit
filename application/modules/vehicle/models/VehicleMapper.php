@@ -89,7 +89,9 @@ class Vehicle_Models_VehicleMapper
 
 	public function fetchAllJoin($key = null,$condition = null) 
 	{
-		if($condition == null)
+		$paginator = $this->getDbTable()->fetchAllJoin($key, $condition);
+		return $paginator;
+		/*if($condition == null)
 		{
 			$resultSet = $this->getDbTable()->fetchAll();
 			}
@@ -122,7 +124,7 @@ class Vehicle_Models_VehicleMapper
 			
 			$entries[] = $entry;
 			}
-		return $entries;
+		return $entries;*/
 	}
 	
 	public function findArrayVehicle($id)

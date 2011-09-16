@@ -5,20 +5,12 @@ class Pment_PlogController extends Zend_Controller_Action
 {	
 	public function init()
 	{
-		$projectId = null;
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		if(isset($projectNamespace->projectId))
-		{
-			$projectId = $projectNamespace->projectId;
-			}
-			else
-			{
-				$this->_redirect('/');
-				}
-		$projects = new Project_Models_ProjectMapper();
-		$project = new Project_Models_Project();
-		$projects->find($projectId,$project);
-		$this->view->project = $project;
+		$this->_loadProject();
+		$this->_pushLocations();
+		$this->_loadMenu();
+		$this->_loadSidebar();
+		$this->_userAccess();
+		$this->_pushFuncs();
 	}
 	
 	public function preDispatch(){
@@ -27,7 +19,7 @@ class Pment_PlogController extends Zend_Controller_Action
 
 	public function indexAction() 
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$plogs = new Pment_Models_PlogMapper();
 		$errorMsg = null;
 		$condition[0] = $projectId;
@@ -55,18 +47,20 @@ class Pment_PlogController extends Zend_Controller_Action
 		{
 			$arrayPlogs = $plogs->fetchAllJoin(null,$condition);
 		}
-
+		if(count($arrayPlogs) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayPlogs->setCurrentPageNumber($pageNumber);
+			$arrayPlogs->setItemCountPerPage('20');
+			}
 		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayPlogs = $arrayPlogs;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "pment";
-		$this->view->controller = "plog";
-		$this->view->modelName = "工程日志";
 		}
 		
 	public function addAction()
 	{
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$addForm = new Pment_Forms_PlogSave();
 		$plogs = new Pment_Models_PlogMapper();
 		$addForm->submit->setLabel('保存继续新建');
@@ -86,7 +80,7 @@ class Pment_PlogController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$plog = new Pment_Models_Plog();
@@ -144,7 +138,7 @@ class Pment_PlogController extends Zend_Controller_Action
 		$editForm->submit->setLabel('保存修改');
 		$editForm->submit2->setAttrib('class','hide');
 		$plogId = $this->_getParam('id',0);
-		$projectId =$this->getProjectId();
+		$projectId =$this->_getProjectId();
 		$editForm = $plogs->formValidator($editForm,1);
 
 		if($this->getRequest()->isPost())
@@ -158,7 +152,7 @@ class Pment_PlogController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$userId = $this->getUserId();
+					$userId = $this->_getUserId();
 					$users = new System_Models_UserMapper();
 					$contactId = $users->getContactId($userId); 
 					$plog = new Pment_Models_Plog();
@@ -252,18 +246,5 @@ class Pment_PlogController extends Zend_Controller_Action
 			$this->_redirect('/pment/plog');
 		}
 	}
-
-	protected function getProjectId()
-	{
-		$projectNamespace = new Zend_Session_Namespace('projectNamespace');
-		return $projectNamespace->projectId;
-		}
-		
-		
-	protected function getUserId()
-	{
-		$userNamespace = new Zend_Session_Namespace('userNamespace');
-		return $userNamespace->userId;
-		}
 }
 ?>

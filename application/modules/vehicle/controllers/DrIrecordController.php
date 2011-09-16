@@ -6,6 +6,8 @@ class Vehicle_DrirecordController extends Zend_Controller_Action
 	public function init()
 	{
 		/* Initialize action controller here */
+		$this->view->module = "vehicle";
+		$this->view->controller = "drirecord";
 	}
 	
 	public function preDispatch()
@@ -42,17 +44,22 @@ class Vehicle_DrirecordController extends Zend_Controller_Action
 		{
 			$arrayDrirecords = $drirecords->fetchAllJoin();
 		}
+		if(count($arrayDrirecords) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayDrirecords->setCurrentPageNumber($pageNumber);
+			$arrayDrirecords->setItemCountPerPage('20');
+			}
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayDrirecords = $arrayDrirecords;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "vehicle";
-		$this->view->controller = "drirecord";
 		$this->view->modelName = "车辆行驶记录";
 		}
 	
 	public function addAction()
 	{
 		$drirecords = new Vehicle_Models_DrirecordMapper();
-		$addForm = new Vehicle_Forms_drirecordSave();
+		$addForm = new Vehicle_Forms_DrirecordSave();
 		$addForm->submit->setLabel('保存继续新建');
 		$addForm->submit2->setLabel('保存返回上页');
 		$errorMsg = null;
@@ -73,7 +80,7 @@ class Vehicle_DrirecordController extends Zend_Controller_Action
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
 				{
-					$drirecord = new Vehicle_Models_drirecord();
+					$drirecord = new Vehicle_Models_Drirecord();
 					$drirecord->setVeId($addForm->getValue('veId'));
 					$drirecord->setRYear($addForm->getValue('rYear'));
 					$drirecord->setRMonth($addForm->getValue('rMonth'));
@@ -88,6 +95,9 @@ class Vehicle_DrirecordController extends Zend_Controller_Action
 						}
 						else
 						{
+							$veId = new Vehicle_Models_VehicleMapper();
+							$plateNo = $veId->findPlateNo($drirecord->getVeId());
+							$this->_helper->flashMessenger->addMessage($plateNo.'创建成功。');
 							$this->_redirect('/vehicle/drirecord');
 							}
 					}
@@ -139,7 +149,7 @@ class Vehicle_DrirecordController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			if($editForm->isValid($formData))
 			{
-				$array = $drirecords->dataValidator($formData,$recordId,$vId,1);
+				$array = $drirecords->dataValidator($formData,1);
 				$trigger = $array['trigger'];
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)

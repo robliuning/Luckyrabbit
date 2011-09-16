@@ -6,6 +6,8 @@ class Vehicle_RepairController extends Zend_Controller_Action
 	public function init()
 	{
 		/* Initialize action controller here */
+		$this->view->module = "vehicle";
+		$this->view->controller = "repair";
 	}
 	
 	public function preDispatch()
@@ -42,10 +44,15 @@ class Vehicle_RepairController extends Zend_Controller_Action
 		{
 			$arrayRepairs = $repairs->fetchAllJoin();
 		}
+		if(count($arrayRepairs) != 0)
+		{
+			$pageNumber = $this->_getParam('page');
+			$arrayRepairs->setCurrentPageNumber($pageNumber);
+			$arrayRepairs->setItemCountPerPage('20');
+			}
+		$this->view->messages = $this->_helper->flashMessenger->getMessages();
 		$this->view->arrayRepairs = $arrayRepairs;
 		$this->view->errorMsg = $errorMsg;
-		$this->view->module = "vehicle";
-		$this->view->controller = "repair";
 		$this->view->modelName = "车辆维修记录";
 		}
 	
@@ -57,17 +64,15 @@ class Vehicle_RepairController extends Zend_Controller_Action
 		$addForm->submit2->setLabel('保存返回上页');
 		$errorMsg = null;
 		$repairs->populateVeDd($addForm);
-		
 		$addForm = $repairs->formValidator($addForm,0);
-		
+
 		if($this->getRequest()->isPost())
 		{
 			$btClicked = $this->getRequest()->getPost('submit');
 			$formData = $this->getRequest()->getPost();
-			
 			if($addForm->isValid($formData))
 			{
-				$array = $repairs->dataValidator($formData,null,$addForm->getValue('veId'),0);
+				$array = $repairs->dataValidator($formData,0);
 				$trigger = $array['trigger'];
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
@@ -88,10 +93,13 @@ class Vehicle_RepairController extends Zend_Controller_Action
 						}
 						else
 						{
-							$repair->setIndem('');
+							$repair->setIndem();
 							}
+					$repair->setIndem($addForm->getValue('indem'));
 					$repair->setRemark($addForm->getValue('remark'));
 					$repairs->save($repair);
+					$veId = new Vehicle_Models_VehicleMapper();
+					$plateNo = $veId->findPlateNo($repair->getVeId());
 					$errorMsg = General_Models_Text::$text_save_success;
 					if($btClicked == '保存继续新建')
 					{
@@ -99,7 +107,8 @@ class Vehicle_RepairController extends Zend_Controller_Action
 						}
 						else
 						{
-							$this->_redirect('/vehicle/repair');
+							$this->_helper->flashMessenger->addMessage($plateNo.'创建成功。');
+							$this->_redirect("/vehicle/repair");
 							}
 					}
 					else
@@ -112,8 +121,9 @@ class Vehicle_RepairController extends Zend_Controller_Action
 					$addForm->populate($formData);
 					}
 			}
-			$this->view->errorMsg = $errorMsg;
-			$this->view->addForm = $addForm;
+		
+		$this->view->errorMsg = $errorMsg;
+		$this->view->addForm = $addForm;
 		}
 	
 	public function editAction()
@@ -148,7 +158,7 @@ class Vehicle_RepairController extends Zend_Controller_Action
 			$formData = $this->getRequest()->getPost();
 			if($editForm->isValid($formData))
 			{
-				$array = $repairs->dataValidator($formData,$repId,$vId,1);
+				$array = $repairs->dataValidator($formData,1);
 				$trigger = $array['trigger'];
 				$errorMsg = $array['errorMsg'];
 				if($trigger == 0)
@@ -175,6 +185,9 @@ class Vehicle_RepairController extends Zend_Controller_Action
 					$repair->setIndem($editForm->getValue('indem'));
 					$repair->setRemark($editForm->getValue('remark'));
 					$repairs->save($repair);
+					$veId = new Vehicle_Models_VehicleMapper();
+					$plateNo = $veId->findPlateNo($repair->getVeId());
+					$this->_helper->flashMessenger->addMessage($plateNo.'修改成功。');
 					$this->_redirect($link);
 					}
 					else

@@ -39,5 +39,19 @@ class Vehicle_Models_DbTable_Drirecord extends Zend_Db_Table_Abstract
 			}
 		return $checkRe;
 		}
+	
+	public function fetchAllJoin($key, $condition)
+	{
+		$select = $this->select()
+						->setIntegrityCheck(false)
+						->from(array('dri' => 've_drirecords'))
+						->join(array('ve' => 've_vehicles'),'ve.veId = dri.veId',array('plateNo'));
+		if($condition == 'plateNo')
+		{
+			$select->where('ve.plateNo like ?','%'.$key.'%');
+			}
+		$paginator = Zend_Paginator::factory($select);
+		return $paginator;
+		}
 }
 ?>
